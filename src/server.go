@@ -12,7 +12,6 @@ func Run() {
 	g := gin.Default()
 
 	route.InitRoutes(g)
-	route.InitStatic(g)
 
 	g.Run(":3000")
 }

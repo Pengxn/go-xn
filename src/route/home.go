@@ -8,5 +8,8 @@ import (
 
 // InitRoutes will init all routes.
 func InitRoutes(g *gin.Engine) {
-	g.GET("/", controller.AddPost)
+	g.GET("/", controller.Home)
+
+	StaticRoutes(g)
+	ArticlesRoutes(g)
 }
