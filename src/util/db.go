@@ -3,8 +3,8 @@ package util
 import (
 	"database/sql"
 
-	"go-xn/src/config"
 	// _ "github.com/go-sql-driver/mysql"
+	"go-xn/src/config"
 )
 
 // InitDB initialize database connection

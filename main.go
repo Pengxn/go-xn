@@ -1,11 +1,11 @@
 package main
 
 import (
-	"log"
-
-	"go-xn/src"
+	"fmt"
 
 	"github.com/gin-gonic/gin"
+
+	"go-xn/src"
 )
 
 // Information for Go-xn
@@ -18,11 +18,12 @@ const (
   | |  _ / _ \  ____ \ \/ / '_ \
   | |_| | (_) ||____| >  <| | | |
    \____|\___/       /_/\_\_| |_|
+
 `
 )
 
 func main() {
-	log.Printf(banner)
+	fmt.Printf(banner)
 
 	gin.SetMode(gin.ReleaseMode)
 
