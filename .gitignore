@@ -1,0 +1,12 @@
+# vscode
+.vscode/
+
+# idea
+.idea/
+*.iml
+
+# Go Module vgo
+go.sum
+
+# build
+build/
