@@ -6,7 +6,7 @@ import (
 	"go-xn/src/controller"
 )
 
-// ArticlesRoutes registere routes about article.
+// ArticlesRoutes register routes about article.
 func ArticlesRoutes(g *gin.Engine) {
 	g.Any("/articles", controller.ListArticles)
 

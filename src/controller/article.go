@@ -11,7 +11,7 @@ func ListArticles(c *gin.Context) {
 	})
 }
 
-// GetArticle list all articles.
+// GetArticle get an articles JSON.
 func GetArticle(c *gin.Context) {
 	id := c.Param("id")
 
@@ -21,21 +21,21 @@ func GetArticle(c *gin.Context) {
 	})
 }
 
-// AddArticle list all articles.
+// AddArticle add an articles JSON.
 func AddArticle(c *gin.Context) {
 	c.JSON(200, gin.H{
 		"articles": "Add articles",
 	})
 }
 
-// UpdateArticle list all articles.
+// UpdateArticle update an articles JSON.
 func UpdateArticle(c *gin.Context) {
 	c.JSON(200, gin.H{
 		"articles": "Update a article",
 	})
 }
 
-// DeleteArticle list all articles.
+// DeleteArticle delete an articles JSON.
 func DeleteArticle(c *gin.Context) {
 	c.JSON(200, gin.H{
 		"articles": "Delete articles",
