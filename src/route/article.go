@@ -8,7 +8,7 @@ import (
 
 // ArticlesRoutes registere routes about article.
 func ArticlesRoutes(g *gin.Engine) {
-	g.GET("/articles", controller.ListArticles)
+	g.Any("/articles", controller.ListArticles)
 
 	article := g.Group("/article")
 	article.GET("/:id", controller.GetArticle)
