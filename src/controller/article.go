@@ -23,21 +23,30 @@ func GetArticle(c *gin.Context) {
 
 // AddArticle add an articles JSON.
 func AddArticle(c *gin.Context) {
+	id := c.Param("id")
+
 	c.JSON(200, gin.H{
-		"articles": "Add articles",
+		"code": "Add an Article",
+		"data": id,
 	})
 }
 
 // UpdateArticle update an articles JSON.
 func UpdateArticle(c *gin.Context) {
+	id := c.Param("id")
+
 	c.JSON(200, gin.H{
-		"articles": "Update a article",
+		"code": "Update an Article",
+		"data": id,
 	})
 }
 
 // DeleteArticle delete an articles JSON.
 func DeleteArticle(c *gin.Context) {
+	id := c.Param("id")
+
 	c.JSON(200, gin.H{
-		"articles": "Delete articles",
+		"code": "Delete an Article",
+		"data": id,
 	})
 }
