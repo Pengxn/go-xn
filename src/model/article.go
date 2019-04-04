@@ -1,12 +1,16 @@
 package model
 
-// Post model
-type Post struct {
-	Common
+import "time"
 
-	Title    string
-	Content  string
-	Author   string
-	Tags     []*Tag
-	Comments []*Comment
+// Article model
+type Article struct {
+	ID         uint64
+	Title      string
+	Content    string
+	AuthorID   uint64
+	Views      uint
+	Status     int
+	CreateTime time.Time
+	UpdateTime time.Time
+	DeleteTime time.Time
 }
