@@ -5,6 +5,7 @@ require (
 	github.com/gin-gonic/gin v1.3.0
 	github.com/go-ini/ini v1.42.0
 	github.com/go-sql-driver/mysql v1.4.1
+	github.com/go-xorm/xorm v0.7.1
 	github.com/golang/protobuf v1.3.1 // indirect
 	github.com/json-iterator/go v1.1.6
 	github.com/mattn/go-isatty v0.0.7 // indirect
