@@ -7,8 +7,7 @@ type Article struct {
 	ID         uint64
 	Title      string
 	Content    string
-	AuthorID   uint64
-	Views      uint
+	Views      uint64
 	Status     int
 	CreateTime time.Time
 	UpdateTime time.Time
