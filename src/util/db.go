@@ -1,19 +1,23 @@
 package util
 
 import (
-	"database/sql"
+	"time"
 
-	// _ "github.com/go-sql-driver/mysql"
+	_ "github.com/go-sql-driver/mysql"
+	"github.com/go-xorm/xorm"
+
 	"go-xn/src/config"
 )
 
-// InitDB initialize database connection
-func InitDB() (*sql.DB, error) {
-	db, err := sql.Open("mysql", config.DBUrl())
+var orm *xorm.Engine
 
-	if err != nil {
-		return nil, err
-	}
+// SetEngine initialize database connection
+func SetEngine() *xorm.Engine {
+	orm, err := xorm.NewEngine("mysql", config.DBUrl())
 
-	return db, err
+	PanicIf(err)
+
+	orm.TZLocation = time.Local
+
+	return orm
 }
