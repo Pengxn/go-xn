@@ -1,15 +1,35 @@
 package model
 
-import "time"
+import (
+	"time"
+
+	"github.com/go-xorm/xorm"
+
+	"go-xn/src/util"
+)
 
 // Article model
 type Article struct {
-	ID         uint64    `form:"article_id" xorm:"bigint(20) notnull autoincr"`
-	Title      string    `form:"title" xorm:"text notnull"`
-	Content    string    `form:"content" xorm:"longtext notnull"`
-	Views      uint64    `form:"views" xorm:"bigint(20) notnull default(0)"`
-	Status     int       `form:"status" xorm:"tinyint(1) notnull default(0)"`
-	CreateTime time.Time `form:"create_time" xorm:"datetime created notnull"`
-	UpdateTime time.Time `form:"update_time" xorm:"datetime updated notnull"`
-	DeleteTime time.Time `form:"delete_time" xorm:"datetime deleted notnull"`
+	ID         uint64    `xorm:"bigint(20) notnull autoincr pk 'article_id'"`
+	Title      string    `xorm:"text notnull 'article_title'"`
+	Content    string    `xorm:"longtext notnull 'article_content'"`
+	Views      uint64    `xorm:"bigint(20) notnull default(0) 'article_views'"`
+	Status     int       `xorm:"tinyint(1) notnull default(0) article_status"`
+	CreateTime time.Time `xorm:"datetime created notnull 'create_time'"`
+	UpdateTime time.Time `xorm:"datetime updated notnull 'update_time'"`
+	DeleteTime time.Time `xorm:"datetime deleted notnull 'delete_time'"`
+}
+
+var orm *xorm.Engine = util.SetEngine()
+
+// GetArticles get article
+func (a *Article) GetArticles() error {
+	_, err := orm.Id(a.ID).Get(a)
+
+	return err
+}
+
+// Exist if article exist
+func (a *Article) Exist() (bool, error) {
+	return orm.Get(a)
 }
