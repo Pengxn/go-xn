@@ -12,6 +12,7 @@ import (
 var orm *xorm.Engine
 
 // SetEngine initialize database connection
+// and return *xorm.Engine
 func SetEngine() *xorm.Engine {
 	orm, err := xorm.NewEngine("mysql", config.DBUrl())
 

@@ -35,7 +35,7 @@ func GetDBConfiguration() *DBConfiguration {
 
 // DBUrl will return database url
 func DBUrl() string {
-	dbConfig := GetDBConfiguration()
+	db := GetDBConfiguration()
 
-	return dbConfig.User + ":" + dbConfig.Password + "@tcp(" + dbConfig.DBUrl + ":" + dbConfig.Port + ")/" + dbConfig.DBName
+	return db.User + ":" + db.Password + "@tcp(" + db.DBUrl + ":" + db.Port + ")/" + db.DBName
 }
