@@ -21,7 +21,7 @@ func GetDBConfiguration() *DBConfiguration {
 	config, err := ini.Load("fyj.ini")
 
 	if err != nil {
-		fmt.Printf("Fail to read file: %v", err)
+		fmt.Printf("Fail to read fyj.ini file: %v", err)
 
 		os.Exit(1)
 	}
