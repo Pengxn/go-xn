@@ -9,11 +9,9 @@ import (
 	"go-xn/src/config"
 )
 
-var orm *xorm.Engine
-
-// SetEngine initialize database connection
+// DBEngine initialize database connection engine
 // and return *xorm.Engine
-func SetEngine() *xorm.Engine {
+func DBEngine() *xorm.Engine {
 	orm, err := xorm.NewEngine("mysql", config.DBUrl())
 
 	PanicIf(err)

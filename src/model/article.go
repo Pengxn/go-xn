@@ -20,9 +20,9 @@ type Article struct {
 	DeleteTime time.Time `xorm:"datetime deleted notnull 'delete_time'"`
 }
 
-var orm *xorm.Engine = util.SetEngine()
+var orm *xorm.Engine = util.DBEngine()
 
-// GetArticles get article
+// GetArticles get all articles
 func (a *Article) GetArticles() error {
 	_, err := orm.Id(a.ID).Get(a)
 
