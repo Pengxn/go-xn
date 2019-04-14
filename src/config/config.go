@@ -37,5 +37,5 @@ func GetDBConfiguration() *DBConfiguration {
 func DBUrl() string {
 	db := GetDBConfiguration()
 
-	return db.User + ":" + db.Password + "@tcp(" + db.DBUrl + ":" + db.Port + ")/" + db.DBName
+	return db.User + ":" + db.Password + "@tcp(" + db.DBUrl + ":" + db.Port + ")/" + db.DBName + "?charset=utf8&parseTime=true"
 }

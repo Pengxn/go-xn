@@ -10,26 +10,23 @@ import (
 
 // Article model
 type Article struct {
-	ID         uint64    `xorm:"bigint(20) notnull autoincr pk 'article_id'"`
+	ID         uint64    `xorm:"bigint(20) notnull autoincr pk 'ID'"`
 	Title      string    `xorm:"text notnull 'article_title'"`
 	Content    string    `xorm:"longtext notnull 'article_content'"`
 	Views      uint64    `xorm:"bigint(20) notnull default(0) 'article_views'"`
-	Status     int       `xorm:"tinyint(1) notnull default(0) article_status"`
-	CreateTime time.Time `xorm:"datetime created notnull 'create_time'"`
-	UpdateTime time.Time `xorm:"datetime updated notnull 'update_time'"`
-	DeleteTime time.Time `xorm:"datetime deleted notnull 'delete_time'"`
+	Status     int       `xorm:"tinyint(4) notnull default(0) article_status"`
+	CreateTime time.Time `xorm:"datetime created notnull default('0000-00-00 00:00:00') 'create_time'"`
+	UpdateTime time.Time `xorm:"datetime updated notnull default('0000-00-00 00:00:00') 'update_time'"`
+	DeleteTime time.Time `xorm:"datetime deleted notnull default('0000-00-00 00:00:00') 'delete_time'"`
 }
 
 var orm *xorm.Engine = util.DBEngine()
 
-// GetArticles get all articles
-func (a *Article) GetArticles() error {
-	_, err := orm.Id(a.ID).Get(a)
+// ArticlesExist if article exist
+func ArticlesExist(id uint64) bool {
+	has, _ := orm.Exist(&Article{
+		ID: id,
+	})
 
-	return err
-}
-
-// Exist if article exist
-func (a *Article) Exist() (bool, error) {
-	return orm.Get(a)
+	return has
 }

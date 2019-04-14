@@ -1,7 +1,11 @@
 package controller
 
 import (
+	"strconv"
+
 	"github.com/gin-gonic/gin"
+
+	"go-xn/src/model"
 )
 
 // ListArticles list all articles JSON.
@@ -13,11 +17,14 @@ func ListArticles(c *gin.Context) {
 
 // GetArticle get an articles JSON.
 func GetArticle(c *gin.Context) {
-	id := c.Param("id")
+	idStr := c.Param("id")
+	id, _ := strconv.ParseUint(idStr, 10, 64)
+
+	has := model.ArticlesExist(id)
 
 	c.JSON(200, gin.H{
 		"code": 200,
-		"data": id,
+		"has":  has,
 	})
 }
 
