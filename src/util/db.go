@@ -1,6 +1,7 @@
 package util
 
 import (
+	"log"
 	"time"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -14,9 +15,16 @@ import (
 func DBEngine() *xorm.Engine {
 	orm, err := xorm.NewEngine("mysql", config.DBUrl())
 
-	PanicIf(err)
+	if err != nil {
+		panic(err)
+	}
+
+	if err = orm.Ping(); err != nil {
+		log.Fatalln("Your DB can't work it normally.", err.Error())
+	}
 
 	orm.TZLocation = time.Local
+	orm.ShowSQL(true)
 
 	return orm
 }
