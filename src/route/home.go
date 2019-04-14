@@ -10,6 +10,6 @@ import (
 func InitRoutes(g *gin.Engine) {
 	g.GET("/", controller.Home)
 
-	StaticRoutes(g)
-	ArticlesRoutes(g)
+	staticRoutes(g)
+	articlesRoutes(g)
 }
