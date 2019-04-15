@@ -1,5 +1,5 @@
 /**
- * This file is used to test database
+ * This database file is used to test
  *
  * (c) MIT 2018
  */
@@ -13,7 +13,7 @@ CREATE TABLE `article` (
     `title` text NOT NULL COMMENT 'The title of article',
     `content` longtext NOT NULL COMMENT 'The content of article',
     `article_views` bigint(20) NOT NULL DEFAULT 0 COMMENT 'Number of articles viewed',
-    `article_status` tinyint(4) NOT NULL DEFAULT 0 COMMENT '0: draft; 1: published',
+    `article_status` tinyint(4) NOT NULL DEFAULT 0 COMMENT '0: draft; 1: published; 2: deleted',
     `create_time` datetime NOT NULL COMMENT 'The time that article is created',
     `update_time` datetime NOT NULL COMMENT 'The time that article is updated',
     `delete_time` datetime NOT NULL COMMENT 'The time that article is deleted',
@@ -50,6 +50,16 @@ INSERT INTO `article` VALUES (
     '0',
     '1',
     '2019-04-10 00:12:52',
+    '0000-00-00 00:00:00',
+    '0000-00-00 00:00:00'
+);
+INSERT INTO `article` VALUES (
+    '4',
+    'The reason we are gathered here on our God-given, much-naeeded day.',
+    'iTerm is a replacement to Mac terminal, and I think most of you are using it for Mac. Tmux is a terminal multilpexer and a pretty great tool',
+    '0',
+    '1',
+    '2019-04-14 08:12:52',
     '0000-00-00 00:00:00',
     '0000-00-00 00:00:00'
 );
