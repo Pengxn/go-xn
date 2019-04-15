@@ -3,13 +3,15 @@ package controller
 import (
 	"github.com/gin-gonic/gin"
 
-	"go-xn/src/config"
+	"go-xn/src/model"
 )
 
 // Home and index
 func Home(c *gin.Context) {
+	articles, _ := model.HomeView()
+
 	c.JSON(200, gin.H{
-		"message":     "pong",
-		"databaseUrl": config.DBUrl(),
+		"code":     200,
+		"articles": articles,
 	})
 }
