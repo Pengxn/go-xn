@@ -24,7 +24,10 @@ var orm *xorm.Engine = util.DBEngine()
 
 // ArticlesExist if article exist
 func ArticlesExist(id uint64) bool {
-	has, _ := orm.Exist(&Article{
+	db := orm.NewSession()
+	defer db.Close()
+
+	has, _ := db.Exist(&Article{
 		ID: id,
 	})
 
@@ -33,9 +36,12 @@ func ArticlesExist(id uint64) bool {
 
 // ArticlesCount return count number
 func ArticlesCount() int {
+	db := orm.NewSession()
+	defer db.Close()
+
 	article := &Article{}
 
-	count, _ := orm.Count(article)
+	count, _ := db.Count(article)
 
 	return int(count)
 }
