@@ -1,3 +1,5 @@
+# Make sure you install `make` and `git` tool
+
 # Get OS name: Linux, MINGW64_NT-10.0 or others
 OS_NAME = $(shell uname -s)
 
