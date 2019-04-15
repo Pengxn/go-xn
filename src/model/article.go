@@ -1,6 +1,7 @@
 package model
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/go-xorm/xorm"
@@ -31,6 +32,8 @@ func HomeView() ([]Article, error) {
 
 	err := db.Table("article").Cols("ID", "title", "content", "article_views").Where("article_status = 1").Desc("create_time").Find(&articles)
 
+	fmt.Println(articles)
+
 	return articles, err
 }
 
@@ -60,11 +63,14 @@ func ArticlesCount() int {
 
 // ArticleByID will return article by ID
 func ArticleByID(id uint64) (*Article, bool) {
+	db := orm.NewSession()
+	defer db.Close()
+
 	article := &Article{
 		ID: id,
 	}
 
-	has, _ := orm.Get(article)
+	has, _ := db.Get(article)
 
 	return article, has
 }

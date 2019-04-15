@@ -1,8 +1,6 @@
 package app
 
 import (
-	"fmt"
-
 	"github.com/gin-gonic/gin"
 
 	"go-xn/src/route"
@@ -12,7 +10,7 @@ import (
 const (
 	Version = "1.0.0"
 	URL     = "https://xn--02f.com"
-	banner  = `
+	Banner  = `
     ____
    / ___| ___        __  ___ __
   | |  _ / _ \  ____ \ \/ / '_ \
@@ -26,8 +24,6 @@ const (
 // Parses the arguments routes and others.
 func Run() {
 	gin.SetMode(gin.ReleaseMode)
-
-	fmt.Printf(banner)
 
 	g := gin.Default()
 
