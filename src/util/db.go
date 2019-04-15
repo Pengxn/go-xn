@@ -2,7 +2,6 @@ package util
 
 import (
 	"log"
-	"time"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/go-xorm/xorm"
@@ -23,7 +22,6 @@ func DBEngine() *xorm.Engine {
 		log.Fatalln("Your DB can't work it normally.", err.Error())
 	}
 
-	orm.TZLocation = time.Local
 	orm.ShowSQL(true)
 
 	return orm
