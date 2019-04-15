@@ -16,7 +16,7 @@ func DBEngine() *xorm.Engine {
 	orm, err := xorm.NewEngine("mysql", config.DBUrl())
 
 	if err != nil {
-		panic(err)
+		log.Fatalln("Can't connect your DB.", err.Error())
 	}
 
 	if err = orm.Ping(); err != nil {
