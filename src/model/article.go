@@ -1,7 +1,6 @@
 package model
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/go-xorm/xorm"
@@ -31,8 +30,6 @@ func HomeView() ([]Article, error) {
 	articles := make([]Article, 0, 4)
 
 	err := db.Table("article").Cols("ID", "title", "content", "article_views").Where("article_status = 1").Desc("create_time").Find(&articles)
-
-	fmt.Println(articles)
 
 	return articles, err
 }
