@@ -10,8 +10,11 @@ import (
 
 // ListArticles list all articles JSON.
 func ListArticles(c *gin.Context) {
+	count := model.ArticlesCount()
+
 	c.JSON(200, gin.H{
-		"code": 200,
+		"code":  200,
+		"count": count,
 	})
 }
 
@@ -20,11 +23,11 @@ func GetArticle(c *gin.Context) {
 	idStr := c.Param("id")
 	id, _ := strconv.ParseUint(idStr, 10, 64)
 
-	has := model.ArticlesExist(id)
+	article, _ := model.ArticleByID(id)
 
 	c.JSON(200, gin.H{
-		"code": 200,
-		"has":  has,
+		"code":    200,
+		"article": article,
 	})
 }
 

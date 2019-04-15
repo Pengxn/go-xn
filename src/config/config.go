@@ -16,8 +16,8 @@ type DBConfiguration struct {
 	DBUrl    string `ini:"url"`
 }
 
-// GetDBConfiguration will return database configuration
-func GetDBConfiguration() *DBConfiguration {
+// getDBConfiguration will return database configuration
+func getDBConfiguration() *DBConfiguration {
 	config, err := ini.Load("fyj.ini")
 
 	if err != nil {
@@ -35,7 +35,7 @@ func GetDBConfiguration() *DBConfiguration {
 
 // DBUrl will return database url
 func DBUrl() string {
-	db := GetDBConfiguration()
+	db := getDBConfiguration()
 
-	return db.User + ":" + db.Password + "@tcp(" + db.DBUrl + ":" + db.Port + ")/" + db.DBName + "?charset=utf8&parseTime=true"
+	return db.User + ":" + db.Password + "@tcp(" + db.DBUrl + ":" + db.Port + ")/" + db.DBName + "?charset=utf8"
 }
