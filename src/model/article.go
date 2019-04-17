@@ -27,7 +27,7 @@ func HomeView() ([]Article, error) {
 	db := orm.NewSession()
 	defer db.Close()
 
-	articles := make([]Article, 0, 4)
+	var articles []Article
 
 	err := db.Table("article").
 		Cols("ID", "title", "content", "article_views").
