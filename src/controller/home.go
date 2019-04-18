@@ -10,8 +10,7 @@ import (
 func Home(c *gin.Context) {
 	articles, _ := model.HomeView()
 
-	c.JSON(200, gin.H{
-		"code":     200,
-		"articles": articles,
+	c.HTML(200, "index.pug", gin.H{
+		"article": articles,
 	})
 }

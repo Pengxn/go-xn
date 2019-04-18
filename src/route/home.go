@@ -8,6 +8,8 @@ import (
 
 // InitRoutes will init all routes.
 func InitRoutes(g *gin.Engine) {
+	g.LoadHTMLGlob("web/template/*")
+
 	g.GET("/", controller.Home)
 
 	staticRoutes(g)
