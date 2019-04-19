@@ -23,7 +23,7 @@ type Article struct {
 var orm *xorm.Engine = util.DBEngine()
 
 // HomeView return articles while index page
-func HomeView() ([]Article, error) {
+func HomeView() []Article {
 	db := orm.NewSession()
 	defer db.Close()
 
@@ -32,10 +32,15 @@ func HomeView() ([]Article, error) {
 	err := db.Table("article").
 		Cols("ID", "title", "content", "article_views", "create_time").
 		Where("article_status = 1").
+		Limit(4).
 		Desc("create_time").
 		Find(&articles)
 
-	return articles, err
+	if err != nil {
+		panic(err)
+	}
+
+	return articles
 }
 
 // ArticlesExist if article exist

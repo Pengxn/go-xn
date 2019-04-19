@@ -8,7 +8,7 @@ import (
 
 // HomePage return home and index page JSON information.
 func HomePage(c *gin.Context) {
-	articles, _ := model.HomeView()
+	articles := model.HomeView()
 
 	c.JSON(200, gin.H{
 		"data": articles,
