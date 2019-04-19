@@ -14,3 +14,12 @@ func HomePage(c *gin.Context) {
 		"data": articles,
 	})
 }
+
+// ByPageNum return JSON information by page number
+func ByPageNum(c *gin.Context) {
+	pageNum := c.Param("pageNum")
+
+	c.JSON(200, gin.H{
+		"pageNum": pageNum,
+	})
+}

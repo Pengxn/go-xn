@@ -10,7 +10,11 @@ import (
 func InitRoutes(g *gin.Engine) {
 	g.LoadHTMLGlob("web/template/*")
 
-	g.GET("/", controller.Home)
+	g.GET("/", controller.HomePage)
+
+	// Page number handler
+	Page := g.Group("/page")
+	Page.Any("/:pageNum", controller.ByPageNum)
 
 	staticRoutes(g)
 	articlesRoutes(g)
