@@ -29,8 +29,8 @@ func InitRoutes(g *gin.Engine) {
 
 	// No Method
 	g.NoMethod(func(c *gin.Context) {
-		c.JSON(404, gin.H{
-			"code": 404,
+		c.JSON(405, gin.H{
+			"code": 405,
 			"data": "The Method Could Not be Found",
 		})
 	})
