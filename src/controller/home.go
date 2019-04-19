@@ -6,11 +6,11 @@ import (
 	"go-xn/src/model"
 )
 
-// Home and index
-func Home(c *gin.Context) {
+// HomePage return home and index page JSON information.
+func HomePage(c *gin.Context) {
 	articles, _ := model.HomeView()
 
-	c.HTML(200, "index.hbs", gin.H{
-		"article": articles,
+	c.JSON(200, gin.H{
+		"data": articles,
 	})
 }
