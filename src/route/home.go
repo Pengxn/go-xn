@@ -21,11 +21,17 @@ func InitRoutes(g *gin.Engine) {
 
 	// No route
 	g.NoRoute(func(c *gin.Context) {
-		c.HTML(404, "404.html", gin.H{})
+		c.HTML(404, "404.html", gin.H{
+			"code": 404,
+			"data": "The Page Could Not be Found",
+		})
 	})
 
 	// No Method
 	g.NoMethod(func(c *gin.Context) {
-		c.HTML(404, "404.html", gin.H{})
+		c.JSON(404, gin.H{
+			"code": 404,
+			"data": "The Method Could Not be Found",
+		})
 	})
 }
