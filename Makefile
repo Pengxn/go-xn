@@ -18,7 +18,7 @@ clean:
 	@if [ -f "build/$(BIN)" ]; then rm -rf build/$(BIN); fi;
 
 test:
-	@cd build && ./$(BIN)
+	@go test ./...
 
 web:
 	# Delete 'build/web'

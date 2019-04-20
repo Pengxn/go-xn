@@ -16,6 +16,11 @@ type DBConfiguration struct {
 	DBUrl    string `ini:"url"`
 }
 
+// Firebase is your firebase custom configuration
+type Firebase struct {
+	Domain string
+}
+
 // getDBConfiguration will return database configuration
 func getDBConfiguration() *DBConfiguration {
 	config, err := ini.Load("fyj.ini")
