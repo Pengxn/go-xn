@@ -1,13 +1,13 @@
 package config
 
 import (
-	"fmt"
+	"log"
 	"os"
 
 	"github.com/go-ini/ini"
 )
 
-// DBConfiguration is your custom configuration for this app
+// DBConfiguration is custom configuration for DB
 type DBConfiguration struct {
 	User     string `ini:"user"`
 	Password string `ini:"password"`
@@ -21,7 +21,7 @@ func getDBConfiguration() *DBConfiguration {
 	config, err := ini.Load("fyj.ini")
 
 	if err != nil {
-		fmt.Printf("Fail to read fyj.ini file: %v", err)
+		log.Fatalln("Fail to read fyj.ini file.", err.Error())
 
 		os.Exit(1)
 	}
