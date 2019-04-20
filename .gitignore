@@ -1,6 +1,10 @@
 # vscode
 .vscode/
 
+# IntelliJ
+*.iml
+.idea/
+
 # Go Module vgo
 go.sum
 
