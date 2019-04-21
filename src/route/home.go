@@ -16,7 +16,10 @@ func InitRoutes(g *gin.Engine) {
 
 	staticRoutes(g)
 	articlesRoutes(g)
+	errorRoute(g)
+}
 
+func errorRoute(g *gin.Engine) {
 	g.LoadHTMLFiles("web/404.html")
 
 	// No route
