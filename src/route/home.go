@@ -11,8 +11,7 @@ func InitRoutes(g *gin.Engine) {
 	g.GET("/", controller.HomePage)
 
 	// Page number handler
-	Page := g.Group("/page")
-	Page.GET("/:pageNum", controller.ByPageNum)
+	g.GET("/page/:pageNum", controller.ByPageNum)
 
 	staticRoutes(g)
 	articlesRoutes(g)

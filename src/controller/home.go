@@ -1,6 +1,8 @@
 package controller
 
 import (
+	"strconv"
+
 	"github.com/gin-gonic/gin"
 
 	"go-xn/src/model"
@@ -18,8 +20,9 @@ func HomePage(c *gin.Context) {
 // ByPageNum return JSON information by page number
 func ByPageNum(c *gin.Context) {
 	pageNum := c.Param("pageNum")
+	num, _ := strconv.ParseUint(pageNum, 10, 64)
 
 	c.JSON(200, gin.H{
-		"pageNum": pageNum,
+		"pageNum": num,
 	})
 }

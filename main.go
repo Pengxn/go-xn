@@ -7,7 +7,6 @@ import (
 )
 
 func main() {
-
 	fmt.Println(app.Banner)
 
 	app.Run()
