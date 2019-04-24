@@ -13,13 +13,13 @@ func InitRoutes(g *gin.Engine) {
 	// Page number handler
 	g.GET("/page/:pageNum", controller.ByPageNum)
 
-	staticRoutes(g)
 	articlesRoutes(g)
+	staticRoutes(g)
 	errorRoute(g)
 }
 
 func errorRoute(g *gin.Engine) {
-	g.LoadHTMLFiles("web/404.html")
+	g.LoadHTMLFiles("web/error.html")
 
 	// No route
 	g.NoRoute(func(c *gin.Context) {
@@ -29,7 +29,7 @@ func errorRoute(g *gin.Engine) {
 				"data": "The JSON Could Not be Found",
 			})
 		} else {
-			c.HTML(404, "404.html", gin.H{
+			c.HTML(404, "error.html", gin.H{
 				"code": 404,
 				"data": "The Page Could Not be Found",
 			})
