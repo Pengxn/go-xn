@@ -8,7 +8,12 @@ import (
 
 // ListOptions return all option JSON
 func ListOptions(c *gin.Context) {
-	//
+	options := model.FindAllOptions()
+
+	c.JSON(200, gin.H{
+		"code": 200,
+		"data": options,
+	})
 }
 
 // GetOption reutn option information JSON
