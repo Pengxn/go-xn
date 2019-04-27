@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	app "go-xn/src"
+	"go-xn/src"
 )
 
 func main() {
