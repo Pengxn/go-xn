@@ -19,7 +19,7 @@ func OptionExist(optionName string) bool {
 	return has
 }
 
-// OptionByName return Option by 'option_name'
+// OptionByName return Option (not including 'option_id') by 'option_name'
 func OptionByName(optionName string) *Option {
 	db := orm.NewSession()
 	defer db.Close()
@@ -28,8 +28,7 @@ func OptionByName(optionName string) *Option {
 		Name: optionName,
 	}
 
-	err := db.Cols("option_name", "option_value").
-		Find(option)
+	err := db.Find(option)
 
 	if err != nil {
 		panic(err)
