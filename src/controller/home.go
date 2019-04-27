@@ -23,6 +23,17 @@ func HomePage(c *gin.Context) {
 	})
 }
 
+// AboutPage return 'about' JSON
+func AboutPage(c *gin.Context) {
+	option := model.OptionByName("")
+
+	c.JSON(200, gin.H{
+		"code":          200,
+		"option_name":   option.Name,
+		"optioin_value": option.Value,
+	})
+}
+
 // ByPageNum return JSON information by page number
 func ByPageNum(c *gin.Context) {
 	pageNum, _ := strconv.ParseUint(c.Param("pageNum"), 10, 64)
