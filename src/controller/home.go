@@ -8,6 +8,12 @@ import (
 	"go-xn/src/model"
 )
 
+// DefaultLimit is default limit number per page
+// And other constant
+const (
+	DefaultLimit uint64 = 8
+)
+
 // HomePage return home and index page JSON information.
 func HomePage(c *gin.Context) {
 	articles := model.HomeView()
@@ -19,10 +25,18 @@ func HomePage(c *gin.Context) {
 
 // ByPageNum return JSON information by page number
 func ByPageNum(c *gin.Context) {
-	pageNum := c.Param("pageNum")
-	num, _ := strconv.ParseUint(pageNum, 10, 64)
+	pageNum, _ := strconv.ParseUint(c.Param("pageNum"), 10, 64)
+	limitNum, _ := strconv.ParseUint(c.Query("limit"), 10, 64)
+
+	if pageNum == 0 {
+		pageNum = 1
+	}
+	if limitNum == 0 {
+		limitNum = DefaultLimit
+	}
 
 	c.JSON(200, gin.H{
-		"pageNum": num,
+		"pageNum":  pageNum,
+		"limitNum": limitNum,
 	})
 }

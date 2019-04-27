@@ -13,9 +13,9 @@ func InitRoutes(g *gin.Engine) {
 	// Page number handler
 	g.GET("/page/:pageNum", controller.ByPageNum)
 
-	articlesRoutes(g)
-	staticRoutes(g)
 	errorRoute(g)
+	staticRoutes(g)
+	articlesRoutes(g)
 }
 
 func errorRoute(g *gin.Engine) {
