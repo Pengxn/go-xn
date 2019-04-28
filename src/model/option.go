@@ -7,8 +7,8 @@ type Option struct {
 	Value string `json:"option_value" xorm:"longtext notnull 'option_value'"`
 }
 
-// FindAllOptions return all options
-func FindAllOptions() []Option {
+// GetAllOptions return all options
+func GetAllOptions() []Option {
 	db := orm.NewSession()
 	defer db.Close()
 
