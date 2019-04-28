@@ -23,18 +23,6 @@ func GetAllOptions() []Option {
 	return options
 }
 
-// OptionExist if the option_name of article exist
-func OptionExist(optionName string) bool {
-	db := orm.NewSession()
-	defer db.Close()
-
-	has, _ := db.Exist(&Option{
-		Name: optionName,
-	})
-
-	return has
-}
-
 // OptionByName return Option (not including 'option_id') by 'option_name'
 func OptionByName(optionName string) *Option {
 	db := orm.NewSession()
@@ -51,4 +39,16 @@ func OptionByName(optionName string) *Option {
 	}
 
 	return option
+}
+
+// OptionExist if the option_name of article exist
+func OptionExist(optionName string) bool {
+	db := orm.NewSession()
+	defer db.Close()
+
+	has, _ := db.Exist(&Option{
+		Name: optionName,
+	})
+
+	return has
 }
