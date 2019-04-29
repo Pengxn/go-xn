@@ -25,7 +25,7 @@ func HomePage(c *gin.Context) {
 
 // AboutPage return 'about' JSON
 func AboutPage(c *gin.Context) {
-	option := model.OptionByName("")
+	option := model.GetOptionByName("")
 
 	c.JSON(200, gin.H{
 		"code":          200,

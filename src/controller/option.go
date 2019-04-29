@@ -1,6 +1,8 @@
 package controller
 
 import (
+	"fmt"
+
 	"github.com/gin-gonic/gin"
 
 	"go-xn/src/model"
@@ -20,7 +22,7 @@ func ListOptions(c *gin.Context) {
 func GetOption(c *gin.Context) {
 	name := c.Param("name")
 
-	option := model.OptionByName(name)
+	option := model.GetOptionByName(name)
 
 	c.JSON(200, gin.H{
 		"code":   200,
@@ -30,7 +32,14 @@ func GetOption(c *gin.Context) {
 
 // AddOption will add option
 func AddOption(c *gin.Context) {
-	//
+	option := &model.Option{
+		Name:  c.Query("name"),
+		Value: c.Query("value"),
+	}
+
+	affected := model.AddToOption(option)
+
+	fmt.Println(affected)
 }
 
 // UpdateOption will update option
