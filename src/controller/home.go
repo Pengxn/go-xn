@@ -25,12 +25,11 @@ func HomePage(c *gin.Context) {
 
 // AboutPage return 'about' JSON
 func AboutPage(c *gin.Context) {
-	option := model.GetOptionByName("")
+	option := model.GetAllOptions()
 
 	c.JSON(200, gin.H{
-		"code":          200,
-		"option_name":   option.Name,
-		"optioin_value": option.Value,
+		"code": 200,
+		"data": option,
 	})
 }
 
