@@ -22,7 +22,5 @@ func DBEngine() *xorm.Engine {
 		log.Fatalln("Your DB can't work it normally.", err.Error())
 	}
 
-	orm.ShowSQL(true)
-
 	return orm
 }
