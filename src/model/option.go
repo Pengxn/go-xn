@@ -60,9 +60,13 @@ func OptionExist(optionName string) bool {
 	db := orm.NewSession()
 	defer db.Close()
 
-	has, _ := db.Exist(&Option{
+	has, err := db.Exist(&Option{
 		Name: optionName,
 	})
+
+	if err != nil {
+		panic(err)
+	}
 
 	return has
 }
