@@ -20,8 +20,7 @@ func ListArticles(c *gin.Context) {
 
 // GetArticle get an articles JSON.
 func GetArticle(c *gin.Context) {
-	idStr := c.Param("id")
-	id, _ := strconv.ParseUint(idStr, 10, 64)
+	id, _ := strconv.ParseUint(c.Param("id"), 10, 64)
 
 	article, _ := model.ArticleByID(id)
 
