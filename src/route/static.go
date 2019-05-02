@@ -9,5 +9,6 @@ func staticRoutes(g *gin.Engine) {
 	g.StaticFile("/favicon.ico", "web/icons/xn-02f.png")
 
 	g.Static("/css", "web/css")
-	g.Static("/js", "web/css")
+	g.Static("/js", "web/js")
+	g.Static("/image", "web/image")
 }
