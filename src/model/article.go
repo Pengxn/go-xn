@@ -32,7 +32,7 @@ func HomeView() []Article {
 	err := db.Table("article").
 		Cols("ID", "title", "content", "article_views", "create_time").
 		Where("article_status = 1").
-		Limit(4).
+		Limit(8).
 		Desc("create_time").
 		Find(&articles)
 
@@ -43,14 +43,18 @@ func HomeView() []Article {
 	return articles
 }
 
-// ArticlesExist if article exist
-func ArticlesExist(id uint64) bool {
+// ArticleExist if article exist
+func ArticleExist(id uint64) bool {
 	db := orm.NewSession()
 	defer db.Close()
 
-	has, _ := db.Exist(&Article{
+	has, err := db.Exist(&Article{
 		ID: id,
 	})
+
+	if err != nil {
+		panic(err)
+	}
 
 	return has
 }
@@ -62,7 +66,11 @@ func ArticlesCount() int {
 
 	article := &Article{}
 
-	count, _ := db.Count(article)
+	count, err := db.Count(article)
+
+	if err != nil {
+		panic(err)
+	}
 
 	return int(count)
 }
@@ -76,7 +84,11 @@ func ArticleByID(id uint64) (*Article, bool) {
 		ID: id,
 	}
 
-	has, _ := db.Get(article)
+	has, err := db.Get(article)
+
+	if err != nil {
+		panic(err)
+	}
 
 	return article, has
 }
