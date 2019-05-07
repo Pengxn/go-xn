@@ -11,7 +11,7 @@ import (
 // DefaultLimit is default limit number per page
 // And other constant
 const (
-	DefaultLimit uint64 = 8
+	DefaultLimit int = 8
 )
 
 // HomePage return home and index page JSON information.
@@ -36,7 +36,7 @@ func AboutPage(c *gin.Context) {
 // ByPageNum return JSON information by page number
 func ByPageNum(c *gin.Context) {
 	pageNum, _ := strconv.ParseUint(c.Param("pageNum"), 10, 64)
-	limitNum, _ := strconv.ParseUint(c.Query("limit"), 10, 64)
+	limitNum, _ := strconv.Atoi(c.Param("limit"))
 
 	if pageNum == 0 {
 		pageNum = 1
