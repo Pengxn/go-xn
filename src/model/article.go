@@ -45,27 +45,6 @@ func ArticlesByPage(limit int, page int) []Article {
 	return articles
 }
 
-// HomeView return articles while index page
-func HomeView() []Article {
-	db := orm.NewSession()
-	defer db.Close()
-
-	var articles []Article
-
-	err := db.Table("article").
-		Cols("ID", "title", "content", "article_views", "create_time").
-		Where("article_status = 1").
-		Limit(8).
-		Desc("create_time").
-		Find(&articles)
-
-	if err != nil {
-		panic(err)
-	}
-
-	return articles
-}
-
 // ArticleExist if article exist
 func ArticleExist(id uint64) bool {
 	db := orm.NewSession()

@@ -16,7 +16,7 @@ const (
 
 // HomePage return home and index page JSON information.
 func HomePage(c *gin.Context) {
-	articles := model.HomeView()
+	articles := model.ArticlesByPage(DefaultLimit, 1)
 
 	c.JSON(200, gin.H{
 		"data": articles,
