@@ -25,7 +25,7 @@ func HomePage(c *gin.Context) {
 
 // ArticlesPage return JSON information by page number
 func ArticlesPage(c *gin.Context) {
-	pageNum, _ := strconv.ParseUint(c.Param("pageNum"), 10, 64)
+	pageNum, _ := strconv.Atoi(c.Param("pageNum"))
 	limitNum, _ := strconv.Atoi(c.Param("limit"))
 
 	if pageNum == 0 {
@@ -35,8 +35,10 @@ func ArticlesPage(c *gin.Context) {
 		limitNum = DefaultLimit
 	}
 
+	articles := model.ArticlesByPage(limitNum, pageNum)
+
 	c.JSON(200, gin.H{
-		"pageNum":  pageNum,
-		"limitNum": limitNum,
+		"code": 200,
+		"data": articles,
 	})
 }

@@ -23,16 +23,18 @@ type Article struct {
 var orm *xorm.Engine = util.DBEngine()
 
 // ArticlesByPage handle articles by page number
-func ArticlesByPage(page int) []Article {
+func ArticlesByPage(limit int, page int) []Article {
 	db := orm.NewSession()
 	defer db.Close()
 
 	var articles []Article
 
+	start := limit * (page - 1)
+
 	err := db.Table("article").
 		Cols("ID", "title", "content", "article_views", "create_time").
 		Where("article_status = 1").
-		Limit(8, page).
+		Limit(limit, start).
 		Desc("create_time").
 		Find(&articles)
 
