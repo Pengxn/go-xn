@@ -22,6 +22,27 @@ type Article struct {
 
 var orm *xorm.Engine = util.DBEngine()
 
+// ArticlesByPage handle articles by page number
+func ArticlesByPage(page int) []Article {
+	db := orm.NewSession()
+	defer db.Close()
+
+	var articles []Article
+
+	err := db.Table("article").
+		Cols("ID", "title", "content", "article_views", "create_time").
+		Where("article_status = 1").
+		Limit(8, page).
+		Desc("create_time").
+		Find(&articles)
+
+	if err != nil {
+		panic(err)
+	}
+
+	return articles
+}
+
 // HomeView return articles while index page
 func HomeView() []Article {
 	db := orm.NewSession()
