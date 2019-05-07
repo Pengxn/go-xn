@@ -33,8 +33,8 @@ func AboutPage(c *gin.Context) {
 	})
 }
 
-// ByPageNum return JSON information by page number
-func ByPageNum(c *gin.Context) {
+// ArticlesPage return JSON information by page number
+func ArticlesPage(c *gin.Context) {
 	pageNum, _ := strconv.ParseUint(c.Param("pageNum"), 10, 64)
 	limitNum, _ := strconv.Atoi(c.Param("limit"))
 

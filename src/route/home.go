@@ -12,7 +12,7 @@ func InitRoutes(g *gin.Engine) {
 	g.GET("/about", controller.AboutPage)
 
 	// Page number handler
-	g.GET("/page/:pageNum", controller.ByPageNum)
+	g.GET("/page/:pageNum", controller.ArticlesPage)
 
 	errorRoute(g)
 	staticRoutes(g)
