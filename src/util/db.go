@@ -3,7 +3,7 @@ package util
 import (
 	"log"
 
-	_ "github.com/go-sql-driver/mysql"
+	_ "github.com/go-sql-driver/mysql" // MySQL driver for go
 	"github.com/go-xorm/xorm"
 
 	"go-xn/src/config"
