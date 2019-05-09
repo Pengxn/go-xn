@@ -30,13 +30,17 @@ func GetArticle(c *gin.Context) {
 	})
 }
 
-// AddArticle add an articles JSON.
-func AddArticle(c *gin.Context) {
-	id := c.Param("id")
+// InsertArticle add an articles JSON.
+func InsertArticle(c *gin.Context) {
+	title := c.Query("title")
+	status := c.Query("status")
+	content := c.Query("content")
 
 	c.JSON(200, gin.H{
-		"code": "Add an Article",
-		"data": id,
+		"code":    200,
+		"title":   title,
+		"status":  status,
+		"content": content,
 	})
 }
 
