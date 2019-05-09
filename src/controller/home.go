@@ -26,7 +26,7 @@ func HomePage(c *gin.Context) {
 // ArticlesPage return JSON information by page number
 func ArticlesPage(c *gin.Context) {
 	pageNum, _ := strconv.Atoi(c.Param("pageNum"))
-	limitNum, _ := strconv.Atoi(c.Param("limit"))
+	limitNum, _ := strconv.Atoi(c.Query("limit"))
 
 	if pageNum == 0 {
 		pageNum = 1
