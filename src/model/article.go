@@ -45,6 +45,23 @@ func ArticlesByPage(limit int, page int) []Article {
 	return articles
 }
 
+// AddArticle handle and add article
+func AddArticle(title string, content string, status int) (int64, error) {
+	db := orm.NewSession()
+	defer db.Close()
+
+	now := time.Now()
+
+	has, err := db.InsertOne(&Article{
+		Title:      title,
+		Content:    content,
+		Status:     status,
+		CreateTime: &now,
+	})
+
+	return has, err
+}
+
 // ArticleExist if article exist
 func ArticleExist(id uint64) bool {
 	db := orm.NewSession()
