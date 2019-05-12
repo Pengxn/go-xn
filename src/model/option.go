@@ -23,7 +23,7 @@ func GetAllOptions() []Option {
 	return options
 }
 
-// GetOptionByName return Option (not including 'option_id') by 'option_name'
+// GetOptionByName return an Option (not including 'option_id') by 'option_name'
 func GetOptionByName(optionName string) *Option {
 	db := orm.NewSession()
 	defer db.Close()
