@@ -74,6 +74,25 @@ func DeleteOptionByName(optionName string) int64 {
 	return success
 }
 
+// UpdateOptionByName will update an option by 'option_name'
+func UpdateOptionByName(optionName string, optionValue string) int64 {
+	db := orm.NewSession()
+	defer db.Close()
+
+	option := &Option{
+		Name:  optionName,
+		Value: optionValue,
+	}
+
+	success, err := db.Cols("option_value").Update(option)
+
+	if err != nil {
+		panic(err)
+	}
+
+	return success
+}
+
 // OptionExist if the option_name of article exist
 func OptionExist(optionName string) bool {
 	db := orm.NewSession()
