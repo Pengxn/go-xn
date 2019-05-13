@@ -69,7 +69,7 @@ func UpdateOption(c *gin.Context) {
 		Value: c.Query("value"),
 	}
 
-	if model.OptionExist(option.Name) == true {
+	if model.OptionExist(option.Name) == false {
 		c.JSON(400, gin.H{
 			"code":  400,
 			"error": "Option you requested to update don't exists.",
