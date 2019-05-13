@@ -69,5 +69,24 @@ func UpdateOption(c *gin.Context) {
 
 // DeleteOption will delete option
 func DeleteOption(c *gin.Context) {
-	//
+	name := c.Param("name")
+
+	if model.OptionExist(name) == false {
+		c.JSON(400, gin.H{
+			"code":  400,
+			"error": "Option you requested to delete don't exists.",
+		})
+	} else {
+		if model.DeleteOptionByName(name) == true {
+			c.JSON(204, gin.H{
+				"code": 204,
+				"data": "Delete option data successfully.",
+			})
+		} else {
+			c.JSON(500, gin.H{
+				"code":  500,
+				"error": "Internal server error occurred when deleting option.",
+			})
+		}
+	}
 }

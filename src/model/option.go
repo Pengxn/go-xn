@@ -42,7 +42,7 @@ func GetOptionByName(optionName string) (bool, *Option) {
 	return has, option
 }
 
-// AddToOption will add option to DB `option` table, return boolean value
+// AddToOption will add option to DB `option` table, return boolean value.
 // If result returned is `true`, insert option data to DB successful.
 func AddToOption(option *Option) bool {
 	db := orm.NewSession()
@@ -63,8 +63,9 @@ func AddToOption(option *Option) bool {
 	return isSuccess
 }
 
-// DeleteOptionByName will delete an Option by 'option_name'
-func DeleteOptionByName(optionName string) int64 {
+// DeleteOptionByName will delete an Option by 'option_name'.
+// If result returned is `true`, delete option data successful.
+func DeleteOptionByName(optionName string) bool {
 	db := orm.NewSession()
 	defer db.Close()
 
@@ -72,13 +73,19 @@ func DeleteOptionByName(optionName string) int64 {
 		Name: optionName,
 	}
 
-	success, err := db.Delete(option)
+	affected, err := db.Delete(option)
 
 	if err != nil {
 		panic(err)
 	}
 
-	return success
+	isSuccess := false
+
+	if affected > 0 {
+		isSuccess = true
+	}
+
+	return isSuccess
 }
 
 // UpdateOptionByName will update an option by 'option_name'
