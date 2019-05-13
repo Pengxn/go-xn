@@ -94,7 +94,9 @@ func UpdateOptionByName(option *Option) bool {
 	db := orm.NewSession()
 	defer db.Close()
 
-	affected, err := db.Cols("option_value").Update(option)
+	affected, err := db.Where("option_name = ?", option.Name).
+		Cols("option_value").
+		Update(option)
 
 	if err != nil {
 		panic(err)
