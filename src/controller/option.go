@@ -44,6 +44,13 @@ func InsertOption(c *gin.Context) {
 		Value: c.Query("value"),
 	}
 
+	if model.OptionExist(option.Name) == true {
+		c.JSON(400, gin.H{
+			"code":  400,
+			"error": "Option you requested to insert already exists.",
+		})
+	}
+
 	affected := model.AddToOption(option)
 
 	fmt.Println(affected)
