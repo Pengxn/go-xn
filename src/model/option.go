@@ -43,7 +43,7 @@ func GetOptionByName(optionName string) (bool, *Option) {
 }
 
 // AddToOption will add option to DB `option` table, return boolean value
-// If result returned is `true`, increase operation  is successful.
+// If result returned is `true`, insert option data to DB successful.
 func AddToOption(option *Option) bool {
 	db := orm.NewSession()
 	defer db.Close()
@@ -100,7 +100,8 @@ func UpdateOptionByName(optionName string, optionValue string) int64 {
 	return success
 }
 
-// OptionExist if the option_name of article exist
+// OptionExist if the option_name of option exist
+// If `true`, this option already exists.
 func OptionExist(optionName string) bool {
 	db := orm.NewSession()
 	defer db.Close()
