@@ -37,8 +37,8 @@ func GetOption(c *gin.Context) {
 	}
 }
 
-// AddOption will add option
-func AddOption(c *gin.Context) {
+// InsertOption will add option
+func InsertOption(c *gin.Context) {
 	option := &model.Option{
 		Name:  c.Query("name"),
 		Value: c.Query("value"),

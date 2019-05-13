@@ -12,7 +12,7 @@ func optionsRoutes(g *gin.Engine) {
 
 	option := g.Group("/option")
 	option.GET("/:name", controller.GetOption)
-	option.POST("/:name", controller.AddOption)
+	option.POST("/", controller.InsertOption)
 	option.PUT("/:name", controller.UpdateOption)
 	option.DELETE("/:name", controller.DeleteOption)
 }
