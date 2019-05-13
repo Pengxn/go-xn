@@ -30,8 +30,8 @@ func GetOption(c *gin.Context) {
 			"data": option,
 		})
 	} else {
-		c.JSON(500, gin.H{
-			"code":  500,
+		c.JSON(404, gin.H{
+			"code":  404,
 			"error": "The option don't exist.",
 		})
 	}
