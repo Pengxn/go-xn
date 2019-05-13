@@ -22,12 +22,19 @@ func ListOptions(c *gin.Context) {
 func GetOption(c *gin.Context) {
 	name := c.Param("name")
 
-	option := model.GetOptionByName(name)
+	has, option := model.GetOptionByName(name)
 
-	c.JSON(200, gin.H{
-		"code":   200,
-		"option": option,
-	})
+	if has == true {
+		c.JSON(200, gin.H{
+			"code": 200,
+			"data": option,
+		})
+	} else {
+		c.JSON(500, gin.H{
+			"code":  500,
+			"error": "The option don't exist.",
+		})
+	}
 }
 
 // AddOption will add option

@@ -23,9 +23,9 @@ func GetAllOptions() []Option {
 	return options
 }
 
-// GetOptionByName return an Option by 'option_name'
+// GetOptionByName return an Option by 'option_name' if it exist
 // Not including 'option_id'
-func GetOptionByName(optionName string) *Option {
+func GetOptionByName(optionName string) (bool, *Option) {
 	db := orm.NewSession()
 	defer db.Close()
 
@@ -33,13 +33,13 @@ func GetOptionByName(optionName string) *Option {
 		Name: optionName,
 	}
 
-	err := db.Find(option)
+	has, err := db.Omit("option_id").Get(option)
 
 	if err != nil {
 		panic(err)
 	}
 
-	return option
+	return has, option
 }
 
 // AddToOption will add option to DB option table
