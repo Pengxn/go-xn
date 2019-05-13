@@ -64,7 +64,29 @@ func InsertOption(c *gin.Context) {
 
 // UpdateOption will update option
 func UpdateOption(c *gin.Context) {
-	//
+	option := &model.Option{
+		Name:  c.Param("name"),
+		Value: c.Query("value"),
+	}
+
+	if model.OptionExist(option.Name) == true {
+		c.JSON(400, gin.H{
+			"code":  400,
+			"error": "Option you requested to update don't exists.",
+		})
+	} else {
+		if model.UpdateOptionByName(option) == true {
+			c.JSON(200, gin.H{
+				"code": 200,
+				"data": "Update option data successfully.",
+			})
+		} else {
+			c.JSON(500, gin.H{
+				"code":  500,
+				"error": "Internal server error occurred when updating option.",
+			})
+		}
+	}
 }
 
 // DeleteOption will delete option
