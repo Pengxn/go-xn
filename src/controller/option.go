@@ -78,8 +78,8 @@ func DeleteOption(c *gin.Context) {
 		})
 	} else {
 		if model.DeleteOptionByName(name) == true {
-			c.JSON(204, gin.H{
-				"code": 204,
+			c.JSON(200, gin.H{
+				"code": 200,
 				"data": "Delete option data successfully.",
 			})
 		} else {
