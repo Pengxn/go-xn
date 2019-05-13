@@ -1,8 +1,6 @@
 package controller
 
 import (
-	"fmt"
-
 	"github.com/gin-gonic/gin"
 
 	"go-xn/src/model"
@@ -49,11 +47,19 @@ func InsertOption(c *gin.Context) {
 			"code":  400,
 			"error": "Option you requested to insert already exists.",
 		})
+	} else {
+		if model.AddToOption(option) == true {
+			c.JSON(201, gin.H{
+				"code": 201,
+				"data": "Insert option data to DB successfully.",
+			})
+		} else {
+			c.JSON(500, gin.H{
+				"code":  500,
+				"error": "Internal server error occurred when inserting option.",
+			})
+		}
 	}
-
-	affected := model.AddToOption(option)
-
-	fmt.Println(affected)
 }
 
 // UpdateOption will update option
