@@ -10,7 +10,7 @@
 DROP TABLE IF EXISTS `option`;
 CREATE TABLE `option` (
     `option_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-    `option_name` varchar(255) NOT NULL COMMENT 'The name of option',
+    `option_name` varchar(255) UNIQUE NOT NULL COMMENT 'The name of option',
     `option_value` longtext NOT NULL COMMENT 'The value of option',
     PRIMARY KEY (`option_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8mb4;

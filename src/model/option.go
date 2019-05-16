@@ -3,7 +3,7 @@ package model
 // Option model, website some information
 type Option struct {
 	ID    uint64 `json:"option_id,omitempty" xorm:"bigint(20) notnull autoincr pk 'option_id'"`
-	Name  string `json:"option_name" xorm:"varvhar(255) notnull 'option_name'"`
+	Name  string `json:"option_name" xorm:"varvhar(255) notnull unique 'option_name'"`
 	Value string `json:"option_value" xorm:"longtext notnull 'option_value'"`
 }
 
