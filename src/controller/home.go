@@ -14,7 +14,9 @@ const (
 	DefaultLimit int = 8
 )
 
-// HomePage return home and index page JSON information.
+// HomePage return home and index page
+// Request sample:
+//     GET / => GET /page/1
 func HomePage(c *gin.Context) {
 	articles := model.ArticlesByPage(DefaultLimit, 1)
 
@@ -24,6 +26,8 @@ func HomePage(c *gin.Context) {
 }
 
 // ArticlesPage return JSON information by page number
+// Request sample:
+//     GET /page/1?limit=6
 func ArticlesPage(c *gin.Context) {
 	pageNum, _ := strconv.Atoi(c.Param("pageNum"))
 	limitNum, _ := strconv.Atoi(c.Query("limit"))
