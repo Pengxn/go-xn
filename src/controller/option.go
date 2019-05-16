@@ -6,7 +6,9 @@ import (
 	"go-xn/src/model"
 )
 
-// ListOptions return all option JSON
+// ListOptions return all options
+// Request sample:
+//     GET /options
 func ListOptions(c *gin.Context) {
 	options := model.GetAllOptions()
 
@@ -16,7 +18,9 @@ func ListOptions(c *gin.Context) {
 	})
 }
 
-// GetOption reutn option information JSON
+// GetOption reutn an option by 'name' param
+// Request sample:
+//     GET /option/:name
 func GetOption(c *gin.Context) {
 	name := c.Param("name")
 
@@ -35,11 +39,15 @@ func GetOption(c *gin.Context) {
 	}
 }
 
-// InsertOption will add option
+// InsertOption will insert an option
+// Request sample:
+//     POST /option/:name?value=foo
 func InsertOption(c *gin.Context) {
+	value := c.Query("value")
+
 	option := &model.Option{
 		Name:  c.Query("name"),
-		Value: c.Query("value"),
+		Value: value,
 	}
 
 	if model.OptionExist(option.Name) == true {
@@ -63,6 +71,8 @@ func InsertOption(c *gin.Context) {
 }
 
 // UpdateOption will update option
+// Request sample:
+//     PUT /option/:name?value=foo1
 func UpdateOption(c *gin.Context) {
 	option := &model.Option{
 		Name:  c.Param("name"),
@@ -89,7 +99,9 @@ func UpdateOption(c *gin.Context) {
 	}
 }
 
-// DeleteOption will delete option
+// DeleteOption will delete option by 'name' param
+// Request sample:
+//     DELETE /option/:name
 func DeleteOption(c *gin.Context) {
 	name := c.Param("name")
 
