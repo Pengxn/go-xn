@@ -7,6 +7,6 @@
 $ make & make web
 $ cd build && ./go-xn
 ```
-And you should configurate you configuration file (fyj.ini) in build folder.
+And you should configurate you configuration file (fyj.ini) in your home directory.
 
 > **Note**: This project is developing.
