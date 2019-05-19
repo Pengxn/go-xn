@@ -9,7 +9,7 @@ import (
 // HomeDir detectes and returns the home directory for the executing user.
 // This uses an OS-specific method for discovering the home directory.
 // An error is returned if a home directory cannot be detected.
-func HomeDir() (string, error) {
+func HomeDir() string {
 	var (
 		home string
 		err  error
@@ -23,10 +23,10 @@ func HomeDir() (string, error) {
 	}
 
 	if err != nil {
-		return "", err
+		panic(err)
 	}
 
-	return home, err
+	return home
 }
 
 func dirWindows() (string, error) {

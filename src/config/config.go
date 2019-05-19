@@ -18,13 +18,7 @@ type DBConfiguration struct {
 
 // getDBConfiguration will return database configuration
 func getDBConfiguration() *DBConfiguration {
-	home, err := HomeDir()
-
-	if err != nil {
-		panic(err)
-	}
-
-	config, err := ini.Load(home + string(os.PathSeparator) + "fyj.ini")
+	config, err := ini.Load(HomeDir() + string(os.PathSeparator) + "fyj.ini")
 
 	if err != nil {
 		log.Fatalln("Fail to read fyj.ini file.", err.Error())
