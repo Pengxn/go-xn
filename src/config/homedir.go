@@ -43,7 +43,7 @@ func dirUnix() (string, error) {
 	home := os.Getenv("HOME")
 
 	if home == "" {
-		return "", errors.New("Can't find 'USERPROFILE' environment variable")
+		return "", errors.New("Can't find 'HOME' environment variable")
 	}
 
 	return home, nil
