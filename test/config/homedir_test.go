@@ -13,7 +13,6 @@ func TestHomeDir(t *testing.T) {
 	assert := assert.New(t)
 
 	home, _ := user.Current()
-	dir, _ := config.HomeDir()
 
-	assert.Equal(home.HomeDir, dir)
+	assert.Equal(home.HomeDir, config.HomeDir())
 }
