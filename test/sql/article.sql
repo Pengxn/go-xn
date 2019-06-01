@@ -19,7 +19,7 @@ CREATE TABLE `article` (
     `delete_time` datetime NOT NULL COMMENT 'The time that article is deleted',
     PRIMARY KEY (`ID`),
     KEY `create_time` (`create_time`)
-) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8;
 -- --------------------------------
 -- Records of article
 -- --------------------------------

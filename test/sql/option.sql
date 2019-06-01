@@ -13,7 +13,7 @@ CREATE TABLE `option` (
     `option_name` varchar(255) UNIQUE NOT NULL COMMENT 'The name of option',
     `option_value` longtext NOT NULL COMMENT 'The value of option',
     PRIMARY KEY (`option_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8;
 -- --------------------------------
 -- Records of article
 -- --------------------------------
