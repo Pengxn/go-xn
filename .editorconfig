@@ -16,6 +16,6 @@ trim_trailing_whitespace = true
 [{*.yml, package.json}]
 indent_size = 2
 
-# Makefile indent style setting
+# Makefile indent TAB-style setting
 [Makefile]
 indent_style = tab
