@@ -19,6 +19,7 @@ func HomeDir() string {
 		home, err = dirWindows()
 	} else {
 		// Unix-like system, so just assume Unix
+		// It's mainly linux
 		home, err = dirUnix()
 	}
 
