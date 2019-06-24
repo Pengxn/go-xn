@@ -8,7 +8,7 @@ import (
 	"go-xn/src/model"
 )
 
-// DefaultLimit is default limit number per page
+// DefaultPageLimit is default limit number per page
 // And other constant
 const (
 	DefaultPageLimit int = 8

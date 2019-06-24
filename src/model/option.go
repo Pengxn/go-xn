@@ -1,6 +1,6 @@
 package model
 
-// Option model, website some information
+// Option model, optional informations
 type Option struct {
 	ID    uint64 `json:"option_id,omitempty" xorm:"bigint(20) notnull autoincr pk 'option_id'"`
 	Name  string `json:"option_name" xorm:"varvhar(255) notnull unique 'option_name'"`
