@@ -32,7 +32,7 @@ func ArticlesPage(c *gin.Context) {
 	pageNum, _ := strconv.Atoi(c.Param("pageNum"))
 	limitNum, _ := strconv.Atoi(c.Query("limit"))
 
-	if pageNum == 0 {
+	if pageNum <= 0 {
 		pageNum = 1
 	}
 	if limitNum == 0 {
