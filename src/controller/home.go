@@ -11,14 +11,14 @@ import (
 // DefaultLimit is default limit number per page
 // And other constant
 const (
-	DefaultLimit int = 8
+	DefaultPageLimit int = 8
 )
 
 // HomePage return home and index page
 // Request sample:
 //     GET / => GET /page/1
 func HomePage(c *gin.Context) {
-	articles := model.ArticlesByPage(DefaultLimit, 1)
+	articles := model.ArticlesByPage(DefaultPageLimit, 1)
 
 	c.JSON(200, gin.H{
 		"data": articles,
@@ -36,7 +36,7 @@ func ArticlesPage(c *gin.Context) {
 		pageNum = 1
 	}
 	if limitNum == 0 {
-		limitNum = DefaultLimit
+		limitNum = DefaultPageLimit
 	}
 
 	articles := model.ArticlesByPage(limitNum, pageNum)
