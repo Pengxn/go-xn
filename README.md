@@ -2,13 +2,11 @@
 
 > ✍ The platform for publishing and running your blog.
 
-## Install
+## Build
 ```shell
 $ make & make web
 $ cd build && ./go-xn
-```
-And you should configurate you configuration file (fyj.ini) in your home directory.
-```shell
+# Move to your home directory and edit it
 $ cp ./src/config/example.ini ~/fyj.ini
 ```
 
