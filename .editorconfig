@@ -20,6 +20,11 @@ indent_size = 2
 [*.go]
 indent_style = tab
 
+# Inno Setup Script charset setting UTF-8 with BOM
+# Scrambled code when characters contain Chinese and charset is utf-8
+[*.{iss, isl}]
+charset = utf-8-bom
+
 # Makefile indent TAB-style setting
 [Makefile]
 indent_style = tab
