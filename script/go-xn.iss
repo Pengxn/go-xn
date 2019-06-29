@@ -9,7 +9,8 @@
 #define EXE_NAME 'go-xn.exe'
 #define ICON '..\web\icons\xn-02f.ico'
 #define LICENSE '..\LICENSE'
-#define OUTPUT '..\build\dist'
+#define OUTPUT_DIR '..\build\dist'
+#define OUTPUT_NAME 'go-xn-setup'
 #define ICON '..\build\web\icons\xn-02f.ico'
 
 [Setup]
@@ -30,8 +31,8 @@ DisableProgramGroupPage=yes
 ; Remove the following line to run in administrative install mode (install for all users.)
 PrivilegesRequired=lowest
 PrivilegesRequiredOverridesAllowed=dialog
-OutputDir={#OUTPUT}
-OutputBaseFilename=go-xn-setup
+OutputDir={#OUTPUT_DIR}
+OutputBaseFilename={#OUTPUT_NAME}
 SetupIconFile={#ICON}
 UninstallDisplayIcon={#ICON}
 Compression=lzma
