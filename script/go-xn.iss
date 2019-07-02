@@ -27,21 +27,25 @@ AppSupportURL={#URL}
 AppUpdatesURL={#URL}
 DefaultDirName=C:\{#APP_NAME}
 LicenseFile={#LICENSE}
-DisableProgramGroupPage=yes
-; Remove the following line to run in administrative install mode (install for all users.)
-PrivilegesRequired=lowest
-PrivilegesRequiredOverridesAllowed=dialog
 OutputDir={#OUTPUT_DIR}
 OutputBaseFilename={#OUTPUT_NAME}
 SetupIconFile={#ICON}
 UninstallDisplayIcon={#ICON}
+Uninstallable=yes
+; Remove the following line to run in admin mode (install for all users.)
+; 'PrivilegesRequiredOverridesAllowed=dialog' can alter mode by dialog.
+PrivilegesRequired=lowest
+DisableProgramGroupPage=yes
+DisableReadyPage=no
+DisableDirPage=no
+DirExistsWarning=yes
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
 
 [Languages]
-Name: "english"; MessagesFile: "compiler:Default.isl"
-Name: "chinesesimplified"; MessagesFile: ".\i18n\ChineseSimplified.isl"
+Name: "english"; MessagesFile: "compiler:Default.isl,.\i18n\Messages.en.isl"
+Name: "chinesesimplified"; MessagesFile: ".\i18n\ChineseSimplified.isl,.\i18n\Messages.zh-cn.isl"
 
 [Files]
 Source: "..\build\go-xn.exe"; DestDir: "{app}"; Flags: ignoreversion
@@ -51,7 +55,8 @@ Source: "..\README.md"; DestDir: "{app}"; Flags: ignoreversion isreadme
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Tasks]
-Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
+Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:Other}"; Flags: unchecked
+Name: "addtopath"; Description: "{cm:AddToPath}"; GroupDescription: "{cm:Other}"; Flags: unchecked
 
 [Icons]
 Name: "{autoprograms}\{#APP_NAME}"; Filename: "{app}\{#EXE_NAME}"
