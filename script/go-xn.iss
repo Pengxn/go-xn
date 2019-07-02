@@ -64,17 +64,3 @@ Name: "{autodesktop}\{#APP_NAME}"; Filename: "{app}\{#EXE_NAME}"; Tasks: desktop
 
 [Run]
 Filename: "{app}\{#EXE_NAME}"; Description: "{cm:LaunchProgram,{#StringChange(APP_NAME, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
-
-; 参考资料
-; https://www.jianshu.com/p/aa8220db7eeb
-; http://www.blogjava.net/amigoxie/archive/2007/11/23/162586.html
-; http://www.dayanzai.me/inno-setup-tut.html
-; https://blog.csdn.net/hyy_217/article/details/71743214
-; https://www.cnblogs.com/csuftzzk/p/innosetup_template.html
-; https://github.com/jrsoftware/ispack
-; https://github.com/jrsoftware/issrc/blob/master/setup.iss
-; https://github.com/coreybutler/nvm-windows/blob/master/nvm.iss
-; https://github.com/rjpcomputing/luaforwindows/blob/master/LuaForWindows.iss
-; https://github.com/git-for-windows/build-extra/blob/master/installer/install.iss
-; https://github.com/Qquanwei/electron-windows-inno-installer/blob/master/example.iss
-; https://github.com/microsoft/vscode/blob/master/build/win32/code.iss
