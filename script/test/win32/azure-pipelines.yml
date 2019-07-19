@@ -13,3 +13,6 @@ steps:
     make
     make web
   displayName: Build and Compile
+- script: |
+    iscc .\script\go-xn.iss
+  displayName: Build Inno Setup Installer
