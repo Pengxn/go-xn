@@ -1,0 +1,6 @@
+jobs:
+- job: Windows
+  pool:
+    vmImage: VS2017-Win2016
+  steps:
+  - template: script/test/win32/azure-pipelines.yml

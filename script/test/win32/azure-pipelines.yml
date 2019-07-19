@@ -1,0 +1,13 @@
+steps:
+- powershell: |
+    iex (new-object net.webclient).downloadstring('https://get.scoop.sh')
+  displayName: Install Scoop Tool
+- powershell: |
+    scoop install go git make
+    scoop bucket add extras
+    scoop install inno-setup
+  displayName: Install Dependent DEV Tools
+- script: |
+    cp example.ini ~/fyj.ini
+    make test
+  displayName: Run Tests
