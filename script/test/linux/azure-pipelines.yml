@@ -6,3 +6,7 @@ steps:
     cp src/config/example.ini ~/fyj.ini
     make test
   displayName: Run Tests
+- script: |
+    make
+    make web
+  displayName: Build and Compile
