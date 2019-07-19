@@ -14,7 +14,6 @@
 #define LICENSE '..\LICENSE'
 #define OUTPUT_DIR '..\build\dist'
 #define OUTPUT_NAME 'go-xn-setup'
-#define ICON '..\build\web\icons\xn-02f.ico'
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application.
