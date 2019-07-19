@@ -1,0 +1,8 @@
+steps:
+- task: GoTool@0
+  inputs:
+    version: '1.12.7'
+- script: |
+    cp src/config/example.ini ~/fyj.ini
+    make test
+  displayName: Run Tests

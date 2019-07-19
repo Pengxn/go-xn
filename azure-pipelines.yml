@@ -4,3 +4,8 @@ jobs:
     vmImage: VS2017-Win2016
   steps:
   - template: script/test/win32/azure-pipelines.yml
+- job: Linux
+  pool:
+    vmImage: Ubuntu-16.04
+  steps:
+  - template: script/test/linux/azure-pipelines.yml
