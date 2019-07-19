@@ -18,5 +18,6 @@ steps:
   displayName: Build Inno Setup Installer
 - task: PublishBuildArtifacts@1
   inputs:
-    pathtoPublish: build
+    pathtoPublish: build\dist
     artifactName: windows-amd64
+  displayName: Publish Build Artifacts
