@@ -1,13 +1,11 @@
 steps:
+- task: GoTool@0
+  inputs:
+    version: '1.12.7'
 - powershell: |
-    iex (new-object net.webclient).downloadstring('https://get.scoop.sh')
-  displayName: Install Scoop Tool
+    choco install make -y
+  displayName: Install Make Tool
 - powershell: |
-    scoop install go git make
-    scoop bucket add extras
-    scoop install inno-setup
-  displayName: Install Dependent DEV Tools
-- script: |
-    cp example.ini ~/fyj.ini
+    Copy-Item -Path .\src\config\example.ini -Destination ~\fyj.ini
     make test
   displayName: Run Tests
