@@ -16,3 +16,7 @@ steps:
 - script: |
     iscc .\script\go-xn.iss
   displayName: Build Inno Setup Installer
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathtoPublish: build
+    artifactName: windows-amd64
