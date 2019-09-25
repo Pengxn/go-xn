@@ -31,7 +31,9 @@ DefaultDirName=C:\{#APP_NAME}
 LicenseFile={#LICENSE}
 OutputDir={#OUTPUT_DIR}
 OutputBaseFilename={#OUTPUT_NAME}
+; better size is 165x315
 WizardImageFile=.\assets\inno-big.bmp
+; better size is 55x55
 WizardSmallImageFile=.\assets\inno-small.bmp
 SetupIconFile={#ICON}
 UninstallDisplayIcon={#ICON}
