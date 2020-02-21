@@ -17,6 +17,9 @@ build: clean
 clean:
 	@if [ -f "build/$(BIN)" ]; then rm -rf build/$(BIN); fi;
 
+deps:
+	@GO111MODULE=on go mod download
+
 test:
 	@go test ./... -v
 
@@ -26,4 +29,4 @@ web:
     # Copy web folder and fyj.ini file
 	@cp -r web/ build/web
 
-.PHONY: build test clean web
+.PHONY: build clean deps test web
