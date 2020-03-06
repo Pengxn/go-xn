@@ -38,7 +38,7 @@ WizardSmallImageFile=.\assets\inno-small.bmp
 SetupIconFile={#ICON}
 UninstallDisplayIcon={#ICON}
 Uninstallable=yes
-; Remove the following line to run in admin mode (install for all users.)
+; Remove the following line to run in admin mode (install for all users).
 ; 'PrivilegesRequiredOverridesAllowed=dialog' can alter mode by dialog.
 PrivilegesRequired=lowest
 DisableProgramGroupPage=yes
@@ -66,7 +66,7 @@ Name: "addtopath"; Description: "{cm:AddToPath}"; GroupDescription: "{cm:Other}"
 
 [Icons]
 Name: "{autoprograms}\{#APP_NAME}"; Filename: "{app}\{#EXE_NAME}"
-Name: "{autodesktop}\{#APP_NAME}"; Filename: "{app}\{#EXE_NAME}"; Tasks: desktopicon
+Name: "{autodesktop}\{#APP_NAME}"; Filename: "{app}\{#EXE_NAME}"; Comment: "{cm:DesktopIconComment}"; Tasks: desktopicon
 
 [Run]
 Filename: "{app}\{#EXE_NAME}"; Description: "{cm:LaunchProgram,{#StringChange(APP_NAME, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
