@@ -4,7 +4,7 @@ import (
 	"log"
 
 	_ "github.com/go-sql-driver/mysql" // MySQL driver
-	"github.com/go-xorm/xorm"
+	"xorm.io/xorm"
 
 	"go-xn/src/config"
 )

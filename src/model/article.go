@@ -3,7 +3,7 @@ package model
 import (
 	"time"
 
-	"github.com/go-xorm/xorm"
+	"xorm.io/xorm"
 
 	"go-xn/src/util"
 )
