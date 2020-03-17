@@ -13,16 +13,16 @@ insert_final_newline = true
 trim_trailing_whitespace = true
 
 # Matches the exact files either package.json or *.yml
-[{*.yml, package.json}]
+[{*.yml,package.json}]
 indent_size = 2
 
 # Command `go fmt` set indent-style to TAB
-[*.go, go.mod]
+[{*.go,go.mod}]
 indent_style = tab
 
 # Inno Setup Script charset setting UTF-8 with BOM
 # Scrambled code when characters contain Chinese and charset is utf-8
-[*.{iss, isl}]
+[*.{iss,isl}]
 charset = utf-8-bom
 
 # Makefile indent TAB-style setting
