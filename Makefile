@@ -15,7 +15,9 @@ build: clean
 	@go build -o build/$(BIN) -tags=jsoniter
 
 clean:
-	@if [ -f "build/$(BIN)" ]; then rm -rf build/$(BIN); fi;
+	@if [ -f "build/$(BIN)" ]; then \
+		rm -rf build/$(BIN); \
+	fi;
 
 deps:
 	@GO111MODULE=on go mod download
