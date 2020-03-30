@@ -5,5 +5,5 @@ require (
 	github.com/go-ini/ini v1.55.0
 	github.com/go-sql-driver/mysql v1.5.0
 	github.com/stretchr/testify v1.5.1
-	xorm.io/xorm v0.8.2
+	xorm.io/xorm v1.0.1
 )
