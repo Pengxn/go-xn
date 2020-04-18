@@ -1,6 +1,10 @@
 # vscode
 .vscode/
 
+# Vim configuration directory and swap
+.vim/
+*.swp
+
 # IntelliJ
 *.iml
 .idea/
