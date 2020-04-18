@@ -1,7 +1,7 @@
 steps:
 - task: GoTool@0
   inputs:
-    version: '1.13'
+    version: '1.14'
 - script: |
     cp src/config/example.ini ~/fyj.ini
     make test

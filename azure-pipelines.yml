@@ -1,11 +1,11 @@
 jobs:
 - job: Windows
   pool:
-    vmImage: VS2017-Win2016
+    vmImage: windows-latest
   steps:
   - template: script/test/win32/azure-pipelines.yml
 - job: Linux
   pool:
-    vmImage: Ubuntu-16.04
+    vmImage: ubuntu-latest
   steps:
   - template: script/test/linux/azure-pipelines.yml
