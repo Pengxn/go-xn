@@ -1,6 +1,8 @@
 package app
 
 import (
+	"log"
+
 	"github.com/gin-gonic/gin"
 
 	"go-xn/src/route"
@@ -35,5 +37,7 @@ func Run() {
 
 	route.InitRoutes(g)
 
-	g.Run(":3000")
+	if err := g.Run(":3000"); err != nil {
+		log.Fatalln("Fail to Start app.", err.Error())
+	}
 }
