@@ -1,12 +1,10 @@
 # Make sure you install `make` and `git` tool
 
-# Get OS name: Linux, MINGW64_NT-10.0 or others
-OS_NAME = $(shell uname -s)
-
-ifeq ($(OS_NAME), Linux)
-	BIN = go-xn
-else
+# OS=Windows_NT for git-bash on Windows OS
+ifeq ($(OS), Windows_NT)
 	BIN = go-xn.exe
+else
+	BIN = go-xn
 endif
 
 all: build
