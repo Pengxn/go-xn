@@ -4,15 +4,15 @@ import (
 	"os/user"
 	"testing"
 
-	"github.com/stretchr/testify/assert"
+	. "github.com/smartystreets/goconvey/convey"
 
 	"go-xn/src/config"
 )
 
 func TestHomeDir(t *testing.T) {
-	assert := assert.New(t)
+	Convey("Test Home Directory Path", t, func() {
+		home, _ := user.Current()
 
-	home, _ := user.Current()
-
-	assert.Equal(home.HomeDir, config.HomeDir())
+		So(config.HomeDir(), ShouldEqual, home.HomeDir)
+	})
 }
