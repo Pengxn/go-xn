@@ -17,16 +17,21 @@ clean:
 		rm -rf build/$(BIN); \
 	fi;
 
+cover:
+	@go tool cover -html=coverage.txt -o coverage.html
+
 deps:
 	@GO111MODULE=on go mod download
 
 test:
-	@go test ./... -v
+	@go test ./... -v -coverprofile=coverage.txt
 
 web:
 	# Delete 'build/web'
-	@if [ -d "build/web" ]; then rm -rf build/web; fi;
+	@if [ -d "build/web" ]; then \
+		rm -rf build/web; \
+	fi;
     # Copy web folder and fyj.ini file
 	@cp -r web/ build/web
 
-.PHONY: build clean deps test web
+.PHONY: build clean cover deps test web
