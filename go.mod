@@ -1,4 +1,4 @@
-module go-xn
+module github.com/Pengxn/go-xn
 
 require (
 	github.com/gin-gonic/gin v1.6.3

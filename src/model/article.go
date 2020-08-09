@@ -5,7 +5,7 @@ import (
 
 	"xorm.io/xorm"
 
-	"go-xn/src/util"
+	"github.com/Pengxn/go-xn/src/util"
 )
 
 // Article model

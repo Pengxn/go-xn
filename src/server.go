@@ -5,7 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"go-xn/src/route"
+	"github.com/Pengxn/go-xn/src/route"
 )
 
 // Information for Go-xn

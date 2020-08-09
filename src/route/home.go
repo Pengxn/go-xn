@@ -3,7 +3,7 @@ package route
 import (
 	"github.com/gin-gonic/gin"
 
-	"go-xn/src/controller"
+	"github.com/Pengxn/go-xn/src/controller"
 )
 
 // InitRoutes will init all routes.

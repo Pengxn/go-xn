@@ -6,7 +6,7 @@ import (
 	_ "github.com/go-sql-driver/mysql" // MySQL driver
 	"xorm.io/xorm"
 
-	"go-xn/src/config"
+	"github.com/Pengxn/go-xn/src/config"
 )
 
 // DBEngine initialize database connection engine

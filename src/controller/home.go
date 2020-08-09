@@ -5,7 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"go-xn/src/model"
+	"github.com/Pengxn/go-xn/src/model"
 )
 
 // DefaultPageLimit is default limit number per page
