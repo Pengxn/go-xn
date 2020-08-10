@@ -2,6 +2,7 @@ package app
 
 import (
 	"log"
+	"os"
 
 	"github.com/gin-gonic/gin"
 
@@ -29,7 +30,7 @@ const (
 )
 
 // Run is the entry point to the server app.
-// Parses the arguments routes and others.
+// Parses the arguments, routes and others.
 func Run() {
 	gin.SetMode(gin.ReleaseMode)
 
@@ -39,5 +40,7 @@ func Run() {
 
 	if err := g.Run(":3000"); err != nil {
 		log.Fatalln("Fail to Start app.", err.Error())
+		// Exit web server
+		os.Exit(1)
 	}
 }
