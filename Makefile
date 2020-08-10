@@ -7,10 +7,17 @@ else
 	BIN = go-xn
 endif
 
+COMMIT_ID = $(shell git rev-parse --short HEAD)
+BUILD_DATE = $(shell date +'%Y-%m-%d')
+BUILD_TIME = $(shell date +'%T')
+
 all: build
 
 build: clean
-	@go build -o build/$(BIN) -tags=jsoniter
+	@go build -o build/$(BIN) -tags=jsoniter -ldflags \
+	"-X github.com/Pengxn/go-xn/src/cmd.commitID=${COMMIT_ID} \
+	-X github.com/Pengxn/go-xn/src/cmd.buildDate=${BUILD_DATE} \
+	-X github.com/Pengxn/go-xn/src/cmd.buildTime=${BUILD_TIME}"
 
 clean:
 	@if [ -f "build/$(BIN)" ]; then \

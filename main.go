@@ -7,13 +7,9 @@
 package main
 
 import (
-	"fmt"
-
-	"github.com/Pengxn/go-xn/src"
+	"github.com/Pengxn/go-xn/src/cmd"
 )
 
 func main() {
-	fmt.Println(app.Banner)
-
-	app.Run()
+	cmd.Execute()
 }
