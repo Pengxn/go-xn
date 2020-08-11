@@ -11,7 +11,6 @@ import (
 
 // Information for Go-xn
 const (
-	Version = "0.0.0-Beta"
 	URL     = "https://xn--02f.com"
 	Banner  = "\n" +
 		"  ,----..\n" +
@@ -39,7 +38,7 @@ func Run() {
 	route.InitRoutes(g)
 
 	if err := g.Run(":3000"); err != nil {
-		log.Fatalln("Fail to Start app.", err.Error())
+		log.Fatalln("Fail to Start Web Server.", err.Error())
 		// Exit web server
 		os.Exit(1)
 	}
