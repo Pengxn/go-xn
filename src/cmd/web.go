@@ -48,7 +48,7 @@ func runWeb(c *cli.Context) error {
 
 	route.InitRoutes(g)
 
-	if err := g.Run(":3000"); err != nil {
+	if err := g.Run(":" + c.String("port")); err != nil {
 		log.Fatalln("Fail to Start Web Server.", err.Error())
 		return err
 	}
