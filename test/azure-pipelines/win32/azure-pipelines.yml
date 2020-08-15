@@ -14,7 +14,7 @@ steps:
     make web
   displayName: Build and Compile
 - script: |
-    iscc .\script\go-xn.iss
+    iscc .\script\windows\go-xn.iss
   displayName: Build Inno Setup Installer
 - task: PublishBuildArtifacts@1
   inputs:

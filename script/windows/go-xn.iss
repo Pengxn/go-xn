@@ -10,9 +10,9 @@
 #define PUBLISHER 'xn-02f Lab'
 #define URL 'https://xn--02f.com'
 #define EXE_NAME 'go-xn.exe'
-#define ICON '..\web\icons\xn-02f.ico'
-#define LICENSE '..\LICENSE'
-#define OUTPUT_DIR '..\build\dist'
+#define ICON '..\..\web\icons\xn-02f.ico'
+#define LICENSE '..\..\LICENSE'
+#define OUTPUT_DIR '..\..\build\dist'
 #define OUTPUT_NAME 'go-xn-setup'
 
 [Setup]
@@ -32,9 +32,9 @@ LicenseFile={#LICENSE}
 OutputDir={#OUTPUT_DIR}
 OutputBaseFilename={#OUTPUT_NAME}
 ; better size is 164x314
-WizardImageFile=.\assets\inno-big.bmp
+WizardImageFile=..\assets\inno-big.bmp
 ; better size is 55x55
-WizardSmallImageFile=.\assets\inno-small.bmp
+WizardSmallImageFile=..\assets\inno-small.bmp
 SetupIconFile={#ICON}
 UninstallDisplayIcon={#ICON}
 Uninstallable=yes
@@ -54,10 +54,10 @@ Name: "english"; MessagesFile: "compiler:Default.isl,.\i18n\Messages.en.isl"
 Name: "chinesesimplified"; MessagesFile: ".\i18n\ChineseSimplified.isl,.\i18n\Messages.zh-cn.isl"
 
 [Files]
-Source: "..\build\go-xn.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\build\web\*"; DestDir: "{app}\web"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "..\LICENSE"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\README.md"; DestDir: "{app}"; Flags: ignoreversion isreadme
+Source: "..\..\build\go-xn.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\..\build\web\*"; DestDir: "{app}\web"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "..\..\LICENSE"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\..\README.md"; DestDir: "{app}"; Flags: ignoreversion isreadme
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Tasks]
