@@ -1,6 +1,6 @@
 // +build go1.14
 
-// Copyright 2020 The go-xn Authors. All rights reserved.
+// Copyright 2020 The Go-xn Authors. All rights reserved.
 // Use of this source code is governed by a Zlib license
 // that can be found in the LICENSE file.
 
