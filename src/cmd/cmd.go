@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"log"
 	"os"
 
 	"github.com/urfave/cli/v2"
@@ -10,7 +9,7 @@ import (
 )
 
 // Execute to run cmd
-func Execute() {
+func Execute() error {
 	app := &cli.App{
 		Name:    "go-xn",
 		Usage:   "The platform for publishing and running your blog",
@@ -29,7 +28,5 @@ func Execute() {
 		},
 	}
 
-	if err := app.Run(os.Args); err != nil {
-		log.Fatalln("Fail to Start Command app.", err.Error())
-	}
+	return app.Run(os.Args)
 }
