@@ -69,4 +69,4 @@ Name: "{autoprograms}\{#APP_NAME}"; Filename: "{app}\{#EXE_NAME}"
 Name: "{autodesktop}\{#APP_NAME}"; Filename: "{app}\{#EXE_NAME}"; Comment: "{cm:DesktopIconComment}"; Tasks: desktopicon
 
 [Run]
-Filename: "{app}\{#EXE_NAME}"; Description: "{cm:LaunchProgram,{#StringChange(APP_NAME, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
+Filename: "{app}\{#EXE_NAME}"; Parameters: "web"; Description: "{cm:LaunchProgram,{#StringChange(APP_NAME, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
