@@ -18,12 +18,12 @@ var (
 	buildTime = ""
 
 	// VersionCmd is "version" subcommand.
-	// It prints the version, revision and buildt time informations to stdout.
+	// It prints the version, revision and built time information to stdout.
 	VersionCmd = &cli.Command{
 		Name:  "version",
 		Usage: "Print some information about version",
 		Description: `Prints version information that might help you get out of trouble.
-And it display revision and built time informations.`,
+And it display revision and built time information.`,
 		Action: showVersion,
 	}
 )
@@ -31,10 +31,10 @@ And it display revision and built time informations.`,
 // showVersion prints the version information to stdout
 func showVersion(c *cli.Context) error {
 	fmt.Printf("FYJ  %s\n", Version)
-	fmt.Println("---------------------------------")
-	fmt.Printf("- OS/Arch:    %s %s\n", runtime.GOOS, runtime.GOARCH)
+	fmt.Printf("---------------------------------\n")
 	fmt.Printf("- Go version: %s\n", runtime.Version())
 	fmt.Printf("- Revision:   %s\n", commitID)
+	fmt.Printf("- OS/Arch:    %s/%s\n", runtime.GOOS, runtime.GOARCH)
 	fmt.Printf("- Built time: %s %s\n", buildDate, buildTime)
 
 	return nil
