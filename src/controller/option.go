@@ -18,7 +18,7 @@ func ListOptions(c *gin.Context) {
 	})
 }
 
-// GetOption reutn an option by 'name' param
+// GetOption return an option by 'name' param
 // Request sample:
 //     GET /option/:name
 func GetOption(c *gin.Context) {

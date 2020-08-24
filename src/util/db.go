@@ -3,7 +3,9 @@ package util
 import (
 	"log"
 
-	_ "github.com/go-sql-driver/mysql" // MySQL driver
+	_ "github.com/go-sql-driver/mysql" // MySQL/MariaDB driver
+	_ "github.com/lib/pq"              // PostgreSQL driver
+	_ "github.com/mattn/go-sqlite3"    // SQLite driver
 	"xorm.io/xorm"
 
 	"github.com/Pengxn/go-xn/src/config"
