@@ -3,7 +3,9 @@
 # Make sure the `rcedit` is installed
 # https://github.com/electron/rcedit
 
-VERSION="0.0.0-beta"
+GIT_VERSION=$(git describe --tags `git rev-list --tags --max-count=1`)
+
+VERSION=$(echo ${GIT_VERSION#*v})
 
 rcedit ./build/go-xn.exe \
         --set-icon "./web/icons/xn-02f.ico" \

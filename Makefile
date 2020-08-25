@@ -7,6 +7,7 @@ else
 	BIN = go-xn
 endif
 
+VERSION = $(shell git describe --tags `git rev-list --tags --max-count=1`)
 COMMIT_ID = $(shell git rev-parse --short HEAD)
 BUILD_DATE = $(shell date +'%Y-%m-%d')
 BUILD_TIME = $(shell date +'%T')
@@ -15,7 +16,8 @@ all: build
 
 build: clean
 	@go build -o build/$(BIN) -tags=jsoniter -ldflags \
-	"-X github.com/Pengxn/go-xn/src/cmd.commitID=${COMMIT_ID} \
+	"-X github.com/Pengxn/go-xn/src/cmd.Version=${VERSION} \
+	-X github.com/Pengxn/go-xn/src/cmd.commitID=${COMMIT_ID} \
 	-X github.com/Pengxn/go-xn/src/cmd.buildDate=${BUILD_DATE} \
 	-X github.com/Pengxn/go-xn/src/cmd.buildTime=${BUILD_TIME}"
 
