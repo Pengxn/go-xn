@@ -27,9 +27,6 @@ clean:
 cover:
 	@go tool cover -html=coverage.txt -o coverage.html
 
-deps:
-	@GO111MODULE=on go mod download
-
 test:
 	@go test ./... -v -coverprofile=coverage.txt
 
