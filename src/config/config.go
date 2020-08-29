@@ -9,6 +9,7 @@ import (
 
 // DBConfiguration is custom configuration for DB
 type DBConfiguration struct {
+	Type     string `ini:"type"`
 	User     string `ini:"user"`
 	Password string `ini:"password"`
 	Port     string `ini:"port"`
