@@ -3,6 +3,7 @@ package config
 import (
 	"log"
 	"os"
+	"strings"
 
 	"github.com/go-ini/ini"
 )
@@ -13,8 +14,8 @@ type DBConfiguration struct {
 	User     string `ini:"user"`
 	Password string `ini:"password"`
 	Port     string `ini:"port"`
-	DBName   string `ini:"name"`
-	DBUrl    string `ini:"url"`
+	Name     string `ini:"name"`
+	Url      string `ini:"url"`
 }
 
 // getDBConfiguration will return database configuration
@@ -35,9 +36,28 @@ func getDBConfiguration() *DBConfiguration {
 	return database
 }
 
-// DBUrl will return database url
-func DBUrl() string {
+// DBUrl will return database type and its DSN
+func DBUrl() (dbType, dsn string) {
 	db := getDBConfiguration()
+	dbType = strings.ToLower(db.Type)
 
-	return db.User + ":" + db.Password + "@tcp(" + db.DBUrl + ":" + db.Port + ")/" + db.DBName + "?charset=utf8"
+	switch dbType {
+	case "mysql":
+		dsn = db.User + ":" + db.Password + "@tcp(" + db.Url +
+			":" + db.Port + ")/" + db.Name + "?charset=utf8"
+	case "postgresql":
+		dsn = strings.Join([]string{
+			"dbname=" + db.Name,
+			"user=" + db.User,
+			"password=" + db.Password,
+			"host=" + db.Url,
+			"port=" + db.Port,
+		}, " ")
+	case "sqlite3":
+		dsn = "file:" + db.Name + "?cache=shared&mode=rwc"
+	default:
+		dsn = ""
+	}
+
+	return
 }

@@ -14,7 +14,7 @@ import (
 // DBEngine initialize database connection engine
 // and return *xorm.Engine
 func DBEngine() *xorm.Engine {
-	orm, err := xorm.NewEngine("mysql", config.DBUrl())
+	orm, err := xorm.NewEngine(config.DBUrl())
 	if err != nil {
 		log.Fatalln("Can't connect your DB.", err.Error())
 	}

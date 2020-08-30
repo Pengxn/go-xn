@@ -9,8 +9,9 @@ import (
 func TestDBUrl(t *testing.T) {
 	Convey("Test DB url", t, func() {
 		want := "root:password@tcp(127.0.0.1:3306)/fyj?charset=utf8"
-		url := DBUrl()
+		dbType, dsn := DBUrl()
 
-		So(url, ShouldEqual, want)
+		So(dbType, ShouldEqual, "mysql")
+		So(dsn, ShouldEqual, want)
 	})
 }
