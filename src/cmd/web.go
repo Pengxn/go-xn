@@ -1,13 +1,12 @@
 package cmd
 
 import (
-	"log"
-
 	"github.com/gin-gonic/gin"
 	"github.com/urfave/cli/v2"
 
 	"github.com/Pengxn/go-xn/src/config"
 	"github.com/Pengxn/go-xn/src/route"
+	"github.com/Pengxn/go-xn/src/util/log"
 )
 
 var (
@@ -50,7 +49,6 @@ func runWeb(c *cli.Context) error {
 
 	if err := g.Run(":" + c.String("port")); err != nil {
 		log.Fatalln("Fail to Start Web Server.", err.Error())
-		return err
 	}
 
 	return nil
