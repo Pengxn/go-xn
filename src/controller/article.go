@@ -8,21 +8,19 @@ import (
 	"github.com/Pengxn/go-xn/src/model"
 )
 
-// ListArticles return the number of all articles
+// ListArticles returns the number of all articles.
 // Request sample:
-//     GET /articles
+//     GET => /articles
 func ListArticles(c *gin.Context) {
-	count := model.ArticlesCount()
-
 	c.JSON(200, gin.H{
 		"code":  200,
-		"count": count,
+		"count": model.ArticlesCount(),
 	})
 }
 
-// GetArticle get an articles by 'id' param
+// GetArticle gets an article by 'id' param.
 // Request sample:
-//     GET /article/1
+//     GET => /article/1
 func GetArticle(c *gin.Context) {
 	id, _ := strconv.ParseUint(c.Param("id"), 10, 64)
 
@@ -34,23 +32,18 @@ func GetArticle(c *gin.Context) {
 	})
 }
 
-// InsertArticle will insert an articles
+// InsertArticle inserts an article.
 // Request sample:
-//     POST /article?title=foo&status=1&content=bar
+//     POST => /article?title=foo&status=1&content=bar
 func InsertArticle(c *gin.Context) {
-	title := c.Query("title")
-	statusString := c.DefaultQuery("status", "0")
-	content := c.Query("content")
-
-	status, _ := strconv.Atoi(statusString)
-
+	status, _ := strconv.Atoi(c.DefaultQuery("status", "0"))
 	article := &model.Article{
-		Title:   title,
+		Title:   c.Query("title"),
 		Status:  status,
-		Content: content,
+		Content: c.Query("content"),
 	}
 
-	if model.AddArticle(article) == true {
+	if model.AddArticle(article) {
 		c.JSON(201, gin.H{
 			"code": 201,
 			"data": "Insert article data successfully.",
@@ -63,22 +56,18 @@ func InsertArticle(c *gin.Context) {
 	}
 }
 
-// UpdateArticle update an articles JSON.
+// UpdateArticle updates an article.
 func UpdateArticle(c *gin.Context) {
-	id := c.Param("id")
-
 	c.JSON(200, gin.H{
 		"code": "Update an Article",
-		"data": id,
+		"data": c.Param("id"),
 	})
 }
 
-// DeleteArticle delete an articles JSON.
+// DeleteArticle deletes an article.
 func DeleteArticle(c *gin.Context) {
-	id := c.Param("id")
-
 	c.JSON(200, gin.H{
 		"code": "Delete an Article",
-		"data": id,
+		"data": c.Param("id"),
 	})
 }
