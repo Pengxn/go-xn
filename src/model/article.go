@@ -22,7 +22,7 @@ type Article struct {
 
 var orm *xorm.Engine = util.DBEngine()
 
-// ArticlesByPage handle articles by page number
+// ArticlesByPage handles articles by page number.
 func ArticlesByPage(limit int, page int) []Article {
 	db := orm.NewSession()
 	defer db.Close()
@@ -45,7 +45,7 @@ func ArticlesByPage(limit int, page int) []Article {
 	return articles
 }
 
-// AddArticle handle and add article
+// AddArticle handles and add article.
 func AddArticle(article *Article) bool {
 	db := orm.NewSession()
 	defer db.Close()
@@ -81,7 +81,7 @@ func ArticleExist(id uint64) bool {
 	return has
 }
 
-// ArticlesCount return count number
+// ArticlesCount returns count number.
 func ArticlesCount() int {
 	db := orm.NewSession()
 	defer db.Close()
@@ -97,7 +97,7 @@ func ArticlesCount() int {
 	return int(count)
 }
 
-// ArticleByID will return article by ID
+// ArticleByID returns article by ID.
 func ArticleByID(id uint64) (*Article, bool) {
 	db := orm.NewSession()
 	defer db.Close()

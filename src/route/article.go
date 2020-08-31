@@ -6,7 +6,7 @@ import (
 	"github.com/Pengxn/go-xn/src/controller"
 )
 
-// articlesRoutes register routes about article.
+// articlesRoutes registers routes about articles.
 func articlesRoutes(g *gin.Engine) {
 	g.Any("/articles", controller.ListArticles)
 

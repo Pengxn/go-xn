@@ -6,9 +6,9 @@ import (
 	"github.com/Pengxn/go-xn/src/model"
 )
 
-// ListOptions return all options
+// ListOptions returns all options.
 // Request sample:
-//     GET /options
+//     GET => /options
 func ListOptions(c *gin.Context) {
 	options := model.GetAllOptions()
 
@@ -18,15 +18,13 @@ func ListOptions(c *gin.Context) {
 	})
 }
 
-// GetOption return an option by 'name' param
+// GetOption returns an option by 'name' param.
 // Request sample:
-//     GET /option/:name
+//     GET => /option/:name
 func GetOption(c *gin.Context) {
-	name := c.Param("name")
+	has, option := model.GetOptionByName(c.Param("name"))
 
-	has, option := model.GetOptionByName(name)
-
-	if has == true {
+	if has {
 		c.JSON(200, gin.H{
 			"code": 200,
 			"data": option,
@@ -39,24 +37,22 @@ func GetOption(c *gin.Context) {
 	}
 }
 
-// InsertOption will insert an option
+// InsertOption inserts an option.
 // Request sample:
-//     POST /option/:name?value=foo
+//     POST => /option/:name?value=foo
 func InsertOption(c *gin.Context) {
-	value := c.Query("value")
-
 	option := &model.Option{
 		Name:  c.Query("name"),
-		Value: value,
+		Value: c.Query("value"),
 	}
 
-	if model.OptionExist(option.Name) == true {
+	if model.OptionExist(option.Name) {
 		c.JSON(400, gin.H{
 			"code":  400,
 			"error": "Option you requested to insert already exists.",
 		})
 	} else {
-		if model.AddToOption(option) == true {
+		if model.AddToOption(option) {
 			c.JSON(201, gin.H{
 				"code": 201,
 				"data": "Insert option data to DB successfully.",
@@ -70,22 +66,22 @@ func InsertOption(c *gin.Context) {
 	}
 }
 
-// UpdateOption will update option
+// UpdateOption updates an option.
 // Request sample:
-//     PUT /option/:name?value=foo1
+//     PUT => /option/:name?value=foo1
 func UpdateOption(c *gin.Context) {
 	option := &model.Option{
 		Name:  c.Param("name"),
 		Value: c.Query("value"),
 	}
 
-	if model.OptionExist(option.Name) == false {
+	if model.OptionExist(option.Name) {
 		c.JSON(400, gin.H{
 			"code":  400,
 			"error": "Option you requested to update don't exists.",
 		})
 	} else {
-		if model.UpdateOptionByName(option) == true {
+		if model.UpdateOptionByName(option) {
 			c.JSON(200, gin.H{
 				"code": 200,
 				"data": "Update option data successfully.",
@@ -99,19 +95,19 @@ func UpdateOption(c *gin.Context) {
 	}
 }
 
-// DeleteOption will delete option by 'name' param
+// DeleteOption deletes option by 'name' param.
 // Request sample:
-//     DELETE /option/:name
+//     DELETE => /option/:name
 func DeleteOption(c *gin.Context) {
 	name := c.Param("name")
 
-	if model.OptionExist(name) == false {
+	if !model.OptionExist(name) {
 		c.JSON(400, gin.H{
 			"code":  400,
 			"error": "Option you requested to delete don't exists.",
 		})
 	} else {
-		if model.DeleteOptionByName(name) == true {
+		if model.DeleteOptionByName(name) {
 			c.JSON(200, gin.H{
 				"code": 200,
 				"data": "Delete option data successfully.",

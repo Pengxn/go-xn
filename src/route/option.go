@@ -6,7 +6,7 @@ import (
 	"github.com/Pengxn/go-xn/src/controller"
 )
 
-// optionsRoutes register routes about option.
+// optionsRoutes registers routes about options.
 func optionsRoutes(g *gin.Engine) {
 	g.Any("/options", controller.ListOptions)
 

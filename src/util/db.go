@@ -10,8 +10,8 @@ import (
 	"github.com/Pengxn/go-xn/src/util/log"
 )
 
-// DBEngine initialize database connection engine
-// and return *xorm.Engine
+// DBEngine initializes database connection engine
+// and return *xorm.Engine.
 func DBEngine() *xorm.Engine {
 	orm, err := xorm.NewEngine(config.DBUrl())
 	if err != nil {

@@ -4,7 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// staticRoutes register static routes files and folders
+// staticRoutes registers static routes files and folders.
 func staticRoutes(g *gin.Engine) {
 	g.StaticFile("/favicon.ico", "web/icons/xn-02f.png")
 

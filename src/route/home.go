@@ -6,7 +6,7 @@ import (
 	"github.com/Pengxn/go-xn/src/controller"
 )
 
-// InitRoutes will init all routes.
+// InitRoutes initializes all routes.
 func InitRoutes(g *gin.Engine) {
 	g.GET("/", controller.HomePage)
 

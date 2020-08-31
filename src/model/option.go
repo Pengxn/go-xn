@@ -7,7 +7,7 @@ type Option struct {
 	Value string `json:"option_value" xorm:"longtext notnull 'option_value'"`
 }
 
-// GetAllOptions return all options
+// GetAllOptions returns all options.
 func GetAllOptions() []Option {
 	db := orm.NewSession()
 	defer db.Close()
@@ -23,8 +23,8 @@ func GetAllOptions() []Option {
 	return options
 }
 
-// GetOptionByName return an Option by 'option_name' if it exist
-// Not including 'option_id'
+// GetOptionByName returns an Option by 'option_name' if it exist.
+// Not including 'option_id' field.
 func GetOptionByName(optionName string) (bool, *Option) {
 	db := orm.NewSession()
 	defer db.Close()
@@ -42,7 +42,7 @@ func GetOptionByName(optionName string) (bool, *Option) {
 	return has, option
 }
 
-// AddToOption will add option to DB `option` table, return boolean value.
+// AddToOption adds option to DB `option` table, return boolean value.
 // If result returned is `true`, insert option data to DB successful.
 func AddToOption(option *Option) bool {
 	db := orm.NewSession()
@@ -63,7 +63,7 @@ func AddToOption(option *Option) bool {
 	return isSuccess
 }
 
-// DeleteOptionByName will delete an Option by 'option_name'.
+// DeleteOptionByName deletes an Option by 'option_name'.
 // If result returned is `true`, delete option data successful.
 func DeleteOptionByName(optionName string) bool {
 	db := orm.NewSession()
@@ -88,7 +88,7 @@ func DeleteOptionByName(optionName string) bool {
 	return isSuccess
 }
 
-// UpdateOptionByName will update an option by 'option_name'
+// UpdateOptionByName updates an option by 'option_name'.
 // If result returned is `true`, update option data successful.
 func UpdateOptionByName(option *Option) bool {
 	db := orm.NewSession()

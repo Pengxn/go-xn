@@ -19,7 +19,7 @@ type DBConfiguration struct {
 	Url      string `ini:"url"`
 }
 
-// getDBConfiguration will return database configuration
+// getDBConfiguration returns database configuration.
 func getDBConfiguration() *DBConfiguration {
 	config, err := ini.Load(HomeDir() + string(os.PathSeparator) + "fyj.ini")
 	if err != nil {
@@ -36,7 +36,7 @@ func getDBConfiguration() *DBConfiguration {
 	return database
 }
 
-// DBUrl will return database type and its DSN
+// DBUrl returns database type and its DSN.
 func DBUrl() (dbType, dsn string) {
 	db := getDBConfiguration()
 	dbType = strings.ToLower(db.Type)

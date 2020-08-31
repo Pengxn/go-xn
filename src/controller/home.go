@@ -8,26 +8,26 @@ import (
 	"github.com/Pengxn/go-xn/src/model"
 )
 
-// DefaultPageLimit is default limit number per page
-// And other constant
+// DefaultPageLimit is default limit number per page,
+// and other constant.
 const (
 	DefaultPageLimit int = 8
 )
 
-// HomePage return home and index page
+// HomePage returns home and index page.
 // Request sample:
-//     GET / => GET /page/1
+//     GET => /
+//     GET => /page/1
 func HomePage(c *gin.Context) {
-	articles := model.ArticlesByPage(DefaultPageLimit, 1)
-
 	c.JSON(200, gin.H{
-		"data": articles,
+		"code": 200,
+		"data": model.ArticlesByPage(DefaultPageLimit, 1),
 	})
 }
 
-// ArticlesPage return JSON information by page number
+// ArticlesPage returns JSON information by page number.
 // Request sample:
-//     GET /page/1?limit=6
+//     GET => /page/1?limit=6
 func ArticlesPage(c *gin.Context) {
 	pageNum, _ := strconv.Atoi(c.Param("pageNum"))
 	limitNum, _ := strconv.Atoi(c.Query("limit"))
@@ -39,10 +39,8 @@ func ArticlesPage(c *gin.Context) {
 		limitNum = DefaultPageLimit
 	}
 
-	articles := model.ArticlesByPage(limitNum, pageNum)
-
 	c.JSON(200, gin.H{
 		"code": 200,
-		"data": articles,
+		"data": model.ArticlesByPage(limitNum, pageNum),
 	})
 }
