@@ -1,6 +1,7 @@
 module github.com/Pengxn/go-xn
 
 require (
+	github.com/agiledragon/gomonkey v2.0.2+incompatible
 	github.com/gin-gonic/gin v1.6.3
 	github.com/go-ini/ini v1.60.2
 	github.com/go-sql-driver/mysql v1.5.0
