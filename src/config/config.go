@@ -6,6 +6,7 @@ import (
 
 	"github.com/go-ini/ini"
 
+	"github.com/Pengxn/go-xn/src/util/home"
 	"github.com/Pengxn/go-xn/src/util/log"
 )
 
@@ -21,7 +22,7 @@ type DBConfiguration struct {
 
 // getDBConfiguration returns database configuration.
 func getDBConfiguration() *DBConfiguration {
-	config, err := ini.Load(HomeDir() + string(os.PathSeparator) + "fyj.ini")
+	config, err := ini.Load(home.HomeDir() + string(os.PathSeparator) + "fyj.ini")
 	if err != nil {
 		log.Fatalln("Fail to read fyj.ini file.", err.Error())
 	}

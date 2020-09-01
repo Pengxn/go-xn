@@ -4,8 +4,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/urfave/cli/v2"
 
-	"github.com/Pengxn/go-xn/src/config"
 	"github.com/Pengxn/go-xn/src/route"
+	"github.com/Pengxn/go-xn/src/util/home"
 	"github.com/Pengxn/go-xn/src/util/log"
 )
 
@@ -34,7 +34,7 @@ port 8080 by default.`,
 		Name:    "webroot",
 		Aliases: []string{"r"},
 		Usage:   "Web root path that used by server",
-		Value:   config.HomeDir(),
+		Value:   home.HomeDir(),
 	}
 )
 

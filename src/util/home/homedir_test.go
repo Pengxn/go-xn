@@ -1,4 +1,4 @@
-package config
+package home
 
 import (
 	"errors"
