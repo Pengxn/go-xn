@@ -4,7 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// errorRoute registers bad routes and methods.
+// errorRoute register bad routes and methods
 func errorRoute(g *gin.Engine) {
 	g.LoadHTMLFiles("web/error.html")
 
