@@ -47,6 +47,7 @@ func DBUrl() (dbType, dsn string) {
 		dsn = db.User + ":" + db.Password + "@tcp(" + db.Url +
 			":" + db.Port + ")/" + db.Name + "?charset=utf8"
 	case "postgresql":
+		dbType = "postgres"
 		dsn = strings.Join([]string{
 			"dbname=" + db.Name,
 			"user=" + db.User,

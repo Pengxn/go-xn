@@ -18,8 +18,8 @@ func HomeDir() string {
 	if runtime.GOOS == "windows" {
 		home, err = dirWindows()
 	} else {
-		// Unix-like system, so just assume Unix
-		// It's mainly linux
+		// Unix-like system, so just assume Unix.
+		// It's mainly linux.
 		home, err = dirUnix()
 	}
 
@@ -32,7 +32,6 @@ func HomeDir() string {
 
 func dirWindows() (string, error) {
 	home := os.Getenv("USERPROFILE")
-
 	if home == "" {
 		return "", errors.New("Can't find 'USERPROFILE' environment variable")
 	}
@@ -42,7 +41,6 @@ func dirWindows() (string, error) {
 
 func dirUnix() (string, error) {
 	home := os.Getenv("HOME")
-
 	if home == "" {
 		return "", errors.New("Can't find 'HOME' environment variable")
 	}
