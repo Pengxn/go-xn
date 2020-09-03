@@ -24,14 +24,14 @@ type DBConfiguration struct {
 func getDBConfiguration() *DBConfiguration {
 	config, err := ini.Load(home.HomeDir() + string(os.PathSeparator) + "fyj.ini")
 	if err != nil {
-		log.Fatalln("Fail to read fyj.ini file.", err.Error())
+		log.Fatalln("Fail to read fyj.ini file.", err)
 	}
 
 	database := new(DBConfiguration)
 
 	err = config.Section("database").MapTo(database)
 	if err != nil {
-		log.Warnln("Fail to parse database configuration.", err.Error())
+		log.Warnln("Fail to parse database configuration.", err)
 	}
 
 	return database
