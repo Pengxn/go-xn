@@ -13,6 +13,6 @@ import (
 
 func main() {
 	if err := cmd.Execute(); err != nil {
-		log.Fatalln("Fail to Start Command app.", err.Error())
+		log.Fatalln("Fail to Start Command app.", err)
 	}
 }

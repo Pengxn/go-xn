@@ -10,7 +10,7 @@ import (
 )
 
 var (
-	// Web is "web" subcommand. It's used to run web server
+	// Web is "web" subcommand. It's used to run web server.
 	Web = &cli.Command{
 		Name:  "web",
 		Usage: "Start web server interface for blog",
@@ -48,7 +48,8 @@ func runWeb(c *cli.Context) error {
 	route.InitRoutes(g)
 
 	if err := g.Run(":" + c.String("port")); err != nil {
-		log.Fatalln("Fail to Start Web Server.", err.Error())
+		log.Fatalln("Fail to Start Web Server.", err)
+		return err
 	}
 
 	return nil
