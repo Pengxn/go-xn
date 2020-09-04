@@ -1,5 +1,9 @@
 package model
 
+import (
+	"github.com/Pengxn/go-xn/src/util/log"
+)
+
 // Option model, optional informations
 type Option struct {
 	ID    uint64 `json:"option_id,omitempty" xorm:"bigint(20) notnull autoincr pk 'option_id'"`
@@ -15,9 +19,8 @@ func GetAllOptions() []Option {
 	var options []Option
 
 	err := db.Omit("option_id").Find(&options)
-
 	if err != nil {
-		panic(err)
+		log.Errorf("GetAllOptions throw error: %s", err)
 	}
 
 	return options
@@ -34,9 +37,8 @@ func GetOptionByName(optionName string) (bool, *Option) {
 	}
 
 	has, err := db.Omit("option_id").Get(option)
-
 	if err != nil {
-		panic(err)
+		log.Errorf("GetOptionByName throw error: %s", err)
 	}
 
 	return has, option
@@ -49,9 +51,8 @@ func AddToOption(option *Option) bool {
 	defer db.Close()
 
 	affected, err := db.InsertOne(option)
-
 	if err != nil {
-		panic(err)
+		log.Errorf("AddToOption throw error: %s", err)
 	}
 
 	isSuccess := false
@@ -74,9 +75,8 @@ func DeleteOptionByName(optionName string) bool {
 	}
 
 	affected, err := db.Delete(option)
-
 	if err != nil {
-		panic(err)
+		log.Errorf("DeleteOptionByName throw error: %s", err)
 	}
 
 	isSuccess := false
@@ -97,9 +97,8 @@ func UpdateOptionByName(option *Option) bool {
 	affected, err := db.Where("option_name = ?", option.Name).
 		Cols("option_value").
 		Update(option)
-
 	if err != nil {
-		panic(err)
+		log.Errorf("UpdateOptionByName throw error: %s", err)
 	}
 
 	isSuccess := false
@@ -120,9 +119,8 @@ func OptionExist(optionName string) bool {
 	has, err := db.Exist(&Option{
 		Name: optionName,
 	})
-
 	if err != nil {
-		panic(err)
+		log.Errorf("OptionExist throw error: %s", err)
 	}
 
 	return has

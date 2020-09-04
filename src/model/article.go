@@ -6,6 +6,7 @@ import (
 	"xorm.io/xorm"
 
 	"github.com/Pengxn/go-xn/src/util"
+	"github.com/Pengxn/go-xn/src/util/log"
 )
 
 // Article model
@@ -37,9 +38,8 @@ func ArticlesByPage(limit int, page int) []Article {
 		Limit(limit, start).
 		Desc("create_time").
 		Find(&articles)
-
 	if err != nil {
-		panic(err)
+		log.Errorf("ArticlesByPage throw error: %s", err)
 	}
 
 	return articles
@@ -51,9 +51,8 @@ func AddArticle(article *Article) bool {
 	defer db.Close()
 
 	affected, err := db.InsertOne(article)
-
 	if err != nil {
-		panic(err)
+		log.Errorf("AddArticle throw error: %s", err)
 	}
 
 	isSuccess := false
@@ -73,9 +72,8 @@ func ArticleExist(id uint64) bool {
 	has, err := db.Exist(&Article{
 		ID: id,
 	})
-
 	if err != nil {
-		panic(err)
+		log.Errorf("ArticleExist throw error: %s", err)
 	}
 
 	return has
@@ -89,9 +87,8 @@ func ArticlesCount() int {
 	article := &Article{}
 
 	count, err := db.Count(article)
-
 	if err != nil {
-		panic(err)
+		log.Errorf("ArticlesCount throw error: %s", err)
 	}
 
 	return int(count)
@@ -107,9 +104,8 @@ func ArticleByID(id uint64) (*Article, bool) {
 	}
 
 	has, err := db.Get(article)
-
 	if err != nil {
-		panic(err)
+		log.Errorf("ArticleByID throw error: %s", err)
 	}
 
 	return article, has
