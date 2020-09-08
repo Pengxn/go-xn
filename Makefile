@@ -40,4 +40,4 @@ web:
     # Copy web folder and fyj.ini file
 	@cp -r web/ build/web
 
-.PHONY: build clean cover deps test web
+.PHONY: build clean cover test web
