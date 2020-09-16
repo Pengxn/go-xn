@@ -8,11 +8,14 @@ import (
 )
 
 func TestDBUrl(t *testing.T) {
-	Convey("Test DBUrl when database is MySQL", t, func() {
-		ApplyFunc(getDBConfiguration, func() *DBConfiguration {
-			return &DBConfiguration{Type: "MySQL"}
-		})
+	ApplyFuncSeq(getDBConfiguration, []OutputCell{
+		{Values: Params{&DBConfiguration{Type: "MySQL"}}},
+		{Values: Params{&DBConfiguration{Type: "PostgreSQL"}}},
+		{Values: Params{&DBConfiguration{Type: "SQLite3"}}},
+		{Values: Params{&DBConfiguration{}}},
+	})
 
+	Convey("Test DBUrl when database is MySQL", t, func() {
 		want := ":@tcp(:)/?charset=utf8"
 		dbType, dsn := DBUrl()
 
@@ -21,10 +24,6 @@ func TestDBUrl(t *testing.T) {
 	})
 
 	Convey("Test DBUrl when database is PostgreSQL", t, func() {
-		ApplyFunc(getDBConfiguration, func() *DBConfiguration {
-			return &DBConfiguration{Type: "PostgreSQL"}
-		})
-
 		want := "dbname= user= password= host= port="
 		dbType, dsn := DBUrl()
 
@@ -33,10 +32,6 @@ func TestDBUrl(t *testing.T) {
 	})
 
 	Convey("Test DBUrl when database is SQLite", t, func() {
-		ApplyFunc(getDBConfiguration, func() *DBConfiguration {
-			return &DBConfiguration{Type: "SQLite3"}
-		})
-
 		want := "file:?cache=shared&mode=rwc"
 		dbType, dsn := DBUrl()
 
@@ -45,10 +40,6 @@ func TestDBUrl(t *testing.T) {
 	})
 
 	Convey("Test DBUrl when database is not supported", t, func() {
-		ApplyFunc(getDBConfiguration, func() *DBConfiguration {
-			return &DBConfiguration{}
-		})
-
 		dbType, dsn := DBUrl()
 
 		So(dbType, ShouldEqual, "")
