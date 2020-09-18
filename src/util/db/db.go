@@ -1,4 +1,4 @@
-package util
+package db
 
 import (
 	_ "github.com/go-sql-driver/mysql" // MySQL/MariaDB driver
