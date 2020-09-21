@@ -11,7 +11,7 @@ import (
 )
 
 // DBEngine initializes database connection engine
-// and return *xorm.Engine.
+// and returns *xorm.Engine.
 func DBEngine() *xorm.Engine {
 	orm, err := xorm.NewEngine(config.DBUrl())
 	if err != nil {
