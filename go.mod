@@ -7,7 +7,7 @@ require (
 	github.com/go-sql-driver/mysql v1.5.0
 	github.com/lib/pq v1.8.0
 	github.com/mattn/go-sqlite3 v1.14.3
-	github.com/sirupsen/logrus v1.6.0
+	github.com/sirupsen/logrus v1.7.0
 	github.com/smartystreets/goconvey v1.6.4
 	github.com/urfave/cli/v2 v2.2.0
 	xorm.io/xorm v1.0.5
