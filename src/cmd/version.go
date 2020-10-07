@@ -14,7 +14,6 @@ import (
 var (
 	Version   = ""
 	commitID  = ""
-	buildDate = ""
 	buildTime = ""
 
 	// VersionCmd is "version" subcommand.
@@ -35,7 +34,7 @@ func showVersion(c *cli.Context) error {
 	fmt.Printf("- Go version: %s\n", runtime.Version())
 	fmt.Printf("- Revision:   %s\n", commitID)
 	fmt.Printf("- OS/Arch:    %s/%s\n", runtime.GOOS, runtime.GOARCH)
-	fmt.Printf("- Built time: %s %s\n", buildDate, buildTime)
+	fmt.Printf("- Built time: %s\n", buildTime)
 
 	return nil
 }
