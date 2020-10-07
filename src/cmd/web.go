@@ -32,7 +32,7 @@ port 8080 by default.`,
 	}
 	webroot = &cli.PathFlag{
 		Name:    "webroot",
-		Aliases: []string{"r"},
+		Aliases: []string{"w"},
 		Usage:   "Web root path that used by server",
 		Value:   home.HomeDir(),
 	}
@@ -47,10 +47,10 @@ func runWeb(c *cli.Context) error {
 
 	route.InitRoutes(g)
 
-	if err := g.Run(":" + c.String("port")); err != nil {
+	err := g.Run(":" + c.String("port"))
+	if err != nil {
 		log.Fatalln("Fail to Start Web Server.", err)
-		return err
 	}
 
-	return nil
+	return err
 }
