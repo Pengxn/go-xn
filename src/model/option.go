@@ -17,7 +17,6 @@ func GetAllOptions() []Option {
 	defer db.Close()
 
 	var options []Option
-
 	err := db.Omit("option_id").Find(&options)
 	if err != nil {
 		log.Errorf("GetAllOptions throw error: %s", err)
@@ -28,15 +27,14 @@ func GetAllOptions() []Option {
 
 // GetOptionByName returns an Option by 'option_name' if it exist.
 // Not including 'option_id' field.
-func GetOptionByName(optionName string) (bool, *Option) {
+func GetOptionByName(optionName string) (bool, Option) {
 	db := orm.NewSession()
 	defer db.Close()
 
-	option := &Option{
-		Name: optionName,
-	}
-
-	has, err := db.Omit("option_id").Get(option)
+	var option Option
+	has, err := db.Omit("option_id").
+		Where("option_name = ?", optionName).
+		Get(&option)
 	if err != nil {
 		log.Errorf("GetOptionByName throw error: %s", err)
 	}
@@ -56,7 +54,6 @@ func AddToOption(option *Option) bool {
 	}
 
 	isSuccess := false
-
 	if affected > 0 {
 		isSuccess = true
 	}
@@ -80,7 +77,6 @@ func DeleteOptionByName(optionName string) bool {
 	}
 
 	isSuccess := false
-
 	if affected > 0 {
 		isSuccess = true
 	}
@@ -102,7 +98,6 @@ func UpdateOptionByName(option *Option) bool {
 	}
 
 	isSuccess := false
-
 	if affected > 0 {
 		isSuccess = true
 	}
