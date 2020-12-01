@@ -10,7 +10,10 @@ import (
 // Request sample:
 //     GET => /options
 func ListOptions(c *gin.Context) {
-	options := model.GetAllOptions()
+	options := map[string]string{}
+	for _, option := range model.GetAllOptions() {
+		options[option.Name] = option.Value
+	}
 
 	c.JSON(200, gin.H{
 		"code": 200,

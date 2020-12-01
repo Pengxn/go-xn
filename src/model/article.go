@@ -18,7 +18,7 @@ type Article struct {
 	Status     int        `json:"article_status,omitempty" xorm:"tinyint(4) notnull default(0) 'article_status'"`
 	CreateTime *time.Time `json:"create_time,omitempty" xorm:"datetime created notnull default('0000-00-00 00:00:00') 'create_time'"`
 	UpdateTime *time.Time `json:"update_time,omitempty" xorm:"datetime updated notnull default('0000-00-00 00:00:00') 'update_time'"`
-	DeleteTime *time.Time `json:"delete_time,omitempty" xorm:"datetime deleted notnull default('0000-00-00 00:00:00') 'delete_time'"`
+	DeleteTime *time.Time `json:"delete_time,omitempty" xorm:"datetime notnull default('0000-00-00 00:00:00') 'delete_time'"`
 }
 
 var orm *xorm.Engine = db.DBEngine()
