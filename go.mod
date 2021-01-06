@@ -10,7 +10,7 @@ require (
 	github.com/sirupsen/logrus v1.7.0
 	github.com/smartystreets/goconvey v1.6.4
 	github.com/urfave/cli/v2 v2.3.0
-	xorm.io/xorm v1.0.5
+	xorm.io/xorm v1.0.6
 )
 
 go 1.14
