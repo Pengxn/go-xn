@@ -7,7 +7,10 @@ import (
 )
 
 // InitRoutes initializes all routes.
-func InitRoutes(g *gin.Engine) {
+func InitRoutes(port string) error {
+	gin.SetMode(gin.ReleaseMode)
+
+	g := gin.Default()
 	g.GET("/", controller.HomePage)
 
 	// Page number handler
@@ -17,4 +20,6 @@ func InitRoutes(g *gin.Engine) {
 	staticRoutes(g)
 	optionsRoutes(g)
 	articlesRoutes(g)
+
+	return g.Run(":" + port)
 }

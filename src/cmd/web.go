@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"github.com/gin-gonic/gin"
 	"github.com/urfave/cli/v2"
 
 	"github.com/Pengxn/go-xn/src/route"
@@ -41,13 +40,7 @@ port 8080 by default.`,
 // runWeb is the entry point to the web server.
 // Parses the arguments, routes and others.
 func runWeb(c *cli.Context) error {
-	gin.SetMode(gin.ReleaseMode)
-
-	g := gin.Default()
-
-	route.InitRoutes(g)
-
-	err := g.Run(":" + c.String("port"))
+	err := route.InitRoutes(c.String("port"))
 	if err != nil {
 		log.Fatalln("Fail to Start Web Server.", err)
 	}
