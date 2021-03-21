@@ -1,11 +1,12 @@
 steps:
 - task: GoTool@0
   inputs:
-    version: '1.14'
+    version: '1.16.2'
 - powershell: |
     choco install make -y
   displayName: Install Make Tool
 - powershell: |
+    go mod download
     Copy-Item -Path .\src\config\example.ini -Destination ~\fyj.ini
     make test
   displayName: Run Tests

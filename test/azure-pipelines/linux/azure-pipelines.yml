@@ -1,8 +1,9 @@
 steps:
 - task: GoTool@0
   inputs:
-    version: '1.14'
+    version: '1.16.2'
 - script: |
+    go mod download
     cp src/config/example.ini ~/fyj.ini
     make test
   displayName: Run Tests
