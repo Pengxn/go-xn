@@ -6,12 +6,14 @@ import (
 	"github.com/Pengxn/go-xn/src/util/log"
 )
 
-// uPicRoute register routes and methods foruPic, more information
+// uPicRoute register routes and methods for uPic, more information
 // to https://blog.svend.cc/upic/tutorials/custom
 func uPicRoute(g *gin.Engine) {
 	// Request sample:
 	//     POST => /upload/upic?file=...
 	g.POST("/upload/upic", uploadFileForUPic)
+
+	g.Static("/upic", "uPic")
 }
 
 // uploadFileForUPic uploads files to the specified file path.
@@ -36,7 +38,7 @@ func uploadFileForUPic(c *gin.Context) {
 	c.JSON(200, gin.H{
 		"code": 200,
 		"data": map[string]string{
-			"url": c.Request.Host + "/uPic/" + file.Filename,
+			"url": c.Request.Host + "/upic/" + file.Filename,
 		},
 	})
 }
