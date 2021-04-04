@@ -13,4 +13,4 @@ require (
 	xorm.io/xorm v1.0.7
 )
 
-go 1.14
+go 1.16
