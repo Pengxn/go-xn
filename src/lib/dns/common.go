@@ -5,6 +5,7 @@ import (
 	"crypto/sha256"
 	"encoding/base64"
 	"fmt"
+	"math/rand"
 	"net/http"
 	"sort"
 	"strconv"
@@ -35,7 +36,7 @@ func NewDNS() DNSCommon {
 		URL:             "https://cns.api.qcloud.com/v2/index.php",
 		Host:            "cns.api.qcloud.com",
 		timestamp:       time.Now(),
-		nonce:           1221,
+		nonce:           rand.Intn(10000),
 		signatureMethod: "HmacSHA256",
 	}
 }
