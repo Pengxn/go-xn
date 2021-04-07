@@ -41,12 +41,13 @@ func NewDNS() DNSCommon {
 	}
 }
 
+// SetAction sets 'action' field in DNSCommon.
 func (dns DNSCommon) SetAction(action string) DNSCommon {
 	dns.action = action
 	return dns
 }
 
-// https://cloud.tencent.com/document/product/302/7310
+// do http request, https://cloud.tencent.com/document/product/302/7310
 func (dns DNSCommon) do(params map[string]string) (*http.Response, error) {
 	// common params
 	allParams := map[string]string{

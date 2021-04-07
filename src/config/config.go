@@ -2,7 +2,6 @@ package config
 
 import (
 	"os"
-	"strings"
 
 	"github.com/go-ini/ini"
 
@@ -10,7 +9,17 @@ import (
 	"github.com/Pengxn/go-xn/src/util/log"
 )
 
-// DBConfiguration is custom configuration for DB
+var config *ini.File // Global setting object
+
+func init() {
+	configFile, err := ini.Load(home.HomeDir() + string(os.PathSeparator) + "fyj.ini")
+	if err != nil {
+		log.Fatalln("Fail to read fyj.ini file.", err)
+	}
+	config = configFile
+}
+
+// DBConfiguration is custom configuration for DB.
 type DBConfiguration struct {
 	Type     string `ini:"type"`
 	User     string `ini:"user"`
@@ -21,45 +30,26 @@ type DBConfiguration struct {
 }
 
 // getDBConfiguration returns database configuration.
-func getDBConfiguration() *DBConfiguration {
-	config, err := ini.Load(home.HomeDir() + string(os.PathSeparator) + "fyj.ini")
-	if err != nil {
-		log.Fatalln("Fail to read fyj.ini file.", err)
-	}
-
+func GetDBConfig() *DBConfiguration {
 	database := new(DBConfiguration)
-
-	err = config.Section("database").MapTo(database)
-	if err != nil {
+	if err := config.Section("database").MapTo(database); err != nil {
 		log.Warnln("Fail to parse database configuration.", err)
 	}
 
 	return database
 }
 
-// DBUrl returns database type and its DSN.
-func DBUrl() (dbType, dsn string) {
-	db := getDBConfiguration()
-	dbType = strings.ToLower(db.Type)
+// DNSConfiguration is DNS configuration for Tencent Cloud.
+type DNSConfiguration struct {
+	SecretID  string `ini:"secretID"`
+	SecretKey string `ini:"secretKey"`
+}
 
-	switch dbType {
-	case "mysql":
-		dsn = db.User + ":" + db.Password + "@tcp(" + db.Url +
-			":" + db.Port + ")/" + db.Name + "?charset=utf8"
-	case "postgresql":
-		dbType = "postgres"
-		dsn = strings.Join([]string{
-			"dbname=" + db.Name,
-			"user=" + db.User,
-			"password=" + db.Password,
-			"host=" + db.Url,
-			"port=" + db.Port,
-		}, " ")
-	case "sqlite3":
-		dsn = "file:" + db.Name + "?cache=shared&mode=rwc"
-	default:
-		dsn = ""
+func DNSConfig() *DNSConfiguration {
+	dns := new(DNSConfiguration)
+	if err := config.Section("dns").MapTo(dns); err != nil {
+		log.Warnln("Fail to parse DNS configuration.", err)
 	}
 
-	return
+	return dns
 }
