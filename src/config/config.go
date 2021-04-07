@@ -19,8 +19,8 @@ func init() {
 	config = configFile
 }
 
-// DBConfiguration is custom configuration for DB.
-type DBConfiguration struct {
+// DBConfig is custom configuration for DB.
+type DBConfig struct {
 	Type     string `ini:"type"`
 	User     string `ini:"user"`
 	Password string `ini:"password"`
@@ -29,9 +29,9 @@ type DBConfiguration struct {
 	Url      string `ini:"url"`
 }
 
-// getDBConfiguration returns database configuration.
-func GetDBConfig() *DBConfiguration {
-	database := new(DBConfiguration)
+// GetDBConfig returns database configuration.
+func GetDBConfig() *DBConfig {
+	database := new(DBConfig)
 	if err := config.Section("database").MapTo(database); err != nil {
 		log.Warnln("Fail to parse database configuration.", err)
 	}
@@ -39,14 +39,15 @@ func GetDBConfig() *DBConfiguration {
 	return database
 }
 
-// DNSConfiguration is DNS configuration for Tencent Cloud.
-type DNSConfiguration struct {
+// DNSConfig is DNS configuration for Tencent Cloud.
+type DNSConfig struct {
 	SecretID  string `ini:"secretID"`
 	SecretKey string `ini:"secretKey"`
 }
 
-func DNSConfig() *DNSConfiguration {
-	dns := new(DNSConfiguration)
+// GetDNSConfig returns DNS configuration.
+func GetDNSConfig() *DNSConfig {
+	dns := new(DNSConfig)
 	if err := config.Section("dns").MapTo(dns); err != nil {
 		log.Warnln("Fail to parse DNS configuration.", err)
 	}
