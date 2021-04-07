@@ -3,7 +3,7 @@ package model
 import (
 	"testing"
 
-	. "github.com/agiledragon/gomonkey"
+	. "github.com/agiledragon/gomonkey/v2"
 	. "github.com/smartystreets/goconvey/convey"
 
 	"github.com/Pengxn/go-xn/src/util/log"

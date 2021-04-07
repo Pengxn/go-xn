@@ -12,12 +12,8 @@ import (
 	"strings"
 	"time"
 
+	"github.com/Pengxn/go-xn/src/config"
 	"github.com/Pengxn/go-xn/src/util/httplib"
-)
-
-const (
-	SecretID  = ""
-	SecretKey = ""
 )
 
 type DNSCommon struct {
@@ -49,12 +45,13 @@ func (dns DNSCommon) SetAction(action string) DNSCommon {
 
 // do http request, https://cloud.tencent.com/document/product/302/7310
 func (dns DNSCommon) do(params map[string]string) (*http.Response, error) {
+	dnsConfig := config.GetDNSConfig()
 	// common params
 	allParams := map[string]string{
 		"Action":          dns.action,
 		"Timestamp":       strconv.Itoa(int(dns.timestamp.Unix())),
 		"Nonce":           strconv.Itoa(dns.nonce),
-		"SecretId":        SecretID,
+		"SecretId":        dnsConfig.SecretID,
 		"SignatureMethod": dns.signatureMethod,
 	}
 	if dns.region != "" { // Optional param
@@ -65,7 +62,7 @@ func (dns DNSCommon) do(params map[string]string) (*http.Response, error) {
 	}
 
 	signatureRaw := fmt.Sprintf("POST%s/v2/index.php?%s", dns.Host, sortParams(allParams))
-	signature := signHmacSha256(signatureRaw, SecretKey)
+	signature := signHmacSha256(signatureRaw, dnsConfig.SecretKey)
 
 	postParam := map[string][]string{}
 	for k, v := range allParams { // convert map[string]string to map[string][]string
