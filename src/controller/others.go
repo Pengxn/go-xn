@@ -3,10 +3,25 @@ package controller
 import (
 	"github.com/gin-gonic/gin"
 
+	"github.com/Pengxn/go-xn/src/lib/whois"
 	"github.com/Pengxn/go-xn/src/util/log"
 )
 
+// GwtWhoisInfo gets domain whois information.
+// Request sample:
+//     GET => /whois?domain=huiyifyj.cn
+func GwtWhoisInfo(c *gin.Context) {
+	res, err := whois.GetWhois(c.Query("domain"))
+	if err != nil {
+		log.Errorf("Get Whois Information error: %+v, domain: %s", err, c.Param("domain"))
+		c.String(404, err.Error())
+	}
+	c.String(200, res)
+}
+
 // UploadFileForUPic uploads files to the specified file path.
+// Request sample:
+//     POST => /upload/upic?file=...
 func UploadFileForUPic(c *gin.Context) {
 	file, err := c.FormFile("file")
 	if err != nil {

@@ -8,10 +8,11 @@ import (
 
 // othersRoutes registers other routes.
 func othersRoutes(g *gin.Engine) {
+	// Get domain whois information.
+	g.GET("/whois", controller.GwtWhoisInfo)
+
 	// Register routes and methods for uPic, more information
 	// to https://blog.svend.cc/upic/tutorials/custom
-	// Request sample:
-	//     POST => /upload/upic?file=...
 	g.POST("/upload/upic", controller.UploadFileForUPic)
 	g.Static("/upic", "uPic")
 }
