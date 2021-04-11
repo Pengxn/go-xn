@@ -1,4 +1,4 @@
-package route
+package controller
 
 import (
 	"github.com/gin-gonic/gin"
@@ -6,18 +6,8 @@ import (
 	"github.com/Pengxn/go-xn/src/util/log"
 )
 
-// uPicRoute register routes and methods for uPic, more information
-// to https://blog.svend.cc/upic/tutorials/custom
-func uPicRoute(g *gin.Engine) {
-	// Request sample:
-	//     POST => /upload/upic?file=...
-	g.POST("/upload/upic", uploadFileForUPic)
-
-	g.Static("/upic", "uPic")
-}
-
-// uploadFileForUPic uploads files to the specified file path.
-func uploadFileForUPic(c *gin.Context) {
+// UploadFileForUPic uploads files to the specified file path.
+func UploadFileForUPic(c *gin.Context) {
 	file, err := c.FormFile("file")
 	if err != nil {
 		log.Errorf("Get uploaded file error: %+v", err)
