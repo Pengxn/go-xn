@@ -15,6 +15,9 @@ import (
 // GetWhois gets domain whois information.
 // Supported TLD list: https://data.iana.org/TLD/tlds-alpha-by-domain.txt
 func GetWhois(domain string) (string, error) {
+	// TODO: Check the domain by regexp
+	// TODO: Convert special domain by punnycode
+
 	tld := domain[strings.LastIndex(domain, ".")+1:]
 	whoisServer, err := getWhoisServer(tld)
 	if err != nil {

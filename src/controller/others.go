@@ -11,12 +11,17 @@ import (
 
 // GwtWhoisInfo gets domain whois information.
 // Request sample:
-//     GET => /whois?domain=huiyifyj.cn
+//     GET => /whois?domain=xn--02f.com
 func GwtWhoisInfo(c *gin.Context) {
-	domain := c.Query("domain")
-	if strings.TrimSpace(domain) == "" {
+	domain := strings.TrimSpace(c.Query("domain"))
+	if strings.HasSuffix(domain, ".") { // Trim the dot at the end
+		domain = domain[:len(domain)-1]
+	}
+
+	if len(strings.Split(domain, ".")) < 2 { // Need a TLD and a domain body
 		c.String(403, "参数有误, 请重试!")
 	}
+
 	res, err := whois.GetWhois(domain)
 	if err != nil {
 		log.Errorf("Get Whois Information error: %+v, domain: %s", err, domain)
