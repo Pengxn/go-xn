@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"net"
 	"net/http"
+	"regexp"
 	"strconv"
 	"strings"
 	"time"
@@ -42,9 +43,9 @@ func getWhoisServer(tld string) (string, error) {
 		return "", err
 	}
 
-	// TODO: Get whois server by regular expression.
+	ret := regexp.MustCompile("(?i:<b>WHOIS Server:</b>(.*?)\n)").FindStringSubmatch(string(bodyData))
 
-	return string(bodyData), nil
+	return strings.TrimSpace(ret[1]), nil
 }
 
 // sendWhoisSocket send whois request to whois server.

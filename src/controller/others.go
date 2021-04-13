@@ -1,6 +1,8 @@
 package controller
 
 import (
+	"strings"
+
 	"github.com/gin-gonic/gin"
 
 	"github.com/Pengxn/go-xn/src/lib/whois"
@@ -11,9 +13,13 @@ import (
 // Request sample:
 //     GET => /whois?domain=huiyifyj.cn
 func GwtWhoisInfo(c *gin.Context) {
-	res, err := whois.GetWhois(c.Query("domain"))
+	domain := c.Query("domain")
+	if strings.TrimSpace(domain) == "" {
+		c.String(403, "参数有误, 请重试!")
+	}
+	res, err := whois.GetWhois(domain)
 	if err != nil {
-		log.Errorf("Get Whois Information error: %+v, domain: %s", err, c.Param("domain"))
+		log.Errorf("Get Whois Information error: %+v, domain: %s", err, domain)
 		c.String(404, err.Error())
 	}
 	c.String(200, res)
