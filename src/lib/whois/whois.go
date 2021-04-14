@@ -17,9 +17,7 @@ import (
 func GetWhois(domain string) (string, error) {
 	// TODO: Check the domain by regexp
 	// TODO: Convert special domain by punnycode
-
-	tld := domain[strings.LastIndex(domain, ".")+1:]
-	whoisServer, err := getWhoisServer(tld)
+	whoisServer, err := getWhoisServer(domain)
 	if err != nil {
 		return "", err
 	}
@@ -32,7 +30,8 @@ func GetWhois(domain string) (string, error) {
 	return whois, nil
 }
 
-func getWhoisServer(tld string) (string, error) {
+func getWhoisServer(domain string) (string, error) {
+	tld := domain[strings.LastIndex(domain, ".")+1:]
 	resp, err := http.Get("https://www.iana.org/domains/root/db/" + tld + ".html")
 	if err != nil {
 		return "", err
