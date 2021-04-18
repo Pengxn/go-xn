@@ -29,12 +29,14 @@ And it display revision and built time information.`,
 
 // showVersion prints the version information to stdout
 func showVersion(c *cli.Context) error {
-	fmt.Printf("FYJ  %s\n", Version)
-	fmt.Printf("---------------------------------\n")
-	fmt.Printf("- Go version: %s\n", runtime.Version())
-	fmt.Printf("- Revision:   %s\n", commitID)
-	fmt.Printf("- OS/Arch:    %s/%s\n", runtime.GOOS, runtime.GOARCH)
-	fmt.Printf("- Built time: %s\n", buildTime)
+	fmt.Printf(`FYJ %s
+---------------------------------
+- Go version: %s
+- Revision:   %s
+- OS/Arch:    %s/%s
+- Built time: %s
+`, Version, runtime.Version(), commitID,
+		runtime.GOOS, runtime.GOARCH, buildTime)
 
 	return nil
 }
