@@ -14,6 +14,7 @@ import (
 
 // GetWhois gets domain whois information.
 // Supported TLD list: https://data.iana.org/TLD/tlds-alpha-by-domain.txt
+// and https://publicsuffix.org/list/public_suffix_list.dat
 func GetWhois(domain string) (string, error) {
 	// TODO: Check the domain by regexp
 	// TODO: Convert special domain by punnycode
@@ -60,7 +61,7 @@ func sendWhoisSocket(domain, whoisServer string) (string, error) {
 	return result, nil
 }
 
-//NewSocketConn news SOCKET connection and contents to server.
+// NewSocketConn news SOCKET connection and contents to server.
 func NewSocketConn(server, content string, timeout int64) (string, int, error) {
 	conn, err := net.Dial("tcp", server)
 	if err != nil {
