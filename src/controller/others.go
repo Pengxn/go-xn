@@ -19,7 +19,7 @@ func GwtWhoisInfo(c *gin.Context) {
 	}
 
 	if len(strings.Split(domain, ".")) < 2 { // Need a TLD and a domain body
-		c.String(403, "参数有误, 请重试!")
+		c.String(403, "Param (domain="+domain+") is invaild")
 	}
 
 	res, err := whois.GetWhois(domain)
