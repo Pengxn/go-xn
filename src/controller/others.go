@@ -20,12 +20,14 @@ func GwtWhoisInfo(c *gin.Context) {
 
 	if len(strings.Split(domain, ".")) < 2 { // Need a TLD and a domain body
 		c.String(403, "Param (domain="+domain+") is invaild")
+		return
 	}
 
 	res, err := whois.GetWhois(domain)
 	if err != nil {
 		log.Errorf("Get Whois Information error: %+v, domain: %s", err, domain)
 		c.String(404, err.Error())
+		return
 	}
 	c.String(200, res)
 }
@@ -41,6 +43,7 @@ func UploadFileForUPic(c *gin.Context) {
 			"code": 500,
 			"data": "Get uploaded file failed",
 		})
+		return
 	}
 
 	if err = c.SaveUploadedFile(file, "./uPic/"+file.Filename); err != nil {
@@ -49,6 +52,7 @@ func UploadFileForUPic(c *gin.Context) {
 			"code": 500,
 			"data": "Save uploaded file failed",
 		})
+		return
 	}
 
 	c.JSON(200, gin.H{
