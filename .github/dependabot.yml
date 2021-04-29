@@ -1,0 +1,17 @@
+version: 2
+updates:
+- package-ecosystem: gomod
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "21:00"
+  open-pull-requests-limit: 10
+  target-branch: master
+  reviewers:
+  - Pengxn
+  labels:
+  - "dependencies\U0001F4E6"
+  ignore:
+  - dependency-name: github.com/sirupsen/logrus
+    versions:
+    - 1.7.1
