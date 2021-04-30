@@ -1,0 +1,13 @@
+# Set update schedule for gomod
+
+version: 2
+updates:
+  - package-ecosystem: "gomod"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    reviewers:
+      - "Pengxn"
+    labels:
+      - dependencies📦
+    target-branch: "master"
