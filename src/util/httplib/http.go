@@ -7,13 +7,10 @@ import (
 	"io"
 	"mime/multipart"
 	"net/http"
-	"net/http/httptrace"
 	"net/url"
 	"sort"
 	"strings"
 	"time"
-
-	"github.com/sirupsen/logrus"
 )
 
 // Client http request client provides more useful methods
@@ -27,7 +24,6 @@ type Client struct {
 	host        string
 	contentType ContentType
 	keepCase    bool
-	log         *logrus.Logger
 }
 
 // NewTimeoutClient returns http Client with custom timeout.
@@ -103,12 +99,6 @@ func (c *Client) SetContentType(contentType ContentType) *Client {
 	return c
 }
 
-// SetDebugTrace sets debug trace.
-func (c *Client) SetDebugTrace(l *logrus.Logger) *Client {
-	c.log = l
-	return c
-}
-
 // GET sends request with GET method.
 func (c *Client) GET(url string) (*http.Response, error) {
 	values := c.httpParamsDeal()
@@ -163,35 +153,6 @@ func (c *Client) do(method, url string, body io.Reader) (*http.Response, error) 
 	}
 	if c.host != "" {
 		req.Host = c.host
-	}
-	if c.log != nil {
-		trace := &httptrace.ClientTrace{
-			DNSStart: func(info httptrace.DNSStartInfo) {
-				c.log.Infof("%s start dns", info.Host)
-			},
-			DNSDone: func(info httptrace.DNSDoneInfo) {
-				c.log.Infof("dns end %s err:%v", info.Addrs, info.Err)
-			},
-			GotConn: func(connInfo httptrace.GotConnInfo) {
-				c.log.Infof("got conn")
-			},
-			ConnectStart: func(network, addr string) {
-				c.log.Infof("dial start")
-			},
-			ConnectDone: func(network, addr string, err error) {
-				c.log.Infof("dial done")
-			},
-			GotFirstResponseByte: func() {
-				c.log.Infof("first response byte!")
-			},
-			WroteHeaders: func() {
-				c.log.Infof("wrote headers")
-			},
-			WroteRequest: func(wr httptrace.WroteRequestInfo) {
-				c.log.Infof("wrote request %v", wr)
-			},
-		}
-		req = req.WithContext(httptrace.WithClientTrace(req.Context(), trace))
 	}
 
 	return c.httpClient.Do(req)
