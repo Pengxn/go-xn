@@ -2,6 +2,8 @@
 
 > ✍ The platform for publishing and running your blog.
 
+![actions](https://img.shields.io/github/workflow/status/Pengxn/go-xn/test?label=action&logo=github&style=flat-square)
+
 ## Build
 ```shell
 $ make & make web
