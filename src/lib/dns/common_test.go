@@ -6,6 +6,14 @@ import (
 	. "github.com/smartystreets/goconvey/convey"
 )
 
+func TestSetAction(t *testing.T) {
+	dns := NewDNS()
+
+	Convey("Test SetAction.", t, func() {
+		So(dns.SetAction("test").action, ShouldEqual, "test")
+	})
+}
+
 func TestSortParams(t *testing.T) {
 	params := map[string]string{
 		"Timestamp": "1234",
