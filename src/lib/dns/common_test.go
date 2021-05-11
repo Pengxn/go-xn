@@ -1,9 +1,14 @@
 package dns
 
 import (
+	"net/http"
+	"reflect"
 	"testing"
 
+	. "github.com/agiledragon/gomonkey/v2"
 	. "github.com/smartystreets/goconvey/convey"
+
+	"github.com/Pengxn/go-xn/src/util/httplib"
 )
 
 func TestSetAction(t *testing.T) {
@@ -11,6 +16,26 @@ func TestSetAction(t *testing.T) {
 
 	Convey("Test SetAction.", t, func() {
 		So(dns.SetAction("test").action, ShouldEqual, "test")
+	})
+}
+
+func TestDo(t *testing.T) {
+	post := func(_ *httplib.Client, url string) (*http.Response, error) {
+		return nil, nil
+	}
+	patch := ApplyMethod(reflect.TypeOf(&httplib.Client{}), "POST", post)
+	defer patch.Reset()
+
+	dns := DNSCommon{
+		action: "action",
+		region: "region", // optional param
+	}
+	response, err := dns.do(map[string]string{
+		"Other": "other", // other params
+	})
+	Convey("Test do.", t, func() {
+		So(response, ShouldEqual, nil)
+		So(err, ShouldEqual, nil)
 	})
 }
 

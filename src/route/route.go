@@ -17,6 +17,7 @@ func InitRoutes(port string) error {
 	g.GET("/page/:pageNum", controller.ArticlesPage)
 
 	errorRoute(g)
+	adminRoutes(g)
 	othersRoutes(g)
 	staticRoutes(g)
 	optionsRoutes(g)
