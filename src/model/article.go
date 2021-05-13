@@ -55,13 +55,7 @@ func AddArticle(article *Article) bool {
 		log.Errorf("AddArticle throw error: %s", err)
 	}
 
-	isSuccess := false
-
-	if affected > 0 {
-		isSuccess = true
-	}
-
-	return isSuccess
+	return affected > 0
 }
 
 // ArticleExist if article exist

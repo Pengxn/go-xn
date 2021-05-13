@@ -53,12 +53,7 @@ func AddToOption(option *Option) bool {
 		log.Errorf("AddToOption throw error: %s", err)
 	}
 
-	isSuccess := false
-	if affected > 0 {
-		isSuccess = true
-	}
-
-	return isSuccess
+	return affected > 0
 }
 
 // DeleteOptionByName deletes an Option by 'option_name'.
