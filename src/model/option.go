@@ -71,12 +71,7 @@ func DeleteOptionByName(optionName string) bool {
 		log.Errorf("DeleteOptionByName throw error: %s", err)
 	}
 
-	isSuccess := false
-	if affected > 0 {
-		isSuccess = true
-	}
-
-	return isSuccess
+	return affected > 0
 }
 
 // UpdateOptionByName updates an option by 'option_name'.
@@ -92,12 +87,7 @@ func UpdateOptionByName(option *Option) bool {
 		log.Errorf("UpdateOptionByName throw error: %s", err)
 	}
 
-	isSuccess := false
-	if affected > 0 {
-		isSuccess = true
-	}
-
-	return isSuccess
+	return affected > 0
 }
 
 // OptionExist if the option_name of option exist
