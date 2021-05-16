@@ -41,26 +41,58 @@ type DomainListData struct {
 }
 
 // DomainList returns all domains with their details.
-func DomainList(params map[string]string) (string, error) {
-	return handle(NewDNS().SetAction("DomainList").do(params))
+func DomainList(params map[string]string) (DomainListData, error) {
+	var data DomainListData
+	content, err := handle(NewDNS().SetAction("DomainList").do(params))
+	if err != nil {
+		return data, err
+	}
+	err = json.Unmarshal([]byte(content), &data)
+
+	return data, err
 }
 
 // RecordListData RecordList data struct
 type RecordListData struct {
-	Record struct {
-		ID     string `json:"id"`
-		Name   string `json:"name"`
-		Status string `json:"status"`
-		Weight int    `json:"weight"`
-	} `json:"record"`
+	Domain struct {
+		ID         string   `json:"id"`
+		Name       string   `json:"name"`
+		Punycode   string   `json:"punycode"`
+		Grade      string   `json:"grade"`
+		Owner      string   `json:"owner"`
+		ExtStatus  string   `json:"ext_status"`
+		TTL        int      `json:"ttl"`
+		MinTTL     int      `json:"min_ttl"`
+		DnspodNS   []string `json:"dnspod_ns"`
+		Status     string   `json:"status"`
+		QProjectID int      `json:"q_project_id"`
+	} `json:"domain"`
+	Info struct {
+		SubDomains  string `json:"sub_domains"`
+		RecordTotal string `json:"record_total"`
+		RecordsNum  string `json:"records_num"`
+	} `json:"info"`
+	Records []struct {
+		ID         int    `json:"id"`
+		TTL        int    `json:"ttl"`
+		Value      string `json:"value"`
+		Enable     int    `json:"enabled"`
+		Status     string `json:"status"`
+		UpdatedOn  string `json:"updated_on"`
+		QProjectID int    `json:"q_project_id"`
+		Name       string `json:"name"`
+		Line       string `json:"line"`
+		LineID     string `json:"line_id"`
+		Type       string `json:"type"`
+		Remark     string `json:"remark"`
+		MX         int    `json:"mx"`
+		Hold       string `json:"hold"`
+	} `json:"records"`
 }
 
 // RecordList returns all DNS records of the domain.
-func RecordList(domain string, params map[string]string) (string, error) {
-	if domain == "" {
-		return "", errors.New("")
-	}
-	params["domain"] = domain
+func RecordList(domain string) (string, error) {
+	params := map[string]string{"domain": domain}
 
 	return handle(NewDNS().SetAction("RecordList").do(params))
 }
@@ -140,6 +172,8 @@ func handle(resp *http.Response, err error) (string, error) {
 	return data, nil
 }
 
+// handleResponse handles http content returned by http according to
+// Tencent Cloud the specification.
 func handleResponse(content []byte) (string, error) {
 	j := gjson.ParseBytes(content)
 	if j.Get("code").Int() != 0 {
