@@ -9,8 +9,9 @@ require (
 	github.com/mattn/go-sqlite3 v1.14.7
 	github.com/sirupsen/logrus v1.8.1
 	github.com/smartystreets/goconvey v1.6.4
-	github.com/tidwall/gjson v1.7.5
+	github.com/tidwall/gjson v1.8.0
 	github.com/urfave/cli/v2 v2.3.0
+	gopkg.in/ini.v1 v1.62.0 // indirect
 	xorm.io/xorm v1.1.0
 )
 
