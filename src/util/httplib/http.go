@@ -26,16 +26,16 @@ type Client struct {
 	keepCase    bool
 }
 
-// NewTimeoutClient returns http Client with custom timeout.
-func NewTimeoutClient(second int64) *Client {
-	conf := NewHttpConfig()
-	conf.Timeout = time.Duration(second) * time.Second
-	return NewClient(conf)
-}
-
 // New returns http Client with default settings.
 func New() *Client {
 	return NewClient(NewHttpConfig())
+}
+
+// NewTimeoutClient returns http Client with custom timeout.
+func NewTimeoutClient(second int64) *Client {
+	config := NewHttpConfig()
+	config.Timeout = time.Duration(second) * time.Second
+	return NewClient(config)
 }
 
 // NewClient returns http Client with custom settings.
