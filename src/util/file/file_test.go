@@ -1,6 +1,7 @@
 package path
 
 import (
+	"os"
 	"testing"
 
 	. "github.com/smartystreets/goconvey/convey"
@@ -44,6 +45,25 @@ func TestIsDir(t *testing.T) {
 		})
 		Convey("Pass a invalid path", func() {
 			So(IsDir("foo"), ShouldEqual, false)
+		})
+	})
+}
+
+func TestCopyFile(t *testing.T) {
+	Convey("Test copy file , including symbolic link.", t, func() {
+		Convey("Test normal text file", func() {
+			destination := "testdata/copy.txt"
+			err := CopyFile("testdata/source.txt", destination)
+			So(err, ShouldBeNil)
+			So(IsExist(destination), ShouldBeTrue)
+			os.Remove(destination)
+		})
+		Convey("Test symbolic link file", func() {
+			destination := "testdata/copy.link"
+			err := CopyFile("testdata/symbolic.link", destination)
+			So(err, ShouldBeNil)
+			So(IsExist(destination), ShouldBeTrue)
+			os.Remove(destination)
 		})
 	})
 }
