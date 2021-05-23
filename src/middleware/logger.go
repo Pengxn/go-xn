@@ -8,6 +8,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 
+	"github.com/Pengxn/go-xn/src/util/file"
 	"github.com/Pengxn/go-xn/src/util/log"
 )
 
@@ -21,11 +22,13 @@ func Logger() gin.HandlerFunc {
 // WriterLog writes log to the specified writer buffer.
 // Example: os.Stdout, a file opened in write mode, a socket...
 func WriterLog() io.Writer {
-	// Logging to a file.
-	f, err := os.Create("fyj.log")
-	if err != nil {
-		log.Errorln("Create log file error: %v", err)
+	if !file.IsExist("fyj.log") {
+		if _, err := os.Create("fyj.log"); err != nil {
+			log.Errorf("Create log file error: %v", err)
+		}
 	}
+	// Logging to a file.
+	f, _ := os.Open("fyj.log")
 
 	return io.MultiWriter(f, os.Stdout)
 }
