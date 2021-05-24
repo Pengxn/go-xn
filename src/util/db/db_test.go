@@ -18,34 +18,36 @@ func TestDBUrl(t *testing.T) {
 	})
 	defer patch.Reset()
 
-	Convey("Test DBUrl when database is MySQL", t, func() {
-		want := ":@tcp(:)/?charset=utf8"
-		dbType, dsn := getDBUrl()
+	Convey("Test if DB Url is correct.", t, func() {
+		Convey("Test DBUrl when database is MySQL", func() {
+			want := ":@tcp(:)/?charset=utf8"
+			dbType, dsn := getDBUrl()
 
-		So(dbType, ShouldEqual, "mysql")
-		So(dsn, ShouldEqual, want)
-	})
+			So(dbType, ShouldEqual, "mysql")
+			So(dsn, ShouldEqual, want)
+		})
 
-	Convey("Test DBUrl when database is PostgreSQL", t, func() {
-		want := "dbname= user= password= host= port="
-		dbType, dsn := getDBUrl()
+		Convey("Test DBUrl when database is PostgreSQL", func() {
+			want := "dbname= user= password= host= port="
+			dbType, dsn := getDBUrl()
 
-		So(dbType, ShouldEqual, "postgres")
-		So(dsn, ShouldEqual, want)
-	})
+			So(dbType, ShouldEqual, "postgres")
+			So(dsn, ShouldEqual, want)
+		})
 
-	Convey("Test DBUrl when database is SQLite", t, func() {
-		want := "file:?cache=shared&mode=rwc"
-		dbType, dsn := getDBUrl()
+		Convey("Test DBUrl when database is SQLite", func() {
+			want := "file:?cache=shared&mode=rwc"
+			dbType, dsn := getDBUrl()
 
-		So(dbType, ShouldEqual, "sqlite3")
-		So(dsn, ShouldEqual, want)
-	})
+			So(dbType, ShouldEqual, "sqlite3")
+			So(dsn, ShouldEqual, want)
+		})
 
-	Convey("Test DBUrl when database is not supported", t, func() {
-		dbType, dsn := getDBUrl()
+		Convey("Test DBUrl when database is not supported", func() {
+			dbType, dsn := getDBUrl()
 
-		So(dbType, ShouldEqual, "")
-		So(dsn, ShouldEqual, "")
+			So(dbType, ShouldEqual, "")
+			So(dsn, ShouldEqual, "")
+		})
 	})
 }
