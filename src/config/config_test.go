@@ -48,3 +48,15 @@ func TestGetDNSConfig(t *testing.T) {
 		})
 	})
 }
+
+func TestGetSentryConfig(t *testing.T) {
+	patch := ApplyGlobalVar(&config, configTest)
+	defer patch.Reset()
+
+	Convey("Test GetSentryConfig", t, func() {
+		So(GetSentryConfig(), ShouldResemble, &SentryConfig{
+			DSN:   "https:/0eaj7***6gv4s@sentry.io/1234567",
+			Debug: true,
+		})
+	})
+}

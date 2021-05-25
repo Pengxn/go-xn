@@ -54,3 +54,19 @@ func GetDNSConfig() *DNSConfig {
 
 	return dns
 }
+
+// SentryConfig is configuration for Sentry.
+type SentryConfig struct {
+	DSN   string `ini:"DSN"`
+	Debug bool   `ini:"debug"`
+}
+
+// GetSentryConfig returns snetry configuration.
+func GetSentryConfig() *SentryConfig {
+	sentry := new(SentryConfig)
+	if err := config.Section("sentry").MapTo(sentry); err != nil {
+		log.Warnln("Fail to parse sentry configuration.", err)
+	}
+
+	return sentry
+}
