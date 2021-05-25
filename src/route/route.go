@@ -12,7 +12,7 @@ func InitRoutes(port string) error {
 	gin.SetMode(gin.ReleaseMode)
 
 	g := gin.New()
-	g.Use(middleware.Logger(), gin.Recovery())
+	g.Use(middleware.Logger(), gin.Recovery(), middleware.Sentry())
 	g.GET("/", controller.HomePage)
 
 	// Page number handler
