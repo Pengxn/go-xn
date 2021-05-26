@@ -1,6 +1,7 @@
+# Build stage
 FROM golang:alpine AS builder
 
-ENV GOPROXY https://goproxy.cn,direct
+# ENV GOPROXY https://goproxy.cn,direct
 
 WORKDIR /src
 
@@ -11,10 +12,9 @@ RUN apk add --no-cache build-base make git; \
     cp src/config/example.ini $HOME/fyj.ini; \
     make && make web
 
+# Server image
 FROM alpine:latest
-
-WORKDIR /fyj
 
 COPY --from=builder /src/build/ /fyj/
 
-CMD [ "./go-xn", "web" ]
+CMD [ "/fyj/go-xn", "web" ]
