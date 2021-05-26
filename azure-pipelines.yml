@@ -9,3 +9,12 @@ jobs:
     vmImage: ubuntu-latest
   steps:
   - template: test/azure-pipelines/linux/azure-pipelines.yml
+- job: Docker
+  pool:
+    vmImage: ubuntu-latest
+  dependsOn: Linux
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/azure-pipelines-docker'))
+  variables:
+  - group: docker
+  steps:
+  - template: test/azure-pipelines/docker/azure-pipelines.yml
