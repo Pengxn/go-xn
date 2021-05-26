@@ -9,7 +9,7 @@ COPY . .
 RUN apk add --no-cache build-base make git; \
     go mod download; \
     cp src/config/example.ini $HOME/fyj.ini; \
-    make && make web && make test
+    make && make web
 
 FROM alpine:latest
 
