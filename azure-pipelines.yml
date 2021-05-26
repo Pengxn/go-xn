@@ -13,7 +13,7 @@ jobs:
   pool:
     vmImage: ubuntu-latest
   dependsOn: Linux
-  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/azure-pipelines-docker'))
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
   variables:
   - group: docker
   steps:
