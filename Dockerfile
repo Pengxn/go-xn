@@ -9,12 +9,11 @@ COPY . .
 
 RUN apk add --no-cache build-base make git; \
     go mod download; \
-    cp src/config/example.ini $HOME/fyj.ini; \
     make && make web
 
 # Server image
 FROM alpine:latest
 
-COPY --from=builder /src/build/ /fyj/
+COPY --from=builder /src/build/ /
 
-CMD [ "/fyj/go-xn", "web" ]
+CMD [ "/go-xn", "web" ]
