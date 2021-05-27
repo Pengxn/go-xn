@@ -1,14 +1,14 @@
 steps:
-- script: |
-    docker pull golang:alpine || true
-    docker pull alpine:latest || true
-  displayName: Fetche Ltest Image
-- script: |
-    docker build --no-cache -t $(DOCKER_USER)/fyj:latest .
-  displayName: Build Docker Image
-- script: |
-    echo -n $(DOCKER_TOKEN) | docker login -u $(DOCKER_USER) --password-stdin
-  displayName: Login Docker Hub
-- script: |
-    docker push $(DOCKER_USER)/fyj:latest
-  displayName: Push Docker Image
+  - script: |
+      docker pull golang:alpine || true
+      docker pull alpine:latest || true
+    displayName: Fetche Ltest Image
+  - script: |
+      docker build --no-cache -t $(DOCKER_USER)/fyj:latest .
+    displayName: Build Docker Image
+  - script: |
+      echo -n $(DOCKER_TOKEN) | docker login -u $(DOCKER_USER) --password-stdin
+    displayName: Login Docker Hub
+  - script: |
+      docker push $(DOCKER_USER)/fyj:latest
+    displayName: Push Docker Image
