@@ -1,6 +1,14 @@
 name: test
 
-on: [push, pull_request]
+on:
+  push:
+    paths-ignore:
+      - 'test/azure-pipelines/**'
+      - 'azure-pipelines.yml'
+  pull_request:
+    paths-ignore:
+      - 'test/azure-pipelines/**'
+      - 'azure-pipelines.yml'
 
 jobs:
   test:
