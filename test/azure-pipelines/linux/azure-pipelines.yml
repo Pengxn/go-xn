@@ -1,18 +1,18 @@
 steps:
-- task: GoTool@0
-  inputs:
-    version: '1.16.2'
-- script: |
-    go mod download
-    cp src/config/example.ini ~/fyj.ini
-    make test
-  displayName: Run Tests
-- script: |
-    make
-    make web
-  displayName: Build and Compile
-- task: PublishBuildArtifacts@1
-  inputs:
-    pathtoPublish: build
-    artifactName: linux-amd64
-  displayName: Publish Build Artifacts
+  - task: GoTool@0
+    inputs:
+      version: '1.16.2'
+  - script: |
+      go mod download
+      cp src/config/example.ini ~/fyj.ini
+      make test
+    displayName: Run Tests
+  - script: |
+      make
+      make web
+    displayName: Build and Compile
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathtoPublish: build
+      artifactName: linux-amd64
+    displayName: Publish Build Artifacts
