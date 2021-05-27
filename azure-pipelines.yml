@@ -1,3 +1,7 @@
+variables:
+  - group: docker # including $DOCKER_USER and $DOCKER_TOKEN
+  - group: go     # including $GO_VERSION
+
 stages:
   - stage:
     displayName: On Windows

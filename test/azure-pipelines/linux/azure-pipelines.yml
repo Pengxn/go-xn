@@ -1,7 +1,7 @@
 steps:
   - task: GoTool@0
     inputs:
-      version: '1.16.2'
+      version: $(GO_VERSION)
   - script: |
       go mod download
       cp src/config/example.ini ~/fyj.ini
