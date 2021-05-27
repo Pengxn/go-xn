@@ -1,6 +1,6 @@
 stages:
   - stage:
-    displayName: Test and Build on Windows
+    displayName: On Windows
     pool:
       vmImage: windows-latest
     jobs:
@@ -8,7 +8,9 @@ stages:
         steps:
           - template: test/azure-pipelines/win32/azure-pipelines.yml
   - stage:
-    displayName: Test and Build on Linux
+    displayName: On Linux
+    # Removes the implicit dependency and run in paralle
+    dependsOn: []
     pool:
       vmImage: ubuntu-latest
     jobs:
