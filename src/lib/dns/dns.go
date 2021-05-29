@@ -70,7 +70,6 @@ type RecordListData struct {
 	Info struct {
 		SubDomains  string `json:"sub_domains"`
 		RecordTotal string `json:"record_total"`
-		RecordsNum  string `json:"records_num"`
 	} `json:"info"`
 	Records []struct {
 		ID         int    `json:"id"`
@@ -86,15 +85,21 @@ type RecordListData struct {
 		Type       string `json:"type"`
 		Remark     string `json:"remark"`
 		MX         int    `json:"mx"`
-		Hold       string `json:"hold"`
 	} `json:"records"`
 }
 
 // RecordList returns all DNS records of the domain.
-func RecordList(domain string) (string, error) {
-	params := map[string]string{"domain": domain}
+func RecordList(domain string) (RecordListData, error) {
+	var data RecordListData
+	content, err := handle(NewDNS().SetAction("RecordList").do(map[string]string{
+		"domain": domain,
+	}))
+	if err != nil {
+		return data, err
+	}
+	err = json.Unmarshal([]byte(content), &data)
 
-	return handle(NewDNS().SetAction("RecordList").do(params))
+	return data, err
 }
 
 // RecordData RecordCreate/RecordStatus/RecordModify data struct
