@@ -89,11 +89,16 @@ type RecordListData struct {
 }
 
 // RecordList returns all DNS records of the domain.
-func RecordList(domain string) (RecordListData, error) {
+func RecordList(domain string, filter ...map[string]string) (RecordListData, error) {
+	param := map[string]string{"domain": domain}
+	if len(filter) > 0 {
+		for k, v := range filter[0] {
+			param[k] = v
+		}
+	}
+
 	var data RecordListData
-	content, err := handle(NewDNS().SetAction("RecordList").do(map[string]string{
-		"domain": domain,
-	}))
+	content, err := handle(NewDNS().SetAction("RecordList").do(param))
 	if err != nil {
 		return data, err
 	}
@@ -102,7 +107,7 @@ func RecordList(domain string) (RecordListData, error) {
 	return data, err
 }
 
-// RecordData RecordCreate/RecordStatus/RecordModify data struct
+// RecordData RecordCreate/RecordModify data struct
 type RecordData struct {
 	Record struct {
 		ID     string `json:"id"`
@@ -113,35 +118,68 @@ type RecordData struct {
 	} `json:"record"`
 }
 
-// RecordCreate creates a new DNS record for domain.
-func RecordCreate(domain string, params map[string]string) (string, error) {
-	if domain == "" {
-		return "", errors.New("")
-	}
-	params["domain"] = domain
-
-	return handle(NewDNS().SetAction("RecordCreate").do(params))
+// RecordParam RecordCreate/RecordModify param struct
+type RecordParam struct {
+	Domain     string `json:"domain"`
+	SubDomain  string `json:"subDomain"`
+	RecordType string `json:"recordType"`
+	RecordLine string `json:"recordLine"`
+	Value      string `json:"value"`
+	TTL        int    `json:"ttl,omitempty"`
+	MX         int    `json:"mx,omitempty"`
 }
 
-// RecordStatus updates the status of DNS record.
-func RecordStatus(domain string, recordID int, status string) (string, error) {
+// RecordCreate creates a new DNS record for domain.
+func RecordCreate(param RecordParam) (RecordData, error) {
 	params := map[string]string{
-		"domain":   domain,
-		"recordId": strconv.Itoa(recordID),
-		"status":   status,
+		"domain":     param.Domain,
+		"subDomain":  param.SubDomain,
+		"recordType": param.RecordType,
+		"recordLine": param.RecordLine,
+		"value":      param.Value,
 	}
 
-	return handle(NewDNS().SetAction("RecordStatus").do(params))
+	var data RecordData
+	content, err := handle(NewDNS().SetAction("RecordCreate").do(params))
+	if err != nil {
+		return data, err
+	}
+	err = json.Unmarshal([]byte(content), &data)
+
+	return data, err
 }
 
 // RecordModify updates DNS record for domain.
-func RecordModify() (string, error) {
+func RecordModify(recordID string, param RecordParam) (RecordData, error) {
 	params := map[string]string{
-		"recordId": "",
-		"status":   "",
+		"recordId":   recordID,
+		"domain":     param.Domain,
+		"subDomain":  param.SubDomain,
+		"recordType": param.RecordType,
+		"recordLine": param.RecordLine,
+		"value":      param.Value,
 	}
 
-	return handle(NewDNS().SetAction("RecordModify").do(params))
+	var data RecordData
+	content, err := handle(NewDNS().SetAction("RecordModify").do(params))
+	if err != nil {
+		return data, err
+	}
+	err = json.Unmarshal([]byte(content), &data)
+
+	return data, err
+}
+
+// RecordStatus updates the status of DNS record.
+func RecordStatus(domain, recordID, status string) error {
+	params := map[string]string{
+		"domain":   domain,
+		"recordId": recordID,
+		"status":   status,
+	}
+	_, err := handle(NewDNS().SetAction("RecordStatus").do(params))
+
+	return err
 }
 
 // RecordDelete deletes DNS record.
