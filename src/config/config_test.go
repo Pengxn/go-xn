@@ -60,3 +60,15 @@ func TestGetSentryConfig(t *testing.T) {
 		})
 	})
 }
+
+func TestGetLoggerConfig(t *testing.T) {
+	patch := ApplyGlobalVar(&config, configTest)
+	defer patch.Reset()
+
+	Convey("Test GetLoggerConfig", t, func() {
+		So(GetLoggerConfig(), ShouldResemble, &LoggerConfig{
+			Route: "route.log",
+			APP:   "app.log",
+		})
+	})
+}

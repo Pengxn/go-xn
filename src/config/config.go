@@ -70,3 +70,19 @@ func GetSentryConfig() *SentryConfig {
 
 	return sentry
 }
+
+// LoggerConfig is configuration for logger.
+type LoggerConfig struct {
+	Route string `ini:"route"`
+	APP   string `ini:"app"`
+}
+
+// GetLoggerConfig returns logger configuration.
+func GetLoggerConfig() *LoggerConfig {
+	logger := new(LoggerConfig)
+	if err := config.Section("log").MapTo(logger); err != nil {
+		log.Warnln("Fail to parse logger configuration.", err)
+	}
+
+	return logger
+}
