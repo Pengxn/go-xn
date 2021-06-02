@@ -13,7 +13,7 @@ stages:
           - template: test/azure-pipelines/win32/azure-pipelines.yml
   - stage:
     displayName: On Linux
-    # Removes the implicit dependency and run in paralle
+    # Removes the implicit dependency and run in parallel
     dependsOn: []
     pool:
       vmImage: ubuntu-latest
