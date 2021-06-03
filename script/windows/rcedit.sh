@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 # Make sure the `rcedit` is installed
 # https://github.com/electron/rcedit
 
