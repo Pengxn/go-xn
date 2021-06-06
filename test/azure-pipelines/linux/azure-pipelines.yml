@@ -4,6 +4,7 @@ steps:
       version: $(GO_VERSION)
   - script: |
       go mod download
+      go mod tidy
       cp src/config/example.ini ~/fyj.ini
       make test
     displayName: Run Tests

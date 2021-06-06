@@ -25,6 +25,7 @@ jobs:
       - name: Run tests
         run: |
           go mod download
+          go mod tidy
           cp src/config/example.ini ~/fyj.ini
           make test
           make cover
