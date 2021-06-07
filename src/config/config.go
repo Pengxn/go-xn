@@ -5,6 +5,7 @@ import (
 
 	"github.com/go-ini/ini"
 
+	"github.com/Pengxn/go-xn/src/util/file"
 	"github.com/Pengxn/go-xn/src/util/home"
 	"github.com/Pengxn/go-xn/src/util/log"
 )
@@ -12,11 +13,28 @@ import (
 var config *ini.File // Global setting object
 
 func init() {
-	configFile, err := ini.Load(home.HomeDir() + string(os.PathSeparator) + "fyj.ini")
+	configFile, err := ini.Load(defaultConfigPath())
 	if err != nil {
 		log.Fatalln("Fail to read fyj.ini file.", err)
 	}
 	config = configFile
+}
+
+func defaultConfigPath() string {
+	ps := string(os.PathSeparator)
+
+	files := []string{
+		"fyj.ini",
+		home.HomeDir() + ps + ".config" + ps + "fyj" + ps + "fyj.ini",
+		home.HomeDir() + ps + "fyj.ini",
+	}
+	for _, f := range files {
+		if file.IsExist(f) && file.IsFile(f) {
+			return f
+		}
+	}
+
+	return files[0] // default is fyj.ini
 }
 
 // DBConfig is custom configuration for DB.
