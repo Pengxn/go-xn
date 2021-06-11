@@ -6,8 +6,6 @@ import (
 
 // errorRoute register bad routes and methods
 func errorRoute(g *gin.Engine) {
-	g.LoadHTMLFiles("web/error.html")
-
 	// No route
 	g.NoRoute(func(c *gin.Context) {
 		c.HTML(404, "error.html", gin.H{
