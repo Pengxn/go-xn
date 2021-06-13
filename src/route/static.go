@@ -1,17 +1,28 @@
 package route
 
 import (
+	"net/http"
+
 	"github.com/gin-gonic/gin"
+
+	"github.com/Pengxn/go-xn/web"
 )
 
 // staticRoutes registers static routes files and folders.
 func staticRoutes(g *gin.Engine) {
-	g.LoadHTMLFiles("web/error.html")
+	g.SetHTMLTemplate(web.HTML())
 
-	g.StaticFile("/favicon.ico", "web/icons/xn-02f.png")
-	g.StaticFile("/robots.txt", "web/robots.txt")
+	g.StaticFS("/assets", web.FS())
 
-	g.Static("/css", "web/css")
-	g.Static("/js", "web/js")
-	g.Static("/image", "web/image")
+	otherFS := web.OtherFS()
+	staticFileFromFS(g, "/favicon.ico", "icons/xn-02f.png", otherFS)
+	staticFileFromFS(g, "/robots.txt", "robots.txt", otherFS)
+}
+
+func staticFileFromFS(g *gin.Engine, relativePath, filepath string, fs http.FileSystem) {
+	handler := func(c *gin.Context) {
+		c.FileFromFS(filepath, fs)
+	}
+	g.GET(relativePath, handler)
+	g.HEAD(relativePath, handler)
 }

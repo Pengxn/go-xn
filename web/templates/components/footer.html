@@ -1,0 +1,48 @@
+{{ define "components/footer.html" }}
+<footer class="site-footer container">
+    <div class="social">
+        {{ if .site.facebook }}
+        <a class="social-item social-item-facebook" href="{{ .site.facebook }}" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+            <svg class="icon">
+                <use xlink:href="#facebook-box"></use>
+            </svg>
+        </a>
+        {{ end }}
+        {{ if .site.twitter }}
+        <a class="social-item social-item-twitter" href="{{ .site.twitter }}" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+            <svg class="icon">
+                <use xlink:href="#twitter-box"></use>
+            </svg>
+        </a>
+        {{ end }}
+        <a class="social-item social-item-rss" href="{{ .site.rss }}" target="_blank" rel="noopener noreferrer" aria-label="RSS">
+            <svg class="icon">
+                <use xlink:href="#rss-box"></use>
+            </svg>
+        </a>
+    </div>
+
+    <div class="copyright">
+        Powered by <a href="https://github.com/Pengxn/go-xn" target="_blank" rel="noopener noreferrer">Go-xn</a>
+    </div>
+
+    <nav class="footer-nav">
+        {{ if .site.beian }}
+        <a class="menu-item menu-item-terms menu-item-current" href="https://beian.miit.gov.cn/">赣ICP备17000022号</a>
+        {{ end }}
+        <a class="menu-item menu-item-privacy menu-item-current" href="#">Privacy</a>
+        <a class="menu-item js-theme" href="#" data-system="System theme" data-dark="Dark theme" data-light="Light theme">
+            <svg class="icon theme-icon theme-icon-system">
+                <use xlink:href="#circle-half-full"></use>
+            </svg>
+            <svg class="icon theme-icon theme-icon-dark">
+                <use xlink:href="#brightness-2"></use>
+            </svg>
+            <svg class="icon theme-icon theme-icon-light">
+                <use xlink:href="#white-balance-sunny"></use>
+            </svg>
+            <span class="theme-text">System theme</span>
+        </a>
+    </nav>
+</footer>
+{{ end }}
