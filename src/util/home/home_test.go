@@ -4,11 +4,14 @@ import (
 	"errors"
 	"os"
 	"os/user"
+	"runtime"
 	"testing"
 
 	. "github.com/agiledragon/gomonkey/v2"
 	. "github.com/smartystreets/goconvey/convey"
 )
+
+var ps = string(os.PathSeparator)
 
 func TestHomeDir(t *testing.T) {
 	Convey("Test Home Directory Path", t, func() {
@@ -18,50 +21,86 @@ func TestHomeDir(t *testing.T) {
 	})
 }
 
-func TestDirWindows(t *testing.T) {
-	Convey("Test dirWindows and error is nil.", t, func() {
+func TestHome(t *testing.T) {
+	Convey("Test home and return non-empty string.", t, func() {
+		var homePath string
+		if runtime.GOOS == "windows" {
+			homePath = "C:\\Users"
+		} else {
+			homePath = "~/fyj"
+		}
+
 		p := ApplyFunc(os.Getenv, func(_ string) string {
-			return "C:\\Users"
+			return homePath
 		})
 		defer p.Reset()
 
-		home, err := dirWindows()
-		So(home, ShouldEqual, "C:\\Users")
-		So(err, ShouldEqual, nil)
+		So(home(), ShouldEqual, homePath)
 	})
 
-	Convey("Test dirWindows and error isn't nil.", t, func() {
+	Convey("Test home and return empty string.", t, func() {
 		p := ApplyFunc(os.Getenv, func(_ string) string {
 			return ""
 		})
 		defer p.Reset()
+		p.ApplyFunc(user.Current, func() (*user.User, error) {
+			return &user.User{}, errors.New("user.Current error")
+		})
 
-		home, err := dirWindows()
-		So(home, ShouldEqual, "")
-		So(err, ShouldResemble, errors.New("Can't find 'USERPROFILE' environment variable"))
+		So(home(), ShouldEqual, "")
 	})
 }
 
-func TestDirUnix(t *testing.T) {
-	Convey("Test dirUnix and error is nil.", t, func() {
+func TestConfigDir(t *testing.T) {
+	Convey("Test home and return non-empty string.", t, func() {
+		var homePath string
+		if runtime.GOOS == "windows" {
+			homePath = "C:\\Users"
+		} else {
+			homePath = "~/fyj"
+		}
+
 		p := ApplyFunc(os.Getenv, func(_ string) string {
-			return "~"
+			return homePath
 		})
 		defer p.Reset()
 
-		home, err := dirUnix()
-		So(home, ShouldEqual, "~")
-		So(err, ShouldEqual, nil)
+		So(ConfigDir("test"), ShouldEqual, homePath+ps+".config"+ps+"test")
 	})
+}
 
-	Convey("Test dirUnix and error isn't nil.", t, func() {
+func TestCacheDir(t *testing.T) {
+	Convey("Test home and return non-empty string.", t, func() {
+		var homePath string
+		if runtime.GOOS == "windows" {
+			homePath = "C:\\Users"
+		} else {
+			homePath = "~/fyj"
+		}
+
 		p := ApplyFunc(os.Getenv, func(_ string) string {
-			return ""
+			return homePath
 		})
 		defer p.Reset()
 
-		home, err := dirUnix()
-		So(home, ShouldEqual, "")
-		So(err, ShouldResemble, errors.New("Can't find 'HOME' environment variable"))
+		So(CacheDir("test"), ShouldEqual, homePath+ps+".cache"+ps+"test")
+	})
+}
+
+func TestDataDir(t *testing.T) {
+	Convey("Test home and return non-empty string.", t, func() {
+		var homePath string
+		if runtime.GOOS == "windows" {
+			homePath = "C:\\Users"
+		} else {
+			homePath = "~/fyj"
+		}
+
+		p := ApplyFunc(os.Getenv, func(_ string) string {
+			return homePath
+		})
+		defer p.Reset()
+
+		So(DataDir("test"), ShouldEqual, homePath+ps+".local"+ps+"share"+ps+"test")
 	})
 }
