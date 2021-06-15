@@ -4,11 +4,21 @@ steps:
       docker pull alpine:latest || true
     displayName: Fetche Latest Image
   - script: |
-      docker build --no-cache -t $(DOCKER_USER)/fyj:latest .
+      docker build --no-cache -t fyj:latest .
     displayName: Build Docker Image
+  # Docker Hub
   - script: |
       echo -n $(DOCKER_TOKEN) | docker login -u $(DOCKER_USER) --password-stdin
     displayName: Login Docker Hub
   - script: |
+      docker tag fyj:latest $(DOCKER_USER)/fyj:latest
       docker push $(DOCKER_USER)/fyj:latest
-    displayName: Push Docker Image
+    displayName: Push to Docker Hub
+  # GitHub Container registry
+  - script: |
+      echo -n $(GITHUB_TOKEN) | docker login -u $(GITHUB_USER) --password-stdin ghcr.io
+    displayName: Login GitHub Container
+  - script: |
+      docker tag fyj:latest ghcr.io/$(GITHUB_USER)/fyj:latest
+      docker push ghcr.io/$(GITHUB_USER)/fyj:latest
+    displayName: Push to GitHub Container

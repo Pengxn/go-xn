@@ -1,5 +1,6 @@
 variables:
   - group: docker # including $DOCKER_USER and $DOCKER_TOKEN
+  - group: github # including $GITHUB_USER and $GITHUB_TOKEN
   - group: go     # including $GO_VERSION
 
 stages:
