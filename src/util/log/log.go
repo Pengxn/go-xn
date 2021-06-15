@@ -8,6 +8,9 @@ var logger *logrus.Logger
 
 func init() {
 	logger = logrus.New()
+
+	logger.SetLevel(logrus.DebugLevel)
+	logger.SetOutput(writerLog())
 }
 
 // Error logs a message at level Error.
