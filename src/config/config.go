@@ -1,7 +1,7 @@
 package config
 
 import (
-	"os"
+	"path/filepath"
 
 	"github.com/go-ini/ini"
 
@@ -21,12 +21,10 @@ func init() {
 }
 
 func defaultConfigPath() string {
-	ps := string(os.PathSeparator)
-
 	files := []string{
 		"fyj.ini",
-		home.HomeDir() + ps + ".config" + ps + "fyj" + ps + "fyj.ini",
-		home.HomeDir() + ps + "fyj.ini",
+		filepath.Join(home.ConfigDir("fyj"), "fyj.ini"), // ~/.config/fyj/fyj.ini
+		filepath.Join(home.HomeDir(), "fyj.ini"),        // ~/fyj.ini
 	}
 	for _, f := range files {
 		if file.IsExist(f) && file.IsFile(f) {
