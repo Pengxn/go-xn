@@ -2,6 +2,7 @@ package web
 
 import (
 	"embed"
+	"fmt"
 	"html/template"
 	"io/fs"
 	"net/http"
@@ -21,9 +22,9 @@ func HTML() *template.Template {
 		log.Errorf("template.ParseFS error: %+v", err)
 	}
 
-	if !gin.IsDebugging() {
+	if gin.IsDebugging() {
 		for _, tmpl := range t.Templates() {
-			log.Info(tmpl.Name())
+			fmt.Println(tmpl.Name())
 		}
 	}
 
