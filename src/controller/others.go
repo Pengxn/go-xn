@@ -14,10 +14,7 @@ import (
 //     GET => /whois?domain=xn--02f.com
 func GwtWhoisInfo(c *gin.Context) {
 	domain := strings.TrimSpace(c.Query("domain"))
-	if strings.HasSuffix(domain, ".") { // Trim the dot at the end
-		domain = domain[:len(domain)-1]
-	}
-
+	domain = strings.TrimSuffix(domain, ".") // Trim the dot at the end
 	if len(strings.Split(domain, ".")) < 2 { // Need a TLD and a domain body
 		c.String(403, "Param (domain="+domain+") is invaild")
 		return
