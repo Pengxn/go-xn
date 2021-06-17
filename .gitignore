@@ -20,3 +20,6 @@ build/
 
 # Coverage files
 coverage.*
+
+# Log directory
+logs/
