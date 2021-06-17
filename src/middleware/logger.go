@@ -4,13 +4,10 @@ import (
 	"fmt"
 	"io"
 	"os"
-	"path/filepath"
 	"time"
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/Pengxn/go-xn/src/util/file"
-	"github.com/Pengxn/go-xn/src/util/home"
 	"github.com/Pengxn/go-xn/src/util/log"
 )
 
@@ -47,18 +44,9 @@ func customLog(param gin.LogFormatterParams) string {
 // writerLog writes log to the specified writer buffer.
 // Example: os.Stdout, a file opened in write mode, a socket...
 func writerLog() io.Writer {
-	logFile := "route.log"
-	if !file.IsExist(logFile) {
-		logDir := filepath.Join(home.LogDir("fyj"), "logs")
-		if file.IsExist(logDir) {
-			logFile = filepath.Join(logDir, logFile)
-		} else {
-			if err := os.MkdirAll(logDir, 0755); err != nil {
-				log.Errorf("Mkdir folder %s error: %+v", logDir, err)
-			} else {
-				logFile = filepath.Join(logDir, logFile)
-			}
-		}
+	logFile, err := log.LogFilePath("route.log")
+	if err != nil {
+		log.Errorf("Get log file Path %s error: %+v", logFile, err)
 	}
 
 	// Logging to a file, append logging if the file already exists.

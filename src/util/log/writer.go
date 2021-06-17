@@ -13,18 +13,9 @@ import (
 // writerLog writes log to the specified writer buffer.
 // Example: os.Stderr, a file opened in write mode, a socket...
 func writerLog() io.Writer {
-	logFile := "fyj.log"
-	if !file.IsExist(logFile) {
-		logDir := filepath.Join(home.LogDir("fyj"), "logs")
-		if file.IsExist(logDir) {
-			logFile = filepath.Join(logDir, logFile)
-		} else {
-			if err := os.MkdirAll(logDir, 0755); err != nil {
-				log.Printf("Mkdir folder %s error: %+v", logDir, err)
-			} else {
-				logFile = filepath.Join(logDir, logFile)
-			}
-		}
+	logFile, err := LogFilePath("fyj.log")
+	if err != nil {
+		log.Printf("Get log file Path %s error: %+v", logFile, err)
 	}
 
 	// Logging to a file, append logging if the file already exists.
@@ -35,4 +26,23 @@ func writerLog() io.Writer {
 	}
 
 	return io.MultiWriter(f, os.Stderr)
+}
+
+func LogFilePath(logFile string) (string, error) {
+	if file.IsExist(logFile) && file.IsFile(logFile) {
+		return logFile, nil // => ./<logFile>
+	}
+
+	logDir := "logs"
+	if file.IsExist(logDir) && file.IsDir(logDir) {
+		return filepath.Join(logDir, logFile), nil // => ./logs/<logFile>
+	}
+
+	logDir = filepath.Join(home.LogDir("fyj"), "logs")
+	if !file.IsExist(logDir) {
+		if err := os.MkdirAll(logDir, 0755); err != nil {
+			return logFile, err // => ./<logFile>
+		}
+	}
+	return filepath.Join(logDir, logFile), nil // => ~/.local/share/fyj/logs/<logFile>
 }
