@@ -13,9 +13,10 @@ import (
 var config *ini.File // Global setting object
 
 func init() {
-	configFile, err := ini.Load(defaultConfigPath())
+	configPath := defaultConfigPath()
+	configFile, err := ini.Load(configPath)
 	if err != nil {
-		log.Fatalln("Fail to read fyj.ini file.", err)
+		log.Fatalf("Fail to read config file %s, %+v", configPath, err)
 	}
 	config = configFile
 }
