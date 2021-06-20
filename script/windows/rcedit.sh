@@ -5,6 +5,9 @@ set -e
 # Make sure the `rcedit` is installed
 # https://github.com/electron/rcedit
 
+CURRENT_DIR="$(cd "$(dirname $0)"; pwd)"
+ROOT_DIR=$CURRENT_DIR/..
+
 GIT_VERSION=$(git describe --tags `git rev-list --tags --max-count=1`)
 
 VERSION=$(echo ${GIT_VERSION#*v})
