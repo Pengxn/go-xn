@@ -33,4 +33,3 @@ jobs:
       - name: Compile and build
         run: |
           make
-          make web

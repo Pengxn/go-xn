@@ -13,7 +13,6 @@ steps:
     displayName: Run Tests
   - script: |
       make
-      make web
     displayName: Build and Compile
   - script: |
       iscc .\script\windows\go-xn.iss

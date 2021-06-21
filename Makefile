@@ -30,11 +30,4 @@ cover:
 test:
 	@go test ./... -v -coverprofile=coverage.txt
 
-web:
-	@if [ -d "build/web" ]; then \
-		rm -rf build/web; \
-	fi;
-    # Copy web folder and fyj.ini file
-	@cp -r web/ build/web
-
-.PHONY: build clean cover test web
+.PHONY: build clean cover test

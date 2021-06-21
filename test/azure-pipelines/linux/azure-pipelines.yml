@@ -10,7 +10,6 @@ steps:
     displayName: Run Tests
   - script: |
       make
-      make web
     displayName: Build and Compile
   - task: PublishBuildArtifacts@1
     inputs:

@@ -10,7 +10,7 @@ COPY . .
 RUN apk add --no-cache build-base make git; \
     go mod download; \
     go mod tidy; \
-    make && make web
+    make
 
 # Server image
 FROM alpine:latest
