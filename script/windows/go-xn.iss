@@ -55,7 +55,7 @@ Name: "chinesesimplified"; MessagesFile: ".\i18n\ChineseSimplified.isl,.\i18n\Me
 
 [Files]
 Source: "..\..\build\go-xn.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\..\build\web\*"; DestDir: "{app}\web"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "..\..\web\*"; DestDir: "{app}\web"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "..\..\LICENSE"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\..\README.md"; DestDir: "{app}"; Flags: ignoreversion isreadme
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
