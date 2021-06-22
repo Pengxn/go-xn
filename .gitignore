@@ -23,3 +23,6 @@ coverage.*
 
 # Log directory
 logs/
+
+# Data directory
+data/

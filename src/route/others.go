@@ -14,5 +14,5 @@ func othersRoutes(g *gin.Engine) {
 	// Register routes and methods for uPic, more information
 	// to https://blog.svend.cc/upic/tutorials/custom
 	g.POST("/upload/upic", controller.UploadFileForUPic)
-	g.Static("/upic", "uPic")
+	g.Static("/upic", "data/uPic")
 }

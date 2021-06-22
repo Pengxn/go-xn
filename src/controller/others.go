@@ -43,7 +43,8 @@ func UploadFileForUPic(c *gin.Context) {
 		return
 	}
 
-	if err = c.SaveUploadedFile(file, "./uPic/"+file.Filename); err != nil {
+	// Save uploaded files to data/uPic directory.
+	if err = c.SaveUploadedFile(file, "data/uPic/"+file.Filename); err != nil {
 		log.Errorf("Save file uploaded to uPic error: %+v", err)
 		c.JSON(500, gin.H{
 			"code": 500,
