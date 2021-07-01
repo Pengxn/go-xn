@@ -19,9 +19,15 @@ const (
 //     GET => /
 //     GET => /page/1
 func HomePage(c *gin.Context) {
-	c.JSON(200, gin.H{
-		"code": 200,
-		"data": model.ArticlesByPage(DefaultPageLimit, 1),
+	c.HTML(200, "index.html", gin.H{
+		"code":     200,
+		"articles": model.ArticlesByPage(DefaultPageLimit, 1),
+		"site": map[string]string{
+			"title":       "Feng.YJ",
+			"logo":        "",
+			"cover":       "",
+			"description": "✍ The platform for publishing and running your blog. [WIP]",
+		},
 	})
 }
 

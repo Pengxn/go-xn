@@ -10,10 +10,6 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,400;0,700;0,800;1,400;1,700&display=swap">
 
     <script>
-        var siteUrl = '{{ .site.url }}';
-    </script>
-
-    <script>
         var localTheme = localStorage.getItem('dawn_theme');
         switch (localTheme) {
             case 'dark':
@@ -120,7 +116,7 @@
                 {{ range $i, $v := .articles }}
                 <article class="post featured">
                     <div class="u-placeholder horizontal">
-                        <img class="lazyload u-object-fit" data-srcset="/content/images/size/w400/2020/07/photo-1558655146-6c222b05fce4.jpeg 400w, /content/images/size/w750/2020/07/photo-1558655146-6c222b05fce4.jpeg 750w, /content/images/size/w960/2020/07/photo-1558655146-6c222b05fce4.jpeg 960w, /content/images/size/w1140/2020/07/photo-1558655146-6c222b05fce4.jpeg 1140w" data-sizes="auto" src="/content/images/size/w750/2020/07/photo-1558655146-6c222b05fce4.jpeg" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="{{ $v.Title }}">
+                        <img class="lazyload u-object-fit" data-srcset="/content/images/size/w400/2020/07/photo.jpeg 400w, /content/images/size/w750/2020/07/photo.jpeg 750w, /content/images/size/w960/2020/07/photo.jpeg 960w, /content/images/size/w1140/2020/07/photo.jpeg 1140w" data-sizes="auto" src="/content/images/size/w750/2020/07/photo.jpeg" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="{{ $v.Title }}">
                     </div>
                     <h3 class="post-title">{{ $v.Title }}</h3>
                     <a class="u-permalink" href="#" aria-label="{{ $v.Title }}"></a>
