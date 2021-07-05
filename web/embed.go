@@ -13,13 +13,17 @@ import (
 )
 
 //go:embed templates
-//go:embed error.html
 var html embed.FS
 
 func HTML() *template.Template {
-	t, err := template.ParseFS(html, "*.html", "**/*.html", "**/**/*.html")
+	templatesDir, err := fs.Sub(html, "templates")
 	if err != nil {
-		log.Errorf("template.ParseFS error: %+v", err)
+		log.Errorf("HTML fs.Sub error: %+v", err)
+	}
+
+	t, err := template.ParseFS(templatesDir, "*.html", "**/*.html")
+	if err != nil {
+		log.Errorf("HTML template.ParseFS error: %+v", err)
 	}
 
 	if gin.IsDebugging() {
@@ -37,7 +41,7 @@ var assets embed.FS
 func FS() http.FileSystem {
 	assetsDir, err := fs.Sub(assets, "assets")
 	if err != nil {
-		log.Errorf("fs.Sub error: %+v", err)
+		log.Errorf("FS fs.Sub error: %+v", err)
 	}
 
 	return http.FS(assetsDir)
