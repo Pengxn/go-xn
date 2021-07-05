@@ -13,15 +13,16 @@ import (
 )
 
 //go:embed templates
-var html embed.FS
+//go:embed assets
+var embedFS embed.FS
 
 func HTML() *template.Template {
-	templatesDir, err := fs.Sub(html, "templates")
+	templates, err := fs.Sub(embedFS, "templates")
 	if err != nil {
 		log.Errorf("HTML fs.Sub error: %+v", err)
 	}
 
-	t, err := template.ParseFS(templatesDir, "*.html", "**/*.html")
+	t, err := template.ParseFS(templates, "*.html", "**/*.html")
 	if err != nil {
 		log.Errorf("HTML template.ParseFS error: %+v", err)
 	}
@@ -35,16 +36,13 @@ func HTML() *template.Template {
 	return t
 }
 
-//go:embed assets
-var assets embed.FS
-
 func FS() http.FileSystem {
-	assetsDir, err := fs.Sub(assets, "assets")
+	assets, err := fs.Sub(embedFS, "assets")
 	if err != nil {
 		log.Errorf("FS fs.Sub error: %+v", err)
 	}
 
-	return http.FS(assetsDir)
+	return http.FS(assets)
 }
 
 //go:embed robots.txt
