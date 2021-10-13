@@ -2,6 +2,8 @@ package httplib
 
 import (
 	"crypto/tls"
+	"net/http"
+	"net/url"
 	"time"
 )
 
@@ -25,6 +27,7 @@ type Config struct {
 	IsEncodeForGo      bool              // To encode URL by golang lib
 	Charset            string            // Charset (default UTF-8)
 	Certificates       []tls.Certificate // SSL certificate
+	Proxy              func(*http.Request) (*url.URL, error)
 }
 
 // NewHttpConfig Overwrite default http settings

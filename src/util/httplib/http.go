@@ -38,6 +38,19 @@ func NewTimeoutClient(second int64) *Client {
 	return NewClient(config)
 }
 
+// NewClientWithProxy returns http Client with custom proxy property.
+// example:
+//
+// 	func(req *http.Request) (*url.URL, error) {
+// 		u, _ := url.ParseRequestURI("http://127.0.0.1:8118")
+// 		return u, nil
+// 	}
+func NewClientWithProxy(proxy func(*http.Request) (*url.URL, error)) *Client {
+	config := NewHttpConfig()
+	config.Proxy = proxy
+	return NewClient(config)
+}
+
 // NewClient returns http Client with custom settings.
 func NewClient(config *Config) *Client {
 	transport := &http.Transport{
@@ -46,6 +59,9 @@ func NewClient(config *Config) *Client {
 			InsecureSkipVerify: config.InsecureSkipVerify,
 			Certificates:       config.Certificates,
 		},
+	}
+	if config.Proxy != nil {
+		transport.Proxy = config.Proxy
 	}
 
 	return &Client{
