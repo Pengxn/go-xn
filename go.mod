@@ -1,7 +1,7 @@
 module github.com/Pengxn/go-xn
 
 require (
-	github.com/agiledragon/gomonkey/v2 v2.2.0
+	github.com/agiledragon/gomonkey/v2 v2.3.1
 	github.com/getsentry/sentry-go v0.11.0
 	github.com/gin-gonic/gin v1.7.4
 	github.com/go-ini/ini v1.63.2
