@@ -3,7 +3,7 @@ module github.com/Pengxn/go-xn
 require (
 	github.com/agiledragon/gomonkey/v2 v2.5.0
 	github.com/getsentry/sentry-go v0.12.0
-	github.com/gin-gonic/gin v1.7.7
+	github.com/gin-gonic/gin v1.8.0
 	github.com/go-ini/ini v1.66.4
 	github.com/go-sql-driver/mysql v1.6.0
 	github.com/lib/pq v1.10.6
