@@ -2,12 +2,14 @@ module github.com/Pengxn/go-xn
 
 require (
 	github.com/agiledragon/gomonkey/v2 v2.5.0
-	github.com/getsentry/sentry-go v0.12.0
+	github.com/getsentry/sentry-go v0.13.0
 	github.com/gin-gonic/gin v1.8.1
 	github.com/go-ini/ini v1.66.6
 	github.com/go-sql-driver/mysql v1.6.0
 	github.com/lib/pq v1.10.6
 	github.com/mattn/go-sqlite3 v1.14.10
+	github.com/onsi/ginkgo v1.10.3 // indirect
+	github.com/onsi/gomega v1.7.1 // indirect
 	github.com/sirupsen/logrus v1.8.1
 	github.com/smartystreets/goconvey v1.7.2
 	github.com/tidwall/gjson v1.14.1
