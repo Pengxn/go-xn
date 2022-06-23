@@ -2,8 +2,10 @@ package controller
 
 import (
 	"strings"
+	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/gorilla/feeds"
 
 	"github.com/Pengxn/go-xn/src/lib/whois"
 	"github.com/Pengxn/go-xn/src/util/log"
@@ -59,4 +61,51 @@ func UploadFileForUPic(c *gin.Context) {
 			"url": c.Request.Host + "/upic/" + file.Filename,
 		},
 	})
+}
+
+func RSS(c *gin.Context) {
+	rss, err := feed().ToRss()
+	if err != nil {
+		log.Errorf("Generate RSS content error: %+v", err)
+		c.XML(500, "")
+		return
+	}
+	c.XML(200, rss)
+}
+
+func Atom(c *gin.Context) {
+	rss, err := feed().ToAtom()
+	if err != nil {
+		log.Errorf("Generate atom content error: %+v", err)
+		c.XML(500, "")
+		return
+	}
+	c.XML(200, rss)
+}
+
+func Feed(c *gin.Context) {
+	rss, err := feed().ToJSON()
+	if err != nil {
+		log.Errorf("Generate feed content error: %+v", err)
+		c.JSON(500, "")
+		return
+	}
+	c.JSON(200, rss)
+}
+
+func feed() *feeds.Feed {
+	now := time.Now()
+	return &feeds.Feed{
+		Title:       "Go-xn",
+		Link:        &feeds.Link{},
+		Description: "The platform for publishing and running your blog.",
+		Author:      &feeds.Author{},
+		Updated:     now,
+		Created:     now,
+		Id:          "",
+		Subtitle:    "",
+		Items:       []*feeds.Item{},
+		Copyright:   "",
+		Image:       &feeds.Image{},
+	}
 }

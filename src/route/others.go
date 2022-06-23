@@ -8,6 +8,13 @@ import (
 
 // othersRoutes registers other routes.
 func othersRoutes(g *gin.Engine) {
+	// RSS 2.0, https://www.rssboard.org/rss-specification
+	g.GET("/rss", controller.RSS)
+	// Atom, https://datatracker.ietf.org/doc/html/rfc4287
+	g.GET("/atom", controller.Atom)
+	// JSON Feed Version 1, https://jsonfeed.org/version/1
+	g.GET("/feed", controller.Feed)
+
 	// Get domain whois information.
 	g.GET("/whois", controller.GwtWhoisInfo)
 
