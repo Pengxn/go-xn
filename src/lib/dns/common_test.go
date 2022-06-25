@@ -2,7 +2,6 @@ package dns
 
 import (
 	"net/http"
-	"reflect"
 	"testing"
 
 	. "github.com/agiledragon/gomonkey/v2"
@@ -23,7 +22,7 @@ func TestDo(t *testing.T) {
 	post := func(_ *httplib.Client, url string) (*http.Response, error) {
 		return nil, nil
 	}
-	patch := ApplyMethod(reflect.TypeOf(&httplib.Client{}), "POST", post)
+	patch := ApplyMethod(&httplib.Client{}, "POST", post)
 	defer patch.Reset()
 
 	dns := DNSCommon{
