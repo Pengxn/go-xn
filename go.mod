@@ -13,7 +13,7 @@ require (
 	github.com/smartystreets/goconvey v1.7.2
 	github.com/tidwall/gjson v1.14.3
 	github.com/urfave/cli/v2 v2.11.2
-	xorm.io/xorm v1.3.1
+	xorm.io/xorm v1.3.2
 )
 
 go 1.16
