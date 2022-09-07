@@ -7,7 +7,7 @@ require (
 	github.com/go-ini/ini v1.67.0
 	github.com/go-sql-driver/mysql v1.6.0
 	github.com/gorilla/feeds v1.1.1
-	github.com/lib/pq v1.10.6
+	github.com/lib/pq v1.10.7
 	github.com/mattn/go-sqlite3 v1.14.15
 	github.com/sirupsen/logrus v1.8.1
 	github.com/smartystreets/goconvey v1.7.2
