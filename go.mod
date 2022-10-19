@@ -9,7 +9,7 @@ require (
 	github.com/gorilla/feeds v1.1.1
 	github.com/lib/pq v1.10.7
 	github.com/mattn/go-sqlite3 v1.14.15
-	github.com/sirupsen/logrus v1.8.1
+	github.com/sirupsen/logrus v1.9.0
 	github.com/smartystreets/goconvey v1.7.2
 	github.com/tidwall/gjson v1.14.3
 	github.com/urfave/cli/v2 v2.11.2
