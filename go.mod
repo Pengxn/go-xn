@@ -12,7 +12,7 @@ require (
 	github.com/sirupsen/logrus v1.9.0
 	github.com/smartystreets/goconvey v1.7.2
 	github.com/tidwall/gjson v1.14.3
-	github.com/urfave/cli/v2 v2.20.3
+	github.com/urfave/cli/v2 v2.23.5
 	xorm.io/xorm v1.3.2
 )
 
