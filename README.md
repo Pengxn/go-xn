@@ -2,7 +2,7 @@
 
 > ✍ The platform for publishing and running your blog. [WIP]
 
-[![actions](https://img.shields.io/github/workflow/status/Pengxn/go-xn/test?label=action&logo=github&style=flat-square)](https://github.com/Pengxn/go-xn/actions/workflows/test.yml)
+[![actions](https://img.shields.io/github/actions/workflow/status/Pengxn/go-xn/test.yml?label=action&logo=github&style=flat-square)](https://github.com/Pengxn/go-xn/actions/workflows/test.yml)
 
 ## Build
 
