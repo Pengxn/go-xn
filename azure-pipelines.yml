@@ -24,6 +24,6 @@ stages:
           - template: test/azure-pipelines/linux/azure-pipelines.yml
       - job: Docker
         dependsOn: Linux
-        condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+        condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
         steps:
           - template: test/azure-pipelines/docker/azure-pipelines.yml
