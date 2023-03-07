@@ -1,3 +1,4 @@
+//go:build go1.16
 // +build go1.16
 
 // Copyright 2020 The Go-xn Authors. All rights reserved.
@@ -13,6 +14,6 @@ import (
 
 func main() {
 	if err := cmd.Execute(); err != nil {
-		log.Fatalln("Fail to Start Command app.", err)
+		log.Fatalln("Fail to start app...", err)
 	}
 }
