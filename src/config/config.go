@@ -36,6 +36,24 @@ func defaultConfigPath() string {
 	return files[0] // default is fyj.ini
 }
 
+// ServerConfig is configuration for server.
+type ServerConfig struct {
+	Port     string `ini:"port"`
+	TLS      bool   `ini:"tls"`
+	CertFile string `ini:"certFile"`
+	KeyFile  string `ini:"keyFile"`
+}
+
+// GetServerConfig returns server configuration.
+func GetServerConfig() *ServerConfig {
+	server := new(ServerConfig)
+	if err := config.Section("server").MapTo(server); err != nil {
+		log.Warnln("Fail to parse server configuration.", err)
+	}
+
+	return server
+}
+
 // DBConfig is custom configuration for DB.
 type DBConfig struct {
 	Type     string `ini:"type"`
