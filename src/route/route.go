@@ -3,6 +3,7 @@ package route
 import (
 	"github.com/gin-gonic/gin"
 
+	"github.com/Pengxn/go-xn/src/config"
 	"github.com/Pengxn/go-xn/src/controller"
 	"github.com/Pengxn/go-xn/src/middleware"
 )
@@ -25,5 +26,9 @@ func InitRoutes(port string) error {
 	optionsRoutes(g)
 	articlesRoutes(g)
 
+	serverConfig := config.GetServerConfig()
+	if serverConfig.TLS {
+		return g.RunTLS(":"+serverConfig.Port, serverConfig.CertFile, serverConfig.KeyFile)
+	}
 	return g.Run(":" + port)
 }
