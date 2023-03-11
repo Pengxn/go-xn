@@ -103,3 +103,20 @@ func GetLoggerConfig() *LoggerConfig {
 
 	return logger
 }
+
+// WebAuthnConfig is the WebAuthn configuration.
+type WebAuthnConfig struct {
+	RPID          string   `ini:"rpID"`
+	RPDisplayName string   `ini:"rpDisplayName"`
+	RPOrigins     []string `ini:"rpOrigins"`
+}
+
+// GetWebAuthnConfig returns WebAuthn configuration.
+func GetWebAuthnConfig() *WebAuthnConfig {
+	webAuthn := new(WebAuthnConfig)
+	if err := config.Section("webauthn").MapTo(webAuthn); err != nil {
+		log.Warnln("Fail to parse WebAuthn configuration.", err)
+	}
+
+	return webAuthn
+}
