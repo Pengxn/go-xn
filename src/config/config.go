@@ -38,6 +38,7 @@ func defaultConfigPath() string {
 
 // ServerConfig is configuration for server.
 type ServerConfig struct {
+	Debug    bool   `ini:"debug"`
 	Port     string `ini:"port"`
 	TLS      bool   `ini:"tls"`
 	CertFile string `ini:"certFile"`
