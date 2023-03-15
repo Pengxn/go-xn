@@ -3,9 +3,6 @@ package model
 import (
 	"time"
 
-	"xorm.io/xorm"
-
-	"github.com/Pengxn/go-xn/src/util/db"
 	"github.com/Pengxn/go-xn/src/util/log"
 )
 
@@ -20,8 +17,6 @@ type Article struct {
 	UpdateTime *time.Time `json:"update_time,omitempty" xorm:"datetime updated notnull default('0000-00-00 00:00:00') 'update_time'"`
 	DeleteTime *time.Time `json:"delete_time,omitempty" xorm:"datetime notnull default('0000-00-00 00:00:00') 'delete_time'"`
 }
-
-var orm *xorm.Engine = db.DBEngine()
 
 // ArticlesByPage handles articles by page number.
 func ArticlesByPage(limit int, page int) []Article {
