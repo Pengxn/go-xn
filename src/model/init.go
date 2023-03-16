@@ -1,6 +1,10 @@
 package model
 
 import (
+	"flag"
+	"os"
+	"strings"
+
 	"xorm.io/xorm"
 
 	"github.com/Pengxn/go-xn/src/util/db"
@@ -10,6 +14,9 @@ import (
 var orm *xorm.Engine = db.DBEngine()
 
 func init() {
+	if flag.Lookup("test.v") != nil || strings.HasSuffix(os.Args[0], ".test") {
+		return // skip init when testing
+	}
 	initTable(new(User))
 	initTable(new(Article))
 	initTable(new(Option))
