@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
     <meta charset="utf-8">
@@ -8,88 +8,36 @@
     <link rel="stylesheet" href="./assets/built/screen.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,400;0,700;0,800;1,400;1,700&display=swap">
-
-    <script>
-        var localTheme = localStorage.getItem('dawn_theme');
-        switch (localTheme) {
-            case 'dark':
-                document.documentElement.classList.add('theme-dark');
-                break;
-            case 'light':
-                document.documentElement.classList.add('theme-light');
-                break;
-            default:
-                break;
-        }
-    </script>
 </head>
 
 <body class="home-template paged-next">
     {{ template "components/icons.html" }}
 
     <div class="site">
-        <header class="site-header container">
-            <div class="header-left">
-                <a class="logo" href="./">
-                {{ if .site.logo }}
-                    <img class="logo-image" src="{{ .site.logo }}" alt="{{ .site.title }}">
-                {{ else }}
-                    <span class="logo-text">{{ .site.title }}</span>
-                {{ end }}
-                </a>
-            </div>
-            <nav class="main-nav hidden-xs hidden-sm hidden-md">
-                <a class="menu-item menu-item-tag" href="/tag">Tag</a>
-                <a class="menu-item menu-item-author" href="/author/fengyj">Author</a>
-                <a class="menu-item menu-item-style-guide" href="/style-guide">Style Guide</a>
-                <a class="menu-item menu-item-more-links" href="https://dawn.ghost.io/...">More links</a>
-                <a class="menu-item menu-item-with-wide-image" href="https://dawn.ghost.io/retailers-going-digital-payment-only-dont-save-money/">With wide image</a>
-                <a class="menu-item menu-item-with-full-image" href="https://dawn.ghost.io/when-tech-brands-get-illustration-right/">With full image</a>
-                <a class="menu-item menu-item-with-narrow-image" href="https://dawn.ghost.io/how-to-ergonomically-optimize-your-workspace/">With narrow image</a>
-                <a class="menu-item menu-item-no-image-post" href="https://dawn.ghost.io/we-added-these-books-to-our-office-library-this-week/">No image post</a>
-                <a class="menu-item menu-item-subscriber-only-post" href="https://dawn.ghost.io/retailers-going-digital-payment-only-dont-save-money/">Subscriber only post</a>
-                <a class="menu-item menu-item-contact-page" href="https://dawn.ghost.io/contact/">Contact page</a>
 
-                <button class="button-icon menu-item-button js-modal" data-modal="search" aria-label="Search">
-                    <svg class="icon">
-                        <use xlink:href="#magnify"></use>
-                    </svg>
-                </button>
-            </nav>
-
-            <button class="button-icon hidden-lg hidden-xl js-modal" data-modal="search" aria-label="Search">
-                <svg class="icon">
-                    <use xlink:href="#magnify"></use>
-                </svg>
-            </button>
-
-            <div class="burger hidden-lg hidden-xl">
-                <div class="burger-bar"></div>
-                <div class="burger-bar"></div>
-            </div>
-
-            <div class="mobile-menu hidden-lg hidden-xl">
-                <div class="container">
-                    <nav class="mobile-nav">
-                        <a class="menu-item menu-item-tag" href="https://dawn.ghost.io/tag/startup/">Tag</a>
-                        <a class="menu-item menu-item-author" href="https://dawn.ghost.io/author/jose/">Author</a>
-                        <a class="menu-item menu-item-style-guide" href="https://dawn.ghost.io/style-guide/">Style Guide</a>
-                        <a class="menu-item menu-item-more-links" href="https://dawn.ghost.io/...">More links</a>
-                        <a class="menu-item menu-item-with-wide-image" href="https://dawn.ghost.io/retailers-going-digital-payment-only-dont-save-money/">With wide image</a>
-                        <a class="menu-item menu-item-with-full-image" href="https://dawn.ghost.io/when-tech-brands-get-illustration-right/">With full image</a>
-                        <a class="menu-item menu-item-with-narrow-image" href="https://dawn.ghost.io/how-to-ergonomically-optimize-your-workspace/">With narrow image</a>
-                        <a class="menu-item menu-item-no-image-post" href="https://dawn.ghost.io/we-added-these-books-to-our-office-library-this-week/">No image post</a>
-                        <a class="menu-item menu-item-subscriber-only-post" href="https://dawn.ghost.io/retailers-going-digital-payment-only-dont-save-money/">Subscriber only post</a>
-                        <a class="menu-item menu-item-contact-page" href="https://dawn.ghost.io/contact/">Contact page</a>
-
-                        <button class="button-text menu-item members-login" data-portal="signin">Login</button>
-                        <button class="button-text menu-item menu-item-cta members-subscribe" data-portal="signup">Subscribe</button>
-                    </nav>
+        <header id="gh-head" class="gh-head gh-outer">
+            <div class="gh-head-inner gh-inner">
+                <div class="gh-head-brand">
+                    <div class="gh-head-brand-wrapper">
+                        <a class="gh-head-logo" href="https://dawn.ghost.io">Feng</a>
+                    </div>
+                    <button class="gh-search gh-icon-btn" aria-label="Search this site" data-ghost-search=""><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="20" height="20"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg></button>
+                    <button class="gh-burger"></button>
                 </div>
-            </div>
-            <div class="header-right hidden-xs hidden-sm hidden-md">
-                <button class="button-text menu-item members-login" data-portal="signin">Login</button>
-                <button class="button-text menu-item menu-item-cta members-subscribe" data-portal="signup">Subscribe</button>
+
+                <nav class="gh-head-menu">
+                    <ul class="nav">
+                        <li class="nav-home nav-current"><a href="/">Home</a></li>
+                        <li class="nav-about"><a href="./about">About</a></li>
+                        <li class="nav-author"><a href="./author/jose">Author</a></li>
+                    </ul>
+                </nav>
+
+                <div class="gh-head-actions">
+                    <button class="gh-search gh-icon-btn" aria-label="Search this site">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="20" height="20"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    </button>
+                </div>
             </div>
         </header>
 
