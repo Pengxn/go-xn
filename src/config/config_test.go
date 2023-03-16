@@ -27,11 +27,11 @@ func TestGetDBConfig(t *testing.T) {
 
 	Convey("Test GetDBConfig", t, func() {
 		So(GetDBConfig(), ShouldResemble, &DBConfig{
-			Type:     "MySQL",
+			Type:     "SQLite3",
+			Name:     "fyj.db",
 			User:     "root",
 			Password: "password",
 			Port:     "3306",
-			Name:     "fyj",
 			Url:      "127.0.0.1",
 		})
 	})
@@ -55,8 +55,8 @@ func TestGetSentryConfig(t *testing.T) {
 
 	Convey("Test GetSentryConfig", t, func() {
 		So(GetSentryConfig(), ShouldResemble, &SentryConfig{
-			DSN:   "https:/0eaj7***6gv4s@sentry.io/1234567",
-			Debug: true,
+			DSN:   "https://xxx@sentry.io/xxx",
+			Debug: false,
 		})
 	})
 }
