@@ -17,12 +17,12 @@ func init() {
 
 func initTable(bean interface{}) {
 	if exist, err := orm.IsTableExist(bean); err != nil {
-		log.Panic("query table exist error: %s", err)
+		log.Panic("query table exist error: ", err)
 	} else if exist {
 		return
 	}
 
 	if err := orm.Sync(bean); err != nil {
-		log.Panic("create table error: %s", err)
+		log.Panic("create table error: ", err)
 	}
 }
