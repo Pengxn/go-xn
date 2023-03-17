@@ -16,8 +16,9 @@ const (
 
 // HomePage returns home and index page.
 // Request sample:
-//     GET => /
-//     GET => /page/1
+//
+//	GET => /
+//	GET => /page/1
 func HomePage(c *gin.Context) {
 	c.HTML(200, "index.html", gin.H{
 		"code":     200,
@@ -33,7 +34,8 @@ func HomePage(c *gin.Context) {
 
 // ArticlesPage returns JSON information by page number.
 // Request sample:
-//     GET => /page/1?limit=6
+//
+//	GET => /page/1?limit=6
 func ArticlesPage(c *gin.Context) {
 	pageNum, _ := strconv.Atoi(c.Param("pageNum"))
 	limitNum, _ := strconv.Atoi(c.Query("limit"))
@@ -53,7 +55,8 @@ func ArticlesPage(c *gin.Context) {
 
 // ListArticles returns the number of all articles.
 // Request sample:
-//     GET => /articles
+//
+//	GET => /articles
 func ListArticles(c *gin.Context) {
 	c.JSON(200, gin.H{
 		"code":  200,
@@ -63,7 +66,8 @@ func ListArticles(c *gin.Context) {
 
 // GetArticle gets an article by 'id' param.
 // Request sample:
-//     GET => /article/1
+//
+//	GET => /article/1
 func GetArticle(c *gin.Context) {
 	id, _ := strconv.ParseUint(c.Param("id"), 10, 64)
 
@@ -77,7 +81,8 @@ func GetArticle(c *gin.Context) {
 
 // InsertArticle inserts an article.
 // Request sample:
-//     POST => /article?title=foo&status=1&content=bar
+//
+//	POST => /article?title=foo&status=1&content=bar
 func InsertArticle(c *gin.Context) {
 	status, _ := strconv.Atoi(c.DefaultQuery("status", "0"))
 	article := &model.Article{

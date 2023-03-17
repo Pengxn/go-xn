@@ -8,7 +8,8 @@ import (
 
 // ListOptions returns all options.
 // Request sample:
-//     GET => /options
+//
+//	GET => /options
 func ListOptions(c *gin.Context) {
 	options := map[string]string{}
 	for _, option := range model.GetAllOptions() {
@@ -23,7 +24,8 @@ func ListOptions(c *gin.Context) {
 
 // GetOption returns an option by 'name' param.
 // Request sample:
-//     GET => /option/:name
+//
+//	GET => /option/:name
 func GetOption(c *gin.Context) {
 	has, option := model.GetOptionByName(c.Param("name"))
 
@@ -42,7 +44,8 @@ func GetOption(c *gin.Context) {
 
 // InsertOption inserts an option.
 // Request sample:
-//     POST => /option/:name?value=foo
+//
+//	POST => /option/:name?value=foo
 func InsertOption(c *gin.Context) {
 	option := &model.Option{
 		Name:  c.Query("name"),
@@ -71,7 +74,8 @@ func InsertOption(c *gin.Context) {
 
 // UpdateOption updates an option.
 // Request sample:
-//     PUT => /option/:name?value=foo1
+//
+//	PUT => /option/:name?value=foo1
 func UpdateOption(c *gin.Context) {
 	option := &model.Option{
 		Name:  c.Param("name"),
@@ -100,7 +104,8 @@ func UpdateOption(c *gin.Context) {
 
 // DeleteOption deletes option by 'name' param.
 // Request sample:
-//     DELETE => /option/:name
+//
+//	DELETE => /option/:name
 func DeleteOption(c *gin.Context) {
 	name := c.Param("name")
 

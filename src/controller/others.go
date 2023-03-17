@@ -13,7 +13,8 @@ import (
 
 // GwtWhoisInfo gets domain whois information.
 // Request sample:
-//     GET => /whois?domain=xn--02f.com
+//
+//	GET => /whois?domain=xn--02f.com
 func GwtWhoisInfo(c *gin.Context) {
 	domain := strings.TrimSpace(c.Query("domain"))
 	domain = strings.TrimSuffix(domain, ".") // Trim the dot at the end
@@ -33,7 +34,8 @@ func GwtWhoisInfo(c *gin.Context) {
 
 // UploadFileForUPic uploads files to the specified file path.
 // Request sample:
-//     POST => /upload/upic?file=...
+//
+//	POST => /upload/upic?file=...
 func UploadFileForUPic(c *gin.Context) {
 	file, err := c.FormFile("file")
 	if err != nil {
