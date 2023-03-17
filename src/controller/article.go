@@ -24,9 +24,8 @@ func HomePage(c *gin.Context) {
 		"code":     200,
 		"articles": model.ArticlesByPage(DefaultPageLimit, 1),
 		"site": map[string]string{
-			"title":       "Feng.YJ",
-			"logo":        "",
-			"cover":       "",
+			"title":       "Feng",
+			"author":      "Feng.YJ",
 			"description": "✍ The platform for publishing and running your blog. [WIP]",
 		},
 	})
