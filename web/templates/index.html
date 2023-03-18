@@ -20,7 +20,7 @@
       darkMode: 'class',
     }
   </script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css">
   <script src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js"></script>
   <script>
     $(document).ready(() => {
@@ -143,19 +143,26 @@
         </p>
       </div>
 
-      <!-- timeline for posts -->
-      <div class="relative pointer-events-none">
-        <span class="text-9xl opacity-10 absolute -left-11 -top-6 font-bold">2022</span>
-      </div>
+      {{ $lastArticleYear := "2006" }}
 
       {{ range $i, $v := .articles }}
-      <a href="/mariadb-master-slave-sync/">
+
+        {{ $articleYear := ($v.CreateTime.Format "2006" | print) }}
+        {{ if ne $lastArticleYear $articleYear }}
+        <!-- timeline posts -->
+        <div class="relative pointer-events-none">
+          <span class="text-9xl opacity-10 absolute -left-11 -top-6 font-bold">{{ $articleYear }}</span>
+        </div>
+        {{end}}
+        {{ $lastArticleYear = $articleYear }}
+
+      <a href="/{ TODO: $v.URL }">
         <header>
           <h2 class="font-bold text-xl">{{ $v.Title }}</h2>
         </header>
         <section class="text-gray-400 my-1 text-sm time">
-          <p class="line-clamp-4">{{ $v.Title }}</p>
-          <p class="line-clamp-4">{{ $v.CreateTime.Format "Jan 02" }} · 4 min</p>
+          <p class="line-clamp-4">{{ $v.Content }}</p>
+          <p class="line-clamp-4">{{ $v.CreateTime.Format "2006 Jan 02" }} · 4 min</p>
         </section>
       </a>
       {{ end }}
@@ -165,11 +172,11 @@
 
   <!-- footer -->
   <footer class="flex flex-col h-40 items-center justify-center text-gray-400 text-sm">
-    <!-- copyright -->
+    <!-- copyright year -->
     <div class="flex items-center gap-2">
-      <a href="https://github.com/huiyifyj" target="_blank" rel="noopener noreferrer">Feng.YJ</a>
+      <a href="https://github.com/huiyifyj" target="_blank" rel="noopener noreferrer">{{ .site.author }}</a>
       <iconify-icon width="18" icon="emojione-monotone:maple-leaf"></iconify-icon>
-      <span>© 2023</span>
+      <span>© {{ .now.Format "2006" }}</span>
     </div>
     <div class="flex items-center gap-2">
       <span>Powered by</span>

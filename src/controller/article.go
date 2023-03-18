@@ -2,6 +2,7 @@ package controller
 
 import (
 	"strconv"
+	"time"
 
 	"github.com/gin-gonic/gin"
 
@@ -23,6 +24,7 @@ func HomePage(c *gin.Context) {
 	c.HTML(200, "index.html", gin.H{
 		"code":     200,
 		"articles": model.ArticlesByPage(DefaultPageLimit, 1),
+		"now":      time.Now(),
 		"site": map[string]string{
 			"title":       "Feng",
 			"author":      "Feng.YJ",
