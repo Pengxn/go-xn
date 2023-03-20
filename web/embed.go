@@ -16,6 +16,7 @@ import (
 //go:embed assets
 var embedFS embed.FS
 
+// HTML returns the HTML template.
 func HTML() *template.Template {
 	templates, err := fs.Sub(embedFS, "templates")
 	if err != nil {
@@ -36,6 +37,7 @@ func HTML() *template.Template {
 	return t
 }
 
+// FS returns the `assets` file system.
 func FS() http.FileSystem {
 	assets, err := fs.Sub(embedFS, "assets")
 	if err != nil {
@@ -49,4 +51,7 @@ func FS() http.FileSystem {
 //go:embed icons
 var other embed.FS
 
-func OtherFS() http.FileSystem { return http.FS(other) }
+// OtherFS returns the `other` file system.
+func OtherFS() http.FileSystem {
+	return http.FS(other)
+}
