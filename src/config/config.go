@@ -139,3 +139,22 @@ func GetWebAuthnConfig() *WebAuthnConfig {
 
 	return webAuthn
 }
+
+// SMTPConfig is the mail SMTP configuration.
+type SMTPConfig struct {
+	Host     string `ini:"host"`
+	Port     int    `ini:"port"`
+	Username string `ini:"username"`
+	Password string `ini:"password"`
+	SkipTLS  bool   `ini:"skipTLS"`
+}
+
+// GetSMTPConfig returns SMTP configuration.
+func GetSMTPConfig() *SMTPConfig {
+	smtp := new(SMTPConfig)
+	if err := config.Section("smtp").MapTo(smtp); err != nil {
+		log.Warnln("Fail to parse SMTP configuration.", err)
+	}
+
+	return smtp
+}
