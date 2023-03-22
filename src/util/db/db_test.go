@@ -11,10 +11,10 @@ import (
 
 func TestDBUrl(t *testing.T) {
 	patch := ApplyFuncSeq(config.GetDBConfig, []OutputCell{
-		{Values: Params{&config.DBConfig{Type: "MySQL"}}},
-		{Values: Params{&config.DBConfig{Type: "PostgreSQL"}}},
-		{Values: Params{&config.DBConfig{Type: "SQLite3"}}},
-		{Values: Params{&config.DBConfig{}}},
+		{Values: Params{config.DBConfig{Type: "MySQL"}}},
+		{Values: Params{config.DBConfig{Type: "PostgreSQL"}}},
+		{Values: Params{config.DBConfig{Type: "SQLite3"}}},
+		{Values: Params{config.DBConfig{}}},
 	})
 	defer patch.Reset()
 

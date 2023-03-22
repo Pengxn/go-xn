@@ -26,7 +26,7 @@ func TestGetDBConfig(t *testing.T) {
 	defer patch.Reset()
 
 	Convey("Test GetDBConfig", t, func() {
-		So(GetDBConfig(), ShouldResemble, &DBConfig{
+		So(GetDBConfig(), ShouldResemble, DBConfig{
 			Type:     "SQLite3",
 			Name:     "fyj.db",
 			User:     "root",
@@ -42,7 +42,7 @@ func TestGetDNSConfig(t *testing.T) {
 	defer patch.Reset()
 
 	Convey("Test GetDNSConfig", t, func() {
-		So(GetDNSConfig(), ShouldResemble, &DNSConfig{
+		So(GetDNSConfig(), ShouldResemble, DNSConfig{
 			SecretID:  "AKIDAF*** ***Z0Gno6C",
 			SecretKey: "IdxgOu*** ***Fj2CFYJ",
 		})
@@ -54,7 +54,7 @@ func TestGetSentryConfig(t *testing.T) {
 	defer patch.Reset()
 
 	Convey("Test GetSentryConfig", t, func() {
-		So(GetSentryConfig(), ShouldResemble, &SentryConfig{
+		So(GetSentryConfig(), ShouldResemble, SentryConfig{
 			DSN:   "https://xxx@sentry.io/xxx",
 			Debug: false,
 		})
@@ -66,7 +66,7 @@ func TestGetLoggerConfig(t *testing.T) {
 	defer patch.Reset()
 
 	Convey("Test GetLoggerConfig", t, func() {
-		So(GetLoggerConfig(), ShouldResemble, &LoggerConfig{
+		So(GetLoggerConfig(), ShouldResemble, LoggerConfig{
 			Route: "route.log",
 			APP:   "app.log",
 		})

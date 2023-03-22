@@ -46,9 +46,9 @@ type ServerConfig struct {
 }
 
 // GetServerConfig returns server configuration.
-func GetServerConfig() *ServerConfig {
-	server := new(ServerConfig)
-	if err := config.Section("server").MapTo(server); err != nil {
+func GetServerConfig() ServerConfig {
+	var server ServerConfig
+	if err := config.Section("server").MapTo(&server); err != nil {
 		log.Warnln("Fail to parse server configuration.", err)
 	}
 
@@ -66,9 +66,9 @@ type DBConfig struct {
 }
 
 // GetDBConfig returns database configuration.
-func GetDBConfig() *DBConfig {
-	database := new(DBConfig)
-	if err := config.Section("database").MapTo(database); err != nil {
+func GetDBConfig() DBConfig {
+	var database DBConfig
+	if err := config.Section("database").MapTo(&database); err != nil {
 		log.Warnln("Fail to parse database configuration.", err)
 	}
 
@@ -82,9 +82,9 @@ type DNSConfig struct {
 }
 
 // GetDNSConfig returns DNS configuration.
-func GetDNSConfig() *DNSConfig {
-	dns := new(DNSConfig)
-	if err := config.Section("dns").MapTo(dns); err != nil {
+func GetDNSConfig() DNSConfig {
+	var dns DNSConfig
+	if err := config.Section("dns").MapTo(&dns); err != nil {
 		log.Warnln("Fail to parse DNS configuration.", err)
 	}
 
@@ -98,9 +98,9 @@ type SentryConfig struct {
 }
 
 // GetSentryConfig returns snetry configuration.
-func GetSentryConfig() *SentryConfig {
-	sentry := new(SentryConfig)
-	if err := config.Section("sentry").MapTo(sentry); err != nil {
+func GetSentryConfig() SentryConfig {
+	var sentry SentryConfig
+	if err := config.Section("sentry").MapTo(&sentry); err != nil {
 		log.Warnln("Fail to parse sentry configuration.", err)
 	}
 
@@ -114,9 +114,9 @@ type LoggerConfig struct {
 }
 
 // GetLoggerConfig returns logger configuration.
-func GetLoggerConfig() *LoggerConfig {
-	logger := new(LoggerConfig)
-	if err := config.Section("log").MapTo(logger); err != nil {
+func GetLoggerConfig() LoggerConfig {
+	var logger LoggerConfig
+	if err := config.Section("log").MapTo(&logger); err != nil {
 		log.Warnln("Fail to parse logger configuration.", err)
 	}
 
@@ -131,9 +131,9 @@ type WebAuthnConfig struct {
 }
 
 // GetWebAuthnConfig returns WebAuthn configuration.
-func GetWebAuthnConfig() *WebAuthnConfig {
-	webAuthn := new(WebAuthnConfig)
-	if err := config.Section("webauthn").MapTo(webAuthn); err != nil {
+func GetWebAuthnConfig() WebAuthnConfig {
+	var webAuthn WebAuthnConfig
+	if err := config.Section("webauthn").MapTo(&webAuthn); err != nil {
 		log.Warnln("Fail to parse WebAuthn configuration.", err)
 	}
 
@@ -150,9 +150,9 @@ type SMTPConfig struct {
 }
 
 // GetSMTPConfig returns SMTP configuration.
-func GetSMTPConfig() *SMTPConfig {
-	smtp := new(SMTPConfig)
-	if err := config.Section("smtp").MapTo(smtp); err != nil {
+func GetSMTPConfig() SMTPConfig {
+	var smtp SMTPConfig
+	if err := config.Section("smtp").MapTo(&smtp); err != nil {
 		log.Warnln("Fail to parse SMTP configuration.", err)
 	}
 
