@@ -1,0 +1,236 @@
+
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <!-- utf-8 works for most cases -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Forcing initial-scale shouldn't be necessary -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Use the latest (edge) version of IE rendering engine -->
+    <title>{{ .site.name }} - Sign in</title>
+    <!-- The title tag shows in email notifications, like Android 4.4. -->
+    <!-- Please use an inliner tool to convert all CSS to inline as inpage or external CSS is removed by email clients -->
+    <!-- important in CSS is used to prevent the styles of currently inline CSS from overriding the ones mentioned in media queries when corresponding screen sizes are encountered -->
+
+    <!-- CSS Reset -->
+    <style type="text/css">
+        /* What it does: Remove spaces around the email design added by some email clients. */
+        /* Beware: It can remove the padding / margin and add a background color to the compose a reply window. */
+        html,
+        body {
+            margin: 0 !important;
+            padding: 0 !important;
+            height: 100% !important;
+            width: 100% !important;
+            font-family: sans-serif;
+        }
+
+        /* What it does: Stops email clients resizing small text. */
+        * {
+            -ms-text-size-adjust: 100%;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        /* What it does: Forces Outlook.com to display emails full width. */
+        .ExternalClass {
+            width: 100%;
+        }
+
+        /* What is does: Centers email on Android 4.4 */
+        div[style*="margin: 16px 0"] {
+            margin: 0 !important;
+        }
+
+        /* What it does: Stops Outlook from adding extra spacing to tables. */
+        table,
+        td {
+            mso-table-lspace: 0pt !important;
+            mso-table-rspace: 0pt !important;
+            font-family: sans-serif;
+        }
+
+        /* What it does: Fixes webkit padding issue. Fix for Yahoo mail table alignment bug. Applies table-layout to the first 2 tables then removes for anything nested deeper. */
+        table {
+            border-spacing: 0 !important;
+            border-collapse: collapse !important;
+            table-layout: fixed !important;
+            margin: 0 auto;
+        }
+
+        table table table {
+            table-layout: auto;
+        }
+
+        /* What it does: Uses a better rendering method when resizing images in IE. */
+        img {
+            -ms-interpolation-mode: bicubic;
+        }
+
+        /* What it does: Overrides styles added when Yahoo's auto-senses a link. */
+        .yshortcuts a {
+            border-bottom: none !important;
+        }
+
+        /* What it does: Another work-around for iOS meddling in triggered links. */
+        a[x-apple-data-detectors] {
+            color: inherit !important;
+        }
+    </style>
+
+    <!-- Progressive Enhancements -->
+    <style type="text/css">
+        /* What it does: Hover styles for buttons */
+        .button-td,
+        .button-a {
+            transition: all 100ms ease-in;
+        }
+
+        .button-td:hover,
+        .button-a:hover {
+            background: #204C56 !important;
+            border-color: #204C56 !important;
+        }
+
+        /* Media Queries */
+        @media screen and (max-width : 800px) {
+
+            .email-container {
+                width: 100% !important;
+            }
+
+            /* What it does: Forces elements to resize to the full width of their container. Useful for resizing images beyond their max-width. */
+            .fluid,
+            .fluid-centered {
+                max-width: 100% !important;
+                height: auto !important;
+                margin-left: auto !important;
+                margin-right: auto !important;
+            }
+
+            /* And center justify these ones. */
+            .fluid-centered {
+                margin-left: auto !important;
+                margin-right: auto !important;
+            }
+
+            /* What it does: Forces table cells into full-width rows. */
+            .stack-column,
+            .stack-column-center {
+                display: block !important;
+                width: 100% !important;
+                max-width: 600px !important;
+                direction: ltr !important;
+            }
+
+            /* And center justify these ones. */
+            .stack-column-center {
+                text-align: center !important;
+            }
+
+            /* What it does: Generic utility class for centering. Useful for images, buttons, and nested tables. */
+            .center-on-narrow {
+                text-align: center !important;
+                display: block !important;
+                margin-left: auto !important;
+                margin-right: auto !important;
+                float: none !important;
+            }
+
+            table.center-on-narrow {
+                display: inline-block !important;
+            }
+
+        }
+
+    </style>
+</head>
+
+<body bgcolor="#FFFFFF" style="margin: 0" width="100%" yahoo="yahoo" valign="top">
+    <table bgcolor="#FFFFFF" cellpadding="0" cellspacing="0" border="0" width="auto" valign="top"
+        style="border-collapse:collapse;">
+        <td>
+            <center style="width: 100%;">
+                <!-- Visually Hidden Preheader Text : BEGIN -->
+                <div
+                    style="display:none;font-size:1px;line-height:1px;max-height:0px;max-width:0px;opacity:0;overflow:hidden;mso-hide:all;font-family: sans-serif;">
+                    {{ .site.name }} Sign in
+                </div>
+                <!-- Visually Hidden Preheader Text : END -->
+
+                <!-- App Name : BEGIN -->
+                <table cellspacing="0" cellpadding="0" border="0" align="center" bgcolor="#ffffff" width="600"
+                    class="email-container">
+                    <tr>
+                        <td valign="top"
+                            style="text-align: left; padding: 15px; padding-bottom:10px; font-size: 32px; mso-height-rule: exactly; line-height: 32px; font-weight: bold; color: #000000;">
+                            {{ .site.name }}
+                        </td>
+                    </tr>
+                </table>
+                <!-- App Name : END -->
+
+                <!-- Logo : BEGIN -->
+                <table cellspacing="0" cellpadding="0" border="0" align="center" bgcolor="#ffffff" width="600"
+                    class="email-container">
+                    <tr>
+                        <td valign="middle" style="text-align: left; padding-left: 15px">
+                            <img style="padding-top:10px; max-width:150px; max-height:150px;" src="{{ .site.logo_url }}" alt="logo" />
+                        </td>
+                    </tr>
+                </table>
+                <!-- Logo: END -->
+
+                <table cellspacing="0" cellpadding="0" border="0" align="center" bgcolor="#ffffff" width="600"
+                    class="email-container">
+                    <tr>
+                        <td valign="middle"
+                            style="text-align: center; padding: 15px; font-size: 14px; mso-height-rule: exactly; line-height: 34px; font-weight: normal; color: #000000;">
+                            Please click the button below to sign in.
+                        </td>
+                    </tr>
+                </table>
+
+                <!-- Button : Begin -->
+
+                <table cellspacing="0" cellpadding="0" border="0" align="center" style="margin: auto" bgcolor="#FFFFFF">
+                    <tr>
+                        <td style="border-radius: 75px; background: #000000; text-align: center;" class="button-td">
+                            <a href="{{ .magic_link }}"
+                                style="background: #000000; border: 15px solid #000000; padding: 0 10px;color: #ffffff; font-size: 16px; line-height: 1.1; text-align: center; text-decoration: none; display: block; border-radius: 75px; font-weight: bold;"
+                                class="button-a">
+                                <!--[if mso]>&nbsp;&nbsp;&nbsp;&nbsp;<![endif]-->Login
+                                <!--[if mso]>&nbsp;&nbsp;&nbsp;&nbsp;<![endif]-->
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+                <!-- Button : END -->
+
+                <table cellspacing="0" cellpadding="0" border="0" align="center" bgcolor="#ffffff" width="600"
+                    class="email-container">
+                    <tr>
+                        <td valign="middle"
+                            style="text-align: center; padding: 60px 15px 15px; font-size: 14px; mso-height-rule: exactly; line-height: 32px; font-weight: normal; color: #000000;">
+                            Having trouble? Copy this link into your browser:  <a href="{{ .magic_link }}">{{ .magic_link }}</a>
+                        </td>
+                    </tr>
+                </table>
+
+                <table cellspacing="0" cellpadding="0" border="0" align="center" bgcolor="#ffffff" width="600"
+                    class="email-container">
+                    <tr>
+                        <td valign="center"
+                            style="text-align: center; padding: 15px;  font-size: 14px; font-weight: normal; mso-height-rule: exactly; line-height: 24px; color: #808080;">
+                            <br>
+                            If you did not request this email, please contact us at {{ .site.contact_email }}.
+                        </td>
+                    </tr>
+                </table>
+            </center>
+        </td>
+    </table>
+</body>
+
+</html>
