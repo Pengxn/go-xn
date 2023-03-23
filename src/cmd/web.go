@@ -40,7 +40,7 @@ port 8080 by default.`,
 // runWeb is the entry point to the web server.
 // Parses the arguments, routes and others.
 func runWeb(c *cli.Context) error {
-	err := route.InitRoutes(c.String("port"))
+	err := route.InitRoutes()
 	if err != nil {
 		log.Fatalln("Fail to Start Web Server.", err)
 	}

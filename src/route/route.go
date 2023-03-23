@@ -9,7 +9,12 @@ import (
 )
 
 // InitRoutes initializes all routes.
-func InitRoutes(port string) error {
+func InitRoutes() error {
+	serverConfig := config.Config.Server
+	if !serverConfig.Debug {
+		gin.SetMode(gin.ReleaseMode)
+	}
+
 	g := gin.New()
 	g.Use(middleware.Logger(), gin.Recovery(), middleware.Sentry())
 	g.GET("/", controller.HomePage)
@@ -24,12 +29,8 @@ func InitRoutes(port string) error {
 	optionsRoutes(g)
 	articlesRoutes(g)
 
-	serverConfig := config.GetServerConfig()
-	if !serverConfig.Debug {
-		gin.SetMode(gin.ReleaseMode)
-	}
 	if serverConfig.TLS {
 		return g.RunTLS(":"+serverConfig.Port, serverConfig.CertFile, serverConfig.KeyFile)
 	}
-	return g.Run(":" + port)
+	return g.Run(":" + serverConfig.Port)
 }
