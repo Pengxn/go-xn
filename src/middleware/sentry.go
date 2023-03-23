@@ -10,7 +10,7 @@ import (
 )
 
 func Sentry() gin.HandlerFunc {
-	sentryConfig := config.GetSentryConfig()
+	sentryConfig := config.Config.Sentry
 	// Initialize Sentry's handler
 	if err := sentry.Init(sentry.ClientOptions{
 		Dsn:   sentryConfig.DSN,

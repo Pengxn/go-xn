@@ -14,7 +14,7 @@ import (
 
 // getDBUrl returns database type and its DSN.
 func getDBUrl() (dbType, dsn string) {
-	db := config.GetDBConfig()
+	db := config.Config.DB
 	dbType = strings.ToLower(db.Type)
 
 	switch dbType {

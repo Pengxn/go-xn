@@ -10,6 +10,19 @@ import (
 	"github.com/Pengxn/go-xn/src/util/log"
 )
 
+var Config appConfig // Global config object
+
+// appConfig is configuration for global object.
+type appConfig struct {
+	Server   ServerConfig   `ini:"server"`
+	DB       DBConfig       `ini:"database"`
+	DNS      DNSConfig      `ini:"dns"`
+	Sentry   SentryConfig   `ini:"sentry"`
+	Logger   LoggerConfig   `ini:"log"`
+	WebAuthn WebAuthnConfig `ini:"webauthn"`
+	SMTP     SMTPConfig     `ini:"smtp"`
+}
+
 var configINI *ini.File // Global setting object
 
 func init() {
@@ -19,6 +32,10 @@ func init() {
 		log.Fatalf("Fail to read config file %s, %+v", configPath, err)
 	}
 	configINI = configFile
+
+	if err := configINI.MapTo(&Config); err != nil {
+		log.Warnln("Fail to parse(MapTo) file configuration.", err)
+	}
 }
 
 func defaultConfigPath() string {
