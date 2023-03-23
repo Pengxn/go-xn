@@ -10,7 +10,7 @@ import (
 	"github.com/Pengxn/go-xn/src/util/log"
 )
 
-var config *ini.File // Global setting object
+var configINI *ini.File // Global setting object
 
 func init() {
 	configPath := defaultConfigPath()
@@ -18,7 +18,7 @@ func init() {
 	if err != nil {
 		log.Fatalf("Fail to read config file %s, %+v", configPath, err)
 	}
-	config = configFile
+	configINI = configFile
 }
 
 func defaultConfigPath() string {
@@ -48,7 +48,7 @@ type ServerConfig struct {
 // GetServerConfig returns server configuration.
 func GetServerConfig() ServerConfig {
 	var server ServerConfig
-	if err := config.Section("server").MapTo(&server); err != nil {
+	if err := configINI.Section("server").MapTo(&server); err != nil {
 		log.Warnln("Fail to parse server configuration.", err)
 	}
 
@@ -68,7 +68,7 @@ type DBConfig struct {
 // GetDBConfig returns database configuration.
 func GetDBConfig() DBConfig {
 	var database DBConfig
-	if err := config.Section("database").MapTo(&database); err != nil {
+	if err := configINI.Section("database").MapTo(&database); err != nil {
 		log.Warnln("Fail to parse database configuration.", err)
 	}
 
@@ -84,7 +84,7 @@ type DNSConfig struct {
 // GetDNSConfig returns DNS configuration.
 func GetDNSConfig() DNSConfig {
 	var dns DNSConfig
-	if err := config.Section("dns").MapTo(&dns); err != nil {
+	if err := configINI.Section("dns").MapTo(&dns); err != nil {
 		log.Warnln("Fail to parse DNS configuration.", err)
 	}
 
@@ -100,7 +100,7 @@ type SentryConfig struct {
 // GetSentryConfig returns snetry configuration.
 func GetSentryConfig() SentryConfig {
 	var sentry SentryConfig
-	if err := config.Section("sentry").MapTo(&sentry); err != nil {
+	if err := configINI.Section("sentry").MapTo(&sentry); err != nil {
 		log.Warnln("Fail to parse sentry configuration.", err)
 	}
 
@@ -116,7 +116,7 @@ type LoggerConfig struct {
 // GetLoggerConfig returns logger configuration.
 func GetLoggerConfig() LoggerConfig {
 	var logger LoggerConfig
-	if err := config.Section("log").MapTo(&logger); err != nil {
+	if err := configINI.Section("log").MapTo(&logger); err != nil {
 		log.Warnln("Fail to parse logger configuration.", err)
 	}
 
@@ -133,7 +133,7 @@ type WebAuthnConfig struct {
 // GetWebAuthnConfig returns WebAuthn configuration.
 func GetWebAuthnConfig() WebAuthnConfig {
 	var webAuthn WebAuthnConfig
-	if err := config.Section("webauthn").MapTo(&webAuthn); err != nil {
+	if err := configINI.Section("webauthn").MapTo(&webAuthn); err != nil {
 		log.Warnln("Fail to parse WebAuthn configuration.", err)
 	}
 
@@ -152,7 +152,7 @@ type SMTPConfig struct {
 // GetSMTPConfig returns SMTP configuration.
 func GetSMTPConfig() SMTPConfig {
 	var smtp SMTPConfig
-	if err := config.Section("smtp").MapTo(&smtp); err != nil {
+	if err := configINI.Section("smtp").MapTo(&smtp); err != nil {
 		log.Warnln("Fail to parse SMTP configuration.", err)
 	}
 

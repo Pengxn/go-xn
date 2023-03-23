@@ -22,7 +22,7 @@ func init() {
 }
 
 func TestGetDBConfig(t *testing.T) {
-	patch := ApplyGlobalVar(&config, configTest)
+	patch := ApplyGlobalVar(&configINI, configTest)
 	defer patch.Reset()
 
 	Convey("Test GetDBConfig", t, func() {
@@ -38,7 +38,7 @@ func TestGetDBConfig(t *testing.T) {
 }
 
 func TestGetDNSConfig(t *testing.T) {
-	patch := ApplyGlobalVar(&config, configTest)
+	patch := ApplyGlobalVar(&configINI, configTest)
 	defer patch.Reset()
 
 	Convey("Test GetDNSConfig", t, func() {
@@ -50,7 +50,7 @@ func TestGetDNSConfig(t *testing.T) {
 }
 
 func TestGetSentryConfig(t *testing.T) {
-	patch := ApplyGlobalVar(&config, configTest)
+	patch := ApplyGlobalVar(&configINI, configTest)
 	defer patch.Reset()
 
 	Convey("Test GetSentryConfig", t, func() {
@@ -62,7 +62,7 @@ func TestGetSentryConfig(t *testing.T) {
 }
 
 func TestGetLoggerConfig(t *testing.T) {
-	patch := ApplyGlobalVar(&config, configTest)
+	patch := ApplyGlobalVar(&configINI, configTest)
 	defer patch.Reset()
 
 	Convey("Test GetLoggerConfig", t, func() {
