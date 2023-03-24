@@ -45,7 +45,7 @@ func (dns DNSCommon) SetAction(action string) DNSCommon {
 
 // do http request, https://cloud.tencent.com/document/product/302/7310
 func (dns DNSCommon) do(params map[string]string) (*http.Response, error) {
-	dnsConfig := config.GetDNSConfig()
+	dnsConfig := config.Config.DNS
 	// common params
 	allParams := map[string]string{
 		"Action":          dns.action,
