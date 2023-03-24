@@ -3,6 +3,7 @@ package cmd
 import (
 	"github.com/urfave/cli/v2"
 
+	"github.com/Pengxn/go-xn/src/config"
 	"github.com/Pengxn/go-xn/src/route"
 	"github.com/Pengxn/go-xn/src/util/home"
 	"github.com/Pengxn/go-xn/src/util/log"
@@ -13,9 +14,8 @@ var (
 	Web = &cli.Command{
 		Name:  "web",
 		Usage: "Start web server interface for blog",
-		Description: `Run a performant web server which serves the site
-for blog. If '--port' flag is not used, it will use
-port 8080 by default.`,
+		Description: `Run a performant web server which serves the site for blog.
+If '--port' flag is not used, it will use port 7991 by default.`,
 		Action: runWeb,
 		Flags: []cli.Flag{
 			port,
@@ -28,7 +28,7 @@ port 8080 by default.`,
 		Name:    "port",
 		Aliases: []string{"p"},
 		Usage:   "Temporary port number to prevent conflict",
-		Value:   3000,
+		Value:   7991,
 	}
 	webroot = &cli.PathFlag{
 		Name:    "webroot",
@@ -47,6 +47,9 @@ port 8080 by default.`,
 // runWeb is the entry point to the web server.
 // Parses the arguments, routes and others.
 func runWeb(c *cli.Context) error {
+	// Override config by cli flag
+	config.OverrideConfigByFlag(c)
+
 	err := route.InitRoutes()
 	if err != nil {
 		log.Fatalln("Fail to Start Web Server.", err)
