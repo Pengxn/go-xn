@@ -20,6 +20,7 @@ port 8080 by default.`,
 		Flags: []cli.Flag{
 			port,
 			webroot,
+			debug,
 		},
 	}
 
@@ -34,6 +35,12 @@ port 8080 by default.`,
 		Aliases: []string{"w"},
 		Usage:   "Web root path that used by server",
 		Value:   home.HomeDir(),
+	}
+	debug = &cli.BoolFlag{
+		Name:               "debug",
+		Aliases:            []string{"d"},
+		Usage:              "Enable debug mode, print extra debugging information",
+		DisableDefaultText: true,
 	}
 )
 
