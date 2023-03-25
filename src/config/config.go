@@ -13,10 +13,14 @@ import (
 var Config appConfig // Global config object
 
 func init() {
-	configPath := defaultConfigPath()
-	configFile, err := ini.LooseLoad(configPath)
+	Config = appConfig{
+		Server: ServerConfig{Port: "7991"},
+		DB:     DBConfig{Type: "SQLite3", Name: "fyj.db"},
+	}
+
+	configFile, err := ini.LooseLoad(defaultConfigPath())
 	if err != nil {
-		log.Warnf("Fail to read config file %s, %+v", configPath, err)
+		log.Warnf(`Fail to read config file, %+v`, err)
 		return
 	}
 
