@@ -18,16 +18,22 @@ func init() {
 		DB:     DBConfig{Type: "SQLite3", Name: "fyj.db"},
 	}
 
+	if err := loadConfig(defaultConfigPath()); err != nil {
+		log.Errorf("Load config file failed, %+v", err)
+	}
+}
+
+func loadConfig(file string) error {
 	configFile, err := ini.LooseLoad(defaultConfigPath())
 	if err != nil {
-		log.Warnf(`Fail to read config file, %+v`, err)
-		return
+		return err
 	}
 
 	configFile.BlockMode = false // Only read the config file, not write.
 	if err := configFile.MapTo(&Config); err != nil {
-		log.Warnln("Fail to parse(MapTo) file configuration.", err)
+		return err
 	}
+	return nil
 }
 
 func defaultConfigPath() string {

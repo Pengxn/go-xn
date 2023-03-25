@@ -13,7 +13,9 @@ func OverrideConfigByFlag(c *cli.Context) {
 		if !file.IsExist(f) || !file.IsFile(f) {
 			log.Error("Specified config file not found: " + f)
 		}
-		// TODO: load specified config file
+		if err := loadConfig(f); err != nil {
+			log.Errorf("Load specified config file failed, %+v", err)
+		}
 	}
 	// Server config
 	if c.IsSet("port") {
