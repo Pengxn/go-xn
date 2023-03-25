@@ -24,7 +24,7 @@ func init() {
 }
 
 func loadConfig(file string) error {
-	configFile, err := ini.LooseLoad(defaultConfigPath())
+	configFile, err := ini.LooseLoad(file)
 	if err != nil {
 		return err
 	}
