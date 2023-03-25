@@ -20,6 +20,7 @@ func init() {
 		return
 	}
 
+	configFile.BlockMode = false // Only read the config file, not write.
 	if err := configFile.MapTo(&Config); err != nil {
 		log.Warnln("Fail to parse(MapTo) file configuration.", err)
 	}
