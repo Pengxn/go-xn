@@ -4,8 +4,6 @@ import (
 	"os"
 
 	"github.com/urfave/cli/v2"
-
-	"github.com/Pengxn/go-xn/src/util/home"
 )
 
 // Execute to run cmd
@@ -17,14 +15,6 @@ func Execute() error {
 		Commands: []*cli.Command{
 			Web,
 			VersionCmd,
-		},
-		Flags: []cli.Flag{
-			&cli.PathFlag{
-				Name:    "config",
-				Aliases: []string{"c"},
-				Usage:   "Custom configuration `file` path",
-				Value:   home.HomeDir() + string(os.PathSeparator) + "fyj.ini",
-			},
 		},
 	}
 
