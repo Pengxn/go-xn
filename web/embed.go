@@ -55,3 +55,12 @@ var other embed.FS
 func OtherFS() http.FileSystem {
 	return http.FS(other)
 }
+
+var (
+	//go:embed templates/mail/mail-login.html
+	MailLogin string
+	//go:embed templates/mail/mail-change.html
+	MailChange string
+	//go:embed templates/mail/mail-verify.html
+	MailVerify string
+)
