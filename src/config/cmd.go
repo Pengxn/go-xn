@@ -1,6 +1,8 @@
 package config
 
 import (
+	"os"
+
 	"github.com/urfave/cli/v2"
 
 	"github.com/Pengxn/go-xn/src/util/file"
@@ -24,4 +26,19 @@ func OverrideConfigByFlag(c *cli.Context) {
 	if c.IsSet("debug") {
 		Config.Server.Debug = c.Bool("debug")
 	}
+}
+
+func getConfigPathByFlag() string {
+	if args := os.Args; len(args) > 0 {
+		for k, v := range args {
+			if v == "-c" || v == "--config" {
+				// Load config file from command line
+				if len(args) > k+1 {
+					return args[k+1]
+				}
+			}
+		}
+	}
+
+	return ""
 }

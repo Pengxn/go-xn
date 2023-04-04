@@ -18,7 +18,12 @@ func init() {
 		DB:     DBConfig{Type: "SQLite3", Name: "fyj.db"},
 	}
 
-	if err := loadConfig(defaultConfigPath()); err != nil {
+	configPath := getConfigPathByFlag()
+	if configPath == "" {
+		configPath = defaultConfigPath()
+	}
+
+	if err := loadConfig(configPath); err != nil {
 		log.Errorf("Load config file failed, %+v", err)
 	}
 }
