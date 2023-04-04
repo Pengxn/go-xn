@@ -26,3 +26,9 @@ jobs:
       - name: Compile and build
         run: |
           make
+
+      - name: Publish Build Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: linux-amd64
+          path: build/

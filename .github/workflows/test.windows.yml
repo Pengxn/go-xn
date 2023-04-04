@@ -26,3 +26,13 @@ jobs:
       - name: Compile and build
         run: |
           make
+
+      - name: Build Inno Setup Installer
+        run: |
+          iscc .\script\windows\go-xn.iss
+
+      - name: Publish Build Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: windows-amd64
+          path: build/dist/
