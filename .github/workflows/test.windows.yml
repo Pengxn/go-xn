@@ -1,9 +1,9 @@
 on: workflow_call
 
 jobs:
-  test-linux:
-    name: Test on Linux
-    runs-on: ubuntu-latest
+  test-windows:
+    name: Test on Windows
+    runs-on: windows-latest
 
     steps:
       - name: Checkout code

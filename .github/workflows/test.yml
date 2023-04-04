@@ -13,3 +13,6 @@ on:
 jobs:
   test-linux:
     uses: ./.github/workflows/test.linux.yml
+
+  test-windows:
+    uses: ./.github/workflows/test.windows.yml
