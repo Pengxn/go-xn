@@ -5,7 +5,6 @@ import (
 
 	"github.com/Pengxn/go-xn/src/config"
 	"github.com/Pengxn/go-xn/src/route"
-	"github.com/Pengxn/go-xn/src/util/home"
 	"github.com/Pengxn/go-xn/src/util/log"
 )
 
@@ -20,7 +19,6 @@ If '--port' flag is not used, it will use port 7991 by default.`,
 		Flags: []cli.Flag{
 			configFile,
 			port,
-			webroot,
 			debug,
 		},
 	}
@@ -37,12 +35,6 @@ If '--port' flag is not used, it will use port 7991 by default.`,
 		Usage:       "Temporary port number to prevent conflict",
 		Value:       7991,
 		DefaultText: "7991",
-	}
-	webroot = &cli.PathFlag{
-		Name:    "webroot",
-		Aliases: []string{"w"},
-		Usage:   "Web root path that used by server",
-		Value:   home.HomeDir(),
 	}
 	debug = &cli.BoolFlag{
 		Name:               "debug",
