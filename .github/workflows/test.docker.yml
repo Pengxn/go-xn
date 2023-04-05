@@ -36,8 +36,10 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Push to GitHub Container
+      - name: Set GCHR_USER Environment Variable
         run: |
           echo "GCHR_USER=${GITHUB_REPOSITORY_OWNER,,}" >> $GITHUB_ENV
+      - name: Push to GitHub Container
+        run: |
           docker tag fyj:latest ghcr.io/${{ env.GCHR_USER }}/fyj:latest
           docker push ghcr.io/${{ env.GCHR_USER }}/fyj:latest
