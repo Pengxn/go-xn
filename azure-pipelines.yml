@@ -1,3 +1,9 @@
+trigger:
+  paths:
+    exclude:
+      - .github/**
+      - README.md
+
 variables:
   - group: docker # including $DOCKER_USER and $DOCKER_TOKEN
   - group: github # including $GITHUB_USER and $GITHUB_TOKEN
