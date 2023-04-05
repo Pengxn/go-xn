@@ -20,3 +20,4 @@ jobs:
   deploy-docker:
     needs: test-linux
     uses: ./.github/workflows/test.docker.yml
+    secrets: inherit
