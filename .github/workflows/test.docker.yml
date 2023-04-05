@@ -38,5 +38,6 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Push to GitHub Container
         run: |
-          docker tag fyj:latest ghcr.io/${{ github.repository_owner }}/fyj:latest
-          docker push ghcr.io/${{ github.repository_owner }}/fyj:latest
+          echo "GCHR_USER=${GITHUB_REPOSITORY_OWNER,,}" >> $GITHUB_ENV
+          docker tag fyj:latest ghcr.io/${{ env.GCHR_USER }}/fyj:latest
+          docker push ghcr.io/${{ env.GCHR_USER }}/fyj:latest

@@ -19,5 +19,6 @@ jobs:
 
   deploy-docker:
     needs: test-linux
+    if: github.event_name == 'push'
     uses: ./.github/workflows/test.docker.yml
     secrets: inherit
