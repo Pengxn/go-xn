@@ -5,6 +5,7 @@ require (
 	github.com/getsentry/sentry-go v0.20.0
 	github.com/gin-gonic/gin v1.9.0
 	github.com/go-ini/ini v1.67.0
+	github.com/go-mail/mail/v2 v2.3.0
 	github.com/go-sql-driver/mysql v1.7.0
 	github.com/gorilla/feeds v1.1.1
 	github.com/lib/pq v1.10.7
@@ -51,6 +52,8 @@ require (
 	golang.org/x/sys v0.6.0 // indirect
 	golang.org/x/text v0.8.0 // indirect
 	google.golang.org/protobuf v1.29.1 // indirect
+	gopkg.in/alexcesaro/quotedprintable.v3 v3.0.0-20150716171945-2caba252f4dc // indirect
+	gopkg.in/mail.v2 v2.3.1 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	xorm.io/builder v0.3.11-0.20220531020008-1bd24a7dc978 // indirect
 )
