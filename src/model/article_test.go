@@ -30,9 +30,9 @@ func init() {
 }
 
 var testORM = func() *xorm.Engine {
-	config, err := ini.Load(home.HomeDir() + string(os.PathSeparator) + "fyj.ini")
+	config, err := ini.LooseLoad(home.HomeDir() + string(os.PathSeparator) + "fyj.ini")
 	if err != nil {
-		log.Fatalln("Fail to read fyj.ini file.", err)
+		log.Errorln("Fail to read fyj.ini file.", err)
 	}
 
 	dbType := config.Section("test").Key("dbType").String()
