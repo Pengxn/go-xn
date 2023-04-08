@@ -41,10 +41,10 @@ func NewTimeoutClient(second int64) *Client {
 // NewClientWithProxy returns http Client with custom proxy property.
 // example:
 //
-// 	func(req *http.Request) (*url.URL, error) {
-// 		u, _ := url.ParseRequestURI("http://127.0.0.1:8118")
-// 		return u, nil
-// 	}
+//	func(req *http.Request) (*url.URL, error) {
+//		u, _ := url.ParseRequestURI("http://127.0.0.1:8118")
+//		return u, nil
+//	}
 func NewClientWithProxy(proxy func(*http.Request) (*url.URL, error)) *Client {
 	config := NewHttpConfig()
 	config.Proxy = proxy

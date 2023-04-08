@@ -18,7 +18,7 @@ const (
 	HTML ContentType = "application/html" // HTML MIME type
 )
 
-// Config 配置文件
+// Config is used to override the default http client settings.
 type Config struct {
 	Timeout            time.Duration     // Time out
 	DisableKeepAlives  bool              // Disable keep alives
@@ -30,7 +30,7 @@ type Config struct {
 	Proxy              func(*http.Request) (*url.URL, error)
 }
 
-// NewHttpConfig Overwrite default http settings
+// NewHttpConfig returns default http config.
 func NewHttpConfig() *Config {
 	return &Config{
 		Timeout:            10 * time.Second,
