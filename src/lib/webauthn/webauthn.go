@@ -61,3 +61,39 @@ func FinishRegister(u User, session, response []byte) (*webauthn.Credential, err
 	}
 	return w.CreateCredential(u, sessionData, creationData)
 }
+
+// BeginLogin generates a new set of login data for webauthn.
+func BeginLogin(u User) ([]byte, []byte, error) {
+	c, s, err := w.BeginLogin(u)
+	if err != nil {
+		return nil, nil, err
+	}
+	cred, err := json.Marshal(c)
+	if err != nil {
+		return nil, nil, err
+	}
+	session, err := json.Marshal(s)
+	if err != nil {
+		return nil, nil, err
+	}
+	return cred, session, nil
+}
+
+// FinishLogin validates the login data and returns the credential for webauthn.
+func FinishLogin(u User, session, response []byte) (*webauthn.Credential, error) {
+	var sessionData webauthn.SessionData
+	if err := json.Unmarshal(session, &sessionData); err != nil {
+		return nil, err
+	}
+
+	var car protocol.CredentialAssertionResponse
+	if err := json.Unmarshal(response, &car); err != nil {
+		return nil, err
+	}
+
+	creationData, err := car.Parse()
+	if err != nil {
+		return nil, err
+	}
+	return w.ValidateLogin(u, sessionData, creationData)
+}
