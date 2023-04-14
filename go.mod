@@ -11,6 +11,7 @@ require (
 	github.com/gorilla/feeds v1.1.1
 	github.com/lib/pq v1.10.7
 	github.com/mattn/go-sqlite3 v1.14.16
+	github.com/patrickmn/go-cache v2.1.0+incompatible
 	github.com/rs/cors v1.8.3
 	github.com/sirupsen/logrus v1.9.0
 	github.com/smartystreets/goconvey v1.8.0
