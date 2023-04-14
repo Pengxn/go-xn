@@ -9,7 +9,7 @@ import (
 var c = cache.New(5*time.Minute, 10*time.Minute)
 
 // Add adds a key/value pair to the cache only if the key doesn't already exist,
-// or if key has expired. Returns an error otherwise.
+// or if the key has expired. Returns an error otherwise.
 func Add(key string, value interface{}) error {
 	return c.Add(key, value, cache.DefaultExpiration)
 }
@@ -18,6 +18,13 @@ func Add(key string, value interface{}) error {
 // overwritten.
 func Set(key string, value interface{}) {
 	c.Set(key, value, cache.DefaultExpiration)
+}
+
+// SetWithExpiration sets a key/value pair in the cache with a given expiration.
+// If the key already exists, it will be overwritten. If expiration is 0, the
+// default expiration time will be used.
+func SetWithExpiration(key string, value interface{}, expiration time.Duration) {
+	c.Set(key, value, expiration)
 }
 
 // Get gets a value by key from the cache. It returns the value and a boolean
