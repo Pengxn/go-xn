@@ -14,6 +14,7 @@ func Execute() error {
 		Version: Version,
 		Commands: []*cli.Command{
 			Web,
+			Update,
 			VersionCmd,
 		},
 	}
