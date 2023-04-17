@@ -22,9 +22,6 @@ var (
 		Name:   "update",
 		Usage:  "Update the binary to the latest version",
 		Action: update,
-		Flags: []cli.Flag{
-			configFile,
-		},
 	}
 )
 
@@ -45,9 +42,7 @@ func update(c *cli.Context) error {
 		return err
 	}
 
-	bytesReader := bytes.NewReader(buff.Bytes())
-
-	archive, err := zip.NewReader(bytesReader, size)
+	archive, err := zip.NewReader(bytes.NewReader(buff.Bytes()), size)
 	if err != nil {
 		return err
 	}
