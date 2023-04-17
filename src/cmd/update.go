@@ -1,8 +1,11 @@
 package cmd
 
 import (
+	"archive/zip"
+	"bytes"
 	"io"
 	"os"
+	"path/filepath"
 
 	"github.com/schollz/progressbar/v3"
 	"github.com/urfave/cli/v2"
@@ -32,17 +35,56 @@ func update(c *cli.Context) error {
 	}
 	defer resp.Body.Close()
 
-	// create and write to file
-	f, err := os.OpenFile("linux-amd64.zip", os.O_CREATE|os.O_WRONLY, 0644)
-	if err != nil {
-		return err
-	}
-	defer f.Close()
+	buff := bytes.NewBuffer([]byte{})
 
 	// create real-time progress bar in terminal
 	bar := progressbar.DefaultBytes(resp.ContentLength)
 
-	_, err = io.Copy(io.MultiWriter(bar), resp.Body)
+	size, err := io.Copy(io.MultiWriter(buff, bar), resp.Body)
+	if err != nil {
+		return err
+	}
 
-	return err
+	bytesReader := bytes.NewReader(buff.Bytes())
+
+	archive, err := zip.NewReader(bytesReader, size)
+	if err != nil {
+		return err
+	}
+
+	return unzip(archive, "build")
+}
+
+func unzip(archive *zip.Reader, dst string) error {
+	for _, f := range archive.File {
+		filePath := filepath.Join(dst, f.Name)
+
+		// create directory if file in archive is a directory
+		if f.FileInfo().IsDir() {
+			os.MkdirAll(filePath, os.ModePerm)
+			continue
+		}
+
+		if err := os.MkdirAll(filepath.Dir(filePath), os.ModePerm); err != nil {
+			return err
+		}
+
+		dstFile, err := os.OpenFile(filePath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, f.Mode())
+		if err != nil {
+			return err
+		}
+		defer dstFile.Close()
+
+		fileInArchive, err := f.Open()
+		if err != nil {
+			return err
+		}
+		defer fileInArchive.Close()
+
+		if _, err := io.Copy(dstFile, fileInArchive); err != nil {
+			return err
+		}
+	}
+
+	return nil
 }
