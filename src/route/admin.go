@@ -18,4 +18,8 @@ func adminRoutes(g *gin.Engine) {
 			"Data": "Hi",
 		})
 	})
+
+	admin.GET("/register", controller.RegisterPage)
+	admin.POST("/register/begin", controller.BeginRegister)
+	admin.POST("/register/finish", controller.FinishRegister)
 }
