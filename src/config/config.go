@@ -60,6 +60,7 @@ func defaultConfigPath() string {
 type appConfig struct {
 	Server   ServerConfig   `ini:"server"`
 	DB       DBConfig       `ini:"database"`
+	Redis    RedisConfig    `ini:"redis"`
 	DNS      DNSConfig      `ini:"dns"`
 	Sentry   SentryConfig   `ini:"sentry"`
 	Logger   LoggerConfig   `ini:"log"`
@@ -84,6 +85,13 @@ type DBConfig struct {
 	Port     string `ini:"port"`
 	Name     string `ini:"name"`
 	Url      string `ini:"url"`
+}
+
+// RedisConfig is custom configuration for Redis.
+type RedisConfig struct {
+	URL      string `ini:"url"`
+	Password string `ini:"password"`
+	DB       int    `ini:"db"`
 }
 
 // DNSConfig is DNS configuration for Tencent Cloud.
