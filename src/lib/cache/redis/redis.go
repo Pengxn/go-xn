@@ -9,6 +9,8 @@ import (
 	"github.com/Pengxn/go-xn/src/config"
 )
 
+const DefaultExpiration = 5 * time.Minute
+
 var (
 	// UseRedis indicates whether to use redis.
 	UseRedis bool
@@ -31,13 +33,13 @@ func init() {
 // Add adds a key/value pair to the redis only if the key doesn't already exist,
 // or if the key has expired. Returns an error otherwise.
 func Add(key string, value interface{}) error {
-	return r.Set(context.Background(), key, value, 5*time.Minute).Err()
+	return r.Set(context.Background(), key, value, DefaultExpiration).Err()
 }
 
 // Set sets a key/value pair in the reids. If the key already exists, it will be
 // overwritten.
 func Set(key string, value interface{}) {
-	r.Set(context.Background(), key, value, 5*time.Minute)
+	r.Set(context.Background(), key, value, DefaultExpiration)
 }
 
 // SetWithExpiration sets a key/value pair in the reids with a given expiration.

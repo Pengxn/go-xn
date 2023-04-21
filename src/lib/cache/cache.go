@@ -8,7 +8,7 @@ import (
 	"github.com/Pengxn/go-xn/src/lib/cache/redis"
 )
 
-var c = cache.New(5*time.Minute, 10*time.Minute)
+var c = cache.New(redis.DefaultExpiration, 10*time.Minute)
 
 // Add adds a key/value pair to the cache only if the key doesn't already exist,
 // or if the key has expired. Returns an error otherwise.
