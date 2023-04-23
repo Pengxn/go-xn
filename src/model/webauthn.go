@@ -35,8 +35,21 @@ func (cred WebAuthnCredential) Add() bool {
 
 	affected, err := db.InsertOne(cred)
 	if err != nil {
-		log.Errorf("WebAuthn Credential add throw error: %s, param: %+v", err, cred)
+		log.Errorf("WebAuthn Credential add throw error: %+v, param: %+v", err, cred)
 	}
 
 	return affected > 0
+}
+
+// Get gets WebAuthn credential list by the given WebAuthnCredential condition.
+func (cred WebAuthnCredential) Get() []WebAuthnCredential {
+	db := orm.NewSession()
+	defer db.Close()
+
+	var credList []WebAuthnCredential
+	if err := db.Find(&credList, &cred); err != nil {
+		log.Errorf("WebAuthn Credential get throw error: %+v, param: %+v", err, cred)
+	}
+
+	return credList
 }
