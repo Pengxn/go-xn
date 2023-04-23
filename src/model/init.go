@@ -9,7 +9,7 @@ import (
 
 var orm *xorm.Engine = db.DBEngine()
 
-func init() {
+func InitTables() {
 	initTable(new(User))
 	initTable(new(Article))
 	initTable(new(Option))

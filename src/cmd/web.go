@@ -4,6 +4,7 @@ import (
 	"github.com/urfave/cli/v2"
 
 	"github.com/Pengxn/go-xn/src/config"
+	"github.com/Pengxn/go-xn/src/model"
 	"github.com/Pengxn/go-xn/src/route"
 	"github.com/Pengxn/go-xn/src/util/log"
 )
@@ -49,6 +50,7 @@ If '--port' flag is not used, it will use port 7991 by default.`,
 func runWeb(c *cli.Context) error {
 	// Override config by cli flag
 	config.OverrideConfigByFlag(c)
+	model.InitTables()
 
 	err := route.InitRoutes()
 	if err != nil {
