@@ -1,6 +1,10 @@
 package model
 
-import "time"
+import (
+	"time"
+
+	"github.com/Pengxn/go-xn/src/util/log"
+)
 
 // WebAuthnCredential represents the WebAuthn credential data.
 type WebAuthnCredential struct {
@@ -22,4 +26,17 @@ type WebAuthnCredential struct {
 // TableName returns a better table name for WebAuthnCredential.
 func (cred WebAuthnCredential) TableName() string {
 	return "webauthn_credential"
+}
+
+// Add adds a new WebAuthn credential to `webauthn_credential` table.
+func (cred WebAuthnCredential) Add() bool {
+	db := orm.NewSession()
+	defer db.Close()
+
+	affected, err := db.InsertOne(cred)
+	if err != nil {
+		log.Errorf("WebAuthn Credential add throw error: %s, param: %+v", err, cred)
+	}
+
+	return affected > 0
 }

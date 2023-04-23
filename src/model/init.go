@@ -13,6 +13,7 @@ func InitTables() {
 	initTable(new(User))
 	initTable(new(Article))
 	initTable(new(Option))
+	initTable(new(WebAuthnCredential))
 }
 
 func initTable(bean interface{}) {
