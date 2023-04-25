@@ -8,6 +8,7 @@ import (
 
 	"github.com/Pengxn/go-xn/src/lib/cache"
 	"github.com/Pengxn/go-xn/src/lib/webauthn"
+	"github.com/Pengxn/go-xn/src/model"
 	"github.com/Pengxn/go-xn/src/util/log"
 )
 
@@ -85,6 +86,26 @@ func FinishRegister(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"code":    http.StatusInternalServerError,
 			"message": "FinishRegister error",
+		})
+		return
+	}
+
+	cred := model.WebAuthnCredential{
+		Name:            creation.Username,
+		NickName:        creation.DisplayName,
+		UserID:          123,
+		CredentialID:    credential.ID,
+		PublicKey:       credential.PublicKey,
+		AttestationType: credential.AttestationType,
+		AAGUID:          credential.Authenticator.AAGUID,
+		SignCount:       credential.Authenticator.SignCount,
+		CloneWarning:    credential.Authenticator.CloneWarning,
+		Attachment:      string(credential.Authenticator.Attachment),
+	}
+	if !cred.Add() {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"code":    http.StatusInternalServerError,
+			"message": "Add data error",
 		})
 		return
 	}
