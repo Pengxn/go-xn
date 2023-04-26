@@ -12,7 +12,7 @@ import (
 
 var w *webauthn.WebAuthn
 
-func init() {
+func InitWebAuthn() {
 	var err error
 	config := config.Config.WebAuthn
 	if w, err = webauthn.New(&webauthn.Config{

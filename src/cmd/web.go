@@ -4,6 +4,7 @@ import (
 	"github.com/urfave/cli/v2"
 
 	"github.com/Pengxn/go-xn/src/config"
+	"github.com/Pengxn/go-xn/src/lib/webauthn"
 	"github.com/Pengxn/go-xn/src/model"
 	"github.com/Pengxn/go-xn/src/route"
 	"github.com/Pengxn/go-xn/src/util/log"
@@ -51,6 +52,7 @@ func runWeb(c *cli.Context) error {
 	// Override config by cli flag
 	config.OverrideConfigByFlag(c)
 	model.InitTables()
+	webauthn.InitWebAuthn()
 
 	err := route.InitRoutes()
 	if err != nil {
