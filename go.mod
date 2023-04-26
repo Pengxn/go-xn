@@ -6,7 +6,7 @@ require (
 	github.com/gin-gonic/gin v1.9.0
 	github.com/go-ini/ini v1.67.0
 	github.com/go-mail/mail/v2 v2.3.0
-	github.com/go-sql-driver/mysql v1.7.0
+	github.com/go-sql-driver/mysql v1.7.1
 	github.com/go-webauthn/webauthn v0.8.2
 	github.com/gorilla/feeds v1.1.1
 	github.com/lib/pq v1.10.8
