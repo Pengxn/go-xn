@@ -227,6 +227,6 @@ func handleResponse(content []byte) (string, error) {
 
 // ToJSON returns the map that marshals from the body bytes as json in response.
 // It calls Response inner.
-func ToJSON(data string, v interface{}) error {
+func ToJSON(data string, v any) error {
 	return json.Unmarshal([]byte(data), v)
 }
