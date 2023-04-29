@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register User - WebAuthn</title>
+
+    <link rel="icon" href="/favicon.ico">
+    <script src="https://unpkg.com/@simplewebauthn/browser/dist/bundle/index.umd.min.js"></script>
+    <script src="/assets/js/main.js"></script>
+</head>
+<body>
+    <h1>🥳 Sign Up!</h1>
+    <div class="warning" id="warning" style="display: none;"></div>
+    <div class="error" id="error" style="display: none;"></div>
+    <div class="message" id="message" style="display: none;"></div>
+
+    <div class="form-container">
+        <label for="username">Username:</label>
+        <input name="username" id="username" value="" required autocomplete="webauthn" autofocus/>
+        <label for="displayName">Display Name:</label>
+        <input type="text" name="displayName" id="displayName">
+        <!-- <input id="password" value="" required type="password" autocomplete="current-password webauthn"/> -->
+        <div class="button-box">
+            <button id="login" type="submit"><strong>Sign Up</strong></button>
+        </div>
+    </div>
+    <p>Already have an account, go to <a href="/admin/login">login</a></p>
+    <div class="message" id="device-support"></div>
+    <hr>
+    <p>Chrome 浏览器可以在 <a href="chrome://settings/passkeys">chrome://settings/passkeys</a> 管理你的密钥。</p>
+
+    <p>已知的一些 Chrome 问题: <a href="https://bugs.chromium.org/p/chromium/issues/list?q=conditional%20ui%20component%3ABlink%3EWebAuthentication&can=2">Issue list</a></p>
+</body>
+<script>
+const { browserSupportsWebAuthn, browserSupportsWebAuthnAutofill, platformAuthenticatorIsAvailable } = SimpleWebAuthnBrowser;
+(async () => {
+    var msg = "设备支持状态: "
+    if (browserSupportsWebAuthn()) {
+        msg += "支持 WebAuthn 认证"
+    } else {
+        msg += "不支持 WebAuthn 认证"
+    }
+    if (browserSupportsWebAuthnAutofill()) {
+        msg += ", 支持自动填充认证"
+    } else {
+        msg += ", 不支持自动填充认证"
+    }
+    if (platformAuthenticatorIsAvailable) {
+        msg += ", 支持其它"
+    } else {
+        msg += ", 不支持其它"
+    }
+    ds = document.getElementById("device-support")
+    if (ds)  {
+        ds.innerHTML = msg
+    }
+})();
+</script>
+<script>
+form = document.getElementById("login")
+if (form)  {
+    form.addEventListener("submit", e => {
+        e.preventDefault()
+        const username = document.getElementById("username").value
+        const displayName = document.getElementById("displayName").value
+
+        console.log(username, displayName)
+        // submit(username, displayName)
+    })
+}
+
+// webauthn register
+submit = (username, displayName) => {
+    resp = fetch("/admin/register/begin", {
+        method: "POST",
+        headers: {"Content-Type": "application/x-www-form-urlencoded"},
+        body: "username="+username+"&displayName="+displayName,
+    }).then(resp => {
+        resp.json().then(data => {
+            creation = data.creation
+            creation.publicKey.challenge = coerceToArrayBuffer(creation.publicKey.challenge)
+            creation.publicKey.user.id = coerceToArrayBuffer(creation.publicKey.user.id)
+            navigator.credentials.create(creation).then(credential => {
+                crea = JSON.stringify({
+                    id: credential.id,
+                    type: credential.type,
+                    // rawId: new TextDecoder("utf-8").decode(new Uint8Array(credential.rawId)),
+                    rawId: coerceToBase64Url(new Uint8Array(credential.rawId)),
+                    response: {
+                        AttestationObject: coerceToBase64Url(new Uint8Array(credential.response.attestationObject)),
+                        clientDataJson: coerceToBase64Url(new Uint8Array(credential.response.clientDataJSON)),
+                        clientDataJsonString: new TextDecoder("utf-8").decode(new Uint8Array(credential.response.clientDataJSON))
+                    }
+                })
+                data = JSON.stringify({
+                    "username": username,
+                    "displayName": displayName,
+                    "credential": JSON.parse(crea)
+                })
+                console.log(data)
+                fetch("/admin/register/finish", {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: data
+                }).then(resp => {
+                    resp.json().then(data => {
+                        console.log(data)
+                    })
+                }).catch(err => showError(err))
+            }).catch(err => showError(err))
+        })
+    }).catch(err => showError(err))
+}
+
+// ArrayBuffer <=> String 转换
+var coerceToBase64Url = value => {
+    const uint8Array = (() => {
+        if (Array.isArray(value)) return Uint8Array.from(value);
+        if (value instanceof ArrayBuffer) return new Uint8Array(value);
+        if (value instanceof Uint8Array) return value;
+        console.warn('Could not coerce to string:', value);
+        throw new Error('Could not coerce to string');
+    })();
+
+    let string = '';
+    for (let i = 0; i < uint8Array.byteLength; i++) {
+        string += String.fromCharCode(uint8Array[i]);
+    }
+
+    const base64String = btoa(string);
+    return base64ToBase64Url(base64String);
+}
+var base64ToBase64Url = base64 => {
+    return base64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=*$/g, '');
+}
+var coerceToArrayBuffer = value => {
+    if (typeof value === 'string') {
+        const base64 = base64UrlToBase64(value);
+        const string = atob(base64);
+        const bytes = new Uint8Array(string.length);
+        for (let i = 0; i < string.length; i++) {
+            bytes[i] = string.charCodeAt(i);
+        }
+
+        return bytes;
+    }
+
+    console.warn('Could not coerce to string:', value);
+    throw new TypeError('Could not coerce to ArrayBuffer');
+}
+var base64UrlToBase64 = base64Url => {
+    return base64Url.replace(/-/g, '+').replace(/_/g, '/');
+}
+
+// error/message container
+let errorContainer = document.getElementById("error");
+let messageContainer = document.getElementById("message");
+var showError = (error) => {
+    console.error(error);
+    errorContainer.innerText = error;
+    errorContainer.style.display = "block";
+}
+var showMessage = (message) => {
+    console.info(message);
+    messageContainer.innerText = message;
+    messageContainer.style.display = "block";
+}
+</script>
+<style>
+body {
+  font-family: helvetica, arial, sans-serif;
+  margin: 2em;
+  max-width: 600px;
+  margin: auto;
+}
+
+h1 {
+  font-style: italic;
+  color: #373fff;
+}
+
+div.error {
+  color: red;
+  background-color: #FFDDDD;
+  border: red 1px solid;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+div.warning {
+  color: red;
+  background-color: #ffff40;
+  border: #aaaaaa 1px solid;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+div.message {
+  color: blue;
+  background-color: #DDDDFF;
+  border: blue 1px solid;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+.code {
+  font-family: monospace;
+}
+
+.form-container {
+  background-color: #eeeeee;
+  padding: 10px;
+  border-radius: 10px;
+  margin: 20px 0;
+}
+
+.form-container label {
+  width: 45%;
+  display: inline-block;
+  text-align: right;
+  margin: 5px 0;
+}
+
+.button-box {
+  text-align: center;
+  margin-top: 5px;
+}
+
+.button-box button {
+  width: 200px;  background-color: #e9e9e9;
+  border-radius: 10px;
+  padding: 10px 0;
+}
+
+.button-box button:hover {
+  background-color: white;
+}
+
+.ok {
+  color: green;
+}
+
+.error {
+  color: red;
+}
+</style>
+</html>
