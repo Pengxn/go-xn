@@ -61,13 +61,12 @@ const { browserSupportsWebAuthn, browserSupportsWebAuthnAutofill, platformAuthen
 <script>
 form = document.getElementById("login")
 if (form)  {
-    form.addEventListener("submit", e => {
+    form.addEventListener("click", e => {
         e.preventDefault()
         const username = document.getElementById("username").value
         const displayName = document.getElementById("displayName").value
 
-        console.log(username, displayName)
-        // submit(username, displayName)
+        submit(username, displayName)
     })
 }
 
