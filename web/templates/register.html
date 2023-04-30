@@ -9,6 +9,7 @@
     <link rel="icon" href="/favicon.ico">
     <script src="https://unpkg.com/@simplewebauthn/browser/dist/bundle/index.umd.min.js"></script>
     <script src="/assets/js/main.js"></script>
+    <script src="/assets/js/register.js"></script>
 </head>
 <body>
     <h1>🥳 Sign Up!</h1>
@@ -58,115 +59,7 @@ const { browserSupportsWebAuthn, browserSupportsWebAuthnAutofill, platformAuthen
     }
 })();
 </script>
-<script>
-form = document.getElementById("login")
-if (form)  {
-    form.addEventListener("click", e => {
-        e.preventDefault()
-        const username = document.getElementById("username").value
-        const displayName = document.getElementById("displayName").value
 
-        submit(username, displayName)
-    })
-}
-
-// webauthn register
-submit = (username, displayName) => {
-    resp = fetch("/admin/register/begin", {
-        method: "POST",
-        headers: {"Content-Type": "application/x-www-form-urlencoded"},
-        body: "username="+username+"&displayName="+displayName,
-    }).then(resp => {
-        resp.json().then(data => {
-            creation = data.creation
-            creation.publicKey.challenge = coerceToArrayBuffer(creation.publicKey.challenge)
-            creation.publicKey.user.id = coerceToArrayBuffer(creation.publicKey.user.id)
-            navigator.credentials.create(creation).then(credential => {
-                crea = JSON.stringify({
-                    id: credential.id,
-                    type: credential.type,
-                    // rawId: new TextDecoder("utf-8").decode(new Uint8Array(credential.rawId)),
-                    rawId: coerceToBase64Url(new Uint8Array(credential.rawId)),
-                    response: {
-                        AttestationObject: coerceToBase64Url(new Uint8Array(credential.response.attestationObject)),
-                        clientDataJson: coerceToBase64Url(new Uint8Array(credential.response.clientDataJSON)),
-                        clientDataJsonString: new TextDecoder("utf-8").decode(new Uint8Array(credential.response.clientDataJSON))
-                    }
-                })
-                data = JSON.stringify({
-                    "username": username,
-                    "displayName": displayName,
-                    "credential": JSON.parse(crea)
-                })
-                console.log(data)
-                fetch("/admin/register/finish", {
-                    method: "POST",
-                    headers: {"Content-Type": "application/json"},
-                    body: data
-                }).then(resp => {
-                    resp.json().then(data => {
-                        console.log(data)
-                    })
-                }).catch(err => showError(err))
-            }).catch(err => showError(err))
-        })
-    }).catch(err => showError(err))
-}
-
-// ArrayBuffer <=> String 转换
-var coerceToBase64Url = value => {
-    const uint8Array = (() => {
-        if (Array.isArray(value)) return Uint8Array.from(value);
-        if (value instanceof ArrayBuffer) return new Uint8Array(value);
-        if (value instanceof Uint8Array) return value;
-        console.warn('Could not coerce to string:', value);
-        throw new Error('Could not coerce to string');
-    })();
-
-    let string = '';
-    for (let i = 0; i < uint8Array.byteLength; i++) {
-        string += String.fromCharCode(uint8Array[i]);
-    }
-
-    const base64String = btoa(string);
-    return base64ToBase64Url(base64String);
-}
-var base64ToBase64Url = base64 => {
-    return base64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=*$/g, '');
-}
-var coerceToArrayBuffer = value => {
-    if (typeof value === 'string') {
-        const base64 = base64UrlToBase64(value);
-        const string = atob(base64);
-        const bytes = new Uint8Array(string.length);
-        for (let i = 0; i < string.length; i++) {
-            bytes[i] = string.charCodeAt(i);
-        }
-
-        return bytes;
-    }
-
-    console.warn('Could not coerce to string:', value);
-    throw new TypeError('Could not coerce to ArrayBuffer');
-}
-var base64UrlToBase64 = base64Url => {
-    return base64Url.replace(/-/g, '+').replace(/_/g, '/');
-}
-
-// error/message container
-let errorContainer = document.getElementById("error");
-let messageContainer = document.getElementById("message");
-var showError = (error) => {
-    console.error(error);
-    errorContainer.innerText = error;
-    errorContainer.style.display = "block";
-}
-var showMessage = (message) => {
-    console.info(message);
-    messageContainer.innerText = message;
-    messageContainer.style.display = "block";
-}
-</script>
 <style>
 body {
   font-family: helvetica, arial, sans-serif;
