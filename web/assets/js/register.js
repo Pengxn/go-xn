@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     messageContainer = document.getElementById("message");
     warningContainer = document.getElementById("warning");
 
-    document.getElementById("login").addEventListener("click", e => {
+    document.getElementById("signup").addEventListener("click", e => {
         e.preventDefault()
         const username = document.getElementById("username").value
         const displayName = document.getElementById("displayName").value
