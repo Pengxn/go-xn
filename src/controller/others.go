@@ -1,12 +1,15 @@
 package controller
 
 import (
+	"html/template"
+	"io/ioutil"
 	"strings"
 	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/feeds"
 
+	"github.com/Pengxn/go-xn/src/lib/markdown"
 	"github.com/Pengxn/go-xn/src/lib/whois"
 	"github.com/Pengxn/go-xn/src/util/log"
 )
@@ -110,4 +113,37 @@ func feed() *feeds.Feed {
 		Copyright:   "",
 		Image:       &feeds.Image{},
 	}
+}
+
+// Mdcat renders the markdown page to HTML.
+func Mdcat(c *gin.Context) {
+	content, err := ioutil.ReadFile("README.md")
+	if err != nil {
+		log.Errorf("Read README.md error: %+v", err)
+		c.JSON(500, gin.H{
+			"code": 500,
+			"data": "Read README.md failed",
+		})
+		return
+	}
+
+	html, err := markdown.ToHTML(content)
+	if err != nil {
+		log.Errorf("Convert markdown to HTML error: %+v", err)
+		c.JSON(500, gin.H{
+			"code": 500,
+			"data": "Convert markdown to HTML failed",
+		})
+		return
+	}
+
+	c.HTML(200, "mdcat.html", gin.H{
+		"code": 200,
+		"site": map[string]interface{}{
+			"title":       "Feng",
+			"author":      "Feng.YJ",
+			"description": "✍ The platform for publishing and running your blog. [WIP]",
+			"html":        template.HTML(html),
+		},
+	})
 }

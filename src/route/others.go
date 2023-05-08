@@ -15,6 +15,8 @@ func othersRoutes(g *gin.Engine) {
 	// JSON Feed Version 1, https://jsonfeed.org/version/1
 	g.GET("/feed", controller.Feed)
 
+	g.GET("/md", controller.Mdcat)
+
 	// Get domain whois information.
 	g.GET("/whois", controller.GwtWhoisInfo)
 
