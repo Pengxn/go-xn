@@ -100,3 +100,20 @@ func ArticleByID(id uint64) (*Article, bool) {
 
 	return article, has
 }
+
+// ArticleByURL returns article by URL.
+func ArticleByURL(url string) (*Article, bool) {
+	db := orm.NewSession()
+	defer db.Close()
+
+	article := &Article{
+		URL: url,
+	}
+
+	has, err := db.Get(article)
+	if err != nil {
+		log.Errorf("ArticleByURL throw error: %s", err)
+	}
+
+	return article, has
+}
