@@ -65,14 +65,12 @@ func ListArticles(c *gin.Context) {
 	})
 }
 
-// GetArticle gets an article by 'id' param.
+// GetArticle gets an article by 'url' param.
 // Request sample:
 //
-//	GET => /article/1
+//	GET => /article/article-custom-url-path
 func GetArticle(c *gin.Context) {
-	id, _ := strconv.ParseUint(c.Param("id"), 10, 64)
-
-	article, _ := model.ArticleByID(id)
+	article, _ := model.ArticleByURL(c.Param("url"))
 
 	c.JSON(200, gin.H{
 		"code":    200,
