@@ -107,7 +107,7 @@ func InsertArticle(c *gin.Context) {
 func UpdateArticle(c *gin.Context) {
 	c.JSON(200, gin.H{
 		"code": "Update an Article",
-		"data": c.Param("id"),
+		"data": c.Param("url"),
 	})
 }
 
@@ -115,6 +115,6 @@ func UpdateArticle(c *gin.Context) {
 func DeleteArticle(c *gin.Context) {
 	c.JSON(200, gin.H{
 		"code": "Delete an Article",
-		"data": c.Param("id"),
+		"data": c.Param("url"),
 	})
 }

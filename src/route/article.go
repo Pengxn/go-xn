@@ -13,6 +13,6 @@ func articlesRoutes(g *gin.Engine) {
 	article := g.Group("/article")
 	article.GET("/:url", controller.GetArticle)
 	article.POST("/", controller.InsertArticle)
-	article.PUT("/:id", controller.UpdateArticle)
-	article.DELETE("/:id", controller.DeleteArticle)
+	article.PUT("/:url", controller.UpdateArticle)
+	article.DELETE("/:url", controller.DeleteArticle)
 }
