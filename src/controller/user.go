@@ -12,10 +12,12 @@ import (
 	"github.com/Pengxn/go-xn/src/util/log"
 )
 
+// RegisterPage returns register html page.
 func RegisterPage(c *gin.Context) {
-	c.HTML(200, "register.html", gin.H{})
+	c.HTML(http.StatusOK, "register.html", gin.H{})
 }
 
+// BeginRegister returns register webauthn creation.
 func BeginRegister(c *gin.Context) {
 	username := c.PostForm("username")
 	displayName := c.PostForm("displayName")
@@ -47,12 +49,14 @@ func BeginRegister(c *gin.Context) {
 	})
 }
 
+// FinishRegisterRequest is request body for finish register.
 type FinishRegisterRequest struct {
 	Username    string          `json:"username"`
 	DisplayName string          `json:"displayName"`
 	Credential  json.RawMessage `json:"credential"`
 }
 
+// FinishRegister validates register webauthn credential.
 func FinishRegister(c *gin.Context) {
 	data, err := c.GetRawData()
 	if err != nil {
@@ -113,5 +117,13 @@ func FinishRegister(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"code": http.StatusOK,
 		"data": credential,
+	})
+}
+
+// LoginPage returns login html page.
+func LoginPage(c *gin.Context) {
+	c.JSON(http.StatusOK, gin.H{
+		"Code": http.StatusOK,
+		"Data": "Hi",
 	})
 }
