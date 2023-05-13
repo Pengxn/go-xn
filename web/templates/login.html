@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login User - WebAuthn</title>
+
+    <link rel="icon" href="/favicon.ico">
+    <script src="https://unpkg.com/@simplewebauthn/browser/dist/bundle/index.umd.min.js"></script>
+    <script src="/assets/js/main.js"></script>
+    <script src="/assets/js/register.js"></script>
+</head>
+<body>
+    <h1>🥳 Login!</h1>
+    <div class="warning" id="warning" style="display: none;"></div>
+    <div class="error" id="error" style="display: none;"></div>
+    <div class="message" id="message" style="display: none;"></div>
+
+    <div class="form-container">
+        <label for="username">Username:</label>
+        <input name="username" id="username" value="" required autocomplete="webauthn" autofocus/>
+        <label for="displayName">Display Name:</label>
+        <input type="text" name="displayName" id="displayName">
+        <!-- <input id="password" value="" required type="password" autocomplete="current-password webauthn"/> -->
+        <div class="button-box">
+            <button id="login" type="submit"><strong>Login</strong></button>
+        </div>
+    </div>
+    <p>Don't have an account, go to <a href="/admin/register">Sign up</a></p>
+    <div class="message" id="device-support"></div>
+</body>
+<script>
+const { browserSupportsWebAuthn, browserSupportsWebAuthnAutofill, platformAuthenticatorIsAvailable } = SimpleWebAuthnBrowser;
+(async () => {
+    var msg = "设备支持状态: "
+    if (browserSupportsWebAuthn()) {
+        msg += "支持 WebAuthn 认证"
+    } else {
+        msg += "不支持 WebAuthn 认证"
+    }
+    if (browserSupportsWebAuthnAutofill()) {
+        msg += ", 支持自动填充认证"
+    } else {
+        msg += ", 不支持自动填充认证"
+    }
+    if (platformAuthenticatorIsAvailable) {
+        msg += ", 支持其它"
+    } else {
+        msg += ", 不支持其它"
+    }
+    ds = document.getElementById("device-support")
+    if (ds)  {
+        ds.innerHTML = msg
+    }
+})();
+</script>
+
+<style>
+body {
+  font-family: helvetica, arial, sans-serif;
+  margin: 2em;
+  max-width: 600px;
+  margin: auto;
+}
+
+h1 {
+  font-style: italic;
+  color: #373fff;
+}
+
+div.error {
+  color: red;
+  background-color: #FFDDDD;
+  border: red 1px solid;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+div.warning {
+  color: red;
+  background-color: #ffff40;
+  border: #aaaaaa 1px solid;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+div.message {
+  color: blue;
+  background-color: #DDDDFF;
+  border: blue 1px solid;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+.code {
+  font-family: monospace;
+}
+
+.form-container {
+  background-color: #eeeeee;
+  padding: 10px;
+  border-radius: 10px;
+  margin: 20px 0;
+}
+
+.form-container label {
+  width: 45%;
+  display: inline-block;
+  text-align: right;
+  margin: 5px 0;
+}
+
+.button-box {
+  text-align: center;
+  margin-top: 5px;
+}
+
+.button-box button {
+  width: 200px;  background-color: #e9e9e9;
+  border-radius: 10px;
+  padding: 10px 0;
+}
+
+.button-box button:hover {
+  background-color: white;
+}
+
+.ok {
+  color: green;
+}
+
+.error {
+  color: red;
+}
+</style>
+</html>

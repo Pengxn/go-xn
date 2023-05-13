@@ -122,8 +122,5 @@ func FinishRegister(c *gin.Context) {
 
 // LoginPage returns login html page.
 func LoginPage(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{
-		"Code": http.StatusOK,
-		"Data": "Hi",
-	})
+	c.HTML(http.StatusOK, "login.html", gin.H{})
 }
