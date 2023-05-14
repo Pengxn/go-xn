@@ -7,7 +7,7 @@
 
     <title>{{ .site.title }}</title>
 
-    <link href="https://unpkg.com/@primer/css@^16.0.0/dist/primer.css" rel="stylesheet"/>
+    <link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet"/>
     <link rel="stylesheet alternate" href="https://cdn.jsdelivr.net/gh/primer/github-syntax-light@master/lib/github-light.css" id="light-hl">
     <link rel="stylesheet alternate" href="https://cdn.jsdelivr.net/gh/primer/github-syntax-dark@master/lib/github-dark.css" id="dark-hl">
 </head>
@@ -27,7 +27,40 @@
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/gh/calganaygun/MDcat@main/theme.js"></script>
 <script src="https://code.iconify.design/2/2.0.3/iconify.min.js"></script>
+<script>
+const switchTheme = (isLight) => {
+    const markdownBodyElement = document.getElementById("markdown-body");
+    const themeIconElement = document.getElementById("theme-icon");
+    const lightHL = document.getElementById("light-hl");
+    const darkHL = document.getElementById("dark-hl");
+
+    const LS = window.localStorage;
+    const LSisLight = LS.getItem("MDcatisLight") === "true";
+
+    isLight = isLight ?? !LSisLight;
+
+    const colorMode = isLight ? "light" : "dark";
+    const colorIcon = isLight ? "sun" : "moon";
+
+    markdownBodyElement.setAttribute("data-color-mode", colorMode);
+    markdownBodyElement.setAttribute("data-dark-theme", colorMode);
+    lightHL.rel =  isLight ? "stylesheet" : "stylesheet alternate";
+    darkHL.rel = isLight ? "stylesheet alternate" : "stylesheet";
+
+    themeIconElement.setAttribute("data-icon", "octicon:" + colorIcon + "-16");
+    LS.setItem("MDcatisLight", isLight);
+}
+
+const themeButton = document.getElementById("theme-button");
+const LS = window.localStorage;
+const LSisLight = LS.getItem("MDcatisLight") === "true";
+
+themeButton.addEventListener("click", () => { switchTheme() });
+
+LS.getItem("MDcatisLight") === null
+    ? switchTheme(!(window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches))
+    : switchTheme(LSisLight);
+</script>
 </body>
 </html>
