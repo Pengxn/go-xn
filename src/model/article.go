@@ -117,3 +117,16 @@ func ArticleByURL(url string) (*Article, bool) {
 
 	return article, has
 }
+
+// UpdateByID updates article data by ID.
+func (a *Article) UpdateByID() bool {
+	db := orm.NewSession()
+	defer db.Close()
+
+	affected, err := db.ID(a.ID).Update(a)
+	if err != nil {
+		log.Errorf("Article update throw error: %s", err)
+	}
+
+	return affected > 0
+}
