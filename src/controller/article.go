@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"html/template"
 	"strconv"
 	"time"
 
@@ -70,11 +71,23 @@ func ListArticles(c *gin.Context) {
 //
 //	GET => /article/article-custom-url-path
 func GetArticle(c *gin.Context) {
-	article, _ := model.ArticleByURL(c.Param("url"))
+	article, exist := model.ArticleByURL(c.Param("url"))
+	if !exist {
+		c.HTML(404, "error.html", gin.H{
+			"code": 404,
+			"data": "Article Not Found",
+		})
+		return
+	}
 
-	c.JSON(200, gin.H{
-		"code":    200,
-		"article": article,
+	c.HTML(200, "mdcat.html", gin.H{
+		"code": 200,
+		"site": map[string]interface{}{
+			"title":       "Feng",
+			"author":      "Feng.YJ",
+			"description": "✍ The platform for publishing and running your blog. [WIP]",
+			"html":        template.HTML(article.Content),
+		},
 	})
 }
 
