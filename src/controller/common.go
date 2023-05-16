@@ -12,3 +12,11 @@ func Redirect(routePath string) func(*gin.Context) {
 		c.Redirect(http.StatusMovedPermanently, routePath)
 	}
 }
+
+// errorHTML returns HTML page rendered with error message.
+func errorHTML(c *gin.Context, code int, message string) {
+	c.HTML(code, "error.html", gin.H{
+		"code": code,
+		"data": message,
+	})
+}

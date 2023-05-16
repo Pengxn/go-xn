@@ -73,10 +73,7 @@ func ListArticles(c *gin.Context) {
 func GetArticle(c *gin.Context) {
 	article, exist := model.ArticleByURL(c.Param("url"))
 	if !exist {
-		c.HTML(404, "error.html", gin.H{
-			"code": 404,
-			"data": "Article Not Found",
-		})
+		errorHTML(c, 404, "Article Not Found")
 		return
 	}
 
