@@ -105,12 +105,13 @@ func InsertArticle(c *gin.Context) {
 			"code": 201,
 			"data": "Insert article data successfully.",
 		})
-	} else {
-		c.JSON(500, gin.H{
-			"code":  500,
-			"error": "Internal server error occurred when inserting article.",
-		})
+		return
 	}
+
+	c.JSON(500, gin.H{
+		"code":  500,
+		"error": "Internal server error occurred when inserting article.",
+	})
 }
 
 // UpdateArticle updates an article.
