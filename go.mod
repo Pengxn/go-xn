@@ -16,7 +16,7 @@ require (
 	github.com/redis/go-redis/v9 v9.0.4
 	github.com/rs/cors v1.9.0
 	github.com/schollz/progressbar/v3 v3.13.1
-	github.com/sirupsen/logrus v1.9.0
+	github.com/sirupsen/logrus v1.9.1
 	github.com/smartystreets/goconvey v1.8.0
 	github.com/tidwall/gjson v1.14.4
 	github.com/urfave/cli/v2 v2.25.3
