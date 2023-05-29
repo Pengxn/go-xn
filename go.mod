@@ -19,7 +19,7 @@ require (
 	github.com/sirupsen/logrus v1.9.0
 	github.com/smartystreets/goconvey v1.8.0
 	github.com/tidwall/gjson v1.14.4
-	github.com/urfave/cli/v2 v2.25.3
+	github.com/urfave/cli/v2 v2.25.5
 	github.com/yuin/goldmark v1.5.4
 	xorm.io/xorm v1.3.2
 )
