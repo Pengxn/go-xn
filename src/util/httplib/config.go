@@ -4,6 +4,7 @@ import (
 	"crypto/tls"
 	"net/http"
 	"net/url"
+	"os"
 	"time"
 )
 
@@ -40,5 +41,31 @@ func NewHttpConfig() *Config {
 		IsEncodeForGo:      false,
 		Charset:            "UTF-8",
 		Certificates:       nil,
+	}
+}
+
+// getProxyByEnv returns proxy settings by environment variables.
+func getProxyByEnv() func(*http.Request) (*url.URL, error) {
+	proxyEnvs := []string{
+		"HTTP_PROXY", "http_proxy",
+		"HTTPS_PROXY", "https_proxy",
+		"SOCKS_PROXY", "socks_proxy",
+		"ALL_PROXY", "all_proxy",
+	}
+
+	var proxy string
+	for _, env := range proxyEnvs {
+		if proxy != "" {
+			break
+		}
+		proxy = os.Getenv(env)
+	}
+
+	if proxy == "" {
+		return nil
+	}
+
+	return func(req *http.Request) (*url.URL, error) {
+		return url.Parse(proxy)
 	}
 }

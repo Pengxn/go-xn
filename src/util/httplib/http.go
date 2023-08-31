@@ -28,6 +28,10 @@ type Client struct {
 
 // New returns http Client with default settings.
 func New() *Client {
+	if proxy := getProxyByEnv(); proxy != nil {
+		return NewClientWithProxy(proxy)
+	}
+
 	return NewClient(NewHttpConfig())
 }
 
