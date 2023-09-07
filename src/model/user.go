@@ -16,9 +16,9 @@ type User struct {
 	Status     int8       `json:"status" xorm:"tinyint(4) notnull default(0) 'status'"`
 	Email      string     `json:"email" xorm:"varchar(50) notnull 'email'"`
 	Role       int8       `json:"role" xorm:"tinyint(4) notnull default(0) 'role'"`
-	CreateTime *time.Time `json:"create_time,omitempty" xorm:"datetime created notnull default('0000-00-00 00:00:00') 'create_time'"`
-	UpdateTime *time.Time `json:"update_time,omitempty" xorm:"datetime updated notnull default('0000-00-00 00:00:00') 'update_time'"`
-	DeleteTime *time.Time `json:"delete_time,omitempty" xorm:"datetime default('0000-00-00 00:00:00') 'delete_time'"`
+	CreateTime *time.Time `json:"create_time,omitempty" xorm:"datetime created notnull 'create_time'"`
+	UpdateTime *time.Time `json:"update_time,omitempty" xorm:"datetime updated notnull 'update_time'"`
+	DeleteTime *time.Time `json:"delete_time,omitempty" xorm:"datetime 'delete_time'"`
 }
 
 // GetByName returns an user by 'name' if it exist.

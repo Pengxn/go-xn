@@ -14,9 +14,9 @@ type Article struct {
 	Content    string     `json:"content" xorm:"longtext notnull 'content'"`
 	Views      uint64     `json:"article_views" xorm:"bigint(20) notnull default(0) 'article_views'"`
 	Status     int        `json:"article_status,omitempty" xorm:"tinyint(4) notnull default(0) 'article_status'"`
-	CreateTime *time.Time `json:"create_time,omitempty" xorm:"datetime created notnull default('0000-00-00 00:00:00') 'create_time'"`
-	UpdateTime *time.Time `json:"update_time,omitempty" xorm:"datetime updated notnull default('0000-00-00 00:00:00') 'update_time'"`
-	DeleteTime *time.Time `json:"delete_time,omitempty" xorm:"datetime notnull default('0000-00-00 00:00:00') 'delete_time'"`
+	CreateTime *time.Time `json:"create_time,omitempty" xorm:"datetime created notnull 'create_time'"`
+	UpdateTime *time.Time `json:"update_time,omitempty" xorm:"datetime updated notnull 'update_time'"`
+	DeleteTime *time.Time `json:"delete_time,omitempty" xorm:"datetime 'delete_time'"`
 }
 
 // ArticlesByPage handles articles by page number.
