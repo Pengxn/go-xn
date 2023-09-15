@@ -14,4 +14,5 @@ $ ./build/go-xn web
 $ cp ./src/config/example.ini ./fyj.ini
 ```
 
-> **Note**: This project is developing.
+> [!NOTE]
+> **This project is developing.**
