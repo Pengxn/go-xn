@@ -17,7 +17,7 @@ LDFLAGS += -X "github.com/Pengxn/go-xn/src/cmd.buildTime=${BUILD_TIME}"
 all: build
 
 build: clean
-	@go build -o build/$(BIN) -tags="jsoniter" -ldflags '-w -s $(LDFLAGS)'
+	@go build -o build/$(BIN) -ldflags '-w -s $(LDFLAGS)'
 
 clean:
 	@if [ -f "build/$(BIN)" ]; then \
