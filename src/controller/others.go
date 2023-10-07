@@ -2,7 +2,7 @@ package controller
 
 import (
 	"html/template"
-	"io/ioutil"
+	"os"
 	"strings"
 	"time"
 
@@ -117,7 +117,7 @@ func feed() *feeds.Feed {
 
 // Mdcat renders the markdown page to HTML.
 func Mdcat(c *gin.Context) {
-	content, err := ioutil.ReadFile("README.md")
+	content, err := os.ReadFile("README.md")
 	if err != nil {
 		log.Errorf("Read README.md error: %+v", err)
 		c.JSON(500, gin.H{

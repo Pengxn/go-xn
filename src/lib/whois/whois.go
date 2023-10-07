@@ -3,7 +3,6 @@ package whois
 import (
 	"errors"
 	"io"
-	"io/ioutil"
 	"net"
 	"net/http"
 	"regexp"
@@ -41,7 +40,7 @@ func getWhoisServer(domain string) (string, error) {
 		return "", errors.New("Status code is " + strconv.Itoa(resp.StatusCode))
 	}
 	defer resp.Body.Close()
-	bodyData, err := ioutil.ReadAll(resp.Body)
+	bodyData, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return "", err
 	}

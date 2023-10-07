@@ -3,7 +3,7 @@ package dns
 import (
 	"encoding/json"
 	"errors"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"strconv"
 
@@ -202,7 +202,7 @@ func handle(resp *http.Response, err error) (string, error) {
 		return "", errors.New("Status code isn't 200")
 	}
 	defer resp.Body.Close()
-	bodyData, err := ioutil.ReadAll(resp.Body)
+	bodyData, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return "", err
 	}
