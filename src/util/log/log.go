@@ -43,6 +43,21 @@ func Infoln(args ...interface{}) {
 	logger.Infoln(args...)
 }
 
+// Debug logs a message at level Debug.
+func Debug(args ...interface{}) {
+	logger.Debug(args...)
+}
+
+// Debugf logs a message at level Debug.
+func Debugf(format string, args ...interface{}) {
+	logger.Debugf(format, args...)
+}
+
+// Debugln logs a message at level Debug.
+func Debugln(args ...interface{}) {
+	logger.Debugln(args...)
+}
+
 // Fatal logs a message at level Fatal and then
 // the process will exit with status set to 1.
 func Fatal(args ...interface{}) {
