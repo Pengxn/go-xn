@@ -4,6 +4,7 @@ import (
 	"path/filepath"
 
 	"github.com/go-ini/ini"
+	"github.com/google/uuid"
 
 	"github.com/Pengxn/go-xn/src/util/file"
 	"github.com/Pengxn/go-xn/src/util/home"
@@ -14,7 +15,7 @@ var Config appConfig // Global config object
 
 func init() {
 	Config = appConfig{
-		Server: ServerConfig{Port: "7991"},
+		Server: ServerConfig{Port: "7991", JwtToken: uuid.New().String()},
 		DB:     DBConfig{Type: "SQLite3", Name: "fyj.db"},
 	}
 
@@ -75,6 +76,8 @@ type ServerConfig struct {
 	TLS      bool   `ini:"tls"`
 	CertFile string `ini:"certFile"`
 	KeyFile  string `ini:"keyFile"`
+	JwtToken string `ini:"jwtToken"`
+	JwtExp   int    `ini:"jwtExp"`
 }
 
 // DBConfig is custom configuration for DB.
