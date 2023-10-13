@@ -6,18 +6,34 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/golang-jwt/jwt/v5/request"
+
+	"github.com/Pengxn/go-xn/src/config"
 )
 
-func JWT(secret string) gin.HandlerFunc {
+func JWT() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		_, err := request.ParseFromRequest(c.Request, request.AuthorizationHeaderExtractor,
+		token, err := request.ParseFromRequest(c.Request, request.AuthorizationHeaderExtractor,
 			func(token *jwt.Token) (interface{}, error) {
-				b := ([]byte(secret))
-				return b, nil
+				return []byte(config.Config.Server.JwtToken), nil
 			})
-
 		if err != nil {
-			c.AbortWithError(http.StatusUnauthorized, err)
+			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
+				"code":    http.StatusUnauthorized,
+				"message": "authorization failed",
+			})
+			return
 		}
+
+		claims, ok := token.Claims.(jwt.MapClaims)
+		if !ok || !token.Valid {
+			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
+				"code":    http.StatusUnauthorized,
+				"message": "token is invalid",
+			})
+			return
+		}
+
+		c.Set("username", claims["username"])
+		c.Next()
 	}
 }
