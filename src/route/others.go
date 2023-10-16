@@ -15,6 +15,11 @@ func othersRoutes(g *gin.Engine) {
 	// JSON Feed Version 1, https://jsonfeed.org/version/1
 	g.GET("/feed", controller.Feed)
 
+	// WebDAV, server for WebDAV service.
+	for _, v := range controller.WebdavMethods {
+		g.Handle(v, "/dav/*webdav", controller.WebDAV)
+	}
+
 	g.GET("/md", controller.Mdcat)
 
 	// Get domain whois information.
