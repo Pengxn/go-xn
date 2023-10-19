@@ -15,9 +15,19 @@ func othersRoutes(g *gin.Engine) {
 	// JSON Feed Version 1, https://jsonfeed.org/version/1
 	g.GET("/feed", controller.Feed)
 
+	// Well-Known URIs specification, refer to:
+	// https://datatracker.ietf.org/doc/html/rfc8615
+	// https://www.iana.org/assignments/well-known-uris/well-known-uris.xhtml
+	wuris := g.Group("/.well-known")
+	// WebDAV well-known URIs, redirect to /dav.
+	wuris.Any("/webdav", controller.Redirect("/dav"))
+	wuris.Any("/caldav", controller.Redirect("/dav"))
+	wuris.Any("/carddav", controller.Redirect("/dav"))
+
 	// WebDAV, server for WebDAV service.
+	webdav := g.Group("/dav")
 	for _, v := range controller.WebdavMethods {
-		g.Handle(v, "/dav/*webdav", controller.WebDAV)
+		webdav.Handle(v, "/*webdav", controller.WebDAV)
 	}
 
 	g.GET("/md", controller.Mdcat)
