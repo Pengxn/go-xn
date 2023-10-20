@@ -159,6 +159,14 @@ func (c *Client) PATCH(url string) (*http.Response, error) {
 	return c.do("PATCH", url, strings.NewReader(data))
 }
 
+// Do sends request with specified method.
+func (c *Client) Do(method, url string, data []byte) (*http.Response, error) {
+	if c.contentType != "" {
+		c.header["Content-Type"] = fmt.Sprintf("%s; charset=%s", c.contentType, c.config.Charset)
+	}
+	return c.do(method, url, bytes.NewReader(data))
+}
+
 // do sends request with custom header and specified method.
 func (c *Client) do(method, url string, body io.Reader) (*http.Response, error) {
 	req, err := http.NewRequest(method, url, body)

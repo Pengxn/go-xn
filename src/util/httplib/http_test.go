@@ -61,10 +61,10 @@ func TestSetParams(t *testing.T) {
 }
 
 func TestSetHost(t *testing.T) {
-	client := New().SetHost("https://huiyifyj.cn")
+	client := New().SetHost("https://test.cn")
 
 	Convey("Test SetHost.", t, func() {
-		So(client.host, ShouldResemble, "https://huiyifyj.cn")
+		So(client.host, ShouldResemble, "https://test.cn")
 	})
 }
 
