@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"github.com/Pengxn/go-xn/src/controller"
+	"github.com/Pengxn/go-xn/src/middleware"
 )
 
 // othersRoutes registers other routes.
@@ -25,7 +26,7 @@ func othersRoutes(g *gin.Engine) {
 	wuris.Any("/carddav", controller.Redirect("/dav"))
 
 	// WebDAV, server for WebDAV service.
-	webdav := g.Group("/dav")
+	webdav := g.Group("/dav").Use(middleware.BasicAuth())
 	for _, v := range controller.WebdavMethods {
 		webdav.Handle(v, "/*webdav", controller.WebDAV)
 	}
