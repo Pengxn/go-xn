@@ -26,7 +26,7 @@ func TestDBUrl(t *testing.T) {
 			patch := ApplyGlobalVar(&config.Config.DB, config.DBConfig{Type: "PostgreSQL"})
 			defer patch.Reset()
 
-			want := "dbname= user= password= host= port="
+			want := "dbname= user= password= host= port= sslmode=disable"
 			dbType, dsn := getDBUrl()
 
 			So(dbType, ShouldEqual, "postgres")

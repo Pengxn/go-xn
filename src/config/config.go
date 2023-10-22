@@ -16,7 +16,7 @@ var Config appConfig // Global config object
 func init() {
 	Config = appConfig{
 		Server: ServerConfig{Port: "7991", JwtToken: uuid.New().String()},
-		DB:     DBConfig{Type: "SQLite3", Name: "fyj.db"},
+		DB:     DBConfig{Type: "SQLite3", Name: "fyj.db", SSLMode: "disable"},
 	}
 
 	configPath := getConfigPathByFlag()
@@ -88,6 +88,7 @@ type DBConfig struct {
 	Port     string `ini:"port"`
 	Name     string `ini:"name"`
 	Url      string `ini:"url"`
+	SSLMode  string `ini:"sslMode"`
 }
 
 // RedisConfig is custom configuration for Redis.

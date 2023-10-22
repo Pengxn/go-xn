@@ -29,6 +29,7 @@ func getDBUrl() (dbType, dsn string) {
 			"password=" + db.Password,
 			"host=" + db.Url,
 			"port=" + db.Port,
+			"sslmode=" + db.SSLMode,
 		}, " ")
 	case "sqlite3":
 		dsn = "file:" + db.Name + "?cache=shared&mode=rwc"
