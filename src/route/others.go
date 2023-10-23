@@ -21,15 +21,13 @@ func othersRoutes(g *gin.Engine) {
 	// https://www.iana.org/assignments/well-known-uris/well-known-uris.xhtml
 	wuris := g.Group("/.well-known")
 	// WebDAV well-known URIs, redirect to /dav.
-	wuris.Any("/webdav", controller.Redirect("/dav"))
-	wuris.Any("/caldav", controller.Redirect("/dav"))
-	wuris.Any("/carddav", controller.Redirect("/dav"))
+	wuris.Match(controller.WebdavMethods, "/webdav", controller.Redirect("/dav"))
+	wuris.Match(controller.WebdavMethods, "/caldav", controller.Redirect("/dav"))
+	wuris.Match(controller.WebdavMethods, "/carddav", controller.Redirect("/dav"))
 
 	// WebDAV, server for WebDAV service.
 	webdav := g.Group("/dav").Use(middleware.BasicAuth())
-	for _, v := range controller.WebdavMethods {
-		webdav.Handle(v, "/*webdav", controller.WebDAV)
-	}
+	webdav.Match(controller.WebdavMethods, "/*webdav", controller.WebDAV)
 
 	g.GET("/md", controller.Mdcat)
 
