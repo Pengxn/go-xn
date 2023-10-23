@@ -24,7 +24,7 @@ require (
 	github.com/urfave/cli/v2 v2.25.7
 	github.com/yuin/goldmark v1.5.4
 	golang.org/x/net v0.17.0
-	xorm.io/xorm v1.3.2
+	xorm.io/xorm v1.3.3
 )
 
 go 1.20
