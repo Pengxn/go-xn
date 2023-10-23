@@ -6,8 +6,6 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
-    reviewers:
-      - "Pengxn"
     labels:
-      - dependencies📦
+      - "dependencies 📦"
     target-branch: "main"
