@@ -33,7 +33,7 @@ func TestDo(t *testing.T) {
 		"Other": "other", // other params
 	})
 	Convey("Test do.", t, func() {
-		So(response, ShouldEqual, nil)
+		So(response, ShouldEqual, (*http.Response)(nil))
 		So(err, ShouldEqual, nil)
 	})
 }
