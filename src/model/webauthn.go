@@ -19,8 +19,9 @@ type WebAuthnCredential struct {
 	SignCount       uint32     `json:"sign_count" xorm:"BIGINT 'sign_count'"`
 	CloneWarning    bool       `json:"clone_warning" xorm:"'clone_warning'"`
 	Attachment      string     `json:"attachment" xorm:"'attachment'"`
-	CreatedTime     *time.Time `json:"created_time,omitempty" xorm:"INDEX created 'created_time'"`
-	UpdatedTime     *time.Time `json:"updated_time,omitempty" xorm:"updated 'updated_time'"`
+	CreateTime      *time.Time `json:"create_time,omitempty" xorm:"datetime created notnull 'create_time'"`
+	UpdateTime      *time.Time `json:"update_time,omitempty" xorm:"datetime updated notnull 'update_time'"`
+	DeleteTime      *time.Time `json:"delete_time,omitempty" xorm:"datetime 'delete_time'"`
 }
 
 // TableName returns a better table name for WebAuthnCredential.

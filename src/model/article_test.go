@@ -1,12 +1,9 @@
 package model
 
 import (
-	"os"
-
 	"github.com/go-ini/ini"
 	"xorm.io/xorm"
 
-	"github.com/Pengxn/go-xn/src/util/home"
 	"github.com/Pengxn/go-xn/src/util/log"
 )
 
@@ -30,7 +27,7 @@ func init() {
 }
 
 var testORM = func() *xorm.Engine {
-	config, err := ini.LooseLoad(home.HomeDir() + string(os.PathSeparator) + "fyj.ini")
+	config, err := ini.LooseLoad("fyj.ini")
 	if err != nil {
 		log.Errorln("Fail to read fyj.ini file.", err)
 	}
