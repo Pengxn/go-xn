@@ -16,7 +16,7 @@ func RequestID() gin.HandlerFunc {
 			c.Request.Header.Add(headerXRequestID, rid)
 		}
 		// Set the request id to ensure that it is in the response
-		c.Header(headerXRequestID, rid)
+		c.Writer.Header()[headerXRequestID] = []string{rid}
 		c.Next()
 	}
 }
