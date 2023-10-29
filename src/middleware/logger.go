@@ -8,6 +8,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 
+	"github.com/Pengxn/go-xn/src/config"
 	"github.com/Pengxn/go-xn/src/util/log"
 )
 
@@ -44,6 +45,10 @@ func customLog(param gin.LogFormatterParams) string {
 // writerLog writes log to the specified writer buffer.
 // Example: os.Stdout, a file opened in write mode, a socket...
 func writerLog() io.Writer {
+	if config.Config.Logger.Route == "" {
+		return os.Stdout
+	}
+
 	logFile, err := log.LogFilePath("route.log")
 	if err != nil {
 		log.Errorf("Get log file Path %s error: %+v", logFile, err)
