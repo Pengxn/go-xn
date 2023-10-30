@@ -22,7 +22,7 @@ require (
 	github.com/smartystreets/goconvey v1.8.1
 	github.com/tidwall/gjson v1.17.0
 	github.com/urfave/cli/v2 v2.25.7
-	github.com/yuin/goldmark v1.5.6
+	github.com/yuin/goldmark v1.6.0
 	golang.org/x/net v0.17.0
 	xorm.io/xorm v1.3.4
 )
