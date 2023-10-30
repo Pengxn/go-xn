@@ -112,8 +112,9 @@ type SentryConfig struct {
 
 // LoggerConfig is configuration for logger.
 type LoggerConfig struct {
-	Route string `ini:"route"`
+	Level string `ini:"level"`
 	APP   string `ini:"app"`
+	Route string `ini:"route"`
 }
 
 // WebAuthnConfig is the WebAuthn configuration.
