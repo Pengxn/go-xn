@@ -1,23 +1,19 @@
 package cmd
 
 import (
-	"os"
+	"github.com/spf13/cobra"
 
-	"github.com/urfave/cli/v2"
+	"github.com/Pengxn/go-xn/src/util/log"
 )
 
-// Execute to run cmd
-func Execute() error {
-	app := &cli.App{
-		Name:    "go-xn",
-		Usage:   "The platform for publishing and running your blog",
-		Version: Version,
-		Commands: []*cli.Command{
-			Web,
-			Update,
-			VersionCmd,
-		},
-	}
+var app = &cobra.Command{
+	Use:   "go-xn",
+	Short: "The platform for publishing and running your blog",
+}
 
-	return app.Run(os.Args)
+// Execute to run cmd
+func Execute() {
+	if err := app.Execute(); err != nil {
+		log.Fatalln("Fail to start app...", err)
+	}
 }

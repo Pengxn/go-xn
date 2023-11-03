@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"github.com/urfave/cli/v2"
+	"github.com/spf13/cobra"
 
 	"github.com/Pengxn/go-xn/src/config"
 	"github.com/Pengxn/go-xn/src/lib/webauthn"
@@ -10,47 +10,34 @@ import (
 	"github.com/Pengxn/go-xn/src/util/log"
 )
 
+func init() {
+	Web.Flags().IntP("port", "p", 7991, "Temporary port number to prevent conflict")
+	Web.Flags().BoolP("debug", "d", false, "Enable debug mode, print extra debugging information")
+	Web.Flags().StringP("config", "c", "fyj.ini", "Custom configuration `file` path")
+
+	app.AddCommand(Web)
+}
+
 var (
 	// Web is "web" subcommand. It's used to run web server.
-	Web = &cli.Command{
-		Name:  "web",
-		Usage: "Start web server interface for blog",
-		Description: `Run a performant web server which serves the site for blog.
+	Web = &cobra.Command{
+		Use:   "web",
+		Short: "Start web server interface for blog",
+		Long: `Run a performant web server which serves the site for blog.
 If '--port' flag is not used, it will use port 7991 by default.`,
-		Action: runWeb,
-		Flags: []cli.Flag{
-			configFile,
-			port,
-			debug,
-		},
-	}
-
-	configFile = &cli.PathFlag{
-		Name:    "config",
-		Aliases: []string{"c"},
-		Usage:   "Custom configuration `file` path",
-		Value:   "fyj.ini",
-	}
-	port = &cli.IntFlag{
-		Name:        "port",
-		Aliases:     []string{"p"},
-		Usage:       "Temporary port number to prevent conflict",
-		Value:       7991,
-		DefaultText: "7991",
-	}
-	debug = &cli.BoolFlag{
-		Name:               "debug",
-		Aliases:            []string{"d"},
-		Usage:              "Enable debug mode, print extra debugging information",
-		DisableDefaultText: true,
+		Run: runWeb,
 	}
 )
 
 // runWeb is the entry point to the web server.
 // Parses the arguments, routes and others.
-func runWeb(c *cli.Context) error {
+func runWeb(cmd *cobra.Command, args []string) {
+	configFile := cmd.Flag("config").Value.String()
+	port := cmd.Flag("port").Value.String()
+	debug, _ := cmd.Flags().GetBool("debug")
+
 	// Override config by cli flag
-	config.OverrideConfigByFlag(c)
+	config.OverrideConfigByFlag(configFile, port, debug)
 	model.InitTables()
 	webauthn.InitWebAuthn()
 
@@ -58,6 +45,4 @@ func runWeb(c *cli.Context) error {
 	if err != nil {
 		log.Fatalln("Fail to Start Web Server.", err)
 	}
-
-	return err
 }

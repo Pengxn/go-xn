@@ -8,24 +8,33 @@ import (
 	"path/filepath"
 
 	"github.com/schollz/progressbar/v3"
-	"github.com/urfave/cli/v2"
+	"github.com/spf13/cobra"
 
 	"github.com/Pengxn/go-xn/src/util/httplib"
+	"github.com/Pengxn/go-xn/src/util/log"
 )
+
+func init() {
+	app.AddCommand(Update)
+}
 
 var (
 	nightlyURL = "https://nightly.link/Pengxn/go-xn/workflows/test/main/linux-amd64.zip"
 
 	// Update is "update" subcommand.
 	// It's used to update command binary to the latest version.
-	Update = &cli.Command{
-		Name:   "update",
-		Usage:  "Update the binary to the latest version",
-		Action: update,
+	Update = &cobra.Command{
+		Use:   "update",
+		Short: "Update the binary to the latest version",
+		Run: func(cmd *cobra.Command, args []string) {
+			if err := update(cmd, args); err != nil {
+				log.Error("Fail to update binary.", err)
+			}
+		},
 	}
 )
 
-func update(c *cli.Context) error {
+func update(cmd *cobra.Command, args []string) error {
 	resp, err := httplib.New().GET(nightlyURL)
 	if err != nil {
 		return err

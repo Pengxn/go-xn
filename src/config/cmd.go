@@ -3,15 +3,13 @@ package config
 import (
 	"os"
 
-	"github.com/urfave/cli/v2"
-
 	"github.com/Pengxn/go-xn/src/util/file"
 	"github.com/Pengxn/go-xn/src/util/log"
 )
 
-func OverrideConfigByFlag(c *cli.Context) {
-	if c.IsSet("config") { // specified config file
-		f := c.Path("config")
+func OverrideConfigByFlag(config, port string, debug bool) {
+	if config != "" { // specified config file
+		f := config
 		if !file.IsExist(f) || !file.IsFile(f) {
 			log.Error("Specified config file not found: " + f)
 		}
@@ -20,12 +18,10 @@ func OverrideConfigByFlag(c *cli.Context) {
 		}
 	}
 	// Server config
-	if c.IsSet("port") {
-		Config.Server.Port = c.String("port")
+	if port != "" {
+		Config.Server.Port = port
 	}
-	if c.IsSet("debug") {
-		Config.Server.Debug = c.Bool("debug")
-	}
+	Config.Server.Debug = debug
 }
 
 func getConfigPathByFlag() string {

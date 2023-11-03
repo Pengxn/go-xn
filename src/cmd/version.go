@@ -4,8 +4,15 @@ import (
 	"fmt"
 	"runtime"
 
-	"github.com/urfave/cli/v2"
+	"github.com/spf13/cobra"
 )
+
+func init() {
+	app.Version = showVersion()
+	app.SetVersionTemplate(`{{ printf "%s" .Version }}`)
+
+	app.AddCommand(VersionCmd)
+}
 
 // Version information for cmd
 // Use "var" (not const) to defined variable for `go build -ldflags`
@@ -18,18 +25,20 @@ var (
 
 	// VersionCmd is "version" subcommand.
 	// It prints the version, revision and built time information to stdout.
-	VersionCmd = &cli.Command{
-		Name:  "version",
-		Usage: "Print some information about version",
-		Description: `Prints version information that might help you get out of trouble.
+	VersionCmd = &cobra.Command{
+		Use:   "version",
+		Short: "Print some information about version",
+		Long: `Prints version information that might help you get out of trouble.
 And it display revision and built time information.`,
-		Action: showVersion,
+		Run: func(cmd *cobra.Command, args []string) {
+			fmt.Print(showVersion())
+		},
 	}
 )
 
 // showVersion prints the version information to stdout
-func showVersion(c *cli.Context) error {
-	fmt.Printf(`FYJ %s
+func showVersion() string {
+	return fmt.Sprintf(`FYJ %s
 ---------------------------------
 - Go version: %s
 - Revision:   %s
@@ -37,6 +46,4 @@ func showVersion(c *cli.Context) error {
 - Built time: %s
 `, Version, runtime.Version(), commitID,
 		runtime.GOOS, runtime.GOARCH, buildTime)
-
-	return nil
 }
