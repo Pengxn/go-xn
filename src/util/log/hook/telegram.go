@@ -8,6 +8,7 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/sirupsen/logrus"
@@ -126,7 +127,7 @@ func (th *TelegramHook) format(entry *logrus.Entry, spoiler string) string {
 	}
 
 	if spoiler != "" {
-		spoiler = fmt.Sprintf("||%s||\n", spoiler)
+		spoiler = fmt.Sprintf("||%s||\n", escape(spoiler))
 	}
 
 	format := logrus.JSONFormatter{
@@ -136,8 +137,24 @@ func (th *TelegramHook) format(entry *logrus.Entry, spoiler string) string {
 
 	var msg string
 	if len(serialized) > 0 {
-		msg = "```\n" + string(serialized) + "\n```"
+		msg = "```\n" + escape(string(serialized)) + "\n```"
 	}
 
 	return fmt.Sprintf("%s\n%s%s", levelWithEmoji, spoiler, msg)
+}
+
+var reservedCharacters = "_*[]()~`>#+-=|{}.!"
+
+// escape escapes special characters with preceding '\' character,
+// refer to https://core.telegram.org/bots/api#markdownv2-style
+func escape(s string) string {
+	var buf strings.Builder
+	for _, c := range s {
+		if strings.ContainsRune(reservedCharacters, c) {
+			buf.WriteString(`\`)
+		}
+		buf.WriteRune(c)
+	}
+
+	return buf.String()
 }
