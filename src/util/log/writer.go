@@ -16,6 +16,7 @@ func writerLog() io.Writer {
 	logFile, err := LogFilePath("fyj.log")
 	if err != nil {
 		log.Printf("Get log file Path %s error: %+v", logFile, err)
+		return os.Stderr
 	}
 
 	// Logging to a file, append logging if the file already exists.
@@ -25,7 +26,7 @@ func writerLog() io.Writer {
 		return os.Stderr
 	}
 
-	return io.MultiWriter(f, os.Stderr)
+	return f
 }
 
 func LogFilePath(logFile string) (string, error) {

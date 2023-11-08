@@ -4,6 +4,8 @@ import (
 	"strings"
 
 	"github.com/sirupsen/logrus"
+
+	"github.com/Pengxn/go-xn/src/util/log/hook"
 )
 
 var logger *logrus.Logger
@@ -12,7 +14,7 @@ func init() {
 	logger = logrus.New()
 
 	logger.SetLevel(logrus.DebugLevel)
-	logger.SetOutput(writerLog())
+	logger.AddHook(hook.NewWriterHook(writerLog()))
 }
 
 // level returns specified log level, default is Info level.
