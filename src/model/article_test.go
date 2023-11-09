@@ -48,7 +48,7 @@ var testORM = func() *xorm.Engine {
 }()
 
 // CleanTable that is used to drop tables for test.
-func CleanTable(orm *xorm.Engine, modelTable interface{}) {
+func CleanTable(orm *xorm.Engine, modelTable any) {
 	if has, _ := orm.IsTableExist(modelTable); has {
 		if err := orm.DropTables(modelTable); err != nil {
 			log.Fatalf("Drop table error: %+v, model: %+v", err, modelTable)

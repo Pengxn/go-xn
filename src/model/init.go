@@ -16,7 +16,7 @@ func InitTables() {
 	initTable(new(WebAuthnCredential))
 }
 
-func initTable(bean interface{}) {
+func initTable(bean any) {
 	if exist, err := orm.IsTableExist(bean); err != nil {
 		log.Panic("query table exist error: ", err)
 	} else if exist {

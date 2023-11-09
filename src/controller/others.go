@@ -139,7 +139,7 @@ func Mdcat(c *gin.Context) {
 
 	c.HTML(200, "mdcat.html", gin.H{
 		"code": 200,
-		"site": map[string]interface{}{
+		"site": map[string]any{
 			"title":       "Feng",
 			"author":      "Feng.YJ",
 			"description": "✍ The platform for publishing and running your blog. [WIP]",

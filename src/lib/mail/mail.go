@@ -93,7 +93,7 @@ func MailContent(mailType MailType, magicLink string) (subject, content string) 
 	}
 
 	var cbuf bytes.Buffer
-	if err = temp.Execute(&cbuf, map[string]interface{}{
+	if err = temp.Execute(&cbuf, map[string]any{
 		"site":       site,
 		"magic_link": "https://magic-link.com/test?code=xxxx",
 	}); err != nil {

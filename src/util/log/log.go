@@ -36,94 +36,94 @@ func level(level string) logrus.Level {
 }
 
 // Error logs a message at level Error.
-func Error(args ...interface{}) {
+func Error(args ...any) {
 	logger.Error(args...)
 }
 
 // Errorf logs a message at level Error.
-func Errorf(format string, args ...interface{}) {
+func Errorf(format string, args ...any) {
 	logger.Errorf(format, args...)
 }
 
 // Errorln logs a message at level Error.
-func Errorln(format string, args ...interface{}) {
+func Errorln(format string, args ...any) {
 	logger.Errorln(args...)
 }
 
 // Info logs a message at level Info.
-func Info(args ...interface{}) {
+func Info(args ...any) {
 	logger.Info(args...)
 }
 
 // Infof logs a message at level Info.
-func Infof(format string, args ...interface{}) {
+func Infof(format string, args ...any) {
 	logger.Infof(format, args...)
 }
 
 // Infoln logs a message at level Info.
-func Infoln(args ...interface{}) {
+func Infoln(args ...any) {
 	logger.Infoln(args...)
 }
 
 // Debug logs a message at level Debug.
-func Debug(args ...interface{}) {
+func Debug(args ...any) {
 	logger.Debug(args...)
 }
 
 // Debugf logs a message at level Debug.
-func Debugf(format string, args ...interface{}) {
+func Debugf(format string, args ...any) {
 	logger.Debugf(format, args...)
 }
 
 // Debugln logs a message at level Debug.
-func Debugln(args ...interface{}) {
+func Debugln(args ...any) {
 	logger.Debugln(args...)
 }
 
 // Fatal logs a message at level Fatal and then
 // the process will exit with status set to 1.
-func Fatal(args ...interface{}) {
+func Fatal(args ...any) {
 	logger.Fatal(args...)
 }
 
 // Fatalf logs a message at level Fatal and then
 // the process will exit with status set to 1.
-func Fatalf(format string, args ...interface{}) {
+func Fatalf(format string, args ...any) {
 	logger.Fatalf(format, args...)
 }
 
 // Fatalln logs a message at level Fatal and then
 // the process will exit with status set to 1.
-func Fatalln(args ...interface{}) {
+func Fatalln(args ...any) {
 	logger.Fatalln(args...)
 }
 
 // Warn logs a message at level Warn.
-func Warn(args ...interface{}) {
+func Warn(args ...any) {
 	logger.Warn(args...)
 }
 
 // Warnf logs a message at level Warn.
-func Warnf(format string, args ...interface{}) {
+func Warnf(format string, args ...any) {
 	logger.Warnf(format, args...)
 }
 
 // Warnln logs a message at level Warn.
-func Warnln(args ...interface{}) {
+func Warnln(args ...any) {
 	logger.Warnln(args...)
 }
 
 // Panic logs a message at level Panic.
-func Panic(args ...interface{}) {
+func Panic(args ...any) {
 	logger.Panic(args...)
 }
 
 // Panicf logs a message at level Panic.
-func Panicf(format string, args ...interface{}) {
+func Panicf(format string, args ...any) {
 	logger.Panicf(format, args...)
 }
 
 // Panicln logs a message at level Panic.
-func Panicln(format string, args ...interface{}) {
+func Panicln(format string, args ...any) {
 	logger.Panicln(args...)
 }

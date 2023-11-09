@@ -13,7 +13,7 @@ import (
 func JWT() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		token, err := request.ParseFromRequest(c.Request, request.AuthorizationHeaderExtractor,
-			func(token *jwt.Token) (interface{}, error) {
+			func(token *jwt.Token) (any, error) {
 				return []byte(config.Config.Server.JwtToken), nil
 			})
 		if err != nil {

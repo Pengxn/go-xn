@@ -12,7 +12,7 @@ var c = cache.New(redis.DefaultExpiration, 10*time.Minute)
 
 // Add adds a key/value pair to the cache only if the key doesn't already exist,
 // or if the key has expired. Returns an error otherwise.
-func Add(key string, value interface{}) error {
+func Add(key string, value any) error {
 	if redis.UseRedis {
 		return redis.Add(key, value)
 	}
@@ -22,7 +22,7 @@ func Add(key string, value interface{}) error {
 
 // Set sets a key/value pair in the cache. If the key already exists, it will be
 // overwritten.
-func Set(key string, value interface{}) {
+func Set(key string, value any) {
 	if redis.UseRedis {
 		redis.Set(key, value)
 		return
@@ -34,7 +34,7 @@ func Set(key string, value interface{}) {
 // SetWithExpiration sets a key/value pair in the cache with a given expiration.
 // If the key already exists, it will be overwritten. If expiration is 0, the
 // default expiration time will be used.
-func SetWithExpiration(key string, value interface{}, expiration time.Duration) {
+func SetWithExpiration(key string, value any, expiration time.Duration) {
 	if redis.UseRedis {
 		redis.SetWithExpiration(key, value, expiration)
 		return
@@ -45,7 +45,7 @@ func SetWithExpiration(key string, value interface{}, expiration time.Duration) 
 
 // Get gets a value by key from the cache. It returns the value and a boolean
 // indicating whether the key was found in the cache.
-func Get(key string) (interface{}, bool) {
+func Get(key string) (any, bool) {
 	if redis.UseRedis {
 		return redis.Get(key)
 	}

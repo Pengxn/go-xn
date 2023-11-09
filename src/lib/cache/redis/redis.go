@@ -32,26 +32,26 @@ func init() {
 
 // Add adds a key/value pair to the redis only if the key doesn't already exist,
 // or if the key has expired. Returns an error otherwise.
-func Add(key string, value interface{}) error {
+func Add(key string, value any) error {
 	return r.Set(context.Background(), key, value, DefaultExpiration).Err()
 }
 
 // Set sets a key/value pair in the reids. If the key already exists, it will be
 // overwritten.
-func Set(key string, value interface{}) {
+func Set(key string, value any) {
 	r.Set(context.Background(), key, value, DefaultExpiration)
 }
 
 // SetWithExpiration sets a key/value pair in the reids with a given expiration.
 // If the key already exists, it will be overwritten. If expiration is 0, the
 // default expiration time will be used.
-func SetWithExpiration(key string, value interface{}, expiration time.Duration) {
+func SetWithExpiration(key string, value any, expiration time.Duration) {
 	r.Set(context.Background(), key, value, expiration)
 }
 
 // Get gets a value by key from the redis. It returns the value and a boolean
 // indicating whether the key was found in the redis.
-func Get(key string) (interface{}, bool) {
+func Get(key string) (any, bool) {
 	result, err := r.Get(context.Background(), key).Result()
 	if err == redis.Nil {
 		return "", false
