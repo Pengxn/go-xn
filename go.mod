@@ -23,7 +23,7 @@ require (
 	github.com/tidwall/gjson v1.17.0
 	github.com/urfave/cli/v2 v2.25.7
 	github.com/yuin/goldmark v1.6.0
-	golang.org/x/net v0.17.0
+	golang.org/x/net v0.18.0
 	xorm.io/xorm v1.3.4
 )
 
@@ -68,10 +68,10 @@ require (
 	github.com/x448/float16 v0.8.4 // indirect
 	github.com/xrash/smetrics v0.0.0-20201216005158-039620a65673 // indirect
 	golang.org/x/arch v0.3.0 // indirect
-	golang.org/x/crypto v0.14.0 // indirect
+	golang.org/x/crypto v0.15.0 // indirect
 	golang.org/x/sys v0.14.0 // indirect
 	golang.org/x/term v0.14.0 // indirect
-	golang.org/x/text v0.13.0 // indirect
+	golang.org/x/text v0.14.0 // indirect
 	google.golang.org/protobuf v1.30.0 // indirect
 	gopkg.in/alexcesaro/quotedprintable.v3 v3.0.0-20150716171945-2caba252f4dc // indirect
 	gopkg.in/mail.v2 v2.3.1 // indirect
