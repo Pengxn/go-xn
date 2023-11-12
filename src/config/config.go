@@ -1,13 +1,10 @@
 package config
 
 import (
-	"path/filepath"
-
 	"github.com/go-ini/ini"
 	"github.com/google/uuid"
 
 	"github.com/Pengxn/go-xn/src/util/file"
-	"github.com/Pengxn/go-xn/src/util/home"
 	"github.com/Pengxn/go-xn/src/util/log"
 )
 
@@ -21,7 +18,10 @@ func init() {
 
 	configPath := getConfigPathByFlag()
 	if configPath == "" {
-		configPath = defaultConfigPath()
+		configPath = "fyj.ini"
+		if !file.IsExist(configPath) || !file.IsFile(configPath) {
+			log.Warnln("Default config file not exist, use default config")
+		}
 	}
 
 	if err := loadConfig(configPath); err != nil {
@@ -40,21 +40,6 @@ func loadConfig(file string) error {
 		return err
 	}
 	return nil
-}
-
-func defaultConfigPath() string {
-	files := []string{
-		"fyj.ini",
-		filepath.Join(home.ConfigDir("fyj"), "fyj.ini"), // ~/.config/fyj/fyj.ini
-		filepath.Join(home.HomeDir(), "fyj.ini"),        // ~/fyj.ini
-	}
-	for _, f := range files {
-		if file.IsExist(f) && file.IsFile(f) {
-			return f
-		}
-	}
-
-	return files[0] // default is fyj.ini
 }
 
 // appConfig is configuration for global object.
