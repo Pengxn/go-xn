@@ -7,7 +7,6 @@ import (
 	"path/filepath"
 
 	"github.com/Pengxn/go-xn/src/util/file"
-	"github.com/Pengxn/go-xn/src/util/home"
 )
 
 // writerLog writes log to the specified writer buffer.
@@ -29,21 +28,17 @@ func writerLog() io.Writer {
 	return f
 }
 
-func LogFilePath(logFile string) (string, error) {
-	if file.IsExist(logFile) && file.IsFile(logFile) {
-		return logFile, nil // => ./<logFile>
+func LogFilePath(fileName string) (string, error) {
+	if file.IsExist(fileName) && file.IsFile(fileName) {
+		return fileName, nil // => ./<logFile>
 	}
 
 	logDir := "logs"
-	if file.IsExist(logDir) && file.IsDir(logDir) {
-		return filepath.Join(logDir, logFile), nil // => ./logs/<logFile>
-	}
-
-	logDir = filepath.Join(home.LogDir("fyj"), "logs")
 	if !file.IsExist(logDir) {
 		if err := os.MkdirAll(logDir, 0755); err != nil {
-			return logFile, err // => ./<logFile>
+			return "", err // => ./<logFile>
 		}
 	}
-	return filepath.Join(logDir, logFile), nil // => ~/.local/share/fyj/logs/<logFile>
+
+	return filepath.Join(logDir, fileName), nil // => ./logs/<logFile>
 }
