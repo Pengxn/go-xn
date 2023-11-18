@@ -13,8 +13,8 @@ func othersRoutes(g *gin.Engine) {
 	g.GET("/rss", controller.RSS)
 	// Atom, https://datatracker.ietf.org/doc/html/rfc4287
 	g.GET("/atom", controller.Atom)
-	// JSON Feed Version 1, https://jsonfeed.org/version/1
-	g.GET("/feed", controller.Feed)
+	// JSON Feed Version 1.1, https://www.jsonfeed.org/version/1.1
+	g.GET("/feed.json", controller.Feed)
 
 	// Well-Known URIs specification, refer to:
 	// https://datatracker.ietf.org/doc/html/rfc8615
