@@ -77,7 +77,7 @@ func RSS(c *gin.Context) {
 	}
 	// RSS MIME, refer to https://www.rssboard.org/rss-mime-type-application.txt
 	c.Header("Content-Type", "application/rss+xml")
-	c.XML(200, rss)
+	c.String(200, rss)
 }
 
 func Atom(c *gin.Context) {
@@ -89,7 +89,7 @@ func Atom(c *gin.Context) {
 	}
 	// Atom MIME, refer to https://datatracker.ietf.org/doc/html/rfc4287#section-7
 	c.Header("Content-Type", "application/atom+xml")
-	c.XML(200, rss)
+	c.String(200, rss)
 }
 
 func Feed(c *gin.Context) {
@@ -102,7 +102,7 @@ func Feed(c *gin.Context) {
 	// JSON Feed MIME
 	// refer to https://jsonfeed.org/version/1.1#suggestions-for-publishers
 	c.Header("Content-Type", "application/feed+json")
-	c.JSON(200, rss)
+	c.String(200, rss)
 }
 
 func feed() *feeds.Feed {
