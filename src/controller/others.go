@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"fmt"
 	"html/template"
 	"os"
 	"strings"
@@ -117,7 +118,7 @@ func feed() *feeds.Feed {
 		Id:          "",
 		Subtitle:    "",
 		Items:       []*feeds.Item{},
-		Copyright:   "",
+		Copyright:   fmt.Sprintf("Copyright (c) 2020-%d The Go-xn Author", now.Year()),
 		Image:       &feeds.Image{},
 	}
 }
