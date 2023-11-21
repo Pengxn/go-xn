@@ -7,6 +7,12 @@
   <meta name="description" content="{{ .site.description }}">
   <title>{{ .site.title }}</title>
 
+  <!-- RSS/Atom, refer to https://blog.jim-nielsen.com/2021/automatically-discoverable-rss-feeds/ -->
+  <link rel="alternate" title="RSS: {{ .site.title }}" type="application/rss+xml" href="/rss" />
+  <link rel="alternate" title="Atom: {{ .site.title }}" type="application/atom+xml" href="/atom" />
+  <!-- refer to https://www.jsonfeed.org/version/1.1/#discovery -->
+  <link rel="alternate" title="JSON Feed: {{ .site.title }}" type="application/feed+json" href="/feed.json" />
+
   <link rel="icon" href="/favicon.ico">
 
   <link rel="stylesheet" href="/assets/css/main.css">
