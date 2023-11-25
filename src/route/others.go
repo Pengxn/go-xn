@@ -29,6 +29,10 @@ func othersRoutes(g *gin.Engine) {
 	webdav := g.Group("/dav").Use(middleware.BasicAuth())
 	webdav.Match(controller.WebdavMethods, "/*webdav", controller.WebDAV)
 
+	// Implement MetaWeblog XML-RPC API, refer to:
+	// https://codex.wordpress.org/XML-RPC_MetaWeblog_API
+	g.Any("/metaweblog", controller.MetaWeblog)
+
 	g.GET("/md", controller.Mdcat)
 
 	// Get domain whois information.
