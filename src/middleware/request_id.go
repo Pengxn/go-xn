@@ -13,7 +13,7 @@ func RequestID() gin.HandlerFunc {
 		rid := c.GetHeader(headerXRequestID)
 		if rid == "" {
 			rid = uuid.New().String()
-			c.Request.Header.Add(headerXRequestID, rid)
+			c.Request.Header[headerXRequestID] = []string{rid}
 		}
 		// Set the request id to ensure that it is in the response
 		c.Writer.Header()[headerXRequestID] = []string{rid}
