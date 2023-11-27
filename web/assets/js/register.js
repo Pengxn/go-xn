@@ -6,13 +6,15 @@ document.addEventListener('DOMContentLoaded', () => {
     messageContainer = document.getElementById("message");
     warningContainer = document.getElementById("warning");
 
-    document.getElementById("signup").addEventListener("click", e => {
-        e.preventDefault()
-        const username = document.getElementById("username").value
-        const displayName = document.getElementById("displayName").value
+    if (document.getElementById("signup")) {
+        document.getElementById("signup").addEventListener("click", e => {
+            e.preventDefault()
+            const username = document.getElementById("username").value
+            const displayName = document.getElementById("displayName").value
 
-        submit(username, displayName)
-    })
+            register(username, displayName)
+        })
+    }
 })
 
 showError = (error) => {
@@ -32,7 +34,7 @@ showWarning = (warning) => {
 }
 
 // webauthn register
-async function submit(username, displayName) {
+async function register(username, displayName) {
     console.log(username, displayName)
 
     let responseBegin = await fetch("/admin/register/begin", {
@@ -48,8 +50,6 @@ async function submit(username, displayName) {
     }
 
     await createCredential(username, displayName, responseBeginJson.creation)
-
-    console.log(responseBegin.status)
 }
 
 async function createCredential(username, displayName, creation) {
