@@ -32,46 +32,77 @@ showWarning = (warning) => {
 }
 
 // webauthn register
-submit = (username, displayName) => {
-    resp = fetch("/admin/register/begin", {
+async function submit(username, displayName) {
+    console.log(username, displayName)
+
+    let responseBegin = await fetch("/admin/register/begin", {
         method: "POST",
-        headers: {"Content-Type": "application/x-www-form-urlencoded"},
-        body: "username="+username+"&displayName="+displayName,
-    }).then(resp => {
-        resp.json().then(data => {
-            creation = data.creation
-            creation.publicKey.challenge = coerceToArrayBuffer(creation.publicKey.challenge)
-            creation.publicKey.user.id = coerceToArrayBuffer(creation.publicKey.user.id)
-            navigator.credentials.create(creation).then(credential => {
-                crea = JSON.stringify({
-                    id: credential.id,
-                    type: credential.type,
-                    // rawId: new TextDecoder("utf-8").decode(new Uint8Array(credential.rawId)),
-                    rawId: coerceToBase64Url(new Uint8Array(credential.rawId)),
-                    response: {
-                        AttestationObject: coerceToBase64Url(new Uint8Array(credential.response.attestationObject)),
-                        clientDataJson: coerceToBase64Url(new Uint8Array(credential.response.clientDataJSON)),
-                        clientDataJsonString: new TextDecoder("utf-8").decode(new Uint8Array(credential.response.clientDataJSON))
-                    }
-                })
-                data = JSON.stringify({
-                    "username": username,
-                    "displayName": displayName,
-                    "credential": JSON.parse(crea)
-                })
-                console.log(data)
-                fetch("/admin/register/finish", {
-                    method: "POST",
-                    headers: {"Content-Type": "application/json"},
-                    body: data
-                }).then(resp => {
-                    resp.json().then(data => {
-                        showWarning(JSON.stringify(data))
-                    })
-                }).catch(err => showError(err))
-            }).catch(err => showError(err))
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: "username=" + username + "&displayName=" + displayName,
+    })
+
+    const responseBeginJson = await responseBegin.json()
+    if (responseBeginJson.code != 200) {
+        showError("register begin failed: " + responseBeginJson.message)
+        return
+    }
+
+    await createCredential(username, displayName, responseBeginJson.creation)
+
+    console.log(responseBegin.status)
+}
+
+async function createCredential(username, displayName, creation) {
+    creation.publicKey.challenge = coerceToArrayBuffer(creation.publicKey.challenge)
+    creation.publicKey.user.id = coerceToArrayBuffer(creation.publicKey.user.id)
+
+    let credential
+    try {
+        credential = await navigator.credentials.create(creation)
+    } catch (error) {
+        showError(error)
+        return error
+    }
+
+    let credentialJSON = JSON.stringify({
+        id: credential.id,
+        type: credential.type,
+        rawId: coerceToBase64Url(new Uint8Array(credential.rawId)),
+        response: {
+            AttestationObject: coerceToBase64Url(new Uint8Array(credential.response.attestationObject)),
+            clientDataJson: coerceToBase64Url(new Uint8Array(credential.response.clientDataJSON)),
+            clientDataJsonString: new TextDecoder("utf-8").decode(new Uint8Array(credential.response.clientDataJSON))
+        }
+    })
+
+    console.log(credentialJSON)
+    await submitFinish(username, displayName, credentialJSON)
+}
+
+async function submitFinish(username, displayName, credentialJSON) {
+    let responseFinish
+    try {
+        responseFinish = await fetch("/admin/register/finish", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                "username": username,
+                "displayName": displayName,
+                "credential": JSON.parse(credentialJSON)
+            })
         })
-    }).catch(err => showError(err))
+    } catch (error) {
+        showError(error)
+        return error
+    }
+
+    const responseFinishJson = await responseFinish.json()
+    if (responseFinishJson.code != 200) {
+        showError("register finish failed: " + responseFinishJson.message)
+        return
+    }
+
+    console.log(responseFinishJson.data)
 }
 
 // ArrayBuffer <=> String 转换
