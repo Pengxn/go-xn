@@ -17,26 +17,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 })
 
-showError = (error) => {
-    console.error(error);
-    errorContainer.innerText = error;
-    errorContainer.style.display = "block";
-}
-showMessage = (message) => {
-    console.info(message);
-    messageContainer.innerText = message;
-    messageContainer.style.display = "block";
-}
-showWarning = (warning) => {
-    console.warn(warning);
-    warningContainer.innerText = warning;
-    warningContainer.style.display = "block";
-}
-
 // webauthn register
-async function register(username, displayName) {
-    console.log(username, displayName)
-
+register = async (username, displayName) => {
     let responseBegin = await fetch("/admin/register/begin", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -52,7 +34,7 @@ async function register(username, displayName) {
     await createCredential(username, displayName, responseBeginJson.creation)
 }
 
-async function createCredential(username, displayName, creation) {
+createCredential = async (username, displayName, creation) => {
     creation.publicKey.challenge = coerceToArrayBuffer(creation.publicKey.challenge)
     creation.publicKey.user.id = coerceToArrayBuffer(creation.publicKey.user.id)
 
@@ -76,10 +58,10 @@ async function createCredential(username, displayName, creation) {
     })
 
     console.log(credentialJSON)
-    await submitFinish(username, displayName, credentialJSON)
+    await registerFinish(username, displayName, credentialJSON)
 }
 
-async function submitFinish(username, displayName, credentialJSON) {
+registerFinish = async (username, displayName, credentialJSON) => {
     let responseFinish
     try {
         responseFinish = await fetch("/admin/register/finish", {
@@ -143,4 +125,21 @@ coerceToArrayBuffer = value => {
 }
 base64UrlToBase64 = base64Url => {
     return base64Url.replace(/-/g, '+').replace(/_/g, '/');
+}
+
+// common functions, display error/message/warning
+showError = (error) => {
+    console.error(error);
+    errorContainer.innerText = error;
+    errorContainer.style.display = "block";
+}
+showMessage = (message) => {
+    console.info(message);
+    messageContainer.innerText = message;
+    messageContainer.style.display = "block";
+}
+showWarning = (warning) => {
+    console.warn(warning);
+    warningContainer.innerText = warning;
+    warningContainer.style.display = "block";
 }
