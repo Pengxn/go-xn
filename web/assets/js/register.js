@@ -6,16 +6,88 @@ document.addEventListener('DOMContentLoaded', () => {
     messageContainer = document.getElementById("message");
     warningContainer = document.getElementById("warning");
 
+    if (document.getElementById("login")) {
+        document.getElementById("login").addEventListener("click", e => {
+            e.preventDefault()
+            const username = document.getElementById("username").value
+            login(username)
+        })
+    }
+
     if (document.getElementById("signup")) {
         document.getElementById("signup").addEventListener("click", e => {
             e.preventDefault()
             const username = document.getElementById("username").value
             const displayName = document.getElementById("displayName").value
-
             register(username, displayName)
         })
     }
 })
+
+// webauthn login
+login = async (username) => {
+    let responseBegin = await fetch("/admin/login/begin", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: "username=" + username,
+    })
+
+    const responseBeginJson = await responseBegin.json()
+    if (responseBeginJson.code != 200) {
+        showError("login begin failed: " + responseBeginJson.message)
+        return
+    }
+
+    await getAssertion(username, responseBeginJson.creation, responseBeginJson.session)
+}
+
+let abortController = new AbortController()
+
+getAssertion = async (username, creation, session) => {
+    creation.publicKey.challenge = coerceToArrayBuffer(creation.publicKey.challenge);
+    // creation.publicKey.allowCredentials = [] // TODO: allowCredentials
+    // creation.mediation = "conditional" // TODO: conditional UI
+    creation.signal = abortController.signal
+
+    const credential = await navigator.credentials.get(creation)
+    if (!credential) {
+        throw new Error('Authentication was not completed');
+    }
+
+    await loginFinish(credential, session)
+}
+
+loginFinish = async (credential, session) => {
+    const assertion = JSON.stringify({
+        session: session,
+        credential: {
+            id: credential.id,
+            rawId: coerceToBase64Url(new Uint8Array(credential.rawId)),
+            type: credential.type,
+            clientExtensionResults: credential.getClientExtensionResults(),
+            authenticatorAttachment: credential.authenticatorAttachment,
+            response: {
+                authenticatorData: coerceToBase64Url(credential.response.authenticatorData),
+                clientDataJson: coerceToBase64Url(credential.response.clientDataJSON),
+                signature: coerceToBase64Url(credential.response.signature),
+                userHandle: coerceToBase64Url(credential.response.userHandle),
+            }
+        }
+    })
+    console.log(assertion)
+
+    let responseFinish = await fetch("/admin/login/finish", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: assertion
+    })
+
+    if (responseFinish.status == 200) {
+        showMessage("login success")
+    } else {
+        showError("login failed: " +  responseFinish.status)
+    }
+}
 
 // webauthn register
 register = async (username, displayName) => {
