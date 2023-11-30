@@ -120,7 +120,7 @@ coerceToArrayBuffer = value => {
         return bytes;
     }
 
-    console.warn('Could not coerce to string:', value);
+    console.warn('Could not coerce to ArrayBuffer:', value);
     throw new TypeError('Could not coerce to ArrayBuffer');
 }
 base64UrlToBase64 = base64Url => {
