@@ -7,16 +7,19 @@ type User struct {
 	ID          []byte
 	Name        string
 	DisplayName string
-	Credential  []webauthn.Credential
+	Credential  []Credential
 }
 
+// Credential is a type alias for webauthn.Credential.
+type Credential webauthn.Credential
+
 // New creates User for WebAuthn.
-func NewUser(id, name, displayName string, cred ...webauthn.Credential) User {
+func NewUser(id, name, displayName string, c ...Credential) User {
 	return User{
 		ID:          []byte(id),
 		Name:        name,
 		DisplayName: displayName,
-		Credential:  cred,
+		Credential:  c,
 	}
 }
 
@@ -37,7 +40,11 @@ func (u User) WebAuthnDisplayName() string {
 
 // WebAuthnCredentials provides the list of Credential objects owned by the user.
 func (u User) WebAuthnCredentials() []webauthn.Credential {
-	return u.Credential
+	var credentials []webauthn.Credential
+	for _, c := range u.Credential {
+		credentials = append(credentials, webauthn.Credential(c))
+	}
+	return credentials
 }
 
 // WebAuthnIcon is a deprecated option,
@@ -47,7 +54,7 @@ func (u User) WebAuthnIcon() string {
 }
 
 // AddCredential adds Credential objects to the user.
-func (u User) AddCredential(c webauthn.Credential) User {
+func (u User) AddCredential(c Credential) User {
 	u.Credential = append(u.Credential, c)
 	return u
 }
