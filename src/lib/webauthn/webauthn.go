@@ -26,9 +26,7 @@ func InitWebAuthn() {
 
 // BeginRegister generates a new set of registration data for webauthn.
 func BeginRegister(u User) ([]byte, []byte, error) {
-	c, s, err := w.BeginRegistration(u, webauthn.WithAuthenticatorSelection(protocol.AuthenticatorSelection{
-		UserVerification: protocol.VerificationRequired,
-	}), webauthn.WithConveyancePreference(protocol.PreferNoAttestation))
+	c, s, err := w.BeginRegistration(u)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -64,11 +62,11 @@ func FinishRegister(u User, session, response []byte) (*webauthn.Credential, err
 
 // BeginLogin generates a new set of login data for webauthn.
 func BeginLogin(u User) ([]byte, []byte, error) {
-	c, s, err := w.BeginLogin(u)
+	a, s, err := w.BeginLogin(u)
 	if err != nil {
 		return nil, nil, err
 	}
-	cred, err := json.Marshal(c)
+	assertion, err := json.Marshal(a)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -76,7 +74,7 @@ func BeginLogin(u User) ([]byte, []byte, error) {
 	if err != nil {
 		return nil, nil, err
 	}
-	return cred, session, nil
+	return assertion, session, nil
 }
 
 // FinishLogin validates the login data and returns the credential for webauthn.
@@ -91,9 +89,9 @@ func FinishLogin(u User, session, response []byte) (*webauthn.Credential, error)
 		return nil, err
 	}
 
-	creationData, err := car.Parse()
+	assertionData, err := car.Parse()
 	if err != nil {
 		return nil, err
 	}
-	return w.ValidateLogin(u, sessionData, creationData)
+	return w.ValidateLogin(u, sessionData, assertionData)
 }
