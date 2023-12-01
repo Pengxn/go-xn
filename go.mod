@@ -27,7 +27,7 @@ require (
 	xorm.io/xorm v1.3.4
 )
 
-go 1.20
+go 1.21
 
 require (
 	github.com/boombuler/barcode v1.0.1 // indirect
