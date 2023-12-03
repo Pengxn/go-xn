@@ -95,3 +95,50 @@ func FinishLogin(u User, session, response []byte) (*webauthn.Credential, error)
 	}
 	return w.ValidateLogin(u, sessionData, assertionData)
 }
+
+// BeginDiscoverableLogin generates a new set of login data for webauthn.
+// It's used for client-side discoverable login.
+func BeginDiscoverableLogin() ([]byte, []byte, error) {
+	c, s, err := w.BeginDiscoverableLogin()
+	if err != nil {
+		return nil, nil, err
+	}
+	cred, err := json.Marshal(c)
+	if err != nil {
+		return nil, nil, err
+	}
+	session, err := json.Marshal(s)
+	if err != nil {
+		return nil, nil, err
+	}
+	return cred, session, nil
+}
+
+// DiscoverableUserHandler is user handler function for discoverable login.
+type DiscoverableUserHandler func(rawID, userHandle []byte) (User, error)
+
+// discoverableUserHandle converts function parameter to webauthn.DiscoverableUserHandler.
+func discoverableUserHandle(handler DiscoverableUserHandler) webauthn.DiscoverableUserHandler {
+	return func(rawID, userHandle []byte) (webauthn.User, error) {
+		return handler(rawID, userHandle)
+	}
+}
+
+// FinishDiscoverableLogin validates the discoverable login data for webauthn.
+func FinishDiscoverableLogin(handler DiscoverableUserHandler, session, response []byte) (*webauthn.Credential, error) {
+	var sessionData webauthn.SessionData
+	if err := json.Unmarshal(session, &sessionData); err != nil {
+		return nil, err
+	}
+
+	var car protocol.CredentialAssertionResponse
+	if err := json.Unmarshal(response, &car); err != nil {
+		return nil, err
+	}
+
+	creationData, err := car.Parse()
+	if err != nil {
+		return nil, err
+	}
+	return w.ValidateDiscoverableLogin(discoverableUserHandle(handler), sessionData, creationData)
+}
