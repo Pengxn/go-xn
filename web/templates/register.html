@@ -7,7 +7,6 @@
     <title>Register User - WebAuthn</title>
 
     <link rel="icon" href="/favicon.ico">
-    <script src="https://unpkg.com/@simplewebauthn/browser/dist/bundle/index.umd.min.js"></script>
     <script src="/assets/js/main.js"></script>
     <script src="/assets/js/register.js"></script>
 </head>
@@ -32,31 +31,6 @@
     <p>Chrome 浏览器可以在 <a href="chrome://settings/passkeys">chrome://settings/passkeys</a> 管理你的密钥。</p>
     <p>已知的一些 Chrome 问题: <a href="https://bugs.chromium.org/p/chromium/issues/list?q=conditional%20ui%20component%3ABlink%3EWebAuthentication&can=2">Issue list</a></p>
 </body>
-<script>
-const { browserSupportsWebAuthn, browserSupportsWebAuthnAutofill, platformAuthenticatorIsAvailable } = SimpleWebAuthnBrowser;
-(async () => {
-    var msg = "设备支持状态: "
-    if (browserSupportsWebAuthn()) {
-        msg += "支持 WebAuthn 认证"
-    } else {
-        msg += "不支持 WebAuthn 认证"
-    }
-    if (browserSupportsWebAuthnAutofill()) {
-        msg += ", 支持自动填充认证"
-    } else {
-        msg += ", 不支持自动填充认证"
-    }
-    if (platformAuthenticatorIsAvailable) {
-        msg += ", 支持其它"
-    } else {
-        msg += ", 不支持其它"
-    }
-    ds = document.getElementById("device-support")
-    if (ds)  {
-        ds.innerHTML = msg
-    }
-})();
-</script>
 
 <style>
 body {

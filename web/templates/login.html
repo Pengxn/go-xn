@@ -7,7 +7,6 @@
     <title>Login User - WebAuthn</title>
 
     <link rel="icon" href="/favicon.ico">
-    <script src="https://unpkg.com/@simplewebauthn/browser/dist/bundle/index.umd.min.js"></script>
     <script src="/assets/js/main.js"></script>
     <script src="/assets/js/register.js"></script>
 </head>
@@ -27,31 +26,6 @@
     <p>Don't have an account, go to <a href="/admin/register">sign up</a></p>
     <div class="message" id="device-support"></div>
 </body>
-<script>
-const { browserSupportsWebAuthn, browserSupportsWebAuthnAutofill, platformAuthenticatorIsAvailable } = SimpleWebAuthnBrowser;
-(async () => {
-    var msg = "设备支持状态: "
-    if (browserSupportsWebAuthn()) {
-        msg += "支持 WebAuthn 认证"
-    } else {
-        msg += "不支持 WebAuthn 认证"
-    }
-    if (browserSupportsWebAuthnAutofill()) {
-        msg += ", 支持自动填充认证"
-    } else {
-        msg += ", 不支持自动填充认证"
-    }
-    if (platformAuthenticatorIsAvailable) {
-        msg += ", 支持其它"
-    } else {
-        msg += ", 不支持其它"
-    }
-    ds = document.getElementById("device-support")
-    if (ds)  {
-        ds.innerHTML = msg
-    }
-})();
-</script>
 
 <style>
 body {

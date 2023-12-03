@@ -6,6 +6,10 @@ document.addEventListener('DOMContentLoaded', () => {
     messageContainer = document.getElementById("message");
     warningContainer = document.getElementById("warning");
 
+    if (document.getElementById("device-support")) {
+        document.getElementById("device-support").innerHTML = webauthnSupportsMsg()
+    }
+
     if (document.getElementById("login")) {
         document.getElementById("login").addEventListener("click", e => {
             e.preventDefault()
@@ -85,7 +89,7 @@ loginFinish = async (credential, session) => {
     if (responseFinish.status == 200) {
         showMessage("login success")
     } else {
-        showError("login failed: " +  responseFinish.status)
+        showError("login failed: " + responseFinish.status)
     }
 }
 
@@ -197,6 +201,36 @@ coerceToArrayBuffer = value => {
 }
 base64UrlToBase64 = base64Url => {
     return base64Url.replace(/-/g, '+').replace(/_/g, '/');
+}
+
+// return webauthn support status message
+webauthnSupportsMsg = () => {
+    webauthnSupports = browserSupportsWebAuthn() ? "支持" : "不支持"
+    webauthnAutofill = browserSupportsWebAuthnAutofill() ? "支持" : "不支持"
+    platformAuthenticator = platformAuthenticatorIsAvailable() ? "支持" : "不支持"
+    return `设备支持状态: ${webauthnSupports} WebAuthn 认证, ${webauthnAutofill}自动填充认证, ${platformAuthenticator}用户验证器`
+}
+
+// check whether browser supports webauthn
+browserSupportsWebAuthn = () => {
+    return (window?.PublicKeyCredential !== undefined && typeof window.PublicKeyCredential === 'function')
+}
+
+// check whether browser supports webauthn autofill (conditional mediation)
+browserSupportsWebAuthnAutofill = () => {
+    const publicKeyCredential = window.PublicKeyCredential
+    if (publicKeyCredential.isConditionalMediationAvailable === undefined) {
+        return false
+    }
+    return publicKeyCredential.isConditionalMediationAvailable()
+}
+
+// check whether platform authenticator is available
+platformAuthenticatorIsAvailable = () => {
+    if (!browserSupportsWebAuthn()) {
+        return false
+    }
+    return PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable()
 }
 
 // common functions, display error/message/warning
