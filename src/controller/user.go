@@ -124,3 +124,19 @@ func FinishRegister(c *gin.Context) {
 func LoginPage(c *gin.Context) {
 	c.HTML(http.StatusOK, "login.html", gin.H{})
 }
+
+func BeginLogin(c *gin.Context) {
+	// TODO: implement BeginLogin
+	c.JSON(http.StatusNotAcceptable, gin.H{
+		"code":    http.StatusNotAcceptable,
+		"message": "not implement",
+	})
+}
+
+func FinishLogin(c *gin.Context) {
+	// TODO: implement FinishLogin
+	c.JSON(http.StatusNotAcceptable, gin.H{
+		"code":    http.StatusNotAcceptable,
+		"message": "not implement",
+	})
+}
