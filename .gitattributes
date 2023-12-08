@@ -2,3 +2,9 @@
 *.png binary
 *.bmp binary
 *.ico binary
+
+# Exclude files from export archives, refer to
+# https://git-scm.com/docs/gitattributes#_export_ignore
+.github        export-ignore
+.gitattributes export-ignore
+.gitignore     export-ignore
