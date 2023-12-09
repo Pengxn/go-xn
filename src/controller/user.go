@@ -2,6 +2,7 @@ package controller
 
 import (
 	"encoding/json"
+	"errors"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -126,11 +127,58 @@ func LoginPage(c *gin.Context) {
 }
 
 func BeginLogin(c *gin.Context) {
-	// TODO: implement BeginLogin
-	c.JSON(http.StatusNotAcceptable, gin.H{
-		"code":    http.StatusNotAcceptable,
-		"message": "not implement",
+	username := c.PostForm("username")
+
+	var (
+		creation, session []byte
+		err               error
+	)
+	if username == "" { // client-side discoverable login
+		creation, session, err = webauthn.BeginDiscoverableLogin()
+	} else {
+		creation, session, err = beginLoginWithUsername(username)
+	}
+	if err != nil {
+		log.Errorf("BeginLogin error: %v", err)
+
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"code":    http.StatusInternalServerError,
+			"message": "BeginLogin error",
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"code":     http.StatusOK,
+		"creation": json.RawMessage(creation),
+		"session":  json.RawMessage(session),
 	})
+}
+
+// beginLoginWithUsername returns login webauthn creation and session with username.
+func beginLoginWithUsername(username string) ([]byte, []byte, error) {
+	wc := model.WebAuthnCredential{Name: username}.Get()
+	if len(wc) == 0 {
+		return nil, nil, errors.New("webauthn credentials not found")
+	}
+
+	var credentials []webauthn.Credential
+	for _, c := range wc {
+		credentials = append(credentials, webauthn.Credential{
+			ID:              c.CredentialID,
+			PublicKey:       c.PublicKey,
+			AttestationType: c.AttestationType,
+			// TODO: add Authenticator fields
+		})
+	}
+
+	user := webauthn.NewUser("123", username, wc[0].NickName)
+	creation, session, err := webauthn.BeginLogin(user)
+	if err != nil {
+		return nil, nil, errors.New("BeginLogin error")
+	}
+
+	return creation, session, nil
 }
 
 func FinishLogin(c *gin.Context) {
