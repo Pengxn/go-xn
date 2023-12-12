@@ -10,7 +10,7 @@ COPY . .
 RUN apk add --no-cache build-base make git; \
     go mod download; \
     go mod tidy; \
-    make
+    CGO_CFLAGS="-D_LARGEFILE64_SOURCE" make
 
 # Server image
 FROM alpine:latest
