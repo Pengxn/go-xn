@@ -17,6 +17,6 @@ jobs:
 
   deploy-docker:
     needs: test-linux
-    if: github.event_name == 'push' && github.ref_name == 'main'
+    if: github.event_name == 'push' # && github.ref_name == 'main'
     uses: ./.github/workflows/test.docker.yml
     secrets: inherit
