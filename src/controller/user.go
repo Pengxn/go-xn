@@ -126,6 +126,7 @@ func LoginPage(c *gin.Context) {
 	c.HTML(http.StatusOK, "login.html", gin.H{})
 }
 
+// BeginLogin returns login webauthn creation and session.
 func BeginLogin(c *gin.Context) {
 	username := c.PostForm("username")
 
@@ -181,10 +182,48 @@ func beginLoginWithUsername(username string) ([]byte, []byte, error) {
 	return creation, session, nil
 }
 
+// FinishRegisterRequest is request body for finish register.
+type FinishLoginRequest struct {
+	Username   string          `json:"username"`
+	Credential json.RawMessage `json:"credential"`
+	Session    json.RawMessage `json:"session"`
+}
+
+// FinishLogin validates login webauthn credential.
 func FinishLogin(c *gin.Context) {
-	// TODO: implement FinishLogin
+	data, err := c.GetRawData()
+	if err != nil {
+		log.Errorf("GetRawData error: %v", err)
+
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"code":    http.StatusInternalServerError,
+			"message": "GetRawData error",
+		})
+		return
+	}
+
+	var login FinishLoginRequest
+	json.Unmarshal(data, &login)
+
+	user := webauthn.NewUser("123", login.Username, "") // TODO: implement query user
+	if login.Username == "" {
+		_, err = webauthn.FinishLogin(user, login.Session, login.Credential)
+	} else {
+		// TODO: implement handler function for discoverable login
+		_, err = webauthn.FinishDiscoverableLogin(nil, login.Session, login.Credential)
+	}
+	if err != nil {
+		log.Errorf("FinishLogin error: %v", err)
+
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"code":    http.StatusInternalServerError,
+			"message": "FinishLogin error",
+		})
+		return
+	}
+
 	c.JSON(http.StatusNotAcceptable, gin.H{
-		"code":    http.StatusNotAcceptable,
-		"message": "not implement",
+		"code":    http.StatusOK,
+		"message": "login success",
 	})
 }
