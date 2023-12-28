@@ -1,0 +1,7 @@
+# refer to https://docs.github.com/en/repositories/working-with-files/using-files/viewing-a-file#ignore-commits-in-the-blame-view
+
+# To use this file (requires git 2.23):
+#   git config blame.ignoreRevsFile .git-blame-ignore-revs
+
+# typo in commit main message
+892b9baa5e38f975a7a2eace8af738a2fabd5baa
