@@ -8,10 +8,10 @@
 ## Build
 
 ```shell
-$ make
-$ ./build/go-xn web
+make
+./build/go-xn web
 # Move to your home directory and edit it
-$ cp ./src/config/example.ini ./fyj.ini
+cp ./src/config/example.ini ./fyj.ini
 ```
 
 > [!NOTE]
