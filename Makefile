@@ -1,10 +1,9 @@
 # Make sure you install `make` and `git` tool
 
-# OS=Windows_NT for git-bash on Windows OS
-ifeq ($(OS), Windows_NT)
-	BIN = go-xn.exe
-else
-	BIN = go-xn
+BIN  = go-xn
+GOOS = $(shell go env GOOS)
+ifeq ($(GOOS), windows)
+	BIN := go-xn.exe
 endif
 
 VERSION     = $(shell git describe --tags `git rev-list --tags --max-count=1`)
