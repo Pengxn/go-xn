@@ -1,11 +1,21 @@
-# Set update schedule for gomod
+# Set update schedule for dependabot
 
 version: 2
 updates:
+  # Go modules
   - package-ecosystem: "gomod"
     directory: "/"
     schedule:
       interval: "daily"
     labels:
       - "dependencies 📦"
+    target-branch: "main"
+  # GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "dependencies 📦"
+      - "CI/CD ⚙️"
     target-branch: "main"
