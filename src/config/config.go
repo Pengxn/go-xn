@@ -4,7 +4,6 @@ import (
 	"github.com/go-ini/ini"
 	"github.com/google/uuid"
 
-	"github.com/Pengxn/go-xn/src/util/file"
 	"github.com/Pengxn/go-xn/src/util/log"
 )
 
@@ -19,9 +18,6 @@ func init() {
 	configPath := getConfigPathByFlag()
 	if configPath == "" {
 		configPath = "fyj.ini"
-		if !file.IsExist(configPath) || !file.IsFile(configPath) {
-			log.Warnln("Default config file not exist, use default config")
-		}
 	}
 
 	if err := loadConfig(configPath); err != nil {
