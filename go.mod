@@ -23,7 +23,7 @@ require (
 	github.com/tidwall/gjson v1.17.1
 	github.com/urfave/cli/v2 v2.27.1
 	github.com/yuin/goldmark v1.7.0
-	golang.org/x/net v0.22.0
+	golang.org/x/net v0.23.0
 	xorm.io/xorm v1.3.9
 )
 
