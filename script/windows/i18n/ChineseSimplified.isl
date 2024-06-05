@@ -67,7 +67,7 @@ WindowsVersionNotSupported=此程序不支持当前计算机运行的 Windows �
 WindowsServicePackRequired=此程序需要 %1 服务包 %2 或更高版本。
 NotOnThisPlatform=此程序不能在 %1 上运行。
 OnlyOnThisPlatform=此程序只能在 %1 上运行。
-OnlyOnTheseArchitectures=此程序只能在为下列处理器结构设计的 Windows 版本中安装：%n%n%1
+OnlyOnTheseArchitectures=此程序只能安装到为下列处理器架构设计的 Windows 版本中：%n%n%1
 WinVersionTooLowError=此程序需要 %1 版本 %2 或更高。
 WinVersionTooHighError=此程序不能安装于 %1 版本 %2 或更高。
 AdminPrivilegesRequired=在安装此程序时您必须以管理员身份登录。
@@ -86,7 +86,7 @@ PrivilegesRequiredOverrideCurrentUser=只为我安装(&M)
 PrivilegesRequiredOverrideCurrentUserRecommended=只为我安装(&M) (建议选项)
 
 ; *** 其他错误
-ErrorCreatingDir=安装程序无法创建目录“%1”。
+ErrorCreatingDir=安装程序无法创建目录“%1”
 ErrorTooManyFilesInDir=无法在目录“%1”中创建文件，因为里面包含太多文件
 
 ; *** 安装程序公共消息
