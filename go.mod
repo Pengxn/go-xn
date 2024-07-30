@@ -20,7 +20,7 @@ require (
 	github.com/schollz/progressbar/v3 v3.14.4
 	github.com/sirupsen/logrus v1.9.3
 	github.com/smartystreets/goconvey v1.8.1
-	github.com/tidwall/gjson v1.17.1
+	github.com/tidwall/gjson v1.17.2
 	github.com/urfave/cli/v2 v2.27.3
 	github.com/yuin/goldmark v1.7.4
 	golang.org/x/net v0.27.0
