@@ -21,7 +21,7 @@ require (
 	github.com/sirupsen/logrus v1.9.3
 	github.com/smartystreets/goconvey v1.8.1
 	github.com/tidwall/gjson v1.17.3
-	github.com/urfave/cli/v2 v2.27.3
+	github.com/urfave/cli/v2 v2.27.4
 	github.com/yuin/goldmark v1.7.4
 	golang.org/x/net v0.28.0
 	xorm.io/xorm v1.3.9
