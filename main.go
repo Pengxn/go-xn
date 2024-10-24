@@ -1,4 +1,4 @@
-//go:build go1.22
+//go:build go1.23
 
 // Copyright 2020 The Go-xn Authors. All rights reserved.
 // Use of this source code is governed by a Zlib license
