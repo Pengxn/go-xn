@@ -2,7 +2,7 @@ module github.com/Pengxn/go-xn
 
 require (
 	github.com/agiledragon/gomonkey/v2 v2.12.0
-	github.com/getsentry/sentry-go v0.28.1
+	github.com/getsentry/sentry-go v0.29.1
 	github.com/gin-gonic/gin v1.10.0
 	github.com/go-ini/ini v1.67.0
 	github.com/go-mail/mail/v2 v2.3.0
@@ -12,23 +12,22 @@ require (
 	github.com/google/uuid v1.6.0
 	github.com/gorilla/feeds v1.2.0
 	github.com/lib/pq v1.10.9
-	github.com/mattn/go-sqlite3 v1.14.22
+	github.com/mattn/go-sqlite3 v1.14.24
 	github.com/patrickmn/go-cache v2.1.0+incompatible
 	github.com/pquerna/otp v1.4.0
-	github.com/redis/go-redis/v9 v9.6.1
-	github.com/rs/cors v1.11.0
-	github.com/schollz/progressbar/v3 v3.14.6
+	github.com/redis/go-redis/v9 v9.7.0
+	github.com/rs/cors v1.11.1
+	github.com/schollz/progressbar/v3 v3.16.1
 	github.com/sirupsen/logrus v1.9.3
 	github.com/smartystreets/goconvey v1.8.1
-	github.com/tidwall/gjson v1.17.3
-	github.com/urfave/cli/v2 v2.27.4
-	github.com/yuin/goldmark v1.7.4
-	golang.org/x/net v0.28.0
+	github.com/tidwall/gjson v1.18.0
+	github.com/urfave/cli/v2 v2.27.5
+	github.com/yuin/goldmark v1.7.8
+	golang.org/x/net v0.30.0
 	xorm.io/xorm v1.3.9
 )
 
-go 1.22
-toolchain go1.23.0
+go 1.23
 
 require (
 	filippo.io/edwards25519 v1.1.0 // indirect
@@ -38,7 +37,7 @@ require (
 	github.com/cespare/xxhash/v2 v2.2.0 // indirect
 	github.com/cloudwego/base64x v0.1.4 // indirect
 	github.com/cloudwego/iasm v0.2.0 // indirect
-	github.com/cpuguy83/go-md2man/v2 v2.0.4 // indirect
+	github.com/cpuguy83/go-md2man/v2 v2.0.5 // indirect
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
 	github.com/fxamacker/cbor/v2 v2.7.0 // indirect
 	github.com/gabriel-vasile/mimetype v1.4.3 // indirect
@@ -72,10 +71,10 @@ require (
 	github.com/x448/float16 v0.8.4 // indirect
 	github.com/xrash/smetrics v0.0.0-20240521201337-686a1a2994c1 // indirect
 	golang.org/x/arch v0.8.0 // indirect
-	golang.org/x/crypto v0.26.0 // indirect
-	golang.org/x/sys v0.23.0 // indirect
-	golang.org/x/term v0.23.0 // indirect
-	golang.org/x/text v0.17.0 // indirect
+	golang.org/x/crypto v0.28.0 // indirect
+	golang.org/x/sys v0.26.0 // indirect
+	golang.org/x/term v0.25.0 // indirect
+	golang.org/x/text v0.19.0 // indirect
 	google.golang.org/protobuf v1.34.1 // indirect
 	gopkg.in/alexcesaro/quotedprintable.v3 v3.0.0-20150716171945-2caba252f4dc // indirect
 	gopkg.in/mail.v2 v2.3.1 // indirect
