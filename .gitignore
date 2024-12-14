@@ -26,3 +26,8 @@ logs/
 
 # Data directory
 data/
+
+# SQLite database files
+*.db
+*.sqlite
+*.sqlite3
