@@ -1,0 +1,19 @@
+/* TEAM */
+	Founder & Developer: Feng.YJ
+	Site: https://fengyj.cn
+	Email: i@fengyj.cn
+	GitHub: @huiyifyj
+	Telegram: @fengyj
+	From: Quanzhou, Fujian, China
+
+/* THANKS */
+	EN Translator: Peng.xn
+	From: Guangzhou, Guangdong, China
+
+	GitHub Contributors: Peng.xn (@Pengxn) and others。
+
+/* SITE */
+	Version: 0.0.1
+	Last Update: 2012/02/04
+	Language: Chinese / English
+	Source Code: https://github.com/Pengxn/go-xn

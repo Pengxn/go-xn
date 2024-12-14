@@ -48,6 +48,7 @@ func FS() http.FileSystem {
 }
 
 //go:embed robots.txt
+//go:embed humans.txt
 //go:embed icons
 var other embed.FS
 

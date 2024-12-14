@@ -16,7 +16,10 @@ func staticRoutes(g *gin.Engine) {
 
 	otherFS := web.OtherFS()
 	staticFileFromFS(g, "/favicon.ico", "icons/logo.ico", otherFS)
+	// Robots.txt, refer to https://www.robotstxt.org/
 	staticFileFromFS(g, "/robots.txt", "robots.txt", otherFS)
+	// Humans.txt, refer to https://humanstxt.org/
+	staticFileFromFS(g, "/humans.txt", "humans.txt", otherFS)
 }
 
 func staticFileFromFS(g *gin.Engine, relativePath, filepath string, fs http.FileSystem) {
