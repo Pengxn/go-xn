@@ -1,6 +1,8 @@
 package controller
 
 import (
+	"strings"
+
 	"github.com/gin-gonic/gin"
 
 	"github.com/Pengxn/go-xn/src/model"
@@ -16,10 +18,7 @@ func ListOptions(c *gin.Context) {
 		options[option.Name] = option.Value
 	}
 
-	c.JSON(200, gin.H{
-		"code": 200,
-		"data": options,
-	})
+	dataJSON(c, options)
 }
 
 // GetOption returns an option by 'name' param.
@@ -27,19 +26,18 @@ func ListOptions(c *gin.Context) {
 //
 //	GET => /option/:name
 func GetOption(c *gin.Context) {
-	has, option := model.GetOptionByName(c.Param("name"))
-
-	if has {
-		c.JSON(200, gin.H{
-			"code": 200,
-			"data": option,
-		})
-	} else {
-		c.JSON(404, gin.H{
-			"code":  404,
-			"error": "The option don't exist.",
-		})
+	name := strings.TrimSpace(c.Param("name"))
+	if name == "" {
+		errorHTML(c, 400, "Option name is required.")
+		return
 	}
+
+	has, option := model.GetOptionByName(name)
+	if has {
+		dataJSON(c, option)
+		return
+	}
+	errorHTML(c, 404, "The option don't exist.")
 }
 
 // InsertOption inserts an option.

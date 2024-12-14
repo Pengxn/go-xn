@@ -20,3 +20,19 @@ func errorHTML(c *gin.Context, code int, message string) {
 		"message": message,
 	})
 }
+
+// errorJSON returns JSON response with error message.
+func errorJSON(c *gin.Context, code int, message string) {
+	c.JSON(code, gin.H{
+		"code":    code,
+		"message": message,
+	})
+}
+
+// dataJSON returns JSON response with data.
+func dataJSON(c *gin.Context, data interface{}) {
+	c.JSON(http.StatusOK, gin.H{
+		"code": 200,
+		"data": data,
+	})
+}
