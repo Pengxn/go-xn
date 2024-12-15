@@ -29,7 +29,10 @@ func TestGetAllOptions(t *testing.T) {
 	defer p.Reset()
 
 	Convey("Test GetAllOptions.", t, func() {
-		So(GetAllOptions(), ShouldResemble, []Option{
+		options, err := GetAllOptions()
+
+		So(err, ShouldBeNil)
+		So(options, ShouldResemble, []Option{
 			{Name: "site_url", Value: "https://xn--02f.com"},
 			{Name: "will_be_deleted", Value: "data_will_be_deleted"},
 			{Name: "will_be_update", Value: "data_will_be_update"},
@@ -43,15 +46,17 @@ func TestGetOptionByName(t *testing.T) {
 	defer p.Reset()
 
 	Convey("When option record is exists.", t, func() {
-		has, option := GetOptionByName("site_url")
+		has, option, err := GetOptionByName("site_url")
 
+		So(err, ShouldBeNil)
 		So(has, ShouldEqual, true)
-		So(option, ShouldResemble, Option{Name: "site_url", Value: "https://xn--02f.com"})
+		So(option, ShouldResemble, Option{Value: "https://xn--02f.com"})
 	})
 
 	Convey("When option record does not exist.", t, func() {
-		has, option := GetOptionByName("not_exist")
+		has, option, err := GetOptionByName("not_exist")
 
+		So(err, ShouldBeNil)
 		So(has, ShouldEqual, false)
 		So(option, ShouldResemble, Option{})
 	})
@@ -62,14 +67,15 @@ func TestAddToOption(t *testing.T) {
 	defer p.Reset()
 
 	Convey("Add option record successfully.", t, func() {
-		success := AddToOption(&Option{Name: "add_record", Value: "add_data"})
+		success, err := AddOption(&Option{Name: "add_record", Value: "add_data"})
+		So(err, ShouldBeNil)
 		So(success, ShouldEqual, true)
 
 		db := testORM.NewSession()
 		defer db.Close()
 
 		option := Option{Name: "add_record"}
-		_, err := db.Omit("option_id").Get(&option)
+		_, err = db.Omit("option_id").Get(&option)
 		So(option, ShouldResemble, Option{Name: "add_record", Value: "add_data"})
 		So(err, ShouldBeNil)
 	})
@@ -80,14 +86,15 @@ func TestDeleteOptionByName(t *testing.T) {
 	defer p.Reset()
 
 	Convey("Delete option record successfully.", t, func() {
-		success := DeleteOptionByName("will_be_deleted")
+		success, err := DeleteOptionByName("will_be_deleted")
+		So(err, ShouldBeNil)
 		So(success, ShouldEqual, true)
 
 		db := testORM.NewSession()
 		defer db.Close()
 
 		option := []Option{}
-		err := db.Where("option_name = ?", "will_be_deleted").Find(&option)
+		err = db.Where("option_name = ?", "will_be_deleted").Find(&option)
 		So(len(option), ShouldEqual, 0)
 		So(err, ShouldBeNil)
 	})
@@ -98,14 +105,15 @@ func TestUpdateOptionByName(t *testing.T) {
 	defer p.Reset()
 
 	Convey("Update option record successfully.", t, func() {
-		success := UpdateOptionByName(&Option{Name: "will_be_update", Value: "update_data"})
+		success, err := UpdateOptionByName(Option{Name: "will_be_update", Value: "update_data"})
+		So(err, ShouldBeNil)
 		So(success, ShouldEqual, true)
 
 		db := testORM.NewSession()
 		defer db.Close()
 
 		option := Option{Name: "will_be_update"}
-		_, err := db.Omit("option_id").Get(&option)
+		_, err = db.Omit("option_id").Get(&option)
 		So(option, ShouldResemble, Option{Name: "will_be_update", Value: "update_data"})
 		So(err, ShouldBeNil)
 	})
@@ -116,12 +124,14 @@ func TestOptionExist(t *testing.T) {
 	defer p.Reset()
 
 	Convey("When option record is exists.", t, func() {
-		success := OptionExist("test_exist")
+		success, err := OptionExist("test_exist")
+		So(err, ShouldBeNil)
 		So(success, ShouldEqual, true)
 	})
 
 	Convey("When option record does not exist.", t, func() {
-		success := OptionExist("not_exist")
+		success, err := OptionExist("not_exist")
+		So(err, ShouldBeNil)
 		So(success, ShouldEqual, false)
 	})
 }

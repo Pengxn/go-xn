@@ -13,26 +13,31 @@ func Redirect(routePath string) func(*gin.Context) {
 	}
 }
 
+const (
+	errorCode   = 0   // common error
+	successCode = 200 // success code
+)
+
 // errorHTML returns HTML page rendered with error message.
-func errorHTML(c *gin.Context, code int, message string) {
-	c.HTML(code, "error.html", gin.H{
-		"code":    code,
+func errorHTML(c *gin.Context, status int, message string) {
+	c.HTML(status, "error.html", gin.H{
+		"code":    status,
 		"message": message,
 	})
 }
 
 // errorJSON returns JSON response with error message.
-func errorJSON(c *gin.Context, code int, message string) {
-	c.JSON(code, gin.H{
-		"code":    code,
+func errorJSON(c *gin.Context, status int, message string) {
+	c.JSON(status, gin.H{
+		"code":    errorCode,
 		"message": message,
 	})
 }
 
 // dataJSON returns JSON response with data.
-func dataJSON(c *gin.Context, data interface{}) {
-	c.JSON(http.StatusOK, gin.H{
-		"code": 200,
+func dataJSON(c *gin.Context, status int, data interface{}) {
+	c.JSON(status, gin.H{
+		"code": successCode,
 		"data": data,
 	})
 }
