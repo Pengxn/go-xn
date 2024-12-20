@@ -1,10 +1,7 @@
 package model
 
 import (
-	"errors"
 	"time"
-
-	"github.com/Pengxn/go-xn/src/util/log"
 )
 
 // User model
@@ -12,7 +9,7 @@ type User struct {
 	ID         uint64     `json:"ID" xorm:"bigint(20) notnull autoincr pk 'ID'"`
 	Name       string     `json:"name" xorm:"varchar(18) notnull 'name'"`
 	NickName   string     `json:"nick_name" xorm:"varchar(25) notnull 'nick_name'"`
-	Password   string     `json:"password" xorm:"varchar(20) notnull 'password'"`
+	Password   string     `json:"password" xorm:"varchar(20) notnull 'password'"` // use raw password temporarily
 	Status     int8       `json:"status" xorm:"tinyint(4) notnull default(0) 'status'"`
 	Email      string     `json:"email" xorm:"varchar(50) notnull 'email'"`
 	Role       int8       `json:"role" xorm:"tinyint(4) notnull default(0) 'role'"`
@@ -23,43 +20,32 @@ type User struct {
 
 // GetByName returns an user by 'name' if it exist.
 // Not including 'ID' field.
-func (u *User) GetByName(name string) (User, error) {
+func GetUserByName(name string) (bool, User, error) {
 	db := orm.NewSession()
 	defer db.Close()
 
-	has, err := db.Omit("ID").
-		Where("name = ?", name).
-		Get(u)
-	if err != nil || !has {
-		log.Errorf("User GetByName throw error: %s", err)
-		return *u, errors.New("Get user data error")
-	}
+	var user User
+	has, err := db.Where("name = ?", name).Get(&user)
 
-	return *u, nil
+	return has, user, err
 }
 
 // Add adds user to `user` table.
-func (u *User) Add() bool {
+func (u *User) Add() (bool, error) {
 	db := orm.NewSession()
 	defer db.Close()
 
 	affected, err := db.InsertOne(u)
-	if err != nil {
-		log.Errorf("User database add throw error: %s, param: %+v", err, u)
-	}
 
-	return affected > 0
+	return affected > 0, err
 }
 
 // Delete deletes an User.
-func (u *User) Delete() bool {
+func (u *User) Delete() (bool, error) {
 	db := orm.NewSession()
 	defer db.Close()
 
 	affected, err := db.Delete(u)
-	if err != nil {
-		log.Errorf("User database delete throw error: %s, param: %+v", err, u)
-	}
 
-	return affected > 0
+	return affected > 0, err
 }

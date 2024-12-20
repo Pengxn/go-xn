@@ -6,6 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"github.com/Pengxn/go-xn/src/model"
+	"github.com/Pengxn/go-xn/src/util/log"
 )
 
 // BasicAuth is a middleware to check basic authentication.
@@ -15,15 +16,18 @@ func BasicAuth() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		username, password, ok := c.Request.BasicAuth()
 		if !ok || username == "" || password == "" {
+			// Set WWW-Authenticate header to tell the client to authenticate.
+			// refer to: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/WWW-Authenticate
 			c.Writer.Header().Set("WWW-Authenticate", `Basic realm="fyj WebDAV"`)
 			c.String(http.StatusUnauthorized, "unauthorized")
 			c.Abort()
 			return
 		}
 
-		user, err := new(model.User).GetByName(username)
-		if err != nil {
-			c.String(http.StatusForbidden, "server error")
+		has, user, err := model.GetUserByName(username)
+		if err != nil || !has {
+			log.Errorf("GetUserByName: %v", err)
+			c.String(http.StatusInternalServerError, "server error")
 			c.Abort()
 			return
 		}
