@@ -105,7 +105,7 @@ func ArticleByURL(url string) (*Article, bool) {
 	defer db.Close()
 
 	article := &Article{
-		URL: url,
+		Slug: url,
 	}
 
 	has, err := db.Get(article)
