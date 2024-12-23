@@ -9,7 +9,8 @@ import (
 // Article model
 type Article struct {
 	ID         uint64     `json:"ID" xorm:"bigint(20) notnull autoincr pk 'ID'"`
-	URL        string     `json:"url,omitempty" xorm:"varchar(255) unique notnull 'url'"`
+	Slug       string     `json:"slug,omitempty" xorm:"varchar(255) unique notnull 'slug'"`
+	URL        string     `json:"url,omitempty" xorm:"varchar(255) unique notnull 'url'"` // deprecated, use slug instead
 	Title      string     `json:"title" xorm:"text notnull 'title'"`
 	Content    string     `json:"content" xorm:"longtext notnull 'content'"`
 	Views      uint64     `json:"article_views" xorm:"bigint(20) notnull default(0) 'article_views'"`
@@ -25,13 +26,10 @@ func ArticlesByPage(limit int, page int) []Article {
 	defer db.Close()
 
 	var articles []Article
-
-	start := limit * (page - 1)
-
 	err := db.Table("article").
-		Cols("ID", "url", "title", "content", "article_views", "create_time").
+		Cols("ID", "slug", "url", "title", "content", "article_views", "create_time").
 		Where("article_status = 1").
-		Limit(limit, start).
+		Limit(limit, limit*(page-1)).
 		Desc("create_time").
 		Find(&articles)
 	if err != nil {
