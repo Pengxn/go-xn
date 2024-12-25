@@ -16,6 +16,7 @@ func Execute() error {
 			Web,
 			Update,
 			VersionCmd,
+			agent,
 		},
 	}
 
