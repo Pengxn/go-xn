@@ -4,10 +4,8 @@ import "github.com/go-webauthn/webauthn/webauthn"
 
 // User implements webauthn.User interface.
 type User struct {
-	ID          []byte
-	Name        string
-	DisplayName string
-	Credential  []Credential
+	ID, Name, DisplayName string
+	Credential            []Credential
 }
 
 // Credential is a type alias for webauthn.Credential.
@@ -16,7 +14,7 @@ type Credential webauthn.Credential
 // New creates User for WebAuthn.
 func NewUser(id, name, displayName string, c ...Credential) User {
 	return User{
-		ID:          []byte(id),
+		ID:          id,
 		Name:        name,
 		DisplayName: displayName,
 		Credential:  c,
@@ -25,7 +23,7 @@ func NewUser(id, name, displayName string, c ...Credential) User {
 
 // WebAuthnID provides user ID, Maximum 64 bytes.
 func (u User) WebAuthnID() []byte {
-	return u.ID
+	return []byte(u.ID)
 }
 
 // WebAuthnName provides name during registration.
@@ -45,12 +43,6 @@ func (u User) WebAuthnCredentials() []webauthn.Credential {
 		credentials = append(credentials, webauthn.Credential(c))
 	}
 	return credentials
-}
-
-// WebAuthnIcon is a deprecated option,
-// this has been removed from the specification recommendation.
-func (u User) WebAuthnIcon() string {
-	return ""
 }
 
 // AddCredential adds Credential objects to the user.
