@@ -12,7 +12,9 @@ import (
 	"github.com/Pengxn/go-xn/src/util/log"
 )
 
-func Logger() gin.HandlerFunc {
+// LoggerToFile is a custom logger middleware, it writes logs to os.Stdout and a file.
+// And uses a custom log format function.
+func LoggerToFile() gin.HandlerFunc {
 	return gin.LoggerWithConfig(gin.LoggerConfig{
 		Formatter: customLog,
 		Output:    writerLog(),
@@ -52,6 +54,7 @@ func writerLog() io.Writer {
 	logFile, err := log.LogFilePath("route.log")
 	if err != nil {
 		log.Errorf("Get log file Path %s error: %+v", logFile, err)
+		return os.Stdout
 	}
 
 	// Logging to a file, append logging if the file already exists.
@@ -61,5 +64,5 @@ func writerLog() io.Writer {
 		return os.Stdout
 	}
 
-	return io.MultiWriter(f, os.Stdout)
+	return f
 }
