@@ -6,7 +6,7 @@ import (
 	"errors"
 	"html/template"
 
-	"github.com/go-mail/mail/v2"
+	"github.com/go-mail/mail"
 
 	"github.com/Pengxn/go-xn/src/config"
 	"github.com/Pengxn/go-xn/src/util/log"
