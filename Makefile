@@ -15,7 +15,7 @@ LDFLAGS    += -X "github.com/Pengxn/go-xn/src/cmd.buildTime=${BUILD_TIME}"
 
 all: build
 
-build: clean generate
+build: clean
 	@go build -o build/$(BIN) -v -ldflags '-w -s $(LDFLAGS)'
 
 clean:
