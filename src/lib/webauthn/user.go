@@ -2,6 +2,8 @@ package webauthn
 
 import "github.com/go-webauthn/webauthn/webauthn"
 
+var _ webauthn.User = (*User)(nil)
+
 // User implements webauthn.User interface.
 type User struct {
 	ID, Name, DisplayName string
