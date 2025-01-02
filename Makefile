@@ -23,6 +23,10 @@ clean:
 		rm -rf build/$(BIN); \
 	fi;
 
+generate:
+	@rm -rf src/rpc/proto/*.pb.go
+	@go generate ./...
+
 cover:
 	@go tool cover -html=coverage.txt -o coverage.html
 
