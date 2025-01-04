@@ -22,6 +22,9 @@ func InitRoutes() error {
 	// Page number handler
 	g.GET("/page/:pageNum", controller.ArticlesPage)
 
+	if serverConfig.Debug {
+		debugRoutes(g)
+	}
 	errorRoute(g)
 	adminRoutes(g)
 	othersRoutes(g)
