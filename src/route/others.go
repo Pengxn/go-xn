@@ -42,4 +42,8 @@ func othersRoutes(g *gin.Engine) {
 	// to https://blog.svend.cc/upic/tutorials/custom
 	g.POST("/upload/upic", controller.UploadFileForUPic)
 	g.Static("/upic", "data/uPic")
+
+	// Bitcoin BIP15 aliases, the status of standard BIP15 aliases is deferred, refer to:
+	// https://github.com/bitcoin/bips/blob/master/bip-0015.mediawiki#https-web-service
+	g.Any("/bitcoin-alias", controller.BitcoinAliases)
 }
