@@ -75,6 +75,7 @@ type DBConfig struct {
 // RedisConfig is custom configuration for Redis.
 type RedisConfig struct {
 	URL      string `ini:"url"`
+	Username string `ini:"username"`
 	Password string `ini:"password"`
 	DB       int    `ini:"db"`
 }

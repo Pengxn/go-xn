@@ -25,6 +25,7 @@ func init() {
 
 	r = redis.NewClient(&redis.Options{
 		Addr:     config.Config.Redis.URL,
+		Username: config.Config.Redis.Username,
 		Password: config.Config.Redis.Password,
 		DB:       config.Config.Redis.DB,
 	})
