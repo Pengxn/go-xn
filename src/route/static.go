@@ -10,7 +10,7 @@ import (
 
 // staticRoutes registers static routes files and folders.
 func staticRoutes(g *gin.Engine) {
-	g.SetHTMLTemplate(web.HTML())
+	g.SetHTMLTemplate(web.HTML(gin.IsDebugging()))
 
 	g.StaticFS("/assets", web.FS())
 
