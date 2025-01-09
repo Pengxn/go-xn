@@ -16,7 +16,6 @@ import (
 // and https://publicsuffix.org/list/public_suffix_list.dat
 func GetWhois(domain string) (string, error) {
 	// TODO: Check the domain by regexp
-	// TODO: Convert special domain by punnycode
 	whoisServer, err := getWhoisServer(domain)
 	if err != nil {
 		return "", err

@@ -9,6 +9,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/feeds"
+	"golang.org/x/net/idna"
 
 	"github.com/Pengxn/go-xn/src/lib/markdown"
 	"github.com/Pengxn/go-xn/src/lib/whois"
@@ -24,6 +25,13 @@ func GwtWhoisInfo(c *gin.Context) {
 	domain = strings.TrimSuffix(domain, ".") // Trim the dot at the end
 	if len(strings.Split(domain, ".")) < 2 { // Need a TLD and a domain body
 		c.String(403, "Param (domain="+domain+") is invaild")
+		return
+	}
+	// Convert domain to punycode if it includes non-ASCII characters
+	domain, err := idna.ToASCII(domain)
+	if err != nil {
+		log.Errorf("convert punycode error: %+v, domain: %s", err, domain)
+		c.String(403, err.Error())
 		return
 	}
 
