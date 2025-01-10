@@ -7,8 +7,6 @@ import (
 	"io/fs"
 	"net/http"
 
-	"github.com/gin-gonic/gin"
-
 	"github.com/Pengxn/go-xn/src/util/log"
 )
 
@@ -17,7 +15,7 @@ import (
 var embedFS embed.FS
 
 // HTML returns the HTML template.
-func HTML() *template.Template {
+func HTML(debug bool) *template.Template {
 	templates, err := fs.Sub(embedFS, "templates")
 	if err != nil {
 		log.Errorf("HTML fs.Sub error: %+v", err)
@@ -28,7 +26,7 @@ func HTML() *template.Template {
 		log.Errorf("HTML template.ParseFS error: %+v", err)
 	}
 
-	if gin.IsDebugging() {
+	if debug {
 		for _, tmpl := range t.Templates() {
 			fmt.Println(tmpl.Name())
 		}
