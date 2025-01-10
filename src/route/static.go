@@ -16,7 +16,7 @@ import (
 func staticRoutes(g *gin.Engine) {
 	g.SetHTMLTemplate(templateFromFS(web.EmbedFS))
 
-	g.StaticFS("/assets", web.FS())
+	g.StaticFS("/assets", assetsFS())
 
 	otherFS := web.OtherFS()
 	staticFileFromFS(g, "/favicon.ico", "icons/logo.ico", otherFS)
@@ -53,4 +53,14 @@ func templateFromFS(fsys fs.FS) *template.Template {
 	}
 
 	return t
+}
+
+// assetsFS returns the assets file system.
+func assetsFS() http.FileSystem {
+	assets, err := fs.Sub(web.EmbedFS, "assets")
+	if err != nil {
+		log.Errorf("FS fs.Sub error: %+v", err)
+	}
+
+	return http.FS(assets)
 }
