@@ -25,6 +25,10 @@ func othersRoutes(g *gin.Engine) {
 	wuris.Match(controller.WebdavMethods, "/caldav", controller.Redirect("/dav"))
 	wuris.Match(controller.WebdavMethods, "/carddav", controller.Redirect("/dav"))
 
+	// WebAuthn well-known URIs, note: its status is still proposal, refer to:
+	// https://github.com/w3c/webauthn/wiki/Explainer:-Related-origin-requests#proposal
+	wuris.Any("/webauthn", controller.WebAuthnWellKnown)
+
 	// WebDAV, server for WebDAV service.
 	webdav := g.Group("/dav").Use(middleware.BasicAuth())
 	webdav.Match(controller.WebdavMethods, "/*webdav", controller.WebDAV)
