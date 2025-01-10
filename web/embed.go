@@ -2,8 +2,6 @@ package web
 
 import (
 	"embed"
-	"fmt"
-	"html/template"
 	"io/fs"
 	"net/http"
 
@@ -12,32 +10,11 @@ import (
 
 //go:embed templates
 //go:embed assets
-var embedFS embed.FS
-
-// HTML returns the HTML template.
-func HTML(debug bool) *template.Template {
-	templates, err := fs.Sub(embedFS, "templates")
-	if err != nil {
-		log.Errorf("HTML fs.Sub error: %+v", err)
-	}
-
-	t, err := template.ParseFS(templates, "*.html", "**/*.html")
-	if err != nil {
-		log.Errorf("HTML template.ParseFS error: %+v", err)
-	}
-
-	if debug {
-		for _, tmpl := range t.Templates() {
-			fmt.Println(tmpl.Name())
-		}
-	}
-
-	return t
-}
+var EmbedFS embed.FS
 
 // FS returns the `assets` file system.
 func FS() http.FileSystem {
-	assets, err := fs.Sub(embedFS, "assets")
+	assets, err := fs.Sub(EmbedFS, "assets")
 	if err != nil {
 		log.Errorf("FS fs.Sub error: %+v", err)
 	}
