@@ -1,41 +1,46 @@
 package webauthn
 
-import "github.com/go-webauthn/webauthn/webauthn"
+import (
+	"strconv"
+
+	"github.com/go-webauthn/webauthn/webauthn"
+)
 
 var _ webauthn.User = (*User)(nil)
 
 // User implements webauthn.User interface.
 type User struct {
-	ID, Name, DisplayName string
-	Credential            []Credential
+	id         int
+	name       string
+	Credential []Credential
 }
 
 // Credential is a type alias for webauthn.Credential.
 type Credential webauthn.Credential
 
 // New creates User for WebAuthn.
-func NewUser(id, name, displayName string, c ...Credential) User {
+func NewUser(id int, name, displayName string, c ...Credential) User {
 	return User{
-		ID:          id,
-		Name:        name,
-		DisplayName: displayName,
-		Credential:  c,
+		id:         id,
+		name:       name,
+		Credential: c,
 	}
 }
 
 // WebAuthnID provides user ID, Maximum 64 bytes.
 func (u User) WebAuthnID() []byte {
-	return []byte(u.ID)
+	return []byte(strconv.Itoa(u.id))
 }
 
 // WebAuthnName provides name during registration.
 func (u User) WebAuthnName() string {
-	return u.Name
+	return u.name
 }
 
 // WebAuthnDisplayName provides display name during registration.
+// Use name as display name temporarily.
 func (u User) WebAuthnDisplayName() string {
-	return u.DisplayName
+	return u.name
 }
 
 // WebAuthnCredentials provides the list of Credential objects owned by the user.

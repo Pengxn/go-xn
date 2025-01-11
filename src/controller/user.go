@@ -22,7 +22,7 @@ func RegisterPage(c *gin.Context) {
 func BeginRegister(c *gin.Context) {
 	username := c.PostForm("username")
 	displayName := c.PostForm("displayName")
-	user := webauthn.NewUser("123", username, displayName)
+	user := webauthn.NewUser(123, username, displayName)
 	creation, session, err := webauthn.BeginRegister(user)
 	if err != nil {
 		log.Errorf("BeginRegister error: %v", err)
@@ -73,7 +73,7 @@ func FinishRegister(c *gin.Context) {
 	var creation FinishRegisterRequest
 	json.Unmarshal(data, &creation)
 
-	user := webauthn.NewUser("123", creation.Username, creation.DisplayName)
+	user := webauthn.NewUser(123, creation.Username, creation.DisplayName)
 
 	session, exist := cache.Get(creation.Username)
 	if !exist {
@@ -173,7 +173,7 @@ func beginLoginWithUsername(username string) ([]byte, []byte, error) {
 		})
 	}
 
-	user := webauthn.NewUser("123", username, wc[0].NickName)
+	user := webauthn.NewUser(123, username, wc[0].NickName)
 	creation, session, err := webauthn.BeginLogin(user)
 	if err != nil {
 		return nil, nil, errors.New("BeginLogin error")
@@ -205,7 +205,7 @@ func FinishLogin(c *gin.Context) {
 	var login FinishLoginRequest
 	json.Unmarshal(data, &login)
 
-	user := webauthn.NewUser("123", login.Username, "") // TODO: implement query user
+	user := webauthn.NewUser(123, login.Username, "") // TODO: implement query user
 	if login.Username == "" {
 		_, err = webauthn.FinishLogin(user, login.Session, login.Credential)
 	} else {
