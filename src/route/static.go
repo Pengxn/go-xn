@@ -19,7 +19,9 @@ func staticRoutes(g *gin.Engine) {
 	g.StaticFS("/assets", assetsFS())
 
 	otherFS := http.FS(web.Other)
+	// logo and favicon
 	staticFileFromFS(g, "/favicon.ico", "icons/logo.ico", otherFS)
+	staticFileFromFS(g, "/logo.svg", "icons/xn-02f.svg", otherFS)
 	// Robots.txt, refer to https://www.robotstxt.org/
 	staticFileFromFS(g, "/robots.txt", "robots.txt", otherFS)
 	// Humans.txt, refer to https://humanstxt.org/
