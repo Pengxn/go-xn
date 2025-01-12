@@ -21,8 +21,7 @@ func RegisterPage(c *gin.Context) {
 // BeginRegister returns register webauthn creation.
 func BeginRegister(c *gin.Context) {
 	username := c.PostForm("username")
-	displayName := c.PostForm("displayName")
-	user := webauthn.NewUser(123, username, displayName)
+	user := webauthn.NewUser(123, username)
 	creation, session, err := webauthn.BeginRegister(user)
 	if err != nil {
 		log.Errorf("BeginRegister error: %v", err)
@@ -52,9 +51,8 @@ func BeginRegister(c *gin.Context) {
 
 // FinishRegisterRequest is request body for finish register.
 type FinishRegisterRequest struct {
-	Username    string          `json:"username"`
-	DisplayName string          `json:"displayName"`
-	Credential  json.RawMessage `json:"credential"`
+	Username   string          `json:"username"`
+	Credential json.RawMessage `json:"credential"`
 }
 
 // FinishRegister validates register webauthn credential.
@@ -73,7 +71,7 @@ func FinishRegister(c *gin.Context) {
 	var creation FinishRegisterRequest
 	json.Unmarshal(data, &creation)
 
-	user := webauthn.NewUser(123, creation.Username, creation.DisplayName)
+	user := webauthn.NewUser(123, creation.Username)
 
 	session, exist := cache.Get(creation.Username)
 	if !exist {
@@ -97,7 +95,7 @@ func FinishRegister(c *gin.Context) {
 
 	cred := model.WebAuthnCredential{
 		Name:            creation.Username,
-		NickName:        creation.DisplayName,
+		NickName:        creation.Username, // use name as nickname temporarily
 		UserID:          123,
 		CredentialID:    credential.ID,
 		PublicKey:       credential.PublicKey,
@@ -173,7 +171,7 @@ func beginLoginWithUsername(username string) ([]byte, []byte, error) {
 		})
 	}
 
-	user := webauthn.NewUser(123, username, wc[0].NickName)
+	user := webauthn.NewUser(123, username)
 	creation, session, err := webauthn.BeginLogin(user)
 	if err != nil {
 		return nil, nil, errors.New("BeginLogin error")
@@ -205,7 +203,7 @@ func FinishLogin(c *gin.Context) {
 	var login FinishLoginRequest
 	json.Unmarshal(data, &login)
 
-	user := webauthn.NewUser(123, login.Username, "") // TODO: implement query user
+	user := webauthn.NewUser(123, login.Username) // TODO: implement query user
 	if login.Username == "" {
 		_, err = webauthn.FinishLogin(user, login.Session, login.Credential)
 	} else {

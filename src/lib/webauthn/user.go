@@ -19,7 +19,7 @@ type User struct {
 type Credential webauthn.Credential
 
 // New creates User for WebAuthn.
-func NewUser(id int, name, displayName string, c ...Credential) User {
+func NewUser(id int, name string, c ...Credential) User {
 	return User{
 		id:         id,
 		name:       name,

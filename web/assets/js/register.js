@@ -22,8 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById("signup").addEventListener("click", e => {
             e.preventDefault()
             const username = document.getElementById("username").value
-            const displayName = document.getElementById("displayName").value
-            register(username, displayName)
+            register(username)
         })
     }
 })
@@ -94,11 +93,11 @@ loginFinish = async (credential, session) => {
 }
 
 // webauthn register
-register = async (username, displayName) => {
+register = async (username) => {
     let responseBegin = await fetch("/admin/register/begin", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: "username=" + username + "&displayName=" + displayName,
+        body: "username=" + username,
     })
 
     const responseBeginJson = await responseBegin.json()
@@ -107,10 +106,10 @@ register = async (username, displayName) => {
         return
     }
 
-    await createCredential(username, displayName, responseBeginJson.creation)
+    await createCredential(username, responseBeginJson.creation)
 }
 
-createCredential = async (username, displayName, creation) => {
+createCredential = async (username, creation) => {
     creation.publicKey.challenge = coerceToArrayBuffer(creation.publicKey.challenge)
     creation.publicKey.user.id = coerceToArrayBuffer(creation.publicKey.user.id)
 
@@ -134,10 +133,10 @@ createCredential = async (username, displayName, creation) => {
     })
 
     console.log(credentialJSON)
-    await registerFinish(username, displayName, credentialJSON)
+    await registerFinish(username, credentialJSON)
 }
 
-registerFinish = async (username, displayName, credentialJSON) => {
+registerFinish = async (username, credentialJSON) => {
     let responseFinish
     try {
         responseFinish = await fetch("/admin/register/finish", {
