@@ -1,3 +1,4 @@
+Contact: https://github.com/Pengxn/go-xn/blob/main/SECURITY.md
 Contact: mailto:i@xn--02f.com
 
 Preferred-Languages: en
@@ -7,7 +8,7 @@ Canonical: https://xn--02f.com/.well-known/security.txt
 # Hiring: https://example.com/jobs.html
 
 # Acknowledgments: https://example.com/acknowledgments
-# Expires: 2025-12-31T18:37:07z
+# Expires: 2025-12-31T23:59:00z
 
 # Example of an OpenPGP key available from a web server:
 # Encryption: https://example.com/key.gpg
