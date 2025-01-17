@@ -11,6 +11,7 @@ var (
 
 	//go:embed robots.txt
 	//go:embed humans.txt
+	//go:embed security.txt
 	//go:embed icons
 	Other embed.FS
 
