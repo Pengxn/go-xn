@@ -1,4 +1,4 @@
-Contact: https://github.com/Pengxn/go-xn/blob/main/SECURITY.md
+Contact: https://github.com/Pengxn/go-xn/blob/main/.github/SECURITY.md
 Contact: mailto:i@xn--02f.com
 
 Preferred-Languages: en
