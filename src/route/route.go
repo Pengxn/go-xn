@@ -25,6 +25,7 @@ func InitRoutes() error {
 	if serverConfig.Debug {
 		debugRoutes(g)
 	}
+	apiRoutes(g)
 	errorRoute(g)
 	adminRoutes(g)
 	othersRoutes(g)
