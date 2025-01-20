@@ -1,0 +1,33 @@
+{
+  "name": "go-xn",
+  "private": true,
+  "version": "0.0.2",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite --config web/admin/vite.config.js",
+    "build": "vite build --config web/admin/vite.config.js",
+    "preview": "vite preview --config web/admin/vite.config.js"
+  },
+  "dependencies": {
+    "@xn-02f/gravatar": "^2.0.0",
+    "motion": "^12.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "swr": "^2.3.0",
+    "zustand": "^5.0.3"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.5.1",
+    "tailwindcss": "^3.4.17",
+    "vite": "^6.0.9"
+  },
+  "author": {
+    "name": "xn-02f Lab",
+    "email": "i@xn--02f.com"
+  },
+  "license": "MIT",
+  "description": "✍ The platform for integrating the API I want to use. [WIP]"
+}

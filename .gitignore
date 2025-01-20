@@ -31,3 +31,12 @@ data/
 *.db
 *.sqlite
 *.sqlite3
+
+# node, npm, yarn and pnpm
+node_modules/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# vite build
+web/admin/dist/
