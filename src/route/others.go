@@ -1,13 +1,10 @@
 package route
 
 import (
-	"net/http"
-
 	"github.com/gin-gonic/gin"
 
 	"github.com/Pengxn/go-xn/src/controller"
 	"github.com/Pengxn/go-xn/src/middleware"
-	"github.com/Pengxn/go-xn/web"
 )
 
 // othersRoutes registers other routes.
@@ -31,11 +28,6 @@ func othersRoutes(g *gin.Engine) {
 	// WebAuthn well-known URIs, note: its status is still proposal, refer to:
 	// https://github.com/w3c/webauthn/wiki/Explainer:-Related-origin-requests#proposal
 	wuris.Any("/webauthn", controller.WebAuthnWellKnown)
-
-	// Security.txt, refer to: https://securitytxt.org/
-	// and https://www.iana.org/assignments/security-txt-fields/security-txt-fields.xhtml
-	// and https://datatracker.ietf.org/doc/html/rfc9116
-	staticFileFromFS(g, "/.well-known/security.txt", "security.txt", http.FS(web.Other))
 
 	// WebDAV, server for WebDAV service.
 	webdav := g.Group("/dav").Use(middleware.BasicAuth())

@@ -26,6 +26,10 @@ func staticRoutes(g *gin.Engine) {
 	staticFileFromFS(g, "/robots.txt", "robots.txt", otherFS)
 	// Humans.txt, refer to https://humanstxt.org/
 	staticFileFromFS(g, "/humans.txt", "humans.txt", otherFS)
+	// Security.txt, refer to: https://securitytxt.org/
+	// and https://www.iana.org/assignments/security-txt-fields/security-txt-fields.xhtml
+	// and https://datatracker.ietf.org/doc/html/rfc9116
+	staticFileFromFS(g, "/.well-known/security.txt", "security.txt", otherFS)
 }
 
 func staticFileFromFS(g *gin.Engine, relativePath, filepath string, fs http.FileSystem) {
