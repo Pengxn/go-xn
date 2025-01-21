@@ -30,7 +30,6 @@ func InitRoutes() error {
 	adminRoutes(g)
 	othersRoutes(g)
 	staticRoutes(g)
-	optionsRoutes(g)
 	articlesRoutes(g)
 
 	if serverConfig.TLS {
