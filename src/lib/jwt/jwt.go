@@ -3,8 +3,9 @@ package jwt
 import (
 	"time"
 
-	"github.com/Pengxn/go-xn/src/config"
 	"github.com/golang-jwt/jwt/v5"
+
+	"github.com/Pengxn/go-xn/src/config"
 )
 
 type Claims struct {
