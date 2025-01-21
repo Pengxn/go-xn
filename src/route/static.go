@@ -5,6 +5,7 @@ import (
 	"html/template"
 	"io/fs"
 	"net/http"
+	"os"
 
 	"github.com/gin-gonic/gin"
 
@@ -26,10 +27,24 @@ func staticRoutes(g *gin.Engine) {
 	staticFileFromFS(g, "/robots.txt", "robots.txt", otherFS)
 	// Humans.txt, refer to https://humanstxt.org/
 	staticFileFromFS(g, "/humans.txt", "humans.txt", otherFS)
+
+	localFS := http.FS(os.DirFS("./data/.well-known"))
 	// Security.txt, refer to: https://securitytxt.org/
 	// and https://www.iana.org/assignments/security-txt-fields/security-txt-fields.xhtml
 	// and https://datatracker.ietf.org/doc/html/rfc9116
-	staticFileFromFS(g, "/.well-known/security.txt", "security.txt", otherFS)
+	staticFile(g, "/.well-known/security.txt", "security.txt", localFS, otherFS)
+}
+
+func staticFile(g *gin.Engine, relativePath, filepath string, localfs, embedfs http.FileSystem) {
+	handler := func(c *gin.Context) {
+		if _, err := localfs.Open(filepath); err == nil {
+			c.FileFromFS(filepath, localfs)
+		} else {
+			c.FileFromFS(filepath, embedfs)
+		}
+	}
+	g.GET(relativePath, handler)
+	g.HEAD(relativePath, handler)
 }
 
 func staticFileFromFS(g *gin.Engine, relativePath, filepath string, fs http.FileSystem) {
