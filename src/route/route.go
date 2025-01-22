@@ -26,6 +26,7 @@ func InitRoutes() error {
 		debugRoutes(g)
 	}
 	apiRoutes(g)
+	authRoutes(g)
 	errorRoute(g)
 	adminRoutes(g)
 	othersRoutes(g)
