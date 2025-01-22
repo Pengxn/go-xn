@@ -33,6 +33,8 @@ func staticRoutes(g *gin.Engine) {
 	// and https://www.iana.org/assignments/security-txt-fields/security-txt-fields.xhtml
 	// and https://datatracker.ietf.org/doc/html/rfc9116
 	staticFile(g, "/.well-known/security.txt", "security.txt", localFS, otherFS)
+	// keybase.txt, refer to: https://keybase.io/docs/keybase_well_known
+	staticFile(g, "/.well-known/keybase.txt", "keybase.txt", localFS, otherFS)
 }
 
 func staticFile(g *gin.Engine, relativePath, filepath string, localfs, embedfs http.FileSystem) {
