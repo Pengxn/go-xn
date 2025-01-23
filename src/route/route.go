@@ -22,6 +22,9 @@ func InitRoutes() error {
 	// Page number handler
 	g.GET("/page/:pageNum", controller.ArticlesPage)
 
+	// Health check
+	g.GET("/health", func(c *gin.Context) { c.String(200, "ok") })
+
 	if serverConfig.Debug {
 		debugRoutes(g)
 	}
