@@ -28,7 +28,7 @@ func staticRoutes(g *gin.Engine) {
 	// Humans.txt, refer to https://humanstxt.org/
 	staticFileFromFS(g, "/humans.txt", "humans.txt", otherFS)
 
-	localFS := http.FS(os.DirFS("./data/.well-known"))
+	localFS := http.FS(os.DirFS("./data/.well-known")) // TODO: read from config
 	// Security.txt, refer to: https://securitytxt.org/
 	// and https://www.iana.org/assignments/security-txt-fields/security-txt-fields.xhtml
 	// and https://datatracker.ietf.org/doc/html/rfc9116
@@ -37,13 +37,16 @@ func staticRoutes(g *gin.Engine) {
 	staticFile(g, "/.well-known/keybase.txt", "keybase.txt", localFS, otherFS)
 }
 
-func staticFile(g *gin.Engine, relativePath, filepath string, localfs, embedfs http.FileSystem) {
+func staticFile(g *gin.Engine, relativePath, filepath string, fsys ...http.FileSystem) {
 	handler := func(c *gin.Context) {
-		if _, err := localfs.Open(filepath); err == nil {
-			c.FileFromFS(filepath, localfs)
-		} else {
-			c.FileFromFS(filepath, embedfs)
+		for _, f := range fsys {
+			if _, err := f.Open(filepath); err == nil {
+				c.FileFromFS(filepath, f)
+				return
+			}
 		}
+		log.Debugf("staticFile: %s not found", filepath)
+		c.String(http.StatusNotFound, "not found")
 	}
 	g.GET(relativePath, handler)
 	g.HEAD(relativePath, handler)
