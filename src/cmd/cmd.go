@@ -13,10 +13,10 @@ func Execute() error {
 		Usage:   "The platform for publishing and running your blog",
 		Version: Version,
 		Commands: []*cli.Command{
-			Web,
-			Update,
-			VersionCmd,
-			agent,
+			webCmd,
+			updateCmd,
+			versionCmd,
+			agentCmd,
 		},
 	}
 
