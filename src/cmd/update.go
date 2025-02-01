@@ -18,7 +18,7 @@ var (
 
 	// Update is "update" subcommand.
 	// It's used to update command binary to the latest version.
-	Update = &cli.Command{
+	updateCmd = &cli.Command{
 		Name:   "update",
 		Usage:  "Update the binary to the latest version",
 		Action: update,

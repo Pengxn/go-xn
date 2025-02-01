@@ -7,7 +7,7 @@ import (
 )
 
 var (
-	agent = &cli.Command{
+	agentCmd = &cli.Command{
 		Name:  "agent",
 		Usage: "Run as an agent",
 		Description: `Run as an agent, which can be used to manage the server.

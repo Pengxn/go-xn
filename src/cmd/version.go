@@ -18,7 +18,7 @@ var (
 
 	// VersionCmd is "version" subcommand.
 	// It prints the version, revision and built time information to stdout.
-	VersionCmd = &cli.Command{
+	versionCmd = &cli.Command{
 		Name:  "version",
 		Usage: "Print some information about version",
 		Description: `Prints version information that might help you get out of trouble.

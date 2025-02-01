@@ -12,7 +12,7 @@ import (
 
 var (
 	// Web is "web" subcommand. It's used to run web server.
-	Web = &cli.Command{
+	webCmd = &cli.Command{
 		Name:  "web",
 		Usage: "Start web server interface for blog",
 		Description: `Run a performant web server which serves the site for blog.
