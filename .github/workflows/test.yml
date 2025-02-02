@@ -1,12 +1,6 @@
 name: test
 
-on:
-  push:
-    paths-ignore:
-      - 'test/azure-pipelines/**'
-  pull_request:
-    paths-ignore:
-      - 'test/azure-pipelines/**'
+on: [push, pull_request]
 
 jobs:
   test-linux:
