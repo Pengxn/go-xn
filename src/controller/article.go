@@ -66,12 +66,12 @@ func ListArticles(c *gin.Context) {
 	})
 }
 
-// GetArticle gets an article by 'url' param.
+// GetArticle gets an article by 'slug' param.
 // Request sample:
 //
-//	GET => /article/article-custom-url-path
+//	GET => /article/article-custom-slug-path
 func GetArticle(c *gin.Context) {
-	article, exist := model.ArticleBySlug(c.Param("url"))
+	article, exist := model.ArticleBySlug(c.Param("slug"))
 	if !exist {
 		errorHTML(c, 404, "Article Not Found")
 		return
@@ -118,7 +118,7 @@ func InsertArticle(c *gin.Context) {
 func UpdateArticle(c *gin.Context) {
 	c.JSON(200, gin.H{
 		"code": "Update an Article",
-		"data": c.Param("url"),
+		"data": c.Param("slug"),
 	})
 }
 
@@ -126,6 +126,6 @@ func UpdateArticle(c *gin.Context) {
 func DeleteArticle(c *gin.Context) {
 	c.JSON(200, gin.H{
 		"code": "Delete an Article",
-		"data": c.Param("url"),
+		"data": c.Param("slug"),
 	})
 }
