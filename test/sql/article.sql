@@ -10,7 +10,7 @@
 DROP TABLE IF EXISTS `article`;
 CREATE TABLE `article` (
     `ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-    `slug` varchar(255) NOT NULL COMMENT 'The url of article',
+    `slug` varchar(255) NOT NULL COMMENT 'The slug of article',
     `title` text NOT NULL COMMENT 'The title of article',
     `content` longtext NOT NULL COMMENT 'The content of article',
     `article_views` bigint(20) NOT NULL DEFAULT 0 COMMENT 'Number of articles viewed',
@@ -19,7 +19,6 @@ CREATE TABLE `article` (
     `update_time` datetime NOT NULL COMMENT 'The time that article is updated',
     `delete_time` datetime NOT NULL COMMENT 'The time that article is deleted',
     PRIMARY KEY (`ID`),
-    UNIQUE KEY `url` (`url`),
     UNIQUE KEY `slug` (`slug`),
     KEY `create_time` (`create_time`)
 ) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8;
