@@ -31,7 +31,7 @@ INSERT INTO `user` VALUES (
     'Feng.YJ',
     'qw123456',
     '1',
-    'i@huiyifyj.cn',
+    'i@xn--02f.com',
     '1',
     '2017-04-07 10:17:50',
     '2019-04-12 16:17:10',

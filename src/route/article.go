@@ -11,8 +11,8 @@ func articlesRoutes(g *gin.Engine) {
 	g.Any("/articles", controller.ListArticles)
 
 	article := g.Group("/article")
-	article.GET("/:url", controller.GetArticle)
+	article.GET("/:slug", controller.GetArticle)
 	article.POST("/", controller.InsertArticle)
-	article.PUT("/:url", controller.UpdateArticle)
-	article.DELETE("/:url", controller.DeleteArticle)
+	article.PUT("/:slug", controller.UpdateArticle)
+	article.DELETE("/:slug", controller.DeleteArticle)
 }

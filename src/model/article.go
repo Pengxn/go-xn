@@ -10,7 +10,6 @@ import (
 type Article struct {
 	ID         uint64     `json:"ID" xorm:"bigint(20) notnull autoincr pk 'ID'"`
 	Slug       string     `json:"slug,omitempty" xorm:"varchar(255) unique notnull 'slug'"`
-	URL        string     `json:"url,omitempty" xorm:"varchar(255) unique notnull 'url'"` // deprecated, use slug instead
 	Title      string     `json:"title" xorm:"text notnull 'title'"`
 	Content    string     `json:"content" xorm:"longtext notnull 'content'"`
 	Views      uint64     `json:"article_views" xorm:"bigint(20) notnull default(0) 'article_views'"`
@@ -27,7 +26,7 @@ func ArticlesByPage(limit int, page int) []Article {
 
 	var articles []Article
 	err := db.Table("article").
-		Cols("ID", "slug", "url", "title", "content", "article_views", "create_time").
+		Cols("ID", "slug", "title", "content", "article_views", "create_time").
 		Where("article_status = 1").
 		Limit(limit, limit*(page-1)).
 		Desc("create_time").
@@ -99,18 +98,18 @@ func ArticleByID(id uint64) (*Article, bool) {
 	return article, has
 }
 
-// ArticleByURL returns article by URL.
-func ArticleByURL(url string) (*Article, bool) {
+// ArticleBySlug returns article by slug.
+func ArticleBySlug(slug string) (*Article, bool) {
 	db := orm.NewSession()
 	defer db.Close()
 
 	article := &Article{
-		Slug: url,
+		Slug: slug,
 	}
 
 	has, err := db.Get(article)
 	if err != nil {
-		log.Errorf("ArticleByURL throw error: %s", err)
+		log.Errorf("ArticleBySlug throw error: %s", err)
 	}
 
 	return article, has
