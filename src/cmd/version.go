@@ -12,7 +12,7 @@ import (
 // And export 'Version' variable
 // ⚠️ WARNING: should only be set by "-ldflags" cli flag.
 var (
-	Version   = ""
+	version   = ""
 	commitID  = ""
 	buildTime = ""
 
@@ -35,7 +35,7 @@ func showVersion(c *cli.Context) error {
 - Revision:   %s
 - OS/Arch:    %s/%s
 - Built time: %s
-`, Version, runtime.Version(), commitID,
+`, version, runtime.Version(), commitID,
 		runtime.GOOS, runtime.GOARCH, buildTime)
 
 	return nil

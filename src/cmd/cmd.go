@@ -11,7 +11,7 @@ func Execute() error {
 	app := &cli.App{
 		Name:    "go-xn",
 		Usage:   "The platform for publishing and running your blog",
-		Version: Version,
+		Version: version,
 		Commands: []*cli.Command{
 			webCmd,
 			updateCmd,

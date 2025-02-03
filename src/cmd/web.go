@@ -28,7 +28,7 @@ If '--port' flag is not used, it will use port 7991 by default.`,
 	configFile = &cli.PathFlag{
 		Name:    "config",
 		Aliases: []string{"c"},
-		Usage:   "Custom configuration `file` path",
+		Usage:   "Custom configuration file path",
 		Value:   "fyj.ini",
 	}
 	port = &cli.IntFlag{
