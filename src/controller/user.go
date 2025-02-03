@@ -171,7 +171,7 @@ func beginLoginWithUsername(username string) ([]byte, []byte, error) {
 		})
 	}
 
-	user := webauthn.NewUser(123, username)
+	user := webauthn.NewUser(123, username).AddCredential(credentials...)
 	creation, session, err := webauthn.BeginLogin(user)
 	if err != nil {
 		return nil, nil, errors.New("BeginLogin error")

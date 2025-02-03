@@ -53,7 +53,8 @@ func (u User) WebAuthnCredentials() []webauthn.Credential {
 }
 
 // AddCredential adds Credential objects to the user.
-func (u User) AddCredential(c Credential) User {
-	u.Credential = append(u.Credential, c)
+func (u User) AddCredential(c ...Credential) User {
+	u.Credential = append(u.Credential, c...)
+
 	return u
 }
