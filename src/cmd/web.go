@@ -32,11 +32,10 @@ If '--port' flag is not used, it will use port 7991 by default.`,
 		Value:   "fyj.ini",
 	}
 	port = &cli.IntFlag{
-		Name:        "port",
-		Aliases:     []string{"p"},
-		Usage:       "Temporary port number to prevent conflict",
-		Value:       7991,
-		DefaultText: "7991",
+		Name:    "port",
+		Aliases: []string{"p"},
+		Usage:   "Temporary port number to prevent conflict",
+		Value:   7991,
 	}
 	debug = &cli.BoolFlag{
 		Name:               "debug",
