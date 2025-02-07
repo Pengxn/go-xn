@@ -4,7 +4,7 @@ BIN        ?= go-xn$(shell go env GOEXE)
 VERSION     = $(shell git describe --tags `git rev-list --tags --max-count=1`)
 COMMIT_ID   = $(shell git rev-parse --short HEAD)
 BUILD_TIME  = $(shell date +'%Y-%m-%d %T')
-LDFLAGS    += -X "github.com/Pengxn/go-xn/src/cmd.Version=${VERSION}"
+LDFLAGS    += -X "github.com/Pengxn/go-xn/src/cmd.version=${VERSION}"
 LDFLAGS    += -X "github.com/Pengxn/go-xn/src/cmd.commitID=${COMMIT_ID}"
 LDFLAGS    += -X "github.com/Pengxn/go-xn/src/cmd.buildTime=${BUILD_TIME}"
 
