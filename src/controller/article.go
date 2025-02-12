@@ -7,7 +7,9 @@ import (
 
 	"github.com/gin-gonic/gin"
 
+	"github.com/Pengxn/go-xn/src/lib/markdown"
 	"github.com/Pengxn/go-xn/src/model"
+	"github.com/Pengxn/go-xn/src/util/log"
 )
 
 // DefaultPageLimit is default limit number per page,
@@ -77,13 +79,23 @@ func GetArticle(c *gin.Context) {
 		return
 	}
 
+	content, err := markdown.ToHTML([]byte(article.Content))
+	if err != nil {
+		log.Errorf("convert markdown to HTML error: %+v", err)
+		c.JSON(500, gin.H{
+			"code": 500,
+			"data": "Convert markdown to HTML failed",
+		})
+		return
+	}
+
 	c.HTML(200, "mdcat.html", gin.H{
 		"code": 200,
 		"site": map[string]any{
 			"title":       "Feng",
 			"author":      "Feng.YJ",
 			"description": "✍ The platform for publishing and running your blog. [WIP]",
-			"html":        template.HTML(article.Content),
+			"html":        template.HTML(content),
 		},
 	})
 }
