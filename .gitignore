@@ -5,32 +5,29 @@
 .vim/
 *.swp
 
-# IntelliJ
-*.iml
+# JetBrains IDEs
 .idea/
+*.iml
 
-# Go Module vgo
-go.sum
-
-# build
-build/
-
-# Mac
+# macOS
 .DS_Store
+._*
+
+# Go Modules
+go.sum
 
 # Coverage files
 coverage.*
-
-# Log directory
-logs/
-
-# Data directory
-data/
 
 # SQLite database files
 *.db
 *.sqlite
 *.sqlite3
+
+# build, data and logs directories
+build/
+data/
+logs/
 
 # node, npm, yarn and pnpm
 node_modules/

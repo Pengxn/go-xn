@@ -14,14 +14,14 @@ import (
 func writerLog() io.Writer {
 	logFile, err := LogFilePath("fyj.log")
 	if err != nil {
-		log.Printf("Get log file Path %s error: %+v", logFile, err)
+		log.Printf("get log file Path %s error: %v", logFile, err)
 		return os.Stderr
 	}
 
 	// Logging to a file, append logging if the file already exists.
 	f, err := os.OpenFile(logFile, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0644)
 	if err != nil {
-		log.Printf("Open log file %s error: %+v", logFile, err)
+		log.Printf("open log file %s error: %v", logFile, err)
 		return os.Stderr
 	}
 

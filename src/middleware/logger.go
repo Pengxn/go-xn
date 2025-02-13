@@ -53,14 +53,14 @@ func writerLog() io.Writer {
 
 	logFile, err := log.LogFilePath("route.log")
 	if err != nil {
-		log.Errorf("Get log file Path %s error: %+v", logFile, err)
+		log.Errorf("get log file Path %s error: %v", logFile, err)
 		return os.Stdout
 	}
 
 	// Logging to a file, append logging if the file already exists.
 	f, err := os.OpenFile(logFile, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0644)
 	if err != nil {
-		log.Errorf("Open log file %s error: %+v", logFile, err)
+		log.Errorf("open log file %s error: %v", logFile, err)
 		return os.Stdout
 	}
 

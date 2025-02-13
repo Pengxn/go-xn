@@ -13,7 +13,7 @@ var logger *logrus.Logger
 func init() {
 	logger = logrus.New()
 
-	logger.SetLevel(logrus.DebugLevel)
+	logger.SetLevel(logrus.InfoLevel)
 	logger.AddHook(hook.NewWriterHook(writerLog()))
 }
 

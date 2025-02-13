@@ -7,7 +7,9 @@ import (
 
 	"github.com/gin-gonic/gin"
 
+	"github.com/Pengxn/go-xn/src/lib/markdown"
 	"github.com/Pengxn/go-xn/src/model"
+	"github.com/Pengxn/go-xn/src/util/log"
 )
 
 // DefaultPageLimit is default limit number per page,
@@ -66,14 +68,24 @@ func ListArticles(c *gin.Context) {
 	})
 }
 
-// GetArticle gets an article by 'url' param.
+// GetArticle gets an article by 'slug' param.
 // Request sample:
 //
-//	GET => /article/article-custom-url-path
+//	GET => /article/article-custom-slug-path
 func GetArticle(c *gin.Context) {
-	article, exist := model.ArticleByURL(c.Param("url"))
+	article, exist := model.ArticleBySlug(c.Param("slug"))
 	if !exist {
 		errorHTML(c, 404, "Article Not Found")
+		return
+	}
+
+	content, err := markdown.ToHTML([]byte(article.Content))
+	if err != nil {
+		log.Errorf("convert markdown to HTML error: %+v", err)
+		c.JSON(500, gin.H{
+			"code": 500,
+			"data": "Convert markdown to HTML failed",
+		})
 		return
 	}
 
@@ -83,7 +95,7 @@ func GetArticle(c *gin.Context) {
 			"title":       "Feng",
 			"author":      "Feng.YJ",
 			"description": "✍ The platform for publishing and running your blog. [WIP]",
-			"html":        template.HTML(article.Content),
+			"html":        template.HTML(content),
 		},
 	})
 }
@@ -118,7 +130,7 @@ func InsertArticle(c *gin.Context) {
 func UpdateArticle(c *gin.Context) {
 	c.JSON(200, gin.H{
 		"code": "Update an Article",
-		"data": c.Param("url"),
+		"data": c.Param("slug"),
 	})
 }
 
@@ -126,6 +138,6 @@ func UpdateArticle(c *gin.Context) {
 func DeleteArticle(c *gin.Context) {
 	c.JSON(200, gin.H{
 		"code": "Delete an Article",
-		"data": c.Param("url"),
+		"data": c.Param("slug"),
 	})
 }

@@ -5,6 +5,7 @@ import (
 	"html/template"
 	"io/fs"
 	"net/http"
+	"os"
 
 	"github.com/gin-gonic/gin"
 
@@ -26,10 +27,29 @@ func staticRoutes(g *gin.Engine) {
 	staticFileFromFS(g, "/robots.txt", "robots.txt", otherFS)
 	// Humans.txt, refer to https://humanstxt.org/
 	staticFileFromFS(g, "/humans.txt", "humans.txt", otherFS)
+
+	localFS := http.FS(os.DirFS("./data/.well-known")) // TODO: read from config
 	// Security.txt, refer to: https://securitytxt.org/
 	// and https://www.iana.org/assignments/security-txt-fields/security-txt-fields.xhtml
 	// and https://datatracker.ietf.org/doc/html/rfc9116
-	staticFileFromFS(g, "/.well-known/security.txt", "security.txt", otherFS)
+	staticFile(g, "/.well-known/security.txt", "security.txt", localFS, otherFS)
+	// keybase.txt, refer to: https://keybase.io/docs/keybase_well_known
+	staticFile(g, "/.well-known/keybase.txt", "keybase.txt", localFS, otherFS)
+}
+
+func staticFile(g *gin.Engine, relativePath, filepath string, fsys ...http.FileSystem) {
+	handler := func(c *gin.Context) {
+		for _, f := range fsys {
+			if _, err := f.Open(filepath); err == nil {
+				c.FileFromFS(filepath, f)
+				return
+			}
+		}
+		log.Debugf("staticFile: %s not found", filepath)
+		c.String(http.StatusNotFound, "not found")
+	}
+	g.GET(relativePath, handler)
+	g.HEAD(relativePath, handler)
 }
 
 func staticFileFromFS(g *gin.Engine, relativePath, filepath string, fs http.FileSystem) {

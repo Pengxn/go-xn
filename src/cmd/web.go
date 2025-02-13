@@ -12,7 +12,7 @@ import (
 
 var (
 	// Web is "web" subcommand. It's used to run web server.
-	Web = &cli.Command{
+	webCmd = &cli.Command{
 		Name:  "web",
 		Usage: "Start web server interface for blog",
 		Description: `Run a performant web server which serves the site for blog.
@@ -26,17 +26,17 @@ If '--port' flag is not used, it will use port 7991 by default.`,
 	}
 
 	configFile = &cli.PathFlag{
-		Name:    "config",
-		Aliases: []string{"c"},
-		Usage:   "Custom configuration `file` path",
-		Value:   "fyj.ini",
+		Name:        "config",
+		Aliases:     []string{"c"},
+		Usage:       "Custom configuration file path",
+		Value:       "fyj.ini",
+		DefaultText: "fyj.ini",
 	}
 	port = &cli.IntFlag{
-		Name:        "port",
-		Aliases:     []string{"p"},
-		Usage:       "Temporary port number to prevent conflict",
-		Value:       7991,
-		DefaultText: "7991",
+		Name:    "port",
+		Aliases: []string{"p"},
+		Usage:   "Temporary port number to prevent conflict",
+		Value:   7991,
 	}
 	debug = &cli.BoolFlag{
 		Name:               "debug",
@@ -56,7 +56,7 @@ func runWeb(c *cli.Context) error {
 
 	err := route.InitRoutes()
 	if err != nil {
-		log.Fatalln("Fail to Start Web Server.", err)
+		log.Fatalln("fail to start web server:", err)
 	}
 
 	return err

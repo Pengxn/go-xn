@@ -11,12 +11,12 @@ func Execute() error {
 	app := &cli.App{
 		Name:    "go-xn",
 		Usage:   "The platform for publishing and running your blog",
-		Version: Version,
+		Version: version,
 		Commands: []*cli.Command{
-			Web,
-			Update,
-			VersionCmd,
-			agent,
+			webCmd,
+			updateCmd,
+			versionCmd,
+			agentCmd,
 		},
 	}
 
