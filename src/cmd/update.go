@@ -3,9 +3,11 @@ package cmd
 import (
 	"archive/zip"
 	"bytes"
+	"fmt"
 	"io"
 	"os"
 	"path/filepath"
+	"runtime"
 
 	"github.com/schollz/progressbar/v3"
 	"github.com/urfave/cli/v2"
@@ -14,7 +16,8 @@ import (
 )
 
 var (
-	nightlyURL = "https://nightly.link/Pengxn/go-xn/workflows/test/main/linux-amd64.zip"
+	// nightly.link is a service to provide nightly build artifact download link.
+	nightlyURL = "https://nightly.link/Pengxn/go-xn/workflows/test/main"
 
 	// Update is "update" subcommand.
 	// It's used to update command binary to the latest version.
@@ -26,7 +29,8 @@ var (
 )
 
 func update(c *cli.Context) error {
-	resp, err := httplib.New().GET(nightlyURL)
+	link := fmt.Sprintf("%s/%s-%s.zip", nightlyURL, runtime.GOOS, runtime.GOARCH)
+	resp, err := httplib.New().GET(link)
 	if err != nil {
 		return err
 	}
