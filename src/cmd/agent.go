@@ -31,9 +31,7 @@ It run as a gRPC server, it only support gRPC protocol.`,
 )
 
 func runGRPCServer(c *cli.Context) error {
-	port := c.Int("port")
-
-	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", port))
+	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", c.Int("port")))
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
