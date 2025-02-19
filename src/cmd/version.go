@@ -8,15 +8,14 @@ import (
 )
 
 // Version information for cmd
-// Use "var" (not const) to defined variable for `go build -ldflags`
-// And export 'Version' variable
+// Use "var" (not const) to defined variable for `go build -ldflags`.
 // ⚠️ WARNING: should only be set by "-ldflags" cli flag.
 var (
 	version   = ""
 	commitID  = ""
 	buildTime = ""
 
-	// VersionCmd is "version" subcommand.
+	// versionCmd is "version" subcommand.
 	// It prints the version, revision and built time information to stdout.
 	versionCmd = &cli.Command{
 		Name:  "version",

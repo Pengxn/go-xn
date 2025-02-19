@@ -13,13 +13,14 @@ import (
 )
 
 var (
+	// agentCmd is "agent" subcommand.
+	// It's used to run a gRPC server as an agent side.
 	agentCmd = &cli.Command{
-		Name:  "agent",
-		Usage: "Run as an agent",
-		Description: `Run as an agent, which can be used to manage the server.
-It run as a gRPC server, it only support gRPC protocol.`,
-		Flags:  []cli.Flag{agentPort},
-		Action: runGRPCServer,
+		Name:        "agent",
+		Usage:       "Run as an agent",
+		Description: `Run a gRPC serveras an agent side, it only support gRPC protocol.`,
+		Flags:       []cli.Flag{agentPort},
+		Action:      runGRPCServer,
 	}
 
 	agentPort = &cli.IntFlag{
