@@ -1,6 +1,28 @@
 package rpc
 
-import "google.golang.org/grpc/codes"
+import (
+	"errors"
+
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
+)
+
+// ErrorWithMessage returns an error with message.
+// If the error is not a general error, it will return the error itself.
+// If the error is nil, it will return nil.
+// If it's gRPC formatted error, it will return the message from the status.
+func ErrorWithMessage(err error) error {
+	st, ok := status.FromError(err)
+	if !ok {
+		return err
+	}
+
+	if st.Code() == OK {
+		return nil
+	}
+
+	return errors.New(st.Message())
+}
 
 // Define some status codes for gRPC, refer to
 // https://github.com/grpc/grpc/blob/master/doc/statuscodes.md
