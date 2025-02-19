@@ -1,0 +1,33 @@
+on: workflow_call
+
+jobs:
+  test-linux:
+    name: Test on macOS
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: 1.23.x
+          cache: false
+
+      - name: Run tests
+        run: |
+          go mod download
+          go mod tidy
+          make test
+          make cover
+
+      - name: Compile and build
+        run: |
+          make
+
+      - name: Publish Build Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: darwin-amd64
+          path: build/
