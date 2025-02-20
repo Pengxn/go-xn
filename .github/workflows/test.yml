@@ -6,11 +6,14 @@ jobs:
   test-linux:
     uses: ./.github/workflows/test.linux.yml
 
+  test-macos:
+    uses: ./.github/workflows/test.macos.yml
+
   test-windows:
     uses: ./.github/workflows/test.windows.yml
 
   deploy-docker:
-    needs: test-linux
+    needs: [test-linux, test-macos]
     if: github.event_name == 'push' && github.ref_name == 'main'
     uses: ./.github/workflows/test.docker.yml
     secrets: inherit
