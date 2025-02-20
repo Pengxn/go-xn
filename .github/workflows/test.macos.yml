@@ -1,7 +1,7 @@
 on: workflow_call
 
 jobs:
-  test-linux:
+  test-macos:
     name: Test on macOS
     runs-on: macos-latest
 
