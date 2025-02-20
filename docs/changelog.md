@@ -2,6 +2,30 @@
 
 ## [Unreleased]
 
+## [0.0.4] - 2025-02-20
+
+### Added
+
+- Implement cloudflare Turnstile server-side validation integration. #348
+- Add `agent` command to run the agent gRPC server. #377
+- Add `changelog.md` document to track version history. #372
+- Add `CODE_OF_CONDUCT.md` file as contributor code of conduct document file. #382
+- Add macOS workflow to improve multi-platform testing and build. #385
+
+### Changed
+
+- Adjust default log level to info. f19f9ab
+- Render markdown content as HTML for article view. f14a531
+- Move `SECURITY.md` file to `docs` directory. #381
+- Support multi-platform binary self-updates. #379
+- Update outdated comments in `version` command variable for early changes. 30bbb4a
+- Update `LICENSE` copyright notice to include other contributors. 6874a46
+
+### Fixed
+
+- Missing version information for command. #371
+- Match `.yaml` file extension with 2-space indentation. #375
+
 ## [0.0.3] - 2025-02-07
 
 ### Added
@@ -69,7 +93,8 @@
 
 - Release first version `0.0.1`.
 
-[Unreleased]: https://github.com/Pengxn/go-xn/compare/0.0.3...HEAD
+[Unreleased]: https://github.com/Pengxn/go-xn/compare/0.0.4...HEAD
+[0.0.4]: https://github.com/Pengxn/go-xn/compare/0.0.3...0.0.4
 [0.0.3]: https://github.com/Pengxn/go-xn/compare/0.0.2...0.0.3
 [0.0.2]: https://github.com/Pengxn/go-xn/compare/0.0.1...0.0.2
 [0.0.1]: https://github.com/Pengxn/go-xn/releases/tag/0.0.1
