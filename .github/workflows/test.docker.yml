@@ -36,6 +36,7 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Set GCHR_USER Environment Variable
         run: |
           echo "GCHR_USER=${GITHUB_REPOSITORY_OWNER,,}" >> $GITHUB_ENV

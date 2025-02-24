@@ -14,6 +14,8 @@ jobs:
         with:
           go-version: 1.23.x
           cache: false
+
+      - name: Set environment variables
         run: |
           echo "GOOS=$(go env GOOS)" >> $GITHUB_ENV
           echo "GOARCH=$(go env GOARCH)" >> $GITHUB_ENV
