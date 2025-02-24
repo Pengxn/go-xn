@@ -26,12 +26,18 @@ jobs:
         run: |
           make
 
-      - name: Build Inno Setup Installer
-        run: |
-          iscc .\script\windows\go-xn.iss
-
       - name: Publish Build Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: ${{ runner.os }}-${{ runner.arch }}
           path: build/
+
+      - name: Build Inno Setup Installer
+        run: |
+          iscc .\script\windows\go-xn.iss
+
+      - name: Publish Installer Build Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ runner.os }}-${{ runner.arch }}-installer
+          path: build/dist/*.exe
