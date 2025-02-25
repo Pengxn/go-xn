@@ -17,8 +17,8 @@ jobs:
 
       - name: Set environment variables
         run: |
-          echo "GOOS=$(go env GOOS)" >> $GITHUB_ENV
-          echo "GOARCH=$(go env GOARCH)" >> $GITHUB_ENV
+          echo "GOOS=$(go env GOOS)" >> $env:GITHUB_ENV
+          echo "GOARCH=$(go env GOARCH)" >> $env:GITHUB_ENV
 
       - name: Run tests
         run: |
