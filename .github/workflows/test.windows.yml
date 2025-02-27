@@ -39,7 +39,7 @@ jobs:
 
       - name: Build Inno Setup Installer
         run: |
-          iscc .\script\windows\go-xn.iss
+          iscc script/windows/go-xn.iss
 
       - name: Publish Installer Build Artifacts
         uses: actions/upload-artifact@v4
