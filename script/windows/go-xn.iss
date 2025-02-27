@@ -11,7 +11,7 @@
 #define EXE_NAME 'go-xn.exe'
 #define ICON '..\..\web\icons\xn-02f.ico'
 #define LICENSE '..\..\LICENSE'
-#define OUTPUT_DIR '..\..\build\dist'
+#define OUTPUT_DIR '..\..\build'
 #define OUTPUT_NAME 'go-xn-setup'
 
 [Setup]

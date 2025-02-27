@@ -39,10 +39,10 @@ jobs:
 
       - name: Build Inno Setup Installer
         run: |
-          iscc .\script\windows\go-xn.iss
+          iscc script/windows/go-xn.iss
 
       - name: Publish Installer Build Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.GOOS }}-${{ env.GOARCH }}-installer
-          path: build/dist/*.exe
+          path: build/*-setup.exe
