@@ -1,3 +1,10 @@
+// # Deprecated
+//
+// This library package is deprecated and will be removed in the future,
+// because the Tencent Cloud DNS API changes frequently,
+// especially the signature algorithm was changed totally.
+//
+// > This library is used to interact with Tencent Cloud DNS API.
 package dns
 
 import (
