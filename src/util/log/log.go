@@ -1,8 +1,6 @@
 package log
 
 import (
-	"strings"
-
 	"github.com/sirupsen/logrus"
 
 	"github.com/Pengxn/go-xn/src/util/log/hook"
@@ -15,24 +13,6 @@ func init() {
 
 	logger.SetLevel(logrus.InfoLevel)
 	logger.AddHook(hook.NewWriterHook(writerLog()))
-}
-
-// level returns specified log level, default is Info level.
-func level(level string) logrus.Level {
-	switch strings.ToUpper(level) {
-	case "DEBUG":
-		return logrus.DebugLevel
-	case "INFO":
-		return logrus.InfoLevel
-	case "WARN":
-		return logrus.WarnLevel
-	case "ERROR":
-		return logrus.ErrorLevel
-	case "FATAL":
-		return logrus.FatalLevel
-	default:
-		return logrus.InfoLevel
-	}
 }
 
 // Error logs a message at level Error.
