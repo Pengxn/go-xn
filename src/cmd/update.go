@@ -3,15 +3,14 @@ package cmd
 import (
 	"archive/zip"
 	"bytes"
-	"fmt"
 	"io"
 	"os"
 	"path/filepath"
-	"runtime"
 
 	"github.com/schollz/progressbar/v3"
 	"github.com/urfave/cli/v2"
 
+	"github.com/Pengxn/go-xn/src/lib/github"
 	"github.com/Pengxn/go-xn/src/util/httplib"
 )
 
@@ -29,7 +28,11 @@ var (
 )
 
 func update(c *cli.Context) error {
-	link := fmt.Sprintf("%s/%s-%s.zip", nightlyURL, runtime.GOOS, runtime.GOARCH)
+	link, err := github.GetLatestAssetLink()
+	if err != nil {
+		return err
+	}
+
 	resp, err := httplib.New().GET(link)
 	if err != nil {
 		return err
