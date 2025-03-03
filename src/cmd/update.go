@@ -15,9 +15,6 @@ import (
 )
 
 var (
-	// nightly.link is a service to provide nightly build artifact download link.
-	nightlyURL = "https://nightly.link/Pengxn/go-xn/workflows/test/main"
-
 	// Update is "update" subcommand.
 	// It's used to update command binary to the latest version.
 	updateCmd = &cli.Command{
