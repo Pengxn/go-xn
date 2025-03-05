@@ -39,7 +39,7 @@ func update(c *cli.Context) error {
 		err  error
 	)
 	if c.Bool("nightly") {
-		link, err = github.GetActionsArtifactLink()
+		link, err = github.GetNightlyLink()
 	} else {
 		link, err = github.GetLatestAssetLink()
 	}
