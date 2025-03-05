@@ -21,11 +21,28 @@ var (
 		Name:   "update",
 		Usage:  "Update the binary to the latest version",
 		Action: update,
+		Flags:  []cli.Flag{nightlyFlag},
+	}
+
+	// nightlyFlag is a flag to specify updating to the latest nightly build.
+	nightlyFlag = &cli.BoolFlag{
+		Name:               "nightly",
+		Aliases:            []string{"n"},
+		Usage:              "Update to the latest nightly build",
+		DisableDefaultText: true,
 	}
 )
 
 func update(c *cli.Context) error {
-	link, err := github.GetLatestAssetLink()
+	var (
+		link string
+		err  error
+	)
+	if c.Bool("nightly") {
+		link, err = github.GetActionsArtifactLink()
+	} else {
+		link, err = github.GetLatestAssetLink()
+	}
 	if err != nil {
 		return err
 	}

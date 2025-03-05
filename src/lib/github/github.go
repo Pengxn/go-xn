@@ -59,9 +59,7 @@ func GetLatestAssetLink() (string, error) {
 // GetActionsArtifactLink returns the latest artifact link of the workflow run from GitHub Actions.
 // It requires the owner and repo name of the repository, and the branch name.
 // The artifact link is the download URL of the artifact file for the current os and arch.
-//
-// But it requires authentication with `actions:read` scope to access the archived artifacts links.
-func GetActionsArtifactLink() (string, string, error) {
+func GetActionsArtifactLink() (string, error) {
 	client := github.NewClient(nil)
 	ctx := context.Background()
 
@@ -69,11 +67,11 @@ func GetActionsArtifactLink() (string, string, error) {
 	option := &github.ListWorkflowRunsOptions{Branch: defaultBranch}
 	runs, _, err := client.Actions.ListRepositoryWorkflowRuns(ctx, defaultOwner, defaultRepo, option)
 	if err != nil {
-		return "", "", err
+		return "", err
 	}
 
 	if len(runs.WorkflowRuns) == 0 {
-		return "", "", errors.New("no latest workflow runs found")
+		return "", errors.New("no latest workflow runs found")
 	}
 
 	runID := runs.WorkflowRuns[0].GetID()
@@ -81,21 +79,20 @@ func GetActionsArtifactLink() (string, string, error) {
 	// API doc url: https://docs.github.com/en/rest/actions/artifacts#list-workflow-run-artifacts
 	artifacts, _, err := client.Actions.ListWorkflowRunArtifacts(ctx, defaultOwner, defaultRepo, runID, nil)
 	if err != nil {
-		return "", "", err
+		return "", err
 	}
 
-	var archive, artifactName string
+	var archive string
 	for _, artifact := range artifacts.Artifacts {
 		if artifact.GetName() == runtime.GOOS+"-"+runtime.GOARCH {
 			archive = artifact.GetArchiveDownloadURL()
-			artifactName = artifact.GetName()
 			break
 		}
 	}
 
 	if archive == "" {
-		return "", "", errors.New("no latest artifact link found")
+		return "", errors.New("no latest artifact link found")
 	}
 
-	return archive, artifactName, nil
+	return archive, nil
 }
