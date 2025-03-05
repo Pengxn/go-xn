@@ -25,7 +25,7 @@ require (
 	github.com/sirupsen/logrus v1.9.3
 	github.com/smartystreets/goconvey v1.8.1
 	github.com/tidwall/gjson v1.18.0
-	github.com/urfave/cli/v2 v2.27.5
+	github.com/urfave/cli/v2 v2.27.6
 	github.com/yuin/goldmark v1.7.8
 	golang.org/x/crypto v0.35.0
 	golang.org/x/net v0.35.0
@@ -35,7 +35,6 @@ require (
 )
 
 go 1.23
-
 require (
 	filippo.io/edwards25519 v1.1.0 // indirect
 	github.com/boombuler/barcode v1.0.1-0.20190219062509-6c824513bacc // indirect
