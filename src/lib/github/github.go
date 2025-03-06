@@ -56,6 +56,19 @@ func GetLatestAssetLink() (string, error) {
 	return "", errors.New("no latest asset link found")
 }
 
+// GetNightlyLink returns the nightly build artifact link from nightly.link.
+func GetNightlyLink() (string, error) {
+	_, artifactName, err := GetActionsArtifactLink()
+	if err != nil {
+		return "", err
+	}
+
+	// nightly.link is a service to provide nightly build artifact download link.
+	nightlyURL := "https://nightly.link/Pengxn/go-xn/workflows/test/main"
+
+	return fmt.Sprintf("%s/%s.zip", nightlyURL, artifactName), nil
+}
+
 // GetActionsArtifactLink returns the latest artifact link of the workflow run from GitHub Actions.
 // It requires the owner and repo name of the repository, and the branch name.
 // The artifact link is the download URL of the artifact file for the current os and arch.
@@ -77,6 +90,9 @@ func GetActionsArtifactLink() (string, string, error) {
 	}
 
 	runID := runs.WorkflowRuns[0].GetID()
+
+	// TODO: check the status of the workflow run, if it's `in_progress` to detect the latest artifact.
+	// If `in_progress` workflow run not found, then get the latest completed workflow run.
 
 	// API doc url: https://docs.github.com/en/rest/actions/artifacts#list-workflow-run-artifacts
 	artifacts, _, err := client.Actions.ListWorkflowRunArtifacts(ctx, defaultOwner, defaultRepo, runID, nil)
