@@ -3,6 +3,7 @@
 > ✍ The platform for integrating the API I want to use. [WIP]
 
 [![actions](https://img.shields.io/github/actions/workflow/status/Pengxn/go-xn/test.yml?logo=github&style=flat-square)](https://github.com/Pengxn/go-xn/actions/workflows/test.yml)
+[![release](https://img.shields.io/github/v/release/Pengxn/go-xn?logo=github&style=flat-square)](https://github.com/Pengxn/go-xn/releases/latest)
 [![LICENSE](https://img.shields.io/github/license/Pengxn/go-xn.svg?style=flat-square&logo=opensourceinitiative)](https://github.com/Pengxn/go-xn/blob/main/LICENSE)
 
 ## Build
