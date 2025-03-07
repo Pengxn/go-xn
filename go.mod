@@ -28,7 +28,7 @@ require (
 	github.com/urfave/cli/v2 v2.27.6
 	github.com/yuin/goldmark v1.7.8
 	golang.org/x/crypto v0.36.0
-	golang.org/x/net v0.35.0
+	golang.org/x/net v0.37.0
 	google.golang.org/grpc v1.71.0
 	google.golang.org/protobuf v1.36.5
 	xorm.io/xorm v1.3.9
