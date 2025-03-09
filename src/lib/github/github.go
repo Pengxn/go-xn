@@ -78,6 +78,7 @@ func GetActionsArtifactLink() (string, string, error) {
 	client := github.NewClient(nil)
 	ctx := context.Background()
 
+	// Get the latest workflow run from list of workflow runs.
 	// API doc url: https://docs.github.com/en/rest/actions/workflow-runs#list-workflow-runs-for-a-repository
 	option := &github.ListWorkflowRunsOptions{Branch: defaultBranch}
 	runs, _, err := client.Actions.ListRepositoryWorkflowRuns(ctx, defaultOwner, defaultRepo, option)
@@ -85,15 +86,19 @@ func GetActionsArtifactLink() (string, string, error) {
 		return "", "", err
 	}
 
-	if len(runs.WorkflowRuns) == 0 {
-		return "", "", errors.New("no latest workflow runs found")
+	var runID int64
+	for _, run := range runs.WorkflowRuns {
+		if run.GetStatus() == "completed" {
+			runID = run.GetID()
+			break
+		}
 	}
 
-	runID := runs.WorkflowRuns[0].GetID()
+	if runID == 0 {
+		return "", "", errors.New("no latest completed workflow runs found")
+	}
 
-	// TODO: check the status of the workflow run, if it's `in_progress` to detect the latest artifact.
-	// If `in_progress` workflow run not found, then get the latest completed workflow run.
-
+	// Get the list of artifacts for specific workflow run.
 	// API doc url: https://docs.github.com/en/rest/actions/artifacts#list-workflow-run-artifacts
 	artifacts, _, err := client.Actions.ListWorkflowRunArtifacts(ctx, defaultOwner, defaultRepo, runID, nil)
 	if err != nil {
