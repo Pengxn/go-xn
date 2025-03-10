@@ -68,7 +68,12 @@ func update(c *cli.Context) error {
 		return err
 	}
 
-	return unzip(archive, "build")
+	exePath, err := os.Executable()
+	if err != nil {
+		return err
+	}
+
+	return unzip(archive, filepath.Dir(exePath))
 }
 
 func unzip(archive *zip.Reader, dst string) error {
