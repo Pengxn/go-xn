@@ -2,6 +2,41 @@
 
 ## [Unreleased]
 
+## [0.0.5] - 2025-03-12
+
+### Added
+
+- Add markdown render support by GitHub API. #380
+- Implement a function to retrieve the latest artifact link. 93cdccd
+- Initialize slog with tint handler. #397
+- Add `--nightly`/`-n` flag to support switching to nightly build. #398
+- Update dependabot configuration to add `github-actions` package. #391
+
+### Changed
+
+- Normalize artifact names using `$GOOS` and `$GOARCH` variables. #388 #390
+- Separate build artifacts for binary and installer in windows workflow. #389
+- Update build installer output path. #394
+- Use github latest asset link as default update source. #396
+- Regenerate the protobuf files and gRPC code. 928bb31
+- Bump go toolchain version to `1.24`. #404
+- Update build docker image tag to specific pinned version. 68bbea6
+
+### Deprecated
+
+- Mark `github.com/Pengxn/go-xn/src/lib/dns` package as deprecated. #395
+
+### Removed
+
+- Remove test files from the `github.com/Pengxn/go-xn/src/lib/dns` package. #395
+- Remove unused `level()` function from the `github.com/Pengxn/go-xn/src/util/log` package. cba1f7b
+
+### Fixed
+
+- Fix artifact name with correct arch for macOS runner image. 3fc2cfc
+- Fix workflow artifact retrieval logic to skip incomplete runs. #405
+- Fix unzip directory to locate the executable path. 09d29b4
+
 ## [0.0.4] - 2025-02-20
 
 ### Added
@@ -93,7 +128,8 @@
 
 - Release first version `0.0.1`.
 
-[Unreleased]: https://github.com/Pengxn/go-xn/compare/0.0.4...HEAD
+[Unreleased]: https://github.com/Pengxn/go-xn/compare/0.0.5...HEAD
+[0.0.5]: https://github.com/Pengxn/go-xn/compare/0.0.4...0.0.5
 [0.0.4]: https://github.com/Pengxn/go-xn/compare/0.0.3...0.0.4
 [0.0.3]: https://github.com/Pengxn/go-xn/compare/0.0.2...0.0.3
 [0.0.2]: https://github.com/Pengxn/go-xn/compare/0.0.1...0.0.2
