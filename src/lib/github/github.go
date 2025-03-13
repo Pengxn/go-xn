@@ -45,7 +45,7 @@ func GetLatestAssetLink() (string, error) {
 	if err != nil {
 		return "", err
 	}
-
+	// release asset name suffix, e.g. <name>-<version>-linux-amd64.tar.gz
 	substr := fmt.Sprintf("-%s-%s.", runtime.GOOS, runtime.GOARCH)
 	for _, asset := range rel.Assets {
 		if strings.Contains(asset.GetName(), substr) {
@@ -88,6 +88,11 @@ func GetActionsArtifactLink() (string, string, error) {
 
 	var runID int64
 	for _, run := range runs.WorkflowRuns {
+		// Skip the `Dependabot Updates` workflow runs, as they are not the nightly build.
+		// Its complete path is `dynamic/dependabot/dependabot-updates`.
+		if strings.Contains(run.GetPath(), "dependabot") {
+			continue
+		}
 		if run.GetStatus() == "completed" {
 			runID = run.GetID()
 			break
