@@ -11,7 +11,7 @@ jobs:
 
       - name: Fetche Latest Image
         run: |
-          docker pull golang:alpine || true
+          docker pull golang:1.24-alpine || true
           docker pull alpine:latest || true
 
       - name: Setup QEMU
