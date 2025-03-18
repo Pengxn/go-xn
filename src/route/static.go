@@ -35,6 +35,10 @@ func staticRoutes(g *gin.Engine) {
 	staticFile(g, "/.well-known/security.txt", "security.txt", localFS, otherFS)
 	// keybase.txt, refer to: https://keybase.io/docs/keybase_well_known
 	staticFile(g, "/.well-known/keybase.txt", "keybase.txt", localFS, otherFS)
+
+	// floss.fund, refer to: https://floss.fund/funding-manifest/
+	staticFile(g, "/.well-known/funding-manifest-urls", "funding-manifest-urls", localFS, otherFS)
+	staticFile(g, "/funding.json", "funding.json", localFS, otherFS)
 }
 
 func staticFile(g *gin.Engine, relativePath, filepath string, fsys ...http.FileSystem) {
