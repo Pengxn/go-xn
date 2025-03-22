@@ -9,7 +9,7 @@ require (
 	github.com/go-mail/mail/v2 v2.3.0
 	github.com/go-sql-driver/mysql v1.9.1
 	github.com/go-webauthn/webauthn v0.12.2
-	github.com/golang-jwt/jwt/v5 v5.2.1
+	github.com/golang-jwt/jwt/v5 v5.2.2
 	github.com/google/go-github/v69 v69.2.0
 	github.com/google/uuid v1.6.0
 	github.com/gorilla/feeds v1.2.0
