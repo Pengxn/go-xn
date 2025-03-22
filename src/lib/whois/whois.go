@@ -44,7 +44,7 @@ func getWhoisServer(domain string) (string, error) {
 		return "", err
 	}
 
-	ret := regexp.MustCompile("(?i:<b>WHOIS Server:</b>(.*?)\n)").FindStringSubmatch(string(bodyData))
+	ret := regexp.MustCompile("(?i:<b>WHOIS Server:</b>(.*?)<br>)").FindStringSubmatch(string(bodyData))
 
 	return strings.TrimSpace(ret[1]), nil
 }
