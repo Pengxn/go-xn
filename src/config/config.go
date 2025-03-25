@@ -43,7 +43,6 @@ type appConfig struct {
 	Server   ServerConfig   `ini:"server"`
 	DB       DBConfig       `ini:"database"`
 	Redis    RedisConfig    `ini:"redis"`
-	DNS      DNSConfig      `ini:"dns"`
 	Sentry   SentryConfig   `ini:"sentry"`
 	Logger   LoggerConfig   `ini:"log"`
 	WebAuthn WebAuthnConfig `ini:"webauthn"`
@@ -78,12 +77,6 @@ type RedisConfig struct {
 	Username string `ini:"username"`
 	Password string `ini:"password"`
 	DB       int    `ini:"db"`
-}
-
-// DNSConfig is DNS configuration for Tencent Cloud.
-type DNSConfig struct {
-	SecretID  string `ini:"secretID"`
-	SecretKey string `ini:"secretKey"`
 }
 
 // SentryConfig is configuration for Sentry.
