@@ -22,7 +22,7 @@ generate:
 	@rm -rf src/rpc/proto/*.pb.go
 	@go generate ./...
 
-cover:
+cover: test
 	@go tool cover -html=coverage.txt -o coverage.html
 
 test:
