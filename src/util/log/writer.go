@@ -12,11 +12,7 @@ import (
 // writerLog writes log to the specified writer buffer.
 // Example: os.Stderr, a file opened in write mode, a socket...
 func writerLog() io.Writer {
-	logFile, err := LogFilePath("fyj.log")
-	if err != nil {
-		log.Printf("get log file Path %s error: %v", logFile, err)
-		return os.Stderr
-	}
+	logFile := filepath.Join("logs", "fyj.log") // -> ./logs/fyj.log
 
 	// Logging to a file, append logging if the file already exists.
 	f, err := os.OpenFile(logFile, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0644)
@@ -28,6 +24,10 @@ func writerLog() io.Writer {
 	return f
 }
 
+// LogFilePath returns the log file path.
+//
+// Deprecated: use fixed log file name instead, with `./logs` directory.
+// This function is deprecated and will be removed in the next release.
 func LogFilePath(fileName string) (string, error) {
 	if file.IsExist(fileName) && file.IsFile(fileName) {
 		return fileName, nil // => ./<logFile>

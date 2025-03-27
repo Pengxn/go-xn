@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"path/filepath"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -51,11 +52,7 @@ func writerLog() io.Writer {
 		return os.Stdout
 	}
 
-	logFile, err := log.LogFilePath("route.log")
-	if err != nil {
-		log.Errorf("get log file Path %s error: %v", logFile, err)
-		return os.Stdout
-	}
+	logFile := filepath.Join("logs", "route.log") // -> ./logs/route.log
 
 	// Logging to a file, append logging if the file already exists.
 	f, err := os.OpenFile(logFile, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0644)
