@@ -3,6 +3,7 @@ package controller
 import (
 	"encoding/json"
 	"errors"
+	"log/slog"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -10,7 +11,6 @@ import (
 	"github.com/Pengxn/go-xn/src/lib/cache"
 	"github.com/Pengxn/go-xn/src/lib/webauthn"
 	"github.com/Pengxn/go-xn/src/model"
-	"github.com/Pengxn/go-xn/src/util/log"
 )
 
 // RegisterPage returns register html page.
@@ -24,7 +24,7 @@ func BeginRegister(c *gin.Context) {
 	user := webauthn.NewUser(123, username)
 	creation, session, err := webauthn.BeginRegister(user)
 	if err != nil {
-		log.Errorf("BeginRegister error: %v", err)
+		slog.Error("BeginRegister error", slog.Any("error", err))
 
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"code":    http.StatusInternalServerError,
@@ -34,7 +34,7 @@ func BeginRegister(c *gin.Context) {
 	}
 
 	if err := cache.Add(username, session); err != nil {
-		log.Errorf("cache.Add error: %v", err)
+		slog.Error("cache.Add error", slog.Any("error", err))
 
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"code":    http.StatusInternalServerError,
@@ -59,7 +59,7 @@ type FinishRegisterRequest struct {
 func FinishRegister(c *gin.Context) {
 	data, err := c.GetRawData()
 	if err != nil {
-		log.Errorf("GetRawData error: %v", err)
+		slog.Error("GetRawData error", slog.Any("error", err))
 
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"code":    http.StatusInternalServerError,
@@ -84,7 +84,7 @@ func FinishRegister(c *gin.Context) {
 
 	credential, err := webauthn.FinishRegister(user, session.([]byte), creation.Credential)
 	if err != nil {
-		log.Errorf("FinishRegister error: %v", err)
+		slog.Error("FinishRegister error", slog.Any("error", err))
 
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"code":    http.StatusInternalServerError,
@@ -138,7 +138,7 @@ func BeginLogin(c *gin.Context) {
 		creation, session, err = beginLoginWithUsername(username)
 	}
 	if err != nil {
-		log.Errorf("BeginLogin error: %v", err)
+		slog.Error("BeginLogin error", slog.Any("error", err))
 
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"code":    http.StatusInternalServerError,
@@ -191,7 +191,7 @@ type FinishLoginRequest struct {
 func FinishLogin(c *gin.Context) {
 	data, err := c.GetRawData()
 	if err != nil {
-		log.Errorf("GetRawData error: %v", err)
+		slog.Error("GetRawData error", slog.Any("error", err))
 
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"code":    http.StatusInternalServerError,
@@ -211,7 +211,7 @@ func FinishLogin(c *gin.Context) {
 		_, err = webauthn.FinishDiscoverableLogin(nil, login.Session, login.Credential)
 	}
 	if err != nil {
-		log.Errorf("FinishLogin error: %v", err)
+		slog.Error("FinishLogin error", slog.Any("error", err))
 
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"code":    http.StatusInternalServerError,

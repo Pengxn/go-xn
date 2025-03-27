@@ -1,12 +1,12 @@
 package middleware
 
 import (
+	"log/slog"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 
 	"github.com/Pengxn/go-xn/src/model"
-	"github.com/Pengxn/go-xn/src/util/log"
 )
 
 // BasicAuth is a middleware to check basic authentication.
@@ -26,7 +26,7 @@ func BasicAuth() gin.HandlerFunc {
 
 		has, user, err := model.GetUserByName(username)
 		if err != nil || !has {
-			log.Errorf("GetUserByName: %v", err)
+			slog.Error("GetUserByName", slog.Any("error", err))
 			c.String(http.StatusInternalServerError, "server error")
 			c.Abort()
 			return

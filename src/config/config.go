@@ -1,10 +1,10 @@
 package config
 
 import (
+	"log/slog"
+
 	"github.com/go-ini/ini"
 	"github.com/google/uuid"
-
-	"github.com/Pengxn/go-xn/src/util/log"
 )
 
 var Config appConfig // Global config object
@@ -21,7 +21,7 @@ func init() {
 	}
 
 	if err := loadConfig(configPath); err != nil {
-		log.Errorf("Load config file failed, %+v", err)
+		slog.Error("load config file failed", slog.Any("error", err))
 	}
 }
 

@@ -2,6 +2,7 @@ package controller
 
 import (
 	"html/template"
+	"log/slog"
 	"strconv"
 	"time"
 
@@ -9,7 +10,6 @@ import (
 
 	"github.com/Pengxn/go-xn/src/lib/markdown"
 	"github.com/Pengxn/go-xn/src/model"
-	"github.com/Pengxn/go-xn/src/util/log"
 )
 
 // DefaultPageLimit is default limit number per page,
@@ -81,7 +81,7 @@ func GetArticle(c *gin.Context) {
 
 	content, err := markdown.ToHTML([]byte(article.Content))
 	if err != nil {
-		log.Errorf("convert markdown to HTML error: %+v", err)
+		slog.Error("convert markdown to HTML error", slog.Any("error", err))
 		c.JSON(500, gin.H{
 			"code": 500,
 			"data": "Convert markdown to HTML failed",

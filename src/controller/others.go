@@ -3,6 +3,7 @@ package controller
 import (
 	"fmt"
 	"html/template"
+	"log/slog"
 	"os"
 	"strings"
 	"time"
@@ -13,7 +14,6 @@ import (
 
 	"github.com/Pengxn/go-xn/src/lib/markdown"
 	"github.com/Pengxn/go-xn/src/lib/whois"
-	"github.com/Pengxn/go-xn/src/util/log"
 )
 
 // GwtWhoisInfo gets domain whois information.
@@ -30,14 +30,14 @@ func GwtWhoisInfo(c *gin.Context) {
 	// Convert domain to punycode if it includes non-ASCII characters
 	domain, err := idna.ToASCII(domain)
 	if err != nil {
-		log.Errorf("convert punycode error: %+v, domain: %s", err, domain)
+		slog.Error("convert punycode error", slog.Any("error", err), slog.String("domain", domain))
 		c.String(403, err.Error())
 		return
 	}
 
 	res, err := whois.GetWhois(domain)
 	if err != nil {
-		log.Errorf("Get Whois Information error: %+v, domain: %s", err, domain)
+		slog.Error("get Whois Information error", slog.Any("error", err), slog.String("domain", domain))
 		c.String(404, err.Error())
 		return
 	}
@@ -51,7 +51,7 @@ func GwtWhoisInfo(c *gin.Context) {
 func UploadFileForUPic(c *gin.Context) {
 	file, err := c.FormFile("file")
 	if err != nil {
-		log.Errorf("Get uploaded file error: %+v", err)
+		slog.Error("get uploaded file error", slog.Any("error", err))
 		c.JSON(500, gin.H{
 			"code": 500,
 			"data": "Get uploaded file failed",
@@ -61,7 +61,7 @@ func UploadFileForUPic(c *gin.Context) {
 
 	// Save uploaded files to data/uPic directory.
 	if err = c.SaveUploadedFile(file, "data/uPic/"+file.Filename); err != nil {
-		log.Errorf("Save file uploaded to uPic error: %+v", err)
+		slog.Error("save file uploaded to uPic error", slog.Any("error", err))
 		c.JSON(500, gin.H{
 			"code": 500,
 			"data": "Save uploaded file failed",
@@ -80,7 +80,7 @@ func UploadFileForUPic(c *gin.Context) {
 func RSS(c *gin.Context) {
 	rss, err := feed().ToRss()
 	if err != nil {
-		log.Errorf("Generate RSS content error: %+v", err)
+		slog.Error("generate RSS content error", slog.Any("error", err))
 		c.XML(500, "")
 		return
 	}
@@ -92,7 +92,7 @@ func RSS(c *gin.Context) {
 func Atom(c *gin.Context) {
 	rss, err := feed().ToAtom()
 	if err != nil {
-		log.Errorf("Generate atom content error: %+v", err)
+		slog.Error("generate Atom content error", slog.Any("error", err))
 		c.XML(500, "")
 		return
 	}
@@ -104,7 +104,7 @@ func Atom(c *gin.Context) {
 func Feed(c *gin.Context) {
 	rss, err := feed().ToJSON()
 	if err != nil {
-		log.Errorf("Generate feed content error: %+v", err)
+		slog.Error("generate feed content error", slog.Any("error", err))
 		c.JSON(500, "")
 		return
 	}
@@ -135,7 +135,7 @@ func feed() *feeds.Feed {
 func Mdcat(c *gin.Context) {
 	content, err := os.ReadFile("README.md")
 	if err != nil {
-		log.Errorf("Read README.md error: %+v", err)
+		slog.Error("read README.md error", slog.Any("error", err))
 		c.JSON(500, gin.H{
 			"code": 500,
 			"data": "Read README.md failed",
@@ -145,7 +145,7 @@ func Mdcat(c *gin.Context) {
 
 	html, err := markdown.ToHTML(content)
 	if err != nil {
-		log.Errorf("Convert markdown to HTML error: %+v", err)
+		slog.Error("convert markdown to HTML error", slog.Any("error", err))
 		c.JSON(500, gin.H{
 			"code": 500,
 			"data": "Convert markdown to HTML failed",

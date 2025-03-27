@@ -1,12 +1,11 @@
 package model
 
 import (
+	"log/slog"
 	"testing"
 
 	. "github.com/agiledragon/gomonkey/v2"
 	. "github.com/smartystreets/goconvey/convey"
-
-	"github.com/Pengxn/go-xn/src/util/log"
 )
 
 func init() {
@@ -20,7 +19,7 @@ func init() {
 		&Option{Name: "test_exist", Value: "1"},
 	)
 	if err != nil {
-		log.Infof("Init data to option table error: %+v, num: %d", err, num)
+		slog.Info("init data to option table error", slog.Any("error", err), slog.Any("num", num))
 	}
 }
 

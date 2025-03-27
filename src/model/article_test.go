@@ -1,10 +1,11 @@
 package model
 
 import (
+	"log"
+	"log/slog"
+
 	"github.com/go-ini/ini"
 	"xorm.io/xorm"
-
-	"github.com/Pengxn/go-xn/src/util/log"
 )
 
 func init() {
@@ -22,14 +23,14 @@ func init() {
 		&Article{ID: 8, Title: "Eight", Content: "8: Content Eight", Status: 1},
 		&Article{ID: 9, Title: "Nine", Content: "9: Content Nine", Status: 1},
 	); err != nil {
-		log.Infof("Init data to article table error: %+v, num: %d", err, num)
+		slog.Info("init data to article table", slog.Any("error", err), slog.Any("num", num))
 	}
 }
 
 var testORM = func() *xorm.Engine {
 	config, err := ini.LooseLoad("fyj.ini")
 	if err != nil {
-		log.Errorln("Fail to read fyj.ini file.", err)
+		slog.Error("fail to read fyj.ini file", slog.Any("error", err))
 	}
 
 	dbType := config.Section("test").Key("dbType").String()
@@ -51,10 +52,10 @@ var testORM = func() *xorm.Engine {
 func CleanTable(orm *xorm.Engine, modelTable any) {
 	if has, _ := orm.IsTableExist(modelTable); has {
 		if err := orm.DropTables(modelTable); err != nil {
-			log.Fatalf("Drop table error: %+v, model: %+v", err, modelTable)
+			log.Fatalf("drop table error: %+v, model: %+v", err, modelTable)
 		}
 	}
 	if err := orm.CreateTables(modelTable); err != nil {
-		log.Fatalf("Create table error: %+v, model: %+v", err, modelTable)
+		log.Fatalf("create table error: %+v, model: %+v", err, modelTable)
 	}
 }
