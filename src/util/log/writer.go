@@ -28,6 +28,10 @@ func writerLog() io.Writer {
 	return f
 }
 
+// LogFilePath returns the log file path.
+//
+// Deprecated: use fixed log file name instead, with `./logs` directory.
+// This function is deprecated and will be removed in the future.
 func LogFilePath(fileName string) (string, error) {
 	if file.IsExist(fileName) && file.IsFile(fileName) {
 		return fileName, nil // => ./<logFile>
