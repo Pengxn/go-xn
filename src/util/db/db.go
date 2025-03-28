@@ -1,6 +1,7 @@
 package db
 
 import (
+	"log"
 	"strings"
 
 	_ "github.com/go-sql-driver/mysql" // MySQL/MariaDB driver
@@ -9,7 +10,6 @@ import (
 	"xorm.io/xorm"
 
 	"github.com/Pengxn/go-xn/src/config"
-	"github.com/Pengxn/go-xn/src/util/log"
 )
 
 // getDBUrl returns database type and its DSN.
@@ -45,7 +45,7 @@ func getDBUrl() (dbType, dsn string) {
 func DBEngine() *xorm.Engine {
 	orm, err := xorm.NewEngine(getDBUrl())
 	if err != nil {
-		log.Fatalln("Can't connect your DB.", err)
+		log.Fatalln("can't connect your DB", err)
 	}
 
 	return orm

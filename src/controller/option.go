@@ -1,13 +1,13 @@
 package controller
 
 import (
+	"log/slog"
 	"strings"
 
 	"github.com/gin-gonic/gin"
 	"xorm.io/xorm"
 
 	"github.com/Pengxn/go-xn/src/model"
-	"github.com/Pengxn/go-xn/src/util/log"
 )
 
 // ListOptions returns all options.
@@ -17,7 +17,7 @@ import (
 func ListOptions(c *gin.Context) {
 	list, err := model.GetAllOptions()
 	if err != nil {
-		log.Errorf("ListOptions: %s", err)
+		slog.Error("ListOptions", slog.Any("error", err))
 		errorJSON(c, 500, "failed to get options")
 		return
 	}
@@ -43,7 +43,7 @@ func GetOption(c *gin.Context) {
 
 	has, option, err := model.GetOptionByName(name)
 	if err != nil {
-		log.Errorf("GetOption: %s", err)
+		slog.Error("GetOption", slog.Any("error", err))
 		errorJSON(c, 500, "failed to get option data")
 		return
 	}
@@ -74,7 +74,7 @@ func InsertOption(c *gin.Context) {
 
 	success, err := model.AddOption(&model.Option{Name: name, Value: string(value)})
 	if err != nil || !success {
-		log.Errorf("InsertOption: %s", err)
+		slog.Error("InsertOption", slog.Any("error", err))
 		errorJSON(c, 500, "failed to insert option data")
 		return
 	}
@@ -100,7 +100,7 @@ func UpdateOption(c *gin.Context) {
 		return
 	}
 	if err != nil || !success {
-		log.Errorf("UpdateOption: %s", err)
+		slog.Error("UpdateOption", slog.Any("error", err))
 		errorJSON(c, 500, "update option data failed")
 		return
 	}
@@ -125,7 +125,7 @@ func DeleteOption(c *gin.Context) {
 		return
 	}
 	if err != nil || !success {
-		log.Errorf("DeleteOption: %s", err)
+		slog.Error("DeleteOption", slog.Any("error", err))
 		errorJSON(c, 500, "delete option data failed")
 		return
 	}

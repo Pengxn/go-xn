@@ -1,9 +1,8 @@
 package model
 
 import (
+	"log/slog"
 	"time"
-
-	"github.com/Pengxn/go-xn/src/util/log"
 )
 
 // Article model
@@ -32,7 +31,7 @@ func ArticlesByPage(limit int, page int) []Article {
 		Desc("create_time").
 		Find(&articles)
 	if err != nil {
-		log.Errorf("ArticlesByPage throw error: %s", err)
+		slog.Error("ArticlesByPage throw error", slog.Any("error", err))
 	}
 
 	return articles
@@ -45,7 +44,7 @@ func AddArticle(article *Article) bool {
 
 	affected, err := db.InsertOne(article)
 	if err != nil {
-		log.Errorf("AddArticle throw error: %s", err)
+		slog.Error("AddArticle throw error", slog.Any("error", err))
 	}
 
 	return affected > 0
@@ -60,7 +59,7 @@ func ArticleExist(id uint64) bool {
 		ID: id,
 	})
 	if err != nil {
-		log.Errorf("ArticleExist throw error: %s", err)
+		slog.Error("ArticleExist throw error", slog.Any("error", err))
 	}
 
 	return has
@@ -75,7 +74,7 @@ func ArticlesCount() int {
 
 	count, err := db.Count(article)
 	if err != nil {
-		log.Errorf("ArticlesCount throw error: %s", err)
+		slog.Error("ArticlesCount throw error", slog.Any("error", err))
 	}
 
 	return int(count)
@@ -92,7 +91,7 @@ func ArticleByID(id uint64) (*Article, bool) {
 
 	has, err := db.Get(article)
 	if err != nil {
-		log.Errorf("ArticleByID throw error: %s", err)
+		slog.Error("ArticleByID throw error", slog.Any("error", err))
 	}
 
 	return article, has
@@ -109,7 +108,7 @@ func ArticleBySlug(slug string) (*Article, bool) {
 
 	has, err := db.Get(article)
 	if err != nil {
-		log.Errorf("ArticleBySlug throw error: %s", err)
+		slog.Error("ArticleBySlug throw error", slog.Any("error", err))
 	}
 
 	return article, has
@@ -122,7 +121,7 @@ func (a *Article) UpdateByID() bool {
 
 	affected, err := db.ID(a.ID).Update(a)
 	if err != nil {
-		log.Errorf("Article update throw error: %s", err)
+		slog.Error("Article update throw error", slog.Any("error", err))
 	}
 
 	return affected > 0

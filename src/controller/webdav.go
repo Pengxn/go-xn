@@ -1,12 +1,11 @@
 package controller
 
 import (
+	"log/slog"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 	"golang.org/x/net/webdav"
-
-	"github.com/Pengxn/go-xn/src/util/log"
 )
 
 // WebdavMethods is a list of supported WebDAV methods.
@@ -22,7 +21,7 @@ func WebDAV(c *gin.Context) {
 		LockSystem: webdav.NewMemLS(),
 		Logger: func(r *http.Request, err error) {
 			if err != nil {
-				log.Errorf("[WebDAV] %s => %s error: %v", r.Method, r.URL.Path, err)
+				slog.Error("[WebDAV]", slog.String("method", r.Method), slog.String("path", r.URL.Path), slog.Any("error", err))
 			}
 		},
 	}

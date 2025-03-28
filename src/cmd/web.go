@@ -1,13 +1,14 @@
 package cmd
 
 import (
+	"log"
+
 	"github.com/urfave/cli/v2"
 
 	"github.com/Pengxn/go-xn/src/config"
 	"github.com/Pengxn/go-xn/src/lib/webauthn"
 	"github.com/Pengxn/go-xn/src/model"
 	"github.com/Pengxn/go-xn/src/route"
-	"github.com/Pengxn/go-xn/src/util/log"
 )
 
 var (
@@ -56,7 +57,7 @@ func runWeb(c *cli.Context) error {
 
 	err := route.InitRoutes()
 	if err != nil {
-		log.Fatalln("fail to start web server:", err)
+		log.Fatalln("fail to init routes", err)
 	}
 
 	return err

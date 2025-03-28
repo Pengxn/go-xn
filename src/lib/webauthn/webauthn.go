@@ -2,12 +2,12 @@ package webauthn
 
 import (
 	"encoding/json"
+	"log/slog"
 
 	"github.com/go-webauthn/webauthn/protocol"
 	"github.com/go-webauthn/webauthn/webauthn"
 
 	"github.com/Pengxn/go-xn/src/config"
-	"github.com/Pengxn/go-xn/src/util/log"
 )
 
 var w *webauthn.WebAuthn
@@ -20,7 +20,7 @@ func InitWebAuthn() {
 		RPDisplayName: config.RPDisplayName,
 		RPOrigins:     config.RPOrigins,
 	}); err != nil {
-		log.Errorln("New WebAuthn object error: ", err)
+		slog.Error("new WebAuthn object error", slog.Any("error", err))
 	}
 }
 
