@@ -16,7 +16,7 @@ func InitRoutes() error {
 	}
 
 	g := gin.New()
-	g.Use(gin.Logger(), middleware.LoggerToFile(), gin.Recovery(), middleware.RequestID(), middleware.Sentry())
+	g.Use(gin.Logger(), gin.Recovery(), middleware.RequestID(), middleware.Sentry())
 	g.GET("/", controller.HomePage)
 
 	// Page number handler
