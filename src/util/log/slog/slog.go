@@ -10,7 +10,7 @@ import (
 	"github.com/Pengxn/go-xn/src/config"
 )
 
-// override default logger with `tint` logger.
+// override default logger with `tint` logger, default to [DEBUG] level.
 func init() {
 	logger := slog.New(tint.NewHandler(os.Stderr, &tint.Options{
 		Level:      slog.LevelDebug,
@@ -22,6 +22,9 @@ func init() {
 }
 
 // SetLogger sets the logger with the given config settings.
+// The default logger is [tint] logger with colorized output.
+//
+// [tint]: https://github.com/lmittmann/tint
 func SetLogger(c config.LoggerConfig) {
 	if c.APP == "" {
 		return
@@ -34,7 +37,7 @@ func SetLogger(c config.LoggerConfig) {
 	slog.SetDefault(logger)
 }
 
-// mapToLevel maps string level to slog.Level.
+// mapToLevel maps string level to [log/slog.Level].
 // If the level is not valid, default to 'INFO'.
 func mapToLevel(level string) slog.Level {
 	switch strings.ToUpper(level) {
