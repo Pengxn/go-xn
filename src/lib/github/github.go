@@ -18,7 +18,9 @@ var (
 
 // Render renders the markdown text to HTML by GitHub API.
 // Default mode is "gfm" (GitHub Flavored Markdown),
-// refer to https://github.github.com/gfm/ for more details.
+// refer to [GitHub Flavored Markdown Spec] for more details.
+//
+// [GitHub Flavored Markdown Spec]: https://github.github.com/gfm/#gfm-overview
 func Render(text string) (string, error) {
 	client := github.NewClient(nil)
 
@@ -56,7 +58,9 @@ func GetLatestAssetLink() (string, error) {
 	return "", errors.New("no latest asset link found")
 }
 
-// GetNightlyLink returns the nightly build artifact link from nightly.link.
+// GetNightlyLink returns the nightly build artifact link from [nightly.link].
+//
+// [nightly.link]: https://nightly.link
 func GetNightlyLink() (string, error) {
 	_, artifactName, err := GetActionsArtifactLink()
 	if err != nil {
@@ -64,9 +68,9 @@ func GetNightlyLink() (string, error) {
 	}
 
 	// nightly.link is a service to provide nightly build artifact download link.
-	nightlyURL := "https://nightly.link/Pengxn/go-xn/workflows/test/main"
+	nightlyURL := "https://nightly.link/Pengxn/go-xn/workflows/test"
 
-	return fmt.Sprintf("%s/%s.zip", nightlyURL, artifactName), nil
+	return fmt.Sprintf("%s/%s/%s.zip", nightlyURL, defaultBranch, artifactName), nil
 }
 
 // GetActionsArtifactLink returns the latest artifact link of the workflow run from GitHub Actions.
