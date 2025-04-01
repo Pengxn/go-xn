@@ -19,6 +19,11 @@ type writerHook struct {
 
 // NewWriterHook returns a new writerHook,
 // which will write logs to the given io.Writer.
+//
+// Deprecated: this function is deprecated and will be removed in the next release.
+// refer to [#429]
+//
+// [#429]: https://github.com/Pengxn/go-xn/pull/429
 func NewWriterHook(output io.Writer) *writerHook {
 	return &writerHook{
 		output: output,

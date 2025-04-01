@@ -23,6 +23,11 @@ type TelegramHook struct {
 }
 
 // NewTelegramHook creates new hook instance with given token.
+//
+// Deprecated: this function is deprecated and will be removed in the next release.
+// refer to [#429]
+//
+// [#429]: https://github.com/Pengxn/go-xn/pull/429
 func NewTelegramHook(token string) *TelegramHook {
 	return &TelegramHook{
 		token:   token,

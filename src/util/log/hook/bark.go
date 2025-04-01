@@ -1,3 +1,11 @@
+// Package hook provides a [logrus] hook for sending logs to [Bark], [Telegram Bot] and [io.Writer].
+//
+// Deprecated: this package is deprecated and will be removed in the next release.
+// Use [github.com/Pengxn/go-xn/src/util/log] instead.
+//
+// [logrus]: https://github.com/sirupsen/logrus
+// [Bark]: https://github.com/Finb/Bark
+// [Telegram Bot]: https://core.telegram.org/bots/api
 package hook
 
 import (
@@ -21,6 +29,11 @@ type BarkHook struct {
 }
 
 // NewBarkHook creates new BarkHook instance with given token.
+//
+// Deprecated: this function is deprecated and will be removed in the next release.
+// refer to [#429]
+//
+// [#429]: https://github.com/Pengxn/go-xn/pull/429
 func NewBarkHook(token string) *BarkHook {
 	return &BarkHook{
 		token:   token,
