@@ -25,6 +25,7 @@
 
 - Deprecated `LogFilePath` function and remove calling it. #425
 - Deprecated `github.com/Pengxn/go-xn/src/util/log` package and add doc comments. #429
+- Deprecated logrus hooks in `github.com/Pengxn/go-xn/src/util/log/hook` package. #432
 
 ### Removed
 
