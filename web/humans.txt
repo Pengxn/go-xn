@@ -13,7 +13,7 @@
 	GitHub Contributors: Peng.xn (@Pengxn) and others。
 
 /* SITE */
-	Version: 0.0.5
-	Last Update: 2025/03/12
+	Version: 0.0.6
+	Last Update: 2025/04/01
 	Language: Chinese / English
 	Source Code: https://github.com/Pengxn/go-xn

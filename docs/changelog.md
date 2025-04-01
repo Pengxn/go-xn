@@ -2,6 +2,46 @@
 
 ## [Unreleased]
 
+## [0.0.6] - 2025-04-01
+
+### Added
+
+- Add `ping` subcommand to check agent server status. #411
+- Add support for (`FLOSS/fund`) funding manifest and discovery. #413
+- Add tool dependencies to `tool` directive for `go 1.24+`. #414
+- Add `SetLogger` function to configure logger. 9dbb934
+
+### Changed
+
+- Update `golang` image tag to `1.24-alpine` in docker test workflow. df9eb33
+- Regenerate proto file with latest `protoc` and `protoc-gen-go`. #412 #424
+- Update Makefile to add `test` dependency for `cover` target. b378030
+- Disable `LoggerToFile()` middleware from routes initialization. 31b6b69
+- Switch to std `log/slog` package for structured logging. #426
+- Update the branch name in the nightly URL. 2a5a5a2
+- Move `slog` package out of `log` directory structure. #431
+
+### Deprecated
+
+- Deprecated `LogFilePath` function and remove calling it. #425
+- Deprecated `github.com/Pengxn/go-xn/src/util/log` package and add doc comments. #429
+- Deprecated logrus hooks in `github.com/Pengxn/go-xn/src/util/log/hook` package. #432
+
+### Removed
+
+- Remove deprecated `dns` package and related config. #410 #422
+- Remove deprecated azure-pipelines ci config files. #421
+
+### Fixed
+
+- Skip dependabot workflow runs when retrieving artifacts. #409
+- Fix whois server extraction regex. #420
+
+### Security
+
+- Fix `CVE-2025-29923`/`GHSA-92cp-5422-2mw7`: bump `github.com/redis/go-redis/v9` to 9.7.3. #416
+- Fix `CVE-2025-30204`/`GHSA-mh63-6h87-95cp`: bump `github.com/golang-jwt/jwt/v5` to 5.2.2. #418
+
 ## [0.0.5] - 2025-03-12
 
 ### Added
@@ -128,7 +168,8 @@
 
 - Release first version `0.0.1`.
 
-[Unreleased]: https://github.com/Pengxn/go-xn/compare/0.0.5...HEAD
+[Unreleased]: https://github.com/Pengxn/go-xn/compare/0.0.6...HEAD
+[0.0.6]: https://github.com/Pengxn/go-xn/compare/0.0.5...0.0.6
 [0.0.5]: https://github.com/Pengxn/go-xn/compare/0.0.4...0.0.5
 [0.0.4]: https://github.com/Pengxn/go-xn/compare/0.0.3...0.0.4
 [0.0.3]: https://github.com/Pengxn/go-xn/compare/0.0.2...0.0.3
