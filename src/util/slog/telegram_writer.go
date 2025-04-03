@@ -45,8 +45,8 @@ func (th *TelegramWriter) Write(msg []byte) (n int, err error) {
 		Text:      th.format(msg, ""), // TODO: add spoiler for sensitive data
 		ParseMode: "MarkdownV2",
 	}
-	if err := th.sendMessage(m); err != nil {
-		fmt.Fprintf(os.Stderr, "failed to telegram hook: %v\n", err)
+	if err = th.sendMessage(m); err != nil {
+		fmt.Fprintf(os.Stderr, "[Telegram] log error: %v, msg: %s", err, msg)
 	}
 
 	return
@@ -80,19 +80,16 @@ func (th *TelegramWriter) sendMessage(msg message) error {
 
 	response, err := http.DefaultClient.Do(request)
 	if err != nil {
-		return fmt.Errorf("failed to sendMessage to telegram: %w", err)
+		return err
 	}
 	defer response.Body.Close()
 	body, err := io.ReadAll(response.Body)
 	if err != nil {
-		return fmt.Errorf("failed to read response body: %w", err)
+		return err
 	}
 	if response.StatusCode != http.StatusOK {
 		return fmt.Errorf("response status code is %d, data: %s", response.StatusCode, body)
 	}
-
-	// TODO: handle response data
-	fmt.Fprintf(os.Stdout, "telegram response: %s\n", body)
 
 	return nil
 }
