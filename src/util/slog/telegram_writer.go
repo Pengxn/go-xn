@@ -96,20 +96,16 @@ func (th *TelegramWriter) sendMessage(msg message) error {
 
 // format formats the log entry to telegram message text.
 func (th *TelegramWriter) format(raw []byte, spoiler string) string {
-	levelWithEmoji := "[FYJ] 🔥 Log"
-
-	serialized := raw
-
 	var msg string
-	if len(serialized) > 0 {
-		msg = "```\n" + escape(string(serialized)) + "\n```"
+	if len(raw) > 0 {
+		msg = "```\n" + escape(string(raw)) + "\n```"
 	}
 
 	if spoiler != "" {
 		spoiler = fmt.Sprintf("||%s||\n", escape(spoiler))
 	}
 
-	return fmt.Sprintf("%s\n%s%s", levelWithEmoji, spoiler, msg)
+	return fmt.Sprintf("[FYJ] 🔥 Log\n%s%s", spoiler, msg)
 }
 
 var reservedCharacters = "_*[]()~`>#+-=|{}.!"
