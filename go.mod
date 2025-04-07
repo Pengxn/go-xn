@@ -22,7 +22,6 @@ require (
 	github.com/robfig/cron/v3 v3.0.1
 	github.com/rs/cors v1.11.1
 	github.com/schollz/progressbar/v3 v3.18.0
-	github.com/sirupsen/logrus v1.9.3
 	github.com/smartystreets/goconvey v1.8.1
 	github.com/urfave/cli/v2 v2.27.6
 	github.com/yuin/goldmark v1.7.8
