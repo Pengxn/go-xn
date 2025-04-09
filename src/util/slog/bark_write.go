@@ -41,11 +41,11 @@ func (bw *BarkWriter) Write(msg []byte) (n int, err error) {
 		return
 	}
 
-	n, err = bw.send(raw)
-	if err != nil {
+	if err = bw.send(raw); err != nil {
 		fmt.Fprintf(os.Stderr, "[bark] log error: %v, msg: %s", err, msg)
 	}
 
+	n = len(msg)
 	return
 }
 
@@ -53,7 +53,7 @@ func (bw *BarkWriter) Write(msg []byte) (n int, err error) {
 // It is called by the [Write] method.
 //
 // [API]: https://bark.day.app/#/tutorial
-func (bw *BarkWriter) send(msg []byte) (n int, err error) {
+func (bw *BarkWriter) send(msg []byte) (err error) {
 	ctx, cancel := context.WithTimeout(context.Background(), bw.timeout)
 	defer cancel()
 
@@ -73,10 +73,10 @@ func (bw *BarkWriter) send(msg []byte) (n int, err error) {
 		return
 	}
 	if response.StatusCode != http.StatusOK {
-		return 0, fmt.Errorf("response status code is %d, data: %s", response.StatusCode, body)
+		return fmt.Errorf("response status code is %d, data: %s", response.StatusCode, body)
 	}
 
-	return len(msg), nil
+	return nil
 }
 
 // barkMessage is the message format for Bark.
