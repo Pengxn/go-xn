@@ -37,19 +37,18 @@ func (nr *NewRelicWriter) Write(msg []byte) (n int, err error) {
 
 	// TODO: concurrent write by goroutine
 
-	n, err = nr.send(msg)
-	if err != nil {
+	if err = nr.send(msg); err != nil {
 		fmt.Fprintf(os.Stderr, "[newrelic] log error: %v, msg: %s", err, msg)
 	}
 
-	return
+	return len(msg), nil
 }
 
 // send sends the log message to NewRelic using its [Log HTTP API].
 // It is called by the [Write] method.
 //
 // [Log HTTP API]: https://docs.newrelic.com/docs/logs/log-api/introduction-log-api/#endpoint
-func (nr *NewRelicWriter) send(msg []byte) (n int, err error) {
+func (nr *NewRelicWriter) send(msg []byte) (err error) {
 	ctx, cancel := context.WithTimeout(context.Background(), nr.timeout)
 	defer cancel()
 
@@ -70,8 +69,8 @@ func (nr *NewRelicWriter) send(msg []byte) (n int, err error) {
 		return
 	}
 	if response.StatusCode != http.StatusAccepted {
-		return 0, fmt.Errorf("response status code is %d, data: %s", response.StatusCode, body)
+		return fmt.Errorf("response status code is %d, data: %s", response.StatusCode, body)
 	}
 
-	return len(msg), nil
+	return nil
 }

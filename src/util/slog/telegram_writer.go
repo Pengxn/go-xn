@@ -49,6 +49,7 @@ func (th *TelegramWriter) Write(msg []byte) (n int, err error) {
 		fmt.Fprintf(os.Stderr, "[Telegram] log error: %v, msg: %s", err, msg)
 	}
 
+	n = len(msg)
 	return
 }
 
