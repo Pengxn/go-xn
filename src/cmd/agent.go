@@ -18,7 +18,7 @@ var (
 	agentCmd = &cli.Command{
 		Name:        "agent",
 		Usage:       "Run as an agent",
-		Description: `Run a gRPC serveras an agent side, it only support gRPC protocol.`,
+		Description: `Run a gRPC server as an agent side, it only support gRPC protocol.`,
 		Flags:       []cli.Flag{agentPort},
 		Action:      runGRPCServer,
 		Subcommands: []*cli.Command{agentPingCmd},
