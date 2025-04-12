@@ -1,9 +1,10 @@
 package cmd
 
 import (
+	"context"
 	"log"
 
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v3"
 
 	"github.com/Pengxn/go-xn/src/config"
 	"github.com/Pengxn/go-xn/src/lib/webauthn"
@@ -26,7 +27,7 @@ If '--port' flag is not used, it will use port 7991 by default.`,
 		},
 	}
 
-	configFile = &cli.PathFlag{
+	configFile = &cli.StringFlag{
 		Name:        "config",
 		Aliases:     []string{"c"},
 		Usage:       "Custom configuration file path",
@@ -40,18 +41,17 @@ If '--port' flag is not used, it will use port 7991 by default.`,
 		Value:   7991,
 	}
 	debug = &cli.BoolFlag{
-		Name:               "debug",
-		Aliases:            []string{"d"},
-		Usage:              "Enable debug mode, print extra debugging information",
-		DisableDefaultText: true,
+		Name:    "debug",
+		Aliases: []string{"d"},
+		Usage:   "Enable debug mode, print extra debugging information",
 	}
 )
 
 // runWeb is the entry point to the web server.
 // Parses the arguments, routes and others.
-func runWeb(c *cli.Context) error {
+func runWeb(ctx context.Context, c *cli.Command) error {
 	// Override config by cli flag
-	config.OverrideConfigByFlag(c)
+	config.OverrideConfigByFlag(ctx, c)
 	model.InitTables()
 	webauthn.InitWebAuthn()
 

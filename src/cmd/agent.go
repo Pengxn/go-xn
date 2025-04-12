@@ -1,11 +1,12 @@
 package cmd
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"net"
 
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v3"
 	"google.golang.org/grpc"
 
 	"github.com/Pengxn/go-xn/src/rpc"
@@ -21,7 +22,7 @@ var (
 		Description: `Run a gRPC serveras an agent side, it only support gRPC protocol.`,
 		Flags:       []cli.Flag{agentPort},
 		Action:      runGRPCServer,
-		Subcommands: []*cli.Command{agentPingCmd},
+		Commands:    []*cli.Command{agentPingCmd},
 	}
 	agentPingCmd = &cli.Command{
 		Name:        "ping",
@@ -46,7 +47,7 @@ var (
 	}
 )
 
-func runGRPCServer(c *cli.Context) error {
+func runGRPCServer(ctx context.Context, c *cli.Command) error {
 	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", c.Int("port")))
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
@@ -65,7 +66,7 @@ func runGRPCServer(c *cli.Context) error {
 	return nil
 }
 
-func pingAgent(c *cli.Context) error {
+func pingAgent(ctx context.Context, c *cli.Command) error {
 	pong, err := rpc.Client(c.String("url"))
 	if err != nil {
 		log.Fatalln("failed to ping agent:", err)

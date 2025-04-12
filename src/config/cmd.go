@@ -1,17 +1,18 @@
 package config
 
 import (
+	"context"
 	"log/slog"
 	"os"
 
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v3"
 
 	"github.com/Pengxn/go-xn/src/util/file"
 )
 
-func OverrideConfigByFlag(c *cli.Context) {
+func OverrideConfigByFlag(ctx context.Context, c *cli.Command) {
 	if c.IsSet("config") { // specified config file
-		f := c.Path("config")
+		f := c.String("config")
 		if !file.IsExist(f) || !file.IsFile(f) {
 			slog.Error("specified config file not found", slog.String("filename", f))
 		}
