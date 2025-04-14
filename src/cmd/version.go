@@ -1,10 +1,11 @@
 package cmd
 
 import (
+	"context"
 	"fmt"
 	"runtime"
 
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v3"
 )
 
 // Version information for cmd
@@ -27,7 +28,7 @@ And it display revision and built time information.`,
 )
 
 // showVersion prints the version information to stdout
-func showVersion(c *cli.Context) error {
+func showVersion(ctx context.Context, c *cli.Command) error {
 	fmt.Printf(`FYJ %s
 ---------------------------------
 - Go version: %s

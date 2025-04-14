@@ -3,12 +3,13 @@ package cmd
 import (
 	"archive/zip"
 	"bytes"
+	"context"
 	"io"
 	"os"
 	"path/filepath"
 
 	"github.com/schollz/progressbar/v3"
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v3"
 
 	"github.com/Pengxn/go-xn/src/lib/github"
 	"github.com/Pengxn/go-xn/src/util/httplib"
@@ -26,14 +27,13 @@ var (
 
 	// nightlyFlag is a flag to specify updating to the latest nightly build.
 	nightlyFlag = &cli.BoolFlag{
-		Name:               "nightly",
-		Aliases:            []string{"n"},
-		Usage:              "Update to the latest nightly build",
-		DisableDefaultText: true,
+		Name:    "nightly",
+		Aliases: []string{"n"},
+		Usage:   "Update to the latest nightly build",
 	}
 )
 
-func update(c *cli.Context) error {
+func update(ctx context.Context, c *cli.Command) error {
 	var (
 		link string
 		err  error

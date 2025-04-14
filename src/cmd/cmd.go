@@ -1,14 +1,15 @@
 package cmd
 
 import (
+	"context"
 	"os"
 
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v3"
 )
 
 // Execute to run cmd
 func Execute() error {
-	app := &cli.App{
+	app := &cli.Command{
 		Name:    "go-xn",
 		Usage:   "The platform for publishing and running your blog",
 		Version: version,
@@ -20,5 +21,5 @@ func Execute() error {
 		},
 	}
 
-	return app.Run(os.Args)
+	return app.Run(context.Background(), os.Args)
 }
