@@ -1,8 +1,10 @@
 package slogger
 
 import (
+	"context"
 	"log/slog"
 	"os"
+	"runtime"
 	"strings"
 
 	"github.com/lmittmann/tint"
@@ -21,18 +23,32 @@ func init() {
 	slog.SetDefault(logger)
 }
 
+// CtxKey is the key type for context.
+type CtxKey int
+
+const (
+	CtxVersionKey CtxKey = iota // version key
+)
+
 // SetLogger sets the logger with the given config settings.
 // The default logger is [tint] logger with colorized output.
 //
 // [tint]: https://github.com/lmittmann/tint
-func SetLogger(c config.LoggerConfig) {
+func SetLogger(ctx context.Context, c config.LoggerConfig) {
 	if c.APP == "" {
 		return
 	}
 
 	logger := slog.New(slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{
 		Level: mapToLevel(c.Level),
-	}))
+	})).With("app", c.APP).
+		With("os", runtime.GOOS).
+		With("arch", runtime.GOARCH)
+
+	// Set extra `version` fields for logger, if any.
+	if version := ctx.Value(CtxVersionKey); version != nil {
+		logger = logger.With("version", version)
+	}
 
 	slog.SetDefault(logger)
 }

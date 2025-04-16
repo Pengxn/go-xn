@@ -10,6 +10,7 @@ import (
 	"github.com/Pengxn/go-xn/src/lib/webauthn"
 	"github.com/Pengxn/go-xn/src/model"
 	"github.com/Pengxn/go-xn/src/route"
+	slogger "github.com/Pengxn/go-xn/src/util/slog"
 )
 
 var (
@@ -54,6 +55,10 @@ func runWeb(ctx context.Context, c *cli.Command) error {
 	config.OverrideConfigByFlag(ctx, c)
 	model.InitTables()
 	webauthn.InitWebAuthn()
+
+	// Initialize the logger
+	ctx = context.WithValue(ctx, slogger.CtxVersionKey, version)
+	slogger.SetLogger(ctx, config.Config.Logger)
 
 	err := route.InitRoutes()
 	if err != nil {
