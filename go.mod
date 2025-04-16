@@ -24,7 +24,7 @@ require (
 	github.com/schollz/progressbar/v3 v3.18.0
 	github.com/smartystreets/goconvey v1.8.1
 	github.com/urfave/cli/v3 v3.1.1
-	github.com/yuin/goldmark v1.7.8
+	github.com/yuin/goldmark v1.7.10
 	golang.org/x/crypto v0.37.0
 	golang.org/x/net v0.39.0
 	google.golang.org/grpc v1.71.1
