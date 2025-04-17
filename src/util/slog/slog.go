@@ -39,9 +39,11 @@ func SetLogger(ctx context.Context, c config.LoggerConfig) {
 		return
 	}
 
-	logger := slog.New(slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{
-		Level: mapToLevel(c.Level),
-	})).With("app", c.APP).
+	logger := slog.New(slog.NewJSONHandler(os.Stdout,
+		&slog.HandlerOptions{
+			Level: mapToLevel(c.Level),
+		})).WithGroup("app").
+		With("server", c.APP).
 		With("os", runtime.GOOS).
 		With("arch", runtime.GOARCH)
 
@@ -66,6 +68,7 @@ func mapToLevel(level string) slog.Level {
 	case "ERROR":
 		return slog.LevelError
 	default:
+		slog.Warn("invalid log level, use default level: INFO")
 		return slog.LevelInfo
 	}
 }
