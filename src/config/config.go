@@ -87,9 +87,12 @@ type SentryConfig struct {
 
 // LoggerConfig is configuration for logger.
 type LoggerConfig struct {
-	Level string `ini:"level"`
-	APP   string `ini:"app"`
-	Route string `ini:"route"`
+	Level    string `ini:"level"`
+	Route    string `ini:"route"`
+	APP      string `ini:"app"`      // log writer: bark, telegram, newrelic, default: os.Stdout
+	Bark     string `ini:"bark"`     // bark token
+	Telegram string `ini:"telegram"` // telegram bot token
+	Newrelic string `ini:"newrelic"` // newrelic api key
 }
 
 // WebAuthnConfig is the WebAuthn configuration.
