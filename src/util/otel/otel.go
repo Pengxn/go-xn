@@ -28,6 +28,8 @@ func InitTrace(ctx context.Context, c Config) func(context.Context) error {
 		client = newHTTPClient(c.Endpoint, c.Headers)
 	default:
 		slog.Warn("unknown otel client", slog.String("client", c.ClientType))
+		slog.Debug("init otel client with default grpc")
+		client = newGRPCClient(c.Endpoint, c.Headers)
 	}
 
 	return initOTELTracer(ctx, client)
@@ -74,8 +76,7 @@ func initOTELTracer(ctx context.Context, client otlptrace.Client) func(context.C
 	}
 
 	// create the resource
-	resources, err := resource.New(
-		context.Background(),
+	resources, err := resource.New(ctx,
 		resource.WithAttributes(
 			attribute.String("service.name", "go-xn"),
 			attribute.String("service.os", runtime.GOOS),
