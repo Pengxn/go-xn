@@ -1,7 +1,9 @@
 package db
 
 import (
+	"fmt"
 	"log"
+	"log/slog"
 	"strings"
 
 	_ "github.com/go-sql-driver/mysql" // MySQL/MariaDB driver
@@ -19,21 +21,17 @@ func getDBUrl() (dbType, dsn string) {
 
 	switch dbType {
 	case "mysql":
-		dsn = db.User + ":" + db.Password + "@tcp(" + db.Url +
-			":" + db.Port + ")/" + db.Name + "?charset=utf8"
+		dsn = fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8",
+			db.User, db.Password, db.Url, db.Port, db.Name)
 	case "postgresql":
 		dbType = "postgres"
-		dsn = strings.Join([]string{
-			"dbname=" + db.Name,
-			"user=" + db.User,
-			"password=" + db.Password,
-			"host=" + db.Url,
-			"port=" + db.Port,
-			"sslmode=" + db.SSLMode,
-		}, " ")
+		dsn = fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=%s",
+			db.Url, db.Port, db.User, db.Password, db.Name, db.SSLMode)
 	case "sqlite3":
 		dsn = "file:" + db.Name + "?cache=shared&mode=rwc"
 	default:
+		slog.Warn("unknown database type")
+		// TODO: set default database settings
 		dsn = ""
 	}
 
