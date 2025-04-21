@@ -25,8 +25,8 @@ func getDBUrl() (dbType, dsn string) {
 			db.User, db.Password, db.Url, db.Port, db.Name)
 	case "postgresql":
 		dbType = "postgres"
-		dsn = fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=%s",
-			db.Url, db.Port, db.User, db.Password, db.Name, db.SSLMode)
+		dsn = fmt.Sprintf("dbname=%s user=%s password=%s host=%s port=%s sslmode=%s",
+			db.Name, db.User, db.Password, db.Url, db.Port, db.SSLMode)
 	case "sqlite3":
 		dsn = "file:" + db.Name + "?cache=shared&mode=rwc"
 	default:
