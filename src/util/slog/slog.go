@@ -56,21 +56,21 @@ func SetLogger(ctx context.Context, c config.LoggerConfig) {
 	slog.SetDefault(logger)
 }
 
-func useWriter(c config.LoggerConfig) io.Writer {
+func useWriter(c config.LoggerConfig) (w io.Writer) {
 	switch c.APP {
 	case "bark": // bark
-		slog.Debug("use log writer: bark")
-		return NewBark(c.Bark)
+		w = NewBark(c.Bark)
 	case "telegram": // telegram
-		slog.Debug("use log writer: telegram")
-		return NewTelegram(c.Telegram)
+		w = NewTelegram(c.Telegram)
 	case "newrelic": // newrelic
-		slog.Debug("use log writer: newrelic")
-		return NewRelic(c.Newrelic)
+		w = NewRelic(c.Newrelic)
 	default:
 		slog.Debug("use default log writer: os.Stdout")
 		return os.Stdout
 	}
+
+	slog.Debug("use specific log writer", slog.String("provider", c.APP))
+	return
 }
 
 // mapToLevel maps string level to [log/slog.Level].
