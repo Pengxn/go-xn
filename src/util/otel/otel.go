@@ -21,14 +21,14 @@ func InitTrace(ctx context.Context, c Config) func(context.Context) error {
 	var client otlptrace.Client
 	switch c.ClientType {
 	case "grpc":
-		slog.Debug("init grpc otel client")
+		slog.Debug("init otel trace grpc client")
 		client = newGRPCClient(c.Endpoint, c.Headers)
 	case "http":
-		slog.Debug("init https otel client")
+		slog.Debug("init otel trace http client")
 		client = newHTTPClient(c.Endpoint, c.Headers)
 	default:
-		slog.Warn("unknown otel client", slog.String("client", c.ClientType))
-		slog.Debug("init otel client with default grpc")
+		slog.Warn("unknown otel trace client", slog.String("client", c.ClientType))
+		slog.Debug("init otel trace client with default grpc")
 		client = newGRPCClient(c.Endpoint, c.Headers)
 	}
 
