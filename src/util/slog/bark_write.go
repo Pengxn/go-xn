@@ -12,6 +12,8 @@ import (
 )
 
 // bark_endpoint is the API endpoint for [Bark].
+//
+// [Bark]: https://github.com/finb/bark
 const bark_endpoint = "https://api.day.app/"
 
 // BarkWriter is a writer that sends log messages to Bark.
