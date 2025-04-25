@@ -50,7 +50,7 @@ type Config struct {
 }
 
 // newGRPCClient creates a new gRPC client for OpenTelemetry.
-// https://opentelemetry.io/docs/languages/go/exporters/#otlp-traces-over-http
+// https://opentelemetry.io/docs/languages/go/exporters/#otlp-traces-over-grpc
 func newGRPCClient(endpoint string, headers map[string]string) otlptrace.Client {
 	return otlptracegrpc.NewClient(
 		otlptracegrpc.WithEndpoint(endpoint),
