@@ -2,6 +2,34 @@
 
 ## [Unreleased]
 
+## [0.0.7] - 2025-04-26
+
+### Added
+
+- Add `NewRelicWriter` to send logs to NewRelic API. #440
+- Update `LoggerConfig` support multiple log writers. #453
+- Add `OpenTelemetry` integration for distributed tracing. #454
+
+### Changed
+
+- Refactor `BarkHook` logrus hook to `BarkWriter`. #438 #445
+- Refactor `TelegramHook` logrus hook to `TelegramWriter`. #439 #445
+- Regenerate proto files with latest protoc. #446
+- Migrate `github.com/urfave/cli` to **`v3`**. #449
+- Enhance logger to include system and version information. e2b0eff caddbab
+- Refactor log writer selection by named return parameter. 7241385
+- Refactor database `dsn` string building. #455
+
+### Removed
+
+- Remove deprecated `github.com/Pengxn/go-xn/src/util/log` packages. #441
+- Remove deprecated `github.com/Pengxn/go-xn/src/util/log/hook` package. #441
+
+### Fixed
+
+- Fix typo in `agent` subcommand description. 10a19d2
+- Fix issue with getting empty version string from git tag in ci workflow. #430
+
 ## [0.0.6] - 2025-04-01
 
 ### Added
@@ -168,7 +196,8 @@
 
 - Release first version `0.0.1`.
 
-[Unreleased]: https://github.com/Pengxn/go-xn/compare/0.0.6...HEAD
+[Unreleased]: https://github.com/Pengxn/go-xn/compare/0.0.7...HEAD
+[0.0.7]: https://github.com/Pengxn/go-xn/compare/0.0.6...0.0.7
 [0.0.6]: https://github.com/Pengxn/go-xn/compare/0.0.5...0.0.6
 [0.0.5]: https://github.com/Pengxn/go-xn/compare/0.0.4...0.0.5
 [0.0.4]: https://github.com/Pengxn/go-xn/compare/0.0.3...0.0.4
