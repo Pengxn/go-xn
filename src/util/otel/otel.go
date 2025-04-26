@@ -11,6 +11,7 @@ import (
 	"go.opentelemetry.io/otel/exporters/otlp/otlptrace"
 	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc"
 	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp"
+	"go.opentelemetry.io/otel/exporters/stdout/stdouttrace"
 	"go.opentelemetry.io/otel/sdk/resource"
 	"go.opentelemetry.io/otel/sdk/trace"
 )
@@ -18,21 +19,24 @@ import (
 // InitTrace initializes the OpenTelemetry trace exporter with the given config.
 // It returns a function to shut down the exporter when done.
 func InitTrace(ctx context.Context, c Config) func(context.Context) error {
-	var client otlptrace.Client
+	var exporterFn exporterFunc
 	switch c.ClientType {
 	case "grpc":
-		slog.Debug("init otel trace grpc client")
-		client = newGRPCClient(c.Endpoint, c.Headers)
+		slog.Debug("init otel trace", slog.String("type", c.ClientType))
+		exporterFn = newGRPCTraceExporter
 	case "http":
-		slog.Debug("init otel trace http client")
-		client = newHTTPClient(c.Endpoint, c.Headers)
+		slog.Debug("init otel trace", slog.String("type", c.ClientType))
+		exporterFn = newHTTPTraceExporter
+	case "stdout":
+		slog.Debug("init otel trace", slog.String("type", c.ClientType))
+		exporterFn = newStdoutTraceExporter
 	default:
-		slog.Warn("unknown otel trace client", slog.String("client", c.ClientType))
-		slog.Debug("init otel trace client with default grpc")
-		client = newGRPCClient(c.Endpoint, c.Headers)
+		slog.Warn("unknown otel trace type", slog.String("type", c.ClientType))
+		slog.Debug("init otel trace with default stdout")
+		exporterFn = newStdoutTraceExporter
 	}
 
-	return initOTELTracer(ctx, client)
+	return initOTELTracer(ctx, c, exporterFn)
 }
 
 // Config is the configuration for [OpenTelemetry].
@@ -49,28 +53,42 @@ type Config struct {
 	Headers    map[string]string
 }
 
-// newGRPCClient creates a new gRPC client for OpenTelemetry.
-// https://opentelemetry.io/docs/languages/go/exporters/#otlp-traces-over-grpc
-func newGRPCClient(endpoint string, headers map[string]string) otlptrace.Client {
-	return otlptracegrpc.NewClient(
-		otlptracegrpc.WithEndpoint(endpoint),
-		otlptracegrpc.WithHeaders(headers),
+type exporterFunc func(context.Context, Config) (trace.SpanExporter, error)
+
+// newStdoutExporter creates a new stdout exporter for OpenTelemetry traces.
+// https://opentelemetry.io/docs/languages/go/exporters/#console-traces
+func newStdoutTraceExporter(_ context.Context, _ Config) (trace.SpanExporter, error) {
+	return stdouttrace.New(
+		stdouttrace.WithPrettyPrint(),
 	)
 }
 
-// newHTTPClient creates a new HTTP client for OpenTelemetry.
+// newGRPCExporter creates a new gRPC exporter for OpenTelemetry traces.
+// https://opentelemetry.io/docs/languages/go/exporters/#otlp-traces-over-grpc
+func newGRPCTraceExporter(ctx context.Context, c Config) (trace.SpanExporter, error) {
+	return otlptrace.New(ctx,
+		otlptracehttp.NewClient(
+			otlptracehttp.WithEndpoint(c.Endpoint),
+			otlptracehttp.WithHeaders(c.Headers),
+		),
+	)
+}
+
+// newHTTPExporter creates a new HTTP exporter for OpenTelemetry traces.
 // https://opentelemetry.io/docs/languages/go/exporters/#otlp-traces-over-http
-func newHTTPClient(endpoint string, headers map[string]string) otlptrace.Client {
-	return otlptracehttp.NewClient(
-		otlptracehttp.WithEndpoint(endpoint),
-		otlptracehttp.WithHeaders(headers),
+func newHTTPTraceExporter(ctx context.Context, c Config) (trace.SpanExporter, error) {
+	return otlptrace.New(ctx,
+		otlptracegrpc.NewClient(
+			otlptracegrpc.WithEndpoint(c.Endpoint),
+			otlptracegrpc.WithHeaders(c.Headers),
+		),
 	)
 }
 
 // initOTELTracer initializes the OpenTelemetry tracer with the given client.
-func initOTELTracer(ctx context.Context, client otlptrace.Client) func(context.Context) error {
+func initOTELTracer(ctx context.Context, c Config, fn exporterFunc) func(context.Context) error {
 	// create the exporter
-	exporter, err := otlptrace.New(ctx, client)
+	exporter, err := fn(ctx, c)
 	if err != nil {
 		log.Fatalf("failed to create exporter: %s", err)
 	}
