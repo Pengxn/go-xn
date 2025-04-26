@@ -53,6 +53,8 @@ type Config struct {
 	Headers    map[string]string
 }
 
+// exporterFunc is a function type that takes a context and config,
+// it's used to create a new OpenTelemetry trace exporter.
 type exporterFunc func(context.Context, Config) (trace.SpanExporter, error)
 
 // newStdoutExporter creates a new stdout exporter for OpenTelemetry traces.
@@ -60,6 +62,7 @@ type exporterFunc func(context.Context, Config) (trace.SpanExporter, error)
 func newStdoutTraceExporter(_ context.Context, _ Config) (trace.SpanExporter, error) {
 	return stdouttrace.New(
 		stdouttrace.WithPrettyPrint(),
+		stdouttrace.WithWriter(log.Writer()), // TODO: use custom writer
 	)
 }
 
