@@ -25,7 +25,7 @@ type NewRelicWriter struct {
 func NewRelic(key string) *NewRelicWriter {
 	return &NewRelicWriter{
 		key:     key,
-		timeout: 5 * time.Second, // default 5 seconds timeout
+		timeout: defaultTimeout,
 	}
 }
 

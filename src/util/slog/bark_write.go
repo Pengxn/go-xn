@@ -26,7 +26,7 @@ type BarkWriter struct {
 func NewBark(token string) *BarkWriter {
 	return &BarkWriter{
 		token:   token,
-		timeout: 5 * time.Second, // default 5 seconds timeout
+		timeout: defaultTimeout,
 	}
 }
 

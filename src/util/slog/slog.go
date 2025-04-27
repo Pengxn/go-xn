@@ -7,11 +7,14 @@ import (
 	"os"
 	"runtime"
 	"strings"
+	"time"
 
 	"github.com/lmittmann/tint"
 
 	"github.com/Pengxn/go-xn/src/config"
 )
+
+const defaultTimeout = 5 * time.Second // default timeout
 
 // override default logger with `tint` logger, default to [DEBUG] level.
 func init() {
