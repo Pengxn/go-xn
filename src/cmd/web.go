@@ -54,7 +54,9 @@ func runWeb(ctx context.Context, c *cli.Command) error {
 	// Override config by cli flag
 	config.OverrideConfigByFlag(ctx, c)
 	model.InitTables()
-	webauthn.InitWebAuthn()
+
+	// Initialize webauthn
+	webauthn.InitWebAuthn(ctx, config.Config.WebAuthn)
 
 	// Initialize the logger
 	ctx = context.WithValue(ctx, slogger.CtxVersionKey, version)
