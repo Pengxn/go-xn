@@ -34,6 +34,7 @@ require (
 	golang.org/x/net v0.39.0
 	google.golang.org/grpc v1.72.0
 	google.golang.org/protobuf v1.36.6
+	gopkg.in/natefinch/lumberjack.v2 v2.2.1
 	xorm.io/xorm v1.3.9
 )
 
