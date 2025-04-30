@@ -23,7 +23,7 @@ require (
 	github.com/rs/cors v1.11.1
 	github.com/schollz/progressbar/v3 v3.18.0
 	github.com/smartystreets/goconvey v1.8.1
-	github.com/urfave/cli/v3 v3.2.0
+	github.com/urfave/cli/v3 v3.3.2
 	github.com/yuin/goldmark v1.7.10
 	go.opentelemetry.io/otel v1.35.0
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace v1.35.0
