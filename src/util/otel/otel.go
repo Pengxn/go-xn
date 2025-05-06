@@ -93,7 +93,7 @@ func initOTELTracer(ctx context.Context, c Config, fn exporterFunc) func(context
 	// create the exporter
 	exporter, err := fn(ctx, c)
 	if err != nil {
-		log.Fatalf("failed to create exporter: %s", err)
+		log.Fatalf("failed to create tracer exporter: %s", err)
 	}
 
 	// create the resource
