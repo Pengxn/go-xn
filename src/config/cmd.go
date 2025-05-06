@@ -1,22 +1,23 @@
 package config
 
 import (
+	"context"
+	"log/slog"
 	"os"
 
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v3"
 
 	"github.com/Pengxn/go-xn/src/util/file"
-	"github.com/Pengxn/go-xn/src/util/log"
 )
 
-func OverrideConfigByFlag(c *cli.Context) {
+func OverrideConfigByFlag(ctx context.Context, c *cli.Command) {
 	if c.IsSet("config") { // specified config file
-		f := c.Path("config")
+		f := c.String("config")
 		if !file.IsExist(f) || !file.IsFile(f) {
-			log.Error("Specified config file not found: " + f)
+			slog.Error("specified config file not found", slog.String("filename", f))
 		}
 		if err := loadConfig(f); err != nil {
-			log.Errorf("Load specified config file failed, %+v", err)
+			slog.Error("load specified config file failed", slog.Any("error", err))
 		}
 	}
 	// Server config

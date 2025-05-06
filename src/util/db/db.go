@@ -1,6 +1,9 @@
 package db
 
 import (
+	"fmt"
+	"log"
+	"log/slog"
 	"strings"
 
 	_ "github.com/go-sql-driver/mysql" // MySQL/MariaDB driver
@@ -9,7 +12,6 @@ import (
 	"xorm.io/xorm"
 
 	"github.com/Pengxn/go-xn/src/config"
-	"github.com/Pengxn/go-xn/src/util/log"
 )
 
 // getDBUrl returns database type and its DSN.
@@ -19,21 +21,17 @@ func getDBUrl() (dbType, dsn string) {
 
 	switch dbType {
 	case "mysql":
-		dsn = db.User + ":" + db.Password + "@tcp(" + db.Url +
-			":" + db.Port + ")/" + db.Name + "?charset=utf8"
+		dsn = fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8",
+			db.User, db.Password, db.Url, db.Port, db.Name)
 	case "postgresql":
 		dbType = "postgres"
-		dsn = strings.Join([]string{
-			"dbname=" + db.Name,
-			"user=" + db.User,
-			"password=" + db.Password,
-			"host=" + db.Url,
-			"port=" + db.Port,
-			"sslmode=" + db.SSLMode,
-		}, " ")
+		dsn = fmt.Sprintf("dbname=%s user=%s password=%s host=%s port=%s sslmode=%s",
+			db.Name, db.User, db.Password, db.Url, db.Port, db.SSLMode)
 	case "sqlite3":
 		dsn = "file:" + db.Name + "?cache=shared&mode=rwc"
 	default:
+		slog.Warn("unknown database type")
+		// TODO: set default database settings
 		dsn = ""
 	}
 
@@ -45,7 +43,7 @@ func getDBUrl() (dbType, dsn string) {
 func DBEngine() *xorm.Engine {
 	orm, err := xorm.NewEngine(getDBUrl())
 	if err != nil {
-		log.Fatalln("Can't connect your DB.", err)
+		log.Fatalln("can't connect your DB", err)
 	}
 
 	return orm

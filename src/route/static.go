@@ -4,12 +4,12 @@ import (
 	"fmt"
 	"html/template"
 	"io/fs"
+	"log/slog"
 	"net/http"
 	"os"
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/Pengxn/go-xn/src/util/log"
 	"github.com/Pengxn/go-xn/web"
 )
 
@@ -35,6 +35,10 @@ func staticRoutes(g *gin.Engine) {
 	staticFile(g, "/.well-known/security.txt", "security.txt", localFS, otherFS)
 	// keybase.txt, refer to: https://keybase.io/docs/keybase_well_known
 	staticFile(g, "/.well-known/keybase.txt", "keybase.txt", localFS, otherFS)
+
+	// floss.fund, refer to: https://floss.fund/funding-manifest/
+	staticFile(g, "/.well-known/funding-manifest-urls", "funding-manifest-urls", localFS, otherFS)
+	staticFile(g, "/funding.json", "funding.json", localFS, otherFS)
 }
 
 func staticFile(g *gin.Engine, relativePath, filepath string, fsys ...http.FileSystem) {
@@ -45,7 +49,7 @@ func staticFile(g *gin.Engine, relativePath, filepath string, fsys ...http.FileS
 				return
 			}
 		}
-		log.Debugf("staticFile: %s not found", filepath)
+		slog.Debug("staticFile not found", slog.String("filepath", filepath))
 		c.String(http.StatusNotFound, "not found")
 	}
 	g.GET(relativePath, handler)
@@ -64,12 +68,12 @@ func staticFileFromFS(g *gin.Engine, relativePath, filepath string, fs http.File
 func templateFromFS(fsys fs.FS) *template.Template {
 	templates, err := fs.Sub(fsys, "templates")
 	if err != nil {
-		log.Errorf("HTML fs.Sub error: %+v", err)
+		slog.Error("HTML fs.Sub error", slog.Any("error", err))
 	}
 
 	t, err := template.ParseFS(templates, "*.html", "**/*.html")
 	if err != nil {
-		log.Errorf("HTML template.ParseFS error: %+v", err)
+		slog.Error("HTML template.ParseFS error", slog.Any("error", err))
 	}
 
 	if gin.IsDebugging() {
@@ -85,7 +89,7 @@ func templateFromFS(fsys fs.FS) *template.Template {
 func assetsFS() http.FileSystem {
 	assets, err := fs.Sub(web.EmbedFS, "assets")
 	if err != nil {
-		log.Errorf("FS fs.Sub error: %+v", err)
+		slog.Error("FS fs.Sub error", slog.Any("error", err))
 	}
 
 	return http.FS(assets)

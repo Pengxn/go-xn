@@ -5,11 +5,11 @@ import (
 	"crypto/tls"
 	"errors"
 	"html/template"
+	"log/slog"
 
 	"github.com/go-mail/mail/v2"
 
 	"github.com/Pengxn/go-xn/src/config"
-	"github.com/Pengxn/go-xn/src/util/log"
 	"github.com/Pengxn/go-xn/web"
 )
 
@@ -82,7 +82,7 @@ func MailContent(mailType MailType, magicLink string) (subject, content string) 
 		temp, err = template.New("mail").Parse(web.MailVerify)
 	}
 	if err != nil {
-		log.Errorf("Fail to parse mail template %d, error: %v", mailType, err)
+		slog.Error("Fail to parse mail template", slog.Any("error", err), slog.Any("mailType", mailType))
 		return "", content
 	}
 
@@ -97,7 +97,7 @@ func MailContent(mailType MailType, magicLink string) (subject, content string) 
 		"site":       site,
 		"magic_link": "https://magic-link.com/test?code=xxxx",
 	}); err != nil {
-		log.Errorf("Fail to execute mail template %d, error: %v", mailType, err)
+		slog.Error("Fail to execute mail template", slog.Any("error", err), slog.Any("mailType", mailType))
 		return "", content
 	}
 

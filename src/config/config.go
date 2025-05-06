@@ -1,10 +1,10 @@
 package config
 
 import (
+	"log/slog"
+
 	"github.com/go-ini/ini"
 	"github.com/google/uuid"
-
-	"github.com/Pengxn/go-xn/src/util/log"
 )
 
 var Config appConfig // Global config object
@@ -21,7 +21,7 @@ func init() {
 	}
 
 	if err := loadConfig(configPath); err != nil {
-		log.Errorf("Load config file failed, %+v", err)
+		slog.Error("load config file failed", slog.Any("error", err))
 	}
 }
 
@@ -43,7 +43,6 @@ type appConfig struct {
 	Server   ServerConfig   `ini:"server"`
 	DB       DBConfig       `ini:"database"`
 	Redis    RedisConfig    `ini:"redis"`
-	DNS      DNSConfig      `ini:"dns"`
 	Sentry   SentryConfig   `ini:"sentry"`
 	Logger   LoggerConfig   `ini:"log"`
 	WebAuthn WebAuthnConfig `ini:"webauthn"`
@@ -80,12 +79,6 @@ type RedisConfig struct {
 	DB       int    `ini:"db"`
 }
 
-// DNSConfig is DNS configuration for Tencent Cloud.
-type DNSConfig struct {
-	SecretID  string `ini:"secretID"`
-	SecretKey string `ini:"secretKey"`
-}
-
 // SentryConfig is configuration for Sentry.
 type SentryConfig struct {
 	DSN   string `ini:"DSN"`
@@ -94,9 +87,12 @@ type SentryConfig struct {
 
 // LoggerConfig is configuration for logger.
 type LoggerConfig struct {
-	Level string `ini:"level"`
-	APP   string `ini:"app"`
-	Route string `ini:"route"`
+	Level    string `ini:"level"`
+	Route    string `ini:"route"`
+	APP      string `ini:"app"`      // log writer: bark, telegram, newrelic, default: os.Stdout
+	Bark     string `ini:"bark"`     // bark token
+	Telegram string `ini:"telegram"` // telegram bot token
+	Newrelic string `ini:"newrelic"` // newrelic api key
 }
 
 // WebAuthnConfig is the WebAuthn configuration.

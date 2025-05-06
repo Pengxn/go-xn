@@ -1,9 +1,8 @@
 package model
 
 import (
+	"log/slog"
 	"time"
-
-	"github.com/Pengxn/go-xn/src/util/log"
 )
 
 // WebAuthnCredential represents the WebAuthn credential data.
@@ -36,7 +35,7 @@ func (cred WebAuthnCredential) Add() bool {
 
 	affected, err := db.InsertOne(cred)
 	if err != nil {
-		log.Errorf("WebAuthn Credential add throw error: %+v, param: %+v", err, cred)
+		slog.Error("WebAuthn Credential add throw error", slog.Any("error", err), slog.Any("credential", cred))
 	}
 
 	return affected > 0
@@ -49,7 +48,7 @@ func (cred WebAuthnCredential) Get() []WebAuthnCredential {
 
 	var credList []WebAuthnCredential
 	if err := db.Find(&credList, &cred); err != nil {
-		log.Errorf("WebAuthn Credential get throw error: %+v, param: %+v", err, cred)
+		slog.Error("WebAuthn Credential get throw error", slog.Any("error", err), slog.Any("credential", cred))
 	}
 
 	return credList

@@ -1,7 +1,7 @@
 # Make sure you install `make` and `git` tool
 
 BIN        ?= go-xn$(shell go env GOEXE)
-VERSION     = $(shell git describe --tags `git rev-list --tags --max-count=1`)
+VERSION     = $(shell git describe --abbrev=0 --tags)
 COMMIT_ID   = $(shell git rev-parse --short HEAD)
 BUILD_TIME  = $(shell date +'%Y-%m-%d %T')
 LDFLAGS    += -X "github.com/Pengxn/go-xn/src/cmd.version=${VERSION}"
@@ -22,7 +22,7 @@ generate:
 	@rm -rf src/rpc/proto/*.pb.go
 	@go generate ./...
 
-cover:
+cover: test
 	@go tool cover -html=coverage.txt -o coverage.html
 
 test:

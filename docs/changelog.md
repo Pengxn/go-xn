@@ -2,6 +2,109 @@
 
 ## [Unreleased]
 
+## [0.0.7] - 2025-04-26
+
+### Added
+
+- Add `NewRelicWriter` to send logs to NewRelic API. #440
+- Update `LoggerConfig` support multiple log writers. #453
+- Add `OpenTelemetry` integration for distributed tracing. #454
+
+### Changed
+
+- Refactor `BarkHook` logrus hook to `BarkWriter`. #438 #445
+- Refactor `TelegramHook` logrus hook to `TelegramWriter`. #439 #445
+- Regenerate proto files with latest protoc. #446
+- Migrate `github.com/urfave/cli` to **`v3`**. #449
+- Enhance logger to include system and version information. e2b0eff caddbab
+- Refactor log writer selection by named return parameter. 7241385
+- Refactor database `dsn` string building. #455
+
+### Removed
+
+- Remove deprecated `github.com/Pengxn/go-xn/src/util/log` packages. #441
+- Remove deprecated `github.com/Pengxn/go-xn/src/util/log/hook` package. #441
+
+### Fixed
+
+- Fix typo in `agent` subcommand description. 10a19d2
+- Fix issue with getting empty version string from git tag in ci workflow. #430
+
+## [0.0.6] - 2025-04-01
+
+### Added
+
+- Add `ping` subcommand to check agent server status. #411
+- Add support for (`FLOSS/fund`) funding manifest and discovery. #413
+- Add tool dependencies to `tool` directive for `go 1.24+`. #414
+- Add `SetLogger` function to configure logger. 9dbb934
+
+### Changed
+
+- Update `golang` image tag to `1.24-alpine` in docker test workflow. df9eb33
+- Regenerate proto file with latest `protoc` and `protoc-gen-go`. #412 #424
+- Update Makefile to add `test` dependency for `cover` target. b378030
+- Disable `LoggerToFile()` middleware from routes initialization. 31b6b69
+- Switch to std `log/slog` package for structured logging. #426
+- Update the branch name in the nightly URL. 2a5a5a2
+- Move `slog` package out of `log` directory structure. #431
+
+### Deprecated
+
+- Deprecated `LogFilePath` function and remove calling it. #425
+- Deprecated `github.com/Pengxn/go-xn/src/util/log` package and add doc comments. #429
+- Deprecated logrus hooks in `github.com/Pengxn/go-xn/src/util/log/hook` package. #432
+
+### Removed
+
+- Remove deprecated `dns` package and related config. #410 #422
+- Remove deprecated azure-pipelines ci config files. #421
+
+### Fixed
+
+- Skip dependabot workflow runs when retrieving artifacts. #409
+- Fix whois server extraction regex. #420
+
+### Security
+
+- Fix `CVE-2025-29923`/`GHSA-92cp-5422-2mw7`: bump `github.com/redis/go-redis/v9` to 9.7.3. #416
+- Fix `CVE-2025-30204`/`GHSA-mh63-6h87-95cp`: bump `github.com/golang-jwt/jwt/v5` to 5.2.2. #418
+
+## [0.0.5] - 2025-03-12
+
+### Added
+
+- Add markdown render support by GitHub API. #380
+- Implement a function to retrieve the latest artifact link. 93cdccd
+- Initialize slog with tint handler. #397
+- Add `--nightly`/`-n` flag to support switching to nightly build. #398
+- Update dependabot configuration to add `github-actions` package. #391
+
+### Changed
+
+- Normalize artifact names using `$GOOS` and `$GOARCH` variables. #388 #390
+- Separate build artifacts for binary and installer in windows workflow. #389
+- Update build installer output path. #394
+- Use github latest asset link as default update source. #396
+- Regenerate the protobuf files and gRPC code. 928bb31
+- Bump go toolchain version to `1.24`. #404
+- Update build docker image tag to specific pinned version. 68bbea6
+
+### Deprecated
+
+- Mark `github.com/Pengxn/go-xn/src/lib/dns` package as deprecated. #395
+
+### Removed
+
+- Remove test files from the `github.com/Pengxn/go-xn/src/lib/dns` package. #395
+- Remove unused `level()` function from the `github.com/Pengxn/go-xn/src/util/log` package. cba1f7b
+
+### Fixed
+
+- Fix artifact name with correct arch for macOS runner image. 3fc2cfc
+- Fix workflow artifact retrieval logic to skip incomplete runs. #405
+- Fix unzip directory to locate the executable path. 09d29b4
+
 ## [0.0.4] - 2025-02-20
 
 ### Added
@@ -93,7 +196,10 @@
 
 - Release first version `0.0.1`.
 
-[Unreleased]: https://github.com/Pengxn/go-xn/compare/0.0.4...HEAD
+[Unreleased]: https://github.com/Pengxn/go-xn/compare/0.0.7...HEAD
+[0.0.7]: https://github.com/Pengxn/go-xn/compare/0.0.6...0.0.7
+[0.0.6]: https://github.com/Pengxn/go-xn/compare/0.0.5...0.0.6
+[0.0.5]: https://github.com/Pengxn/go-xn/compare/0.0.4...0.0.5
 [0.0.4]: https://github.com/Pengxn/go-xn/compare/0.0.3...0.0.4
 [0.0.3]: https://github.com/Pengxn/go-xn/compare/0.0.2...0.0.3
 [0.0.2]: https://github.com/Pengxn/go-xn/compare/0.0.1...0.0.2

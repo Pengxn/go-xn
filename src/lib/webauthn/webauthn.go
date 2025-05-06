@@ -1,27 +1,28 @@
 package webauthn
 
 import (
+	"context"
 	"encoding/json"
+	"log/slog"
 
 	"github.com/go-webauthn/webauthn/protocol"
 	"github.com/go-webauthn/webauthn/webauthn"
 
 	"github.com/Pengxn/go-xn/src/config"
-	"github.com/Pengxn/go-xn/src/util/log"
 )
 
 var w *webauthn.WebAuthn
 
-func InitWebAuthn() {
+func InitWebAuthn(ctx context.Context, c config.WebAuthnConfig) {
 	var err error
-	config := config.Config.WebAuthn
 	if w, err = webauthn.New(&webauthn.Config{
-		RPID:          config.RPID,
-		RPDisplayName: config.RPDisplayName,
-		RPOrigins:     config.RPOrigins,
+		RPID:          c.RPID,
+		RPDisplayName: c.RPDisplayName,
+		RPOrigins:     c.RPOrigins,
 	}); err != nil {
-		log.Errorln("New WebAuthn object error: ", err)
+		slog.Error("new WebAuthn object error", slog.Any("error", err))
 	}
+	slog.Debug("init WebAuthn", slog.String("rpID", c.RPID))
 }
 
 // BeginRegister generates a new set of registration data for webauthn.

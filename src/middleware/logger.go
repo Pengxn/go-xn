@@ -3,13 +3,14 @@ package middleware
 import (
 	"fmt"
 	"io"
+	"log/slog"
 	"os"
+	"path/filepath"
 	"time"
 
 	"github.com/gin-gonic/gin"
 
 	"github.com/Pengxn/go-xn/src/config"
-	"github.com/Pengxn/go-xn/src/util/log"
 )
 
 // LoggerToFile is a custom logger middleware, it writes logs to os.Stdout and a file.
@@ -51,16 +52,12 @@ func writerLog() io.Writer {
 		return os.Stdout
 	}
 
-	logFile, err := log.LogFilePath("route.log")
-	if err != nil {
-		log.Errorf("get log file Path %s error: %v", logFile, err)
-		return os.Stdout
-	}
+	logFile := filepath.Join("logs", "route.log") // -> ./logs/route.log
 
 	// Logging to a file, append logging if the file already exists.
 	f, err := os.OpenFile(logFile, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0644)
 	if err != nil {
-		log.Errorf("open log file %s error: %v", logFile, err)
+		slog.Error("open log file error", slog.Any("error", err), slog.String("logFile", logFile))
 		return os.Stdout
 	}
 

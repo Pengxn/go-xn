@@ -1,12 +1,13 @@
 package middleware
 
 import (
+	"log/slog"
+
 	"github.com/getsentry/sentry-go"
 	"github.com/getsentry/sentry-go/gin"
 	"github.com/gin-gonic/gin"
 
 	"github.com/Pengxn/go-xn/src/config"
-	"github.com/Pengxn/go-xn/src/util/log"
 )
 
 func Sentry() gin.HandlerFunc {
@@ -16,7 +17,7 @@ func Sentry() gin.HandlerFunc {
 		Dsn:   sentryConfig.DSN,
 		Debug: sentryConfig.Debug,
 	}); err != nil {
-		log.Errorf("Sentry initialization failed: %v", err)
+		slog.Error("Sentry initialization failed", slog.Any("error", err))
 	}
 
 	return sentrygin.New(sentrygin.Options{})

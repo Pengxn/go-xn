@@ -18,7 +18,9 @@ var (
 
 // Render renders the markdown text to HTML by GitHub API.
 // Default mode is "gfm" (GitHub Flavored Markdown),
-// refer to https://github.github.com/gfm/ for more details.
+// refer to [GitHub Flavored Markdown Spec] for more details.
+//
+// [GitHub Flavored Markdown Spec]: https://github.github.com/gfm/#gfm-overview
 func Render(text string) (string, error) {
 	client := github.NewClient(nil)
 
@@ -45,7 +47,7 @@ func GetLatestAssetLink() (string, error) {
 	if err != nil {
 		return "", err
 	}
-
+	// release asset name suffix, e.g. <name>-<version>-linux-amd64.tar.gz
 	substr := fmt.Sprintf("-%s-%s.", runtime.GOOS, runtime.GOARCH)
 	for _, asset := range rel.Assets {
 		if strings.Contains(asset.GetName(), substr) {
@@ -56,7 +58,9 @@ func GetLatestAssetLink() (string, error) {
 	return "", errors.New("no latest asset link found")
 }
 
-// GetNightlyLink returns the nightly build artifact link from nightly.link.
+// GetNightlyLink returns the nightly build artifact link from [nightly.link].
+//
+// [nightly.link]: https://nightly.link
 func GetNightlyLink() (string, error) {
 	_, artifactName, err := GetActionsArtifactLink()
 	if err != nil {
@@ -64,9 +68,9 @@ func GetNightlyLink() (string, error) {
 	}
 
 	// nightly.link is a service to provide nightly build artifact download link.
-	nightlyURL := "https://nightly.link/Pengxn/go-xn/workflows/test/main"
+	nightlyURL := "https://nightly.link/Pengxn/go-xn/workflows/test"
 
-	return fmt.Sprintf("%s/%s.zip", nightlyURL, artifactName), nil
+	return fmt.Sprintf("%s/%s/%s.zip", nightlyURL, defaultBranch, artifactName), nil
 }
 
 // GetActionsArtifactLink returns the latest artifact link of the workflow run from GitHub Actions.
@@ -78,6 +82,7 @@ func GetActionsArtifactLink() (string, string, error) {
 	client := github.NewClient(nil)
 	ctx := context.Background()
 
+	// Get the latest workflow run from list of workflow runs.
 	// API doc url: https://docs.github.com/en/rest/actions/workflow-runs#list-workflow-runs-for-a-repository
 	option := &github.ListWorkflowRunsOptions{Branch: defaultBranch}
 	runs, _, err := client.Actions.ListRepositoryWorkflowRuns(ctx, defaultOwner, defaultRepo, option)
@@ -85,15 +90,24 @@ func GetActionsArtifactLink() (string, string, error) {
 		return "", "", err
 	}
 
-	if len(runs.WorkflowRuns) == 0 {
-		return "", "", errors.New("no latest workflow runs found")
+	var runID int64
+	for _, run := range runs.WorkflowRuns {
+		// Skip the `Dependabot Updates` workflow runs, as they are not the nightly build.
+		// Its complete path is `dynamic/dependabot/dependabot-updates`.
+		if strings.Contains(run.GetPath(), "dependabot") {
+			continue
+		}
+		if run.GetStatus() == "completed" {
+			runID = run.GetID()
+			break
+		}
 	}
 
-	runID := runs.WorkflowRuns[0].GetID()
+	if runID == 0 {
+		return "", "", errors.New("no latest completed workflow runs found")
+	}
 
-	// TODO: check the status of the workflow run, if it's `in_progress` to detect the latest artifact.
-	// If `in_progress` workflow run not found, then get the latest completed workflow run.
-
+	// Get the list of artifacts for specific workflow run.
 	// API doc url: https://docs.github.com/en/rest/actions/artifacts#list-workflow-run-artifacts
 	artifacts, _, err := client.Actions.ListWorkflowRunArtifacts(ctx, defaultOwner, defaultRepo, runID, nil)
 	if err != nil {
