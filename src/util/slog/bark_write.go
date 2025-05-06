@@ -12,6 +12,8 @@ import (
 )
 
 // bark_endpoint is the API endpoint for [Bark].
+//
+// [Bark]: https://github.com/finb/bark
 const bark_endpoint = "https://api.day.app/"
 
 // BarkWriter is a writer that sends log messages to Bark.
@@ -24,7 +26,7 @@ type BarkWriter struct {
 func NewBark(token string) *BarkWriter {
 	return &BarkWriter{
 		token:   token,
-		timeout: 5 * time.Second, // default 5 seconds timeout
+		timeout: defaultTimeout,
 	}
 }
 

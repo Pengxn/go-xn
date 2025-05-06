@@ -10,7 +10,10 @@ import (
 	"time"
 )
 
-const endpoint = "https://log-api.newrelic.com/log/v1"
+// nr_endpoint is the API endpoint for [NewRelic].
+//
+// [NewRelic]: https://newrelic.com
+const nr_endpoint = "https://log-api.newrelic.com/log/v1"
 
 // NewRelicWriter is a writer that sends log messages to NewRelic.
 type NewRelicWriter struct {
@@ -22,7 +25,7 @@ type NewRelicWriter struct {
 func NewRelic(key string) *NewRelicWriter {
 	return &NewRelicWriter{
 		key:     key,
-		timeout: 5 * time.Second, // default 5 seconds timeout
+		timeout: defaultTimeout,
 	}
 }
 
@@ -52,7 +55,7 @@ func (nr *NewRelicWriter) send(msg []byte) (err error) {
 	ctx, cancel := context.WithTimeout(context.Background(), nr.timeout)
 	defer cancel()
 
-	request, err := http.NewRequestWithContext(ctx, http.MethodPost, endpoint, bytes.NewBuffer(msg))
+	request, err := http.NewRequestWithContext(ctx, http.MethodPost, nr_endpoint, bytes.NewBuffer(msg))
 	if err != nil {
 		return
 	}

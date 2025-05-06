@@ -23,7 +23,7 @@ type TelegramWriter struct {
 func NewTelegram(token string) *TelegramWriter {
 	return &TelegramWriter{
 		token:   token,
-		timeout: 5 * time.Second, // default 5 seconds timeout
+		timeout: defaultTimeout,
 	}
 }
 

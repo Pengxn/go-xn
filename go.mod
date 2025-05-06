@@ -18,13 +18,13 @@ require (
 	github.com/mattn/go-sqlite3 v1.14.28
 	github.com/patrickmn/go-cache v2.1.0+incompatible
 	github.com/pquerna/otp v1.4.0
-	github.com/redis/go-redis/v9 v9.7.3
+	github.com/redis/go-redis/v9 v9.8.0
 	github.com/robfig/cron/v3 v3.0.1
 	github.com/rs/cors v1.11.1
 	github.com/schollz/progressbar/v3 v3.18.0
 	github.com/smartystreets/goconvey v1.8.1
-	github.com/urfave/cli/v3 v3.2.0
-	github.com/yuin/goldmark v1.7.10
+	github.com/urfave/cli/v3 v3.3.2
+	github.com/yuin/goldmark v1.7.11
 	go.opentelemetry.io/contrib/bridges/otelslog v0.10.0
 	go.opentelemetry.io/otel v1.35.0
 	go.opentelemetry.io/otel/exporters/otlp/otlplog/otlploggrpc v0.11.0
@@ -33,12 +33,14 @@ require (
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc v1.35.0
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp v1.35.0
 	go.opentelemetry.io/otel/exporters/stdout/stdoutlog v0.11.0
+	go.opentelemetry.io/otel/exporters/stdout/stdouttrace v1.35.0
 	go.opentelemetry.io/otel/sdk v1.35.0
 	go.opentelemetry.io/otel/sdk/log v0.11.0
 	golang.org/x/crypto v0.37.0
 	golang.org/x/net v0.39.0
 	google.golang.org/grpc v1.72.0
 	google.golang.org/protobuf v1.36.6
+	gopkg.in/natefinch/lumberjack.v2 v2.2.1
 	xorm.io/xorm v1.3.9
 )
 
