@@ -70,9 +70,9 @@ func newStdoutTraceExporter(_ context.Context, _ Config) (trace.SpanExporter, er
 // https://opentelemetry.io/docs/languages/go/exporters/#otlp-traces-over-grpc
 func newGRPCTraceExporter(ctx context.Context, c Config) (trace.SpanExporter, error) {
 	return otlptrace.New(ctx,
-		otlptracehttp.NewClient(
-			otlptracehttp.WithEndpoint(c.Endpoint),
-			otlptracehttp.WithHeaders(c.Headers),
+		otlptracegrpc.NewClient(
+			otlptracegrpc.WithEndpoint(c.Endpoint),
+			otlptracegrpc.WithHeaders(c.Headers),
 		),
 	)
 }
@@ -81,9 +81,9 @@ func newGRPCTraceExporter(ctx context.Context, c Config) (trace.SpanExporter, er
 // https://opentelemetry.io/docs/languages/go/exporters/#otlp-traces-over-http
 func newHTTPTraceExporter(ctx context.Context, c Config) (trace.SpanExporter, error) {
 	return otlptrace.New(ctx,
-		otlptracegrpc.NewClient(
-			otlptracegrpc.WithEndpoint(c.Endpoint),
-			otlptracegrpc.WithHeaders(c.Headers),
+		otlptracehttp.NewClient(
+			otlptracehttp.WithEndpoint(c.Endpoint),
+			otlptracehttp.WithHeaders(c.Headers),
 		),
 	)
 }
