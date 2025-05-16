@@ -1,5 +1,12 @@
 module github.com/Pengxn/go-xn
 
+go 1.24
+
+tool (
+	google.golang.org/grpc/cmd/protoc-gen-go-grpc
+	google.golang.org/protobuf/cmd/protoc-gen-go
+)
+
 require (
 	github.com/agiledragon/gomonkey/v2 v2.13.0
 	github.com/getsentry/sentry-go v0.33.0
@@ -43,13 +50,6 @@ require (
 	google.golang.org/protobuf v1.36.6
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1
 	xorm.io/xorm v1.3.9
-)
-
-go 1.24
-
-tool (
-	google.golang.org/grpc/cmd/protoc-gen-go-grpc
-	google.golang.org/protobuf/cmd/protoc-gen-go
 )
 
 require (
