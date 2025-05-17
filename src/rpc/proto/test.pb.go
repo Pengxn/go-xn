@@ -109,9 +109,8 @@ const file_test_proto_rawDesc = "" +
 	"test.proto\x12\x05proto\"\a\n" +
 	"\x05Empty\" \n" +
 	"\x04Pong\x12\x18\n" +
-	"\amessage\x18\x01 \x01(\tR\amessage2/\n" +
-	"\n" +
-	"HeathCheck\x12!\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage20\n" +
+	"\vHealthCheck\x12!\n" +
 	"\x04Ping\x12\f.proto.Empty\x1a\v.proto.PongB'Z%github.com/Pengxn/go-xn/src/rpc/protob\x06proto3"
 
 var (
@@ -132,8 +131,8 @@ var file_test_proto_goTypes = []any{
 	(*Pong)(nil),  // 1: proto.Pong
 }
 var file_test_proto_depIdxs = []int32{
-	0, // 0: proto.HeathCheck.Ping:input_type -> proto.Empty
-	1, // 1: proto.HeathCheck.Ping:output_type -> proto.Pong
+	0, // 0: proto.HealthCheck.Ping:input_type -> proto.Empty
+	1, // 1: proto.HealthCheck.Ping:output_type -> proto.Pong
 	1, // [1:2] is the sub-list for method output_type
 	0, // [0:1] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
