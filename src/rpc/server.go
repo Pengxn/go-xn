@@ -7,7 +7,7 @@ import (
 )
 
 type Server struct {
-	pb.HeathCheckServer
+	pb.HealthCheckServer
 }
 
 func (s *Server) Ping(_ context.Context, _ *pb.Empty) (*pb.Pong, error) {

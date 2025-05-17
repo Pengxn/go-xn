@@ -55,7 +55,7 @@ func runGRPCServer(ctx context.Context, c *cli.Command) error {
 
 	gs := grpc.NewServer()
 	defer gs.Stop()
-	proto.RegisterHeathCheckServer(gs, &rpc.Server{})
+	proto.RegisterHealthCheckServer(gs, &rpc.Server{})
 
 	log.Printf("server listening at %v", lis.Addr())
 	err = gs.Serve(lis)
