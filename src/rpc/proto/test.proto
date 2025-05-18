@@ -10,6 +10,6 @@ message Pong {
     string message = 1;
 }
 
-service HeathCheck {
+service HealthCheck {
     rpc Ping (Empty) returns (Pong);
 }
