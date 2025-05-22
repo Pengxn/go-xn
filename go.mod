@@ -41,9 +41,9 @@ require (
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp v1.36.0
 	go.opentelemetry.io/otel/exporters/stdout/stdoutlog v0.11.0
 	go.opentelemetry.io/otel/exporters/stdout/stdouttrace v1.36.0
-	go.opentelemetry.io/otel/log v0.11.0
+	go.opentelemetry.io/otel/log v0.12.2
 	go.opentelemetry.io/otel/sdk v1.36.0
-	go.opentelemetry.io/otel/sdk/log v0.11.0
+	go.opentelemetry.io/otel/sdk/log v0.12.2
 	golang.org/x/crypto v0.38.0
 	golang.org/x/net v0.40.0
 	google.golang.org/grpc v1.72.1
@@ -95,6 +95,7 @@ require (
 	github.com/x448/float16 v0.8.4 // indirect
 	go.opentelemetry.io/auto/sdk v1.1.0 // indirect
 	go.opentelemetry.io/otel/metric v1.36.0 // indirect
+	go.opentelemetry.io/otel/sdk/log/logtest v0.0.0-20250522073055-0fc383a3ac34 // indirect
 	go.opentelemetry.io/otel/trace v1.36.0 // indirect
 	go.opentelemetry.io/proto/otlp v1.6.0 // indirect
 	golang.org/x/arch v0.14.0 // indirect
