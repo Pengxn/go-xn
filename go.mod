@@ -32,7 +32,7 @@ require (
 	github.com/smartystreets/goconvey v1.8.1
 	github.com/urfave/cli/v3 v3.3.3
 	github.com/yuin/goldmark v1.7.12
-	go.opentelemetry.io/contrib/bridges/otelslog v0.10.0
+	go.opentelemetry.io/contrib/bridges/otelslog v0.11.0
 	go.opentelemetry.io/otel v1.36.0
 	go.opentelemetry.io/otel/exporters/otlp/otlplog/otlploggrpc v0.12.2
 	go.opentelemetry.io/otel/exporters/otlp/otlplog/otlploghttp v0.12.2
