@@ -11,7 +11,6 @@ import (
 	"go.opentelemetry.io/otel/exporters/otlp/otlplog/otlploggrpc"
 	"go.opentelemetry.io/otel/exporters/otlp/otlplog/otlploghttp"
 	"go.opentelemetry.io/otel/exporters/stdout/stdoutlog"
-	otellog "go.opentelemetry.io/otel/log"
 	sdklog "go.opentelemetry.io/otel/sdk/log"
 	"go.opentelemetry.io/otel/sdk/resource"
 )
@@ -26,7 +25,7 @@ func NewLogger(ctx context.Context, c Config) *slog.Logger {
 	return logger
 }
 
-func InitLog(ctx context.Context, c Config) otellog.LoggerProvider {
+func InitLog(ctx context.Context, c Config) *sdklog.LoggerProvider {
 	var exporterFn func(context.Context, Config) (sdklog.Exporter, error)
 	switch c.ClientType {
 	case "grpc":
