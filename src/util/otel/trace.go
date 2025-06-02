@@ -39,20 +39,6 @@ func InitTrace(ctx context.Context, c Config) func(context.Context) error {
 	return initOTELTracer(ctx, c, exporterFn)
 }
 
-// Config is the configuration for [OpenTelemetry].
-// It contains the client type, endpoint, and headers for the exporter.
-// The client type can be either "grpc" or "http".
-// The endpoint is the URL of the [OpenTelemetry Collector], default not including `v1/trace`.
-// refer to https://opentelemetry.io/docs/languages/sdk-configuration/otlp-exporter/
-//
-// [OpenTelemetry]: https://opentelemetry.io/
-// [OpenTelemetry Collector]: https://opentelemetry.io/docs/collector/
-type Config struct {
-	ClientType string
-	Endpoint   string
-	Headers    map[string]string
-}
-
 // exporterFunc is a function type that takes a context and config,
 // it's used to create a new OpenTelemetry trace exporter.
 type exporterFunc func(context.Context, Config) (trace.SpanExporter, error)
