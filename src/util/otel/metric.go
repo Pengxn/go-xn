@@ -4,15 +4,12 @@ import (
 	"context"
 	"log"
 	"log/slog"
-	"runtime"
 
 	"go.opentelemetry.io/otel"
-	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/exporters/otlp/otlpmetric/otlpmetricgrpc"
 	"go.opentelemetry.io/otel/exporters/otlp/otlpmetric/otlpmetrichttp"
 	"go.opentelemetry.io/otel/exporters/stdout/stdoutmetric"
 	"go.opentelemetry.io/otel/sdk/metric"
-	"go.opentelemetry.io/otel/sdk/resource"
 )
 
 // InitTrace initializes the OpenTelemetry trace exporter with the given config.
@@ -41,13 +38,7 @@ func InitMetric(ctx context.Context, c Config) func(context.Context) error {
 	}
 
 	// Create new resource
-	resources, err := resource.New(ctx,
-		resource.WithAttributes(
-			attribute.String("service.name", "go-xn"),
-			attribute.String("service.os", runtime.GOOS),
-			attribute.String("service.arch", runtime.GOARCH),
-		),
-	)
+	resources, err := commonResource(ctx)
 	if err != nil {
 		log.Fatal("failed to create resource: ", err)
 	}

@@ -4,15 +4,12 @@ import (
 	"context"
 	"log"
 	"log/slog"
-	"runtime"
 
 	"go.opentelemetry.io/otel"
-	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/exporters/otlp/otlptrace"
 	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc"
 	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp"
 	"go.opentelemetry.io/otel/exporters/stdout/stdouttrace"
-	"go.opentelemetry.io/otel/sdk/resource"
 	"go.opentelemetry.io/otel/sdk/trace"
 )
 
@@ -83,13 +80,7 @@ func initOTELTracer(ctx context.Context, c Config, fn exporterFunc) func(context
 	}
 
 	// create the resource
-	resources, err := resource.New(ctx,
-		resource.WithAttributes(
-			attribute.String("service.name", "go-xn"),
-			attribute.String("service.os", runtime.GOOS),
-			attribute.String("service.arch", runtime.GOARCH),
-		),
-	)
+	resources, err := commonResource(ctx)
 	if err != nil {
 		log.Fatalf("failed to set resources: %s", err)
 	}
