@@ -4,15 +4,12 @@ import (
 	"context"
 	"log"
 	"log/slog"
-	"runtime"
 
 	"go.opentelemetry.io/contrib/bridges/otelslog"
-	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/exporters/otlp/otlplog/otlploggrpc"
 	"go.opentelemetry.io/otel/exporters/otlp/otlplog/otlploghttp"
 	"go.opentelemetry.io/otel/exporters/stdout/stdoutlog"
 	sdklog "go.opentelemetry.io/otel/sdk/log"
-	"go.opentelemetry.io/otel/sdk/resource"
 )
 
 func NewLogger(ctx context.Context, c Config) *slog.Logger {
@@ -48,13 +45,7 @@ func InitLog(ctx context.Context, c Config) *sdklog.LoggerProvider {
 	}
 
 	// create the resource
-	resources, err := resource.New(ctx,
-		resource.WithAttributes(
-			attribute.String("service.name", "go-xn"),
-			attribute.String("service.os", runtime.GOOS),
-			attribute.String("service.arch", runtime.GOARCH),
-		),
-	)
+	resources, err := commonResource(ctx)
 	if err != nil {
 		log.Fatalf("failed to set resources: %s", err)
 	}
