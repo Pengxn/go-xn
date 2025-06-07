@@ -21,6 +21,16 @@ func init() {
 	logger := slog.New(tint.NewHandler(os.Stderr, &tint.Options{
 		Level:      slog.LevelDebug,
 		TimeFormat: "2006/01/02 - 15:04:05",
+
+		// colorize the error messages
+		ReplaceAttr: func(_ []string, attr slog.Attr) slog.Attr {
+			if attr.Value.Kind() == slog.KindAny {
+				if e, ok := attr.Value.Any().(error); ok {
+					return tint.Err(e)
+				}
+			}
+			return attr
+		},
 	}))
 
 	// Set `tint` logger with colorized output as default logger.
