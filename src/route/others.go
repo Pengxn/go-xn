@@ -50,4 +50,7 @@ func othersRoutes(g *gin.Engine) {
 	// Bitcoin BIP15 aliases, the status of standard BIP15 aliases is deferred, refer to:
 	// https://github.com/bitcoin/bips/blob/master/bip-0015.mediawiki#https-web-service
 	g.Any("/bitcoin-alias", controller.BitcoinAliases)
+
+	// Metrics for Prometheus.
+	g.GET("/metrics", controller.PrometheusMetrics)
 }
