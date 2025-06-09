@@ -4,18 +4,25 @@ import (
 	"context"
 	"log"
 	"log/slog"
-	"runtime"
 
 	"go.opentelemetry.io/contrib/bridges/otelslog"
-	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/exporters/otlp/otlplog/otlploggrpc"
 	"go.opentelemetry.io/otel/exporters/otlp/otlplog/otlploghttp"
 	"go.opentelemetry.io/otel/exporters/stdout/stdoutlog"
 	sdklog "go.opentelemetry.io/otel/sdk/log"
-	"go.opentelemetry.io/otel/sdk/resource"
 )
 
-func InitLog(ctx context.Context, c Config) *slog.Logger {
+func NewLogger(ctx context.Context, c Config) *slog.Logger {
+	loggerProvider := InitLog(ctx, c)
+
+	logger := otelslog.NewLogger("go-xn",
+		otelslog.WithLoggerProvider(loggerProvider),
+	)
+
+	return logger
+}
+
+func InitLog(ctx context.Context, c Config) *sdklog.LoggerProvider {
 	var exporterFn func(context.Context, Config) (sdklog.Exporter, error)
 	switch c.ClientType {
 	case "grpc":
@@ -34,17 +41,11 @@ func InitLog(ctx context.Context, c Config) *slog.Logger {
 	}
 	exporter, err := exporterFn(ctx, c)
 	if err != nil {
-		log.Fatalf("failed to create exporter: %s", err)
+		log.Fatalf("failed to create log exporter: %s", err)
 	}
 
 	// create the resource
-	resources, err := resource.New(ctx,
-		resource.WithAttributes(
-			attribute.String("service.name", "go-xn"),
-			attribute.String("service.os", runtime.GOOS),
-			attribute.String("service.arch", runtime.GOARCH),
-		),
-	)
+	resources, err := commonResource(ctx)
 	if err != nil {
 		log.Fatalf("failed to set resources: %s", err)
 	}
@@ -55,11 +56,7 @@ func InitLog(ctx context.Context, c Config) *slog.Logger {
 		sdklog.WithResource(resources),
 	)
 
-	logger := otelslog.NewLogger("go-xn",
-		otelslog.WithLoggerProvider(loggerProvider),
-	)
-
-	return logger
+	return loggerProvider
 }
 
 // newStdoutExporter creates a new stdout exporter for OpenTelemetry logs.
