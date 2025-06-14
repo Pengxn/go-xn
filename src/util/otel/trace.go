@@ -15,7 +15,7 @@ import (
 
 // InitTrace initializes the OpenTelemetry trace exporter with the given config.
 // It returns a function to shut down the exporter when done.
-func InitTrace(ctx context.Context, c Config) func(context.Context) error {
+func InitTrace(ctx context.Context, c config) func(context.Context) error {
 	var exporterFn exporterFunc
 	switch c.ClientType {
 	case "grpc":
@@ -36,43 +36,8 @@ func InitTrace(ctx context.Context, c Config) func(context.Context) error {
 	return initOTELTracer(ctx, c, exporterFn)
 }
 
-// exporterFunc is a function type that takes a context and config,
-// it's used to create a new OpenTelemetry trace exporter.
-type exporterFunc func(context.Context, Config) (trace.SpanExporter, error)
-
-// newStdoutExporter creates a new stdout exporter for OpenTelemetry traces.
-// https://opentelemetry.io/docs/languages/go/exporters/#console-traces
-func newStdoutTraceExporter(_ context.Context, _ Config) (trace.SpanExporter, error) {
-	return stdouttrace.New(
-		stdouttrace.WithPrettyPrint(),
-		stdouttrace.WithWriter(log.Writer()), // TODO: use custom writer
-	)
-}
-
-// newGRPCExporter creates a new gRPC exporter for OpenTelemetry traces.
-// https://opentelemetry.io/docs/languages/go/exporters/#otlp-traces-over-grpc
-func newGRPCTraceExporter(ctx context.Context, c Config) (trace.SpanExporter, error) {
-	return otlptrace.New(ctx,
-		otlptracegrpc.NewClient(
-			otlptracegrpc.WithEndpoint(c.Endpoint),
-			otlptracegrpc.WithHeaders(c.Headers),
-		),
-	)
-}
-
-// newHTTPExporter creates a new HTTP exporter for OpenTelemetry traces.
-// https://opentelemetry.io/docs/languages/go/exporters/#otlp-traces-over-http
-func newHTTPTraceExporter(ctx context.Context, c Config) (trace.SpanExporter, error) {
-	return otlptrace.New(ctx,
-		otlptracehttp.NewClient(
-			otlptracehttp.WithEndpoint(c.Endpoint),
-			otlptracehttp.WithHeaders(c.Headers),
-		),
-	)
-}
-
 // initOTELTracer initializes the OpenTelemetry tracer with the given client.
-func initOTELTracer(ctx context.Context, c Config, fn exporterFunc) func(context.Context) error {
+func initOTELTracer(ctx context.Context, c config, fn exporterFunc) func(context.Context) error {
 	// create the exporter
 	exporter, err := fn(ctx, c)
 	if err != nil {
@@ -96,4 +61,39 @@ func initOTELTracer(ctx context.Context, c Config, fn exporterFunc) func(context
 	)
 
 	return exporter.Shutdown
+}
+
+// exporterFunc is a function type that takes a context and config,
+// it's used to create a new OpenTelemetry trace exporter.
+type exporterFunc func(context.Context, config) (trace.SpanExporter, error)
+
+// newStdoutExporter creates a new stdout exporter for OpenTelemetry traces.
+// https://opentelemetry.io/docs/languages/go/exporters/#console-traces
+func newStdoutTraceExporter(_ context.Context, _ config) (trace.SpanExporter, error) {
+	return stdouttrace.New(
+		stdouttrace.WithPrettyPrint(),
+		stdouttrace.WithWriter(log.Writer()), // TODO: use custom writer
+	)
+}
+
+// newGRPCExporter creates a new gRPC exporter for OpenTelemetry traces.
+// https://opentelemetry.io/docs/languages/go/exporters/#otlp-traces-over-grpc
+func newGRPCTraceExporter(ctx context.Context, c config) (trace.SpanExporter, error) {
+	return otlptrace.New(ctx,
+		otlptracegrpc.NewClient(
+			otlptracegrpc.WithEndpoint(c.Endpoint),
+			otlptracegrpc.WithHeaders(c.Headers),
+		),
+	)
+}
+
+// newHTTPExporter creates a new HTTP exporter for OpenTelemetry traces.
+// https://opentelemetry.io/docs/languages/go/exporters/#otlp-traces-over-http
+func newHTTPTraceExporter(ctx context.Context, c config) (trace.SpanExporter, error) {
+	return otlptrace.New(ctx,
+		otlptracehttp.NewClient(
+			otlptracehttp.WithEndpoint(c.Endpoint),
+			otlptracehttp.WithHeaders(c.Headers),
+		),
+	)
 }
