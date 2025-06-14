@@ -36,6 +36,33 @@ func InitTrace(ctx context.Context, c config) func(context.Context) error {
 	return initOTELTracer(ctx, c, exporterFn)
 }
 
+// initOTELTracer initializes the OpenTelemetry tracer with the given client.
+func initOTELTracer(ctx context.Context, c config, fn exporterFunc) func(context.Context) error {
+	// create the exporter
+	exporter, err := fn(ctx, c)
+	if err != nil {
+		log.Fatalf("failed to create tracer exporter: %s", err)
+	}
+
+	// create the resource
+	resources, err := commonResource(ctx)
+	if err != nil {
+		log.Fatalf("failed to set resources: %s", err)
+	}
+
+	// set the global OpenTelemetry tracer provider
+	otel.SetTracerProvider(
+		trace.NewTracerProvider(
+			trace.WithSampler(trace.AlwaysSample()),
+			trace.WithSpanProcessor(trace.NewBatchSpanProcessor(exporter)),
+			trace.WithSyncer(exporter),
+			trace.WithResource(resources),
+		),
+	)
+
+	return exporter.Shutdown
+}
+
 // exporterFunc is a function type that takes a context and config,
 // it's used to create a new OpenTelemetry trace exporter.
 type exporterFunc func(context.Context, config) (trace.SpanExporter, error)
@@ -69,31 +96,4 @@ func newHTTPTraceExporter(ctx context.Context, c config) (trace.SpanExporter, er
 			otlptracehttp.WithHeaders(c.Headers),
 		),
 	)
-}
-
-// initOTELTracer initializes the OpenTelemetry tracer with the given client.
-func initOTELTracer(ctx context.Context, c config, fn exporterFunc) func(context.Context) error {
-	// create the exporter
-	exporter, err := fn(ctx, c)
-	if err != nil {
-		log.Fatalf("failed to create tracer exporter: %s", err)
-	}
-
-	// create the resource
-	resources, err := commonResource(ctx)
-	if err != nil {
-		log.Fatalf("failed to set resources: %s", err)
-	}
-
-	// set the global OpenTelemetry tracer provider
-	otel.SetTracerProvider(
-		trace.NewTracerProvider(
-			trace.WithSampler(trace.AlwaysSample()),
-			trace.WithSpanProcessor(trace.NewBatchSpanProcessor(exporter)),
-			trace.WithSyncer(exporter),
-			trace.WithResource(resources),
-		),
-	)
-
-	return exporter.Shutdown
 }
