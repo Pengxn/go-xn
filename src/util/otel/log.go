@@ -12,7 +12,7 @@ import (
 	sdklog "go.opentelemetry.io/otel/sdk/log"
 )
 
-func NewLogger(ctx context.Context, c config) *slog.Logger {
+func NewLogger(ctx context.Context, c *config) *slog.Logger {
 	loggerProvider := InitLog(ctx, c)
 
 	logger := otelslog.NewLogger("go-xn",
@@ -22,7 +22,7 @@ func NewLogger(ctx context.Context, c config) *slog.Logger {
 	return logger
 }
 
-func InitLog(ctx context.Context, c config) *sdklog.LoggerProvider {
+func InitLog(ctx context.Context, c *config) *sdklog.LoggerProvider {
 	var exporterFn func(context.Context, config) (sdklog.Exporter, error)
 	switch c.ClientType {
 	case "grpc":
@@ -39,7 +39,7 @@ func InitLog(ctx context.Context, c config) *sdklog.LoggerProvider {
 		slog.Debug("init otel log with default stdout")
 		exporterFn = newStdoutLogExporter
 	}
-	exporter, err := exporterFn(ctx, c)
+	exporter, err := exporterFn(ctx, *c)
 	if err != nil {
 		log.Fatalf("failed to create log exporter: %s", err)
 	}
