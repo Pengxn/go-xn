@@ -14,7 +14,7 @@ import (
 
 // InitTrace initializes the OpenTelemetry trace exporter with the given config.
 // It returns a function to shut down the exporter when done.
-func InitMetric(ctx context.Context, c config) func(context.Context) error {
+func InitMetric(ctx context.Context, c *config) func(context.Context) error {
 	var metricExporter metricFunc
 	switch c.ClientType {
 	case "grpc":
@@ -32,7 +32,7 @@ func InitMetric(ctx context.Context, c config) func(context.Context) error {
 		metricExporter = newStdoutMetricExporter
 	}
 
-	exporter, err := metricExporter(ctx, c)
+	exporter, err := metricExporter(ctx, *c)
 	if err != nil {
 		log.Fatal("failed to create metric exporter: ", err)
 	}
