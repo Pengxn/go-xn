@@ -2,6 +2,38 @@
 
 ## [Unreleased]
 
+## [0.1.0] - 2025-06-18
+
+### Added
+
+- Implement OpenTelemetry metrics collection. (#490)
+- Add OpenTelemetry integration for structured logging. (#466)
+- Refactor trace exporter and add stdout support (#460)
+- Add support for log rolling files writer. (#465)
+- Define `defaultTimeout` constant as common timeout value. (ee84379)
+
+### Changed
+
+- Tweak directives order in `go.mod`. (4f1b546)
+- refactor: separate slog logger creation from provider init. (#471)
+- Rename `newrelic.go` file with `_write` suffix. (9757acc)
+- Rename `otel.go` file to `trace.go`. (d28462e)
+- Update error log messages to specific exporter type. (8730309)
+- Refactor WebAuthn init function to accept context and config. (#463)
+- refactor: change `InitLog` return type from interface to concrete type. (#493)
+- Optimize otel config constructor with functional options. (#495)
+- Optimize otel resource attribute by shared function. (#496)
+- Setup `ReplaceAttr` option to colorize error messages. (#501)
+- Sync Chinese translation language file for inno-setup. (#504)
+- tweak: update otel config to private type. (#507)
+- tweak: use pointer as param type for otel init functions. (#508)
+
+### Fixed
+
+- Fix typo and regenerate proto files. (#478)
+- fix: exclude file not exist error and check for directory. (#470)
+- fix: correct trace exporter client implementations. (#469)
+
 ## [0.0.7] - 2025-04-26
 
 ### Added
@@ -196,7 +228,8 @@
 
 - Release first version `0.0.1`.
 
-[Unreleased]: https://github.com/Pengxn/go-xn/compare/0.0.7...HEAD
+[Unreleased]: https://github.com/Pengxn/go-xn/compare/0.1.0...HEAD
+[0.1.0]: https://github.com/Pengxn/go-xn/compare/0.0.7...0.1.0
 [0.0.7]: https://github.com/Pengxn/go-xn/compare/0.0.6...0.0.7
 [0.0.6]: https://github.com/Pengxn/go-xn/compare/0.0.5...0.0.6
 [0.0.5]: https://github.com/Pengxn/go-xn/compare/0.0.4...0.0.5
