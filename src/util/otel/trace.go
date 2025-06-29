@@ -6,7 +6,6 @@ import (
 	"log/slog"
 
 	"go.opentelemetry.io/otel"
-	"go.opentelemetry.io/otel/exporters/otlp/otlptrace"
 	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc"
 	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp"
 	"go.opentelemetry.io/otel/exporters/stdout/stdouttrace"
@@ -79,21 +78,17 @@ func newStdoutTraceExporter(_ context.Context, _ config) (trace.SpanExporter, er
 // newGRPCExporter creates a new gRPC exporter for OpenTelemetry traces.
 // https://opentelemetry.io/docs/languages/go/exporters/#otlp-traces-over-grpc
 func newGRPCTraceExporter(ctx context.Context, c config) (trace.SpanExporter, error) {
-	return otlptrace.New(ctx,
-		otlptracegrpc.NewClient(
-			otlptracegrpc.WithEndpoint(c.Endpoint),
-			otlptracegrpc.WithHeaders(c.Headers),
-		),
+	return otlptracegrpc.New(ctx,
+		otlptracegrpc.WithEndpoint(c.Endpoint),
+		otlptracegrpc.WithHeaders(c.Headers),
 	)
 }
 
 // newHTTPExporter creates a new HTTP exporter for OpenTelemetry traces.
 // https://opentelemetry.io/docs/languages/go/exporters/#otlp-traces-over-http
 func newHTTPTraceExporter(ctx context.Context, c config) (trace.SpanExporter, error) {
-	return otlptrace.New(ctx,
-		otlptracehttp.NewClient(
-			otlptracehttp.WithEndpoint(c.Endpoint),
-			otlptracehttp.WithHeaders(c.Headers),
-		),
+	return otlptracehttp.New(ctx,
+		otlptracehttp.WithEndpoint(c.Endpoint),
+		otlptracehttp.WithHeaders(c.Headers),
 	)
 }
