@@ -19,3 +19,5 @@ updates:
       - "dependencies 📦"
       - "CI/CD ⚙️"
     target-branch: "main"
+    ignore:
+      - dependency-name: "go.opentelemetry.io/*"

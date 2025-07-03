@@ -12,7 +12,7 @@ import (
 	sdklog "go.opentelemetry.io/otel/sdk/log"
 )
 
-func NewLogger(ctx context.Context, c Config) *slog.Logger {
+func NewLogger(ctx context.Context, c *config) *slog.Logger {
 	loggerProvider := InitLog(ctx, c)
 
 	logger := otelslog.NewLogger("go-xn",
@@ -22,8 +22,8 @@ func NewLogger(ctx context.Context, c Config) *slog.Logger {
 	return logger
 }
 
-func InitLog(ctx context.Context, c Config) *sdklog.LoggerProvider {
-	var exporterFn func(context.Context, Config) (sdklog.Exporter, error)
+func InitLog(ctx context.Context, c *config) *sdklog.LoggerProvider {
+	var exporterFn func(context.Context, config) (sdklog.Exporter, error)
 	switch c.ClientType {
 	case "grpc":
 		slog.Debug("init otel log", slog.String("type", c.ClientType))
@@ -39,7 +39,7 @@ func InitLog(ctx context.Context, c Config) *sdklog.LoggerProvider {
 		slog.Debug("init otel log with default stdout")
 		exporterFn = newStdoutLogExporter
 	}
-	exporter, err := exporterFn(ctx, c)
+	exporter, err := exporterFn(ctx, *c)
 	if err != nil {
 		log.Fatalf("failed to create log exporter: %s", err)
 	}
@@ -61,7 +61,7 @@ func InitLog(ctx context.Context, c Config) *sdklog.LoggerProvider {
 
 // newStdoutExporter creates a new stdout exporter for OpenTelemetry logs.
 // https://opentelemetry.io/docs/languages/go/exporters/#console-logs
-func newStdoutLogExporter(_ context.Context, _ Config) (sdklog.Exporter, error) {
+func newStdoutLogExporter(_ context.Context, _ config) (sdklog.Exporter, error) {
 	return stdoutlog.New(
 		stdoutlog.WithPrettyPrint(),
 		stdoutlog.WithWriter(log.Writer()), // TODO: use custom writer
@@ -70,7 +70,7 @@ func newStdoutLogExporter(_ context.Context, _ Config) (sdklog.Exporter, error) 
 
 // newGRPCExporter creates a new gRPC exporter for OpenTelemetry logs.
 // https://opentelemetry.io/docs/languages/go/exporters/#otlp-logs-over-grpc-experimental
-func newGRPCLogExporter(ctx context.Context, c Config) (sdklog.Exporter, error) {
+func newGRPCLogExporter(ctx context.Context, c config) (sdklog.Exporter, error) {
 	return otlploggrpc.New(ctx,
 		otlploggrpc.WithEndpoint(c.Endpoint),
 		otlploggrpc.WithHeaders(c.Headers),
@@ -79,7 +79,7 @@ func newGRPCLogExporter(ctx context.Context, c Config) (sdklog.Exporter, error) 
 
 // newHTTPExporter creates a new HTTP exporter for OpenTelemetry logs.
 // https://opentelemetry.io/docs/languages/go/exporters/#otlp-logs-over-http-experimental
-func newHTTPLogExporter(ctx context.Context, c Config) (sdklog.Exporter, error) {
+func newHTTPLogExporter(ctx context.Context, c config) (sdklog.Exporter, error) {
 	return otlploghttp.New(ctx,
 		otlploghttp.WithEndpoint(c.Endpoint),
 		otlploghttp.WithHeaders(c.Headers),
