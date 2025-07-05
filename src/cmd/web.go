@@ -10,6 +10,7 @@ import (
 	"github.com/Pengxn/go-xn/src/lib/webauthn"
 	"github.com/Pengxn/go-xn/src/model"
 	"github.com/Pengxn/go-xn/src/route"
+	"github.com/Pengxn/go-xn/src/util/otel"
 	slogger "github.com/Pengxn/go-xn/src/util/slog"
 )
 
@@ -61,6 +62,10 @@ func runWeb(ctx context.Context, c *cli.Command) error {
 	// Initialize the logger
 	ctx = context.WithValue(ctx, slogger.CtxVersionKey, version)
 	slogger.SetLogger(ctx, config.Config.Logger)
+
+	// Initialize OpenTelemetry
+	shutdown := otel.SetOtel(ctx, config.Config.Otel)
+	defer shutdown(ctx)
 
 	err := route.InitRoutes()
 	if err != nil {
