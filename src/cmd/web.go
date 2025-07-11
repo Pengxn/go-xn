@@ -67,7 +67,7 @@ func runWeb(ctx context.Context, c *cli.Command) error {
 	shutdown := otel.SetOtel(ctx, config.Config.Otel)
 	defer shutdown(ctx)
 
-	err := route.InitRoutes()
+	err := route.InitRoutes(ctx, config.Config.Server)
 	if err != nil {
 		log.Fatalln("fail to init routes", err)
 	}
