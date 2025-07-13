@@ -54,6 +54,8 @@ If '--port' flag is not used, it will use port 7991 by default.`,
 func runWeb(ctx context.Context, c *cli.Command) error {
 	// Override config by cli flag
 	config.OverrideConfigByFlag(ctx, c)
+
+	// Initialize database and tables
 	model.InitTables()
 
 	// Initialize webauthn
@@ -67,7 +69,7 @@ func runWeb(ctx context.Context, c *cli.Command) error {
 	shutdown := otel.SetOtel(ctx, config.Config.Otel)
 	defer shutdown(ctx)
 
-	err := route.InitRoutes()
+	err := route.InitRoutes(ctx, config.Config.Server)
 	if err != nil {
 		log.Fatalln("fail to init routes", err)
 	}
