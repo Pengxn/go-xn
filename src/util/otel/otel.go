@@ -21,23 +21,41 @@ func SetOtel(ctx context.Context, c commonConfig.OtelConfig) func(ctx context.Co
 			c.Header: c.Token,
 		}))
 
-	// Initialize OpenTelemetry tracing
-	traceShutdown := InitTrace(ctx, cfg)
+	shutdown := []func(context.Context){}
 
-	// Initialize OpenTelemetry metrics
-	metricShutdown := InitMetric(ctx, cfg)
+	// Enable and initialize OpenTelemetry tracing
+	if c.EnableTrace {
+		traceShutdown := InitTrace(ctx, cfg)
+		// Add the trace shutdown function to the list
+		shutdown = append(shutdown, func(ctx context.Context) {
+			err := traceShutdown(ctx)
+			if err != nil {
+				slog.Error("failed to shutdown otel trace", slog.Any("error", err))
+			}
+		})
+	}
 
-	// Initialize OpenTelemetry logging
-	_ = NewLogger(ctx, cfg)
+	// Enable and initialize OpenTelemetry metrics
+	if c.EnableMetric {
+		metricShutdown := InitMetric(ctx, cfg)
+		// Add the metric shutdown function to the list
+		shutdown = append(shutdown, func(ctx context.Context) {
+			err := metricShutdown(ctx)
+			if err != nil {
+				slog.Error("failed to shutdown otel metric", slog.Any("error", err))
+			}
+		})
+	}
+
+	// Enable and initialize OpenTelemetry logging
+	if c.EnableLog {
+		logger := NewLogger(ctx, cfg)
+		slog.SetDefault(logger)
+	}
 
 	return func(ctx context.Context) {
-		err := traceShutdown(ctx)
-		if err != nil {
-			slog.Error("failed to shutdown otel trace", slog.Any("error", err))
-		}
-		err = metricShutdown(ctx)
-		if err != nil {
-			slog.Error("failed to shutdown otel metric", slog.Any("error", err))
+		for _, fn := range shutdown {
+			fn(ctx)
 		}
 	}
 }
