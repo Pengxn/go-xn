@@ -9,8 +9,8 @@ tool (
 
 require (
 	github.com/agiledragon/gomonkey/v2 v2.13.0
-	github.com/getsentry/sentry-go v0.35.0
-	github.com/getsentry/sentry-go/gin v0.35.0
+	github.com/getsentry/sentry-go v0.35.1
+	github.com/getsentry/sentry-go/gin v0.35.1
 	github.com/gin-gonic/gin v1.10.1
 	github.com/go-ini/ini v1.67.0
 	github.com/go-mail/mail/v2 v2.3.0
