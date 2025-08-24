@@ -18,6 +18,12 @@ func InitRoutes(ctx context.Context, c config.ServerConfig) error {
 
 	g := gin.New()
 	g.Use(gin.Logger(), gin.Recovery(), middleware.RequestID(), middleware.Sentry())
+
+	// Initialize OpenTelemetry trace middleware
+	if config.Config.Otel.EnableTrace {
+		g.Use(middleware.Otel(ctx))
+	}
+
 	g.GET("/", controller.HomePage)
 
 	// Page number handler
