@@ -1,6 +1,8 @@
 package route
 
 import (
+	"context"
+
 	"github.com/gin-gonic/gin"
 
 	"github.com/Pengxn/go-xn/src/config"
@@ -9,14 +11,19 @@ import (
 )
 
 // InitRoutes initializes all routes.
-func InitRoutes() error {
-	serverConfig := config.Config.Server
-	if !serverConfig.Debug {
+func InitRoutes(ctx context.Context, c config.ServerConfig) error {
+	if !c.Debug {
 		gin.SetMode(gin.ReleaseMode)
 	}
 
 	g := gin.New()
 	g.Use(gin.Logger(), gin.Recovery(), middleware.RequestID(), middleware.Sentry())
+
+	// Initialize OpenTelemetry trace middleware
+	if config.Config.Otel.EnableTrace {
+		g.Use(middleware.Otel(ctx))
+	}
+
 	g.GET("/", controller.HomePage)
 
 	// Page number handler
@@ -25,7 +32,7 @@ func InitRoutes() error {
 	// Health check
 	g.GET("/health", func(c *gin.Context) { c.String(200, "ok") })
 
-	if serverConfig.Debug {
+	if c.Debug {
 		debugRoutes(g)
 	}
 	apiRoutes(g)
@@ -36,8 +43,8 @@ func InitRoutes() error {
 	staticRoutes(g)
 	articlesRoutes(g)
 
-	if serverConfig.TLS {
-		return g.RunTLS(":"+serverConfig.Port, serverConfig.CertFile, serverConfig.KeyFile)
+	if c.TLS {
+		return g.RunTLS(":"+c.Port, c.CertFile, c.KeyFile)
 	}
-	return g.Run(":" + serverConfig.Port)
+	return g.Run(":" + c.Port)
 }

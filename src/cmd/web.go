@@ -10,6 +10,7 @@ import (
 	"github.com/Pengxn/go-xn/src/lib/webauthn"
 	"github.com/Pengxn/go-xn/src/model"
 	"github.com/Pengxn/go-xn/src/route"
+	"github.com/Pengxn/go-xn/src/util/otel"
 	slogger "github.com/Pengxn/go-xn/src/util/slog"
 )
 
@@ -53,6 +54,8 @@ If '--port' flag is not used, it will use port 7991 by default.`,
 func runWeb(ctx context.Context, c *cli.Command) error {
 	// Override config by cli flag
 	config.OverrideConfigByFlag(ctx, c)
+
+	// Initialize database and tables
 	model.InitTables()
 
 	// Initialize webauthn
@@ -62,7 +65,11 @@ func runWeb(ctx context.Context, c *cli.Command) error {
 	ctx = context.WithValue(ctx, slogger.CtxVersionKey, version)
 	slogger.SetLogger(ctx, config.Config.Logger)
 
-	err := route.InitRoutes()
+	// Initialize OpenTelemetry
+	shutdown := otel.SetOtel(ctx, config.Config.Otel)
+	defer shutdown(ctx)
+
+	err := route.InitRoutes(ctx, config.Config.Server)
 	if err != nil {
 		log.Fatalln("fail to init routes", err)
 	}

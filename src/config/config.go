@@ -45,6 +45,7 @@ type appConfig struct {
 	Redis    RedisConfig    `ini:"redis"`
 	Sentry   SentryConfig   `ini:"sentry"`
 	Logger   LoggerConfig   `ini:"log"`
+	Otel     OtelConfig     `ini:"otel"`
 	WebAuthn WebAuthnConfig `ini:"webauthn"`
 	SMTP     SMTPConfig     `ini:"smtp"`
 }
@@ -93,6 +94,17 @@ type LoggerConfig struct {
 	Bark     string `ini:"bark"`     // bark token
 	Telegram string `ini:"telegram"` // telegram bot token
 	Newrelic string `ini:"newrelic"` // newrelic api key
+}
+
+// OtelConfig is the OpenTelemetry configuration.
+type OtelConfig struct {
+	EnableTrace  bool   `ini:"trace"`      // enable OpenTelemetry tracing
+	EnableMetric bool   `ini:"metric"`     // enable OpenTelemetry metrics
+	EnableLog    bool   `ini:"log"`        // enable OpenTelemetry logging
+	ClientType   string `ini:"clientType"` // client type, used to determine the OpenTelemetry client
+	Endpoint     string `ini:"endpoint"`   // endpoint for OpenTelemetry, default: localhost:4317
+	Header       string `ini:"header"`     // header name for authentication
+	Token        string `ini:"token"`      // token or key for authentication
 }
 
 // WebAuthnConfig is the WebAuthn configuration.
