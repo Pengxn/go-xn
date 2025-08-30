@@ -3,6 +3,7 @@ package route
 import (
 	"github.com/gin-gonic/gin"
 
+	"github.com/Pengxn/go-xn/src/config"
 	"github.com/Pengxn/go-xn/src/controller"
 	"github.com/Pengxn/go-xn/src/middleware"
 )
@@ -52,5 +53,7 @@ func othersRoutes(g *gin.Engine) {
 	g.Any("/bitcoin-alias", controller.BitcoinAliases)
 
 	// Metrics for Prometheus.
-	g.GET("/metrics", controller.PrometheusMetrics)
+	if config.Config.Otel.EnablePrometheus {
+		g.GET("/metrics", controller.PrometheusMetrics)
+	}
 }
