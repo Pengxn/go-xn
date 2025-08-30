@@ -2,6 +2,23 @@
 
 ## [Unreleased]
 
+## [0.1.1] - 2025-08-30
+
+### Added
+
+- feat: add otel-related configuration support. (#523)
+- Add OpenTelemetry initialization in web server startup. (#524)
+- Add otel-related granular toggles and refactor otel init. (#543)
+- Add and enable otel tracing middleware. (#557)
+
+### Changed
+
+- chore: mark docs directory as documentation. (e27d88b)
+- refactor: simplify OpenTelemetry trace exporter implementation. (#521)
+- ci: ignore OpenTelemetry go dependencies in dependabot. (#522)
+- refactor: pass context and server config to initialize routes. (#529)
+- Regenerate proto file with latest protoc and protoc-gen-go. (#548, #560)
+
 ## [0.1.0] - 2025-06-18
 
 ### Added
@@ -228,7 +245,8 @@
 
 - Release first version `0.0.1`.
 
-[Unreleased]: https://github.com/Pengxn/go-xn/compare/0.1.0...HEAD
+[Unreleased]: https://github.com/Pengxn/go-xn/compare/0.1.1...HEAD
+[0.1.1]: https://github.com/Pengxn/go-xn/compare/0.1.0...0.1.1
 [0.1.0]: https://github.com/Pengxn/go-xn/compare/0.0.7...0.1.0
 [0.0.7]: https://github.com/Pengxn/go-xn/compare/0.0.6...0.0.7
 [0.0.6]: https://github.com/Pengxn/go-xn/compare/0.0.5...0.0.6

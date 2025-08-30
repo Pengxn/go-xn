@@ -5,7 +5,7 @@
 ;     [guid]::NewGuid().ToString()
 #define APP_ID '9F00A778-1C16-4F7D-8FE4-0CDE4FC712DD'
 #define APP_NAME 'Go-xn'
-#define VERSION '0.1.0'
+#define VERSION '0.1.1'
 #define PUBLISHER 'xn-02f Lab'
 #define URL 'https://xn--02f.com'
 #define EXE_NAME 'go-xn.exe'
