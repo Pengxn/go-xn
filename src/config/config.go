@@ -98,13 +98,14 @@ type LoggerConfig struct {
 
 // OtelConfig is the OpenTelemetry configuration.
 type OtelConfig struct {
-	EnableTrace  bool   `ini:"trace"`      // enable OpenTelemetry tracing
-	EnableMetric bool   `ini:"metric"`     // enable OpenTelemetry metrics
-	EnableLog    bool   `ini:"log"`        // enable OpenTelemetry logging
-	ClientType   string `ini:"clientType"` // client type, used to determine the OpenTelemetry client
-	Endpoint     string `ini:"endpoint"`   // endpoint for OpenTelemetry, default: localhost:4317
-	Header       string `ini:"header"`     // header name for authentication
-	Token        string `ini:"token"`      // token or key for authentication
+	EnableTrace      bool   `ini:"trace"`      // enable OpenTelemetry tracing
+	EnableMetric     bool   `ini:"metric"`     // enable OpenTelemetry metrics
+	EnableLog        bool   `ini:"log"`        // enable OpenTelemetry logging
+	ClientType       string `ini:"clientType"` // client type, used to determine the OpenTelemetry client
+	Endpoint         string `ini:"endpoint"`   // endpoint for OpenTelemetry, default: localhost:4317
+	Header           string `ini:"header"`     // header name for authentication
+	Token            string `ini:"token"`      // token or key for authentication
+	EnablePrometheus bool   `ini:"prometheus"` // enable Prometheus metrics
 }
 
 // WebAuthnConfig is the WebAuthn configuration.
