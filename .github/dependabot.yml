@@ -10,6 +10,9 @@ updates:
     labels:
       - "dependencies 📦"
     target-branch: "main"
+    ignore:
+      - dependency-name: "go.opentelemetry.io/*"
+
   # GitHub Actions
   - package-ecosystem: "github-actions"
     directory: "/"
@@ -19,5 +22,3 @@ updates:
       - "dependencies 📦"
       - "CI/CD ⚙️"
     target-branch: "main"
-    ignore:
-      - dependency-name: "go.opentelemetry.io/*"
