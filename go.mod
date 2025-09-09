@@ -1,6 +1,6 @@
 module github.com/Pengxn/go-xn
 
-go 1.24
+go 1.25
 
 tool (
 	google.golang.org/grpc/cmd/protoc-gen-go-grpc
