@@ -82,8 +82,9 @@ type RedisConfig struct {
 
 // SentryConfig is configuration for Sentry.
 type SentryConfig struct {
-	DSN   string `ini:"DSN"`
-	Debug bool   `ini:"debug"`
+	Enable bool   `ini:"enable"`
+	DSN    string `ini:"DSN"`
+	Debug  bool   `ini:"debug"`
 }
 
 // LoggerConfig is configuration for logger.
