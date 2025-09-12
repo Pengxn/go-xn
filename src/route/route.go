@@ -17,7 +17,12 @@ func InitRoutes(ctx context.Context, c config.ServerConfig) error {
 	}
 
 	g := gin.New()
-	g.Use(gin.Logger(), gin.Recovery(), middleware.RequestID(), middleware.Sentry())
+	g.Use(gin.Logger(), gin.Recovery(), middleware.RequestID())
+
+	// Enable and initialize Sentry
+	if config.Config.Sentry.Enable {
+		g.Use(middleware.Sentry())
+	}
 
 	// Initialize OpenTelemetry trace middleware
 	if config.Config.Otel.EnableTrace {
