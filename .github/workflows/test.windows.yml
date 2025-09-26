@@ -3,7 +3,7 @@ on: workflow_call
 jobs:
   test-windows:
     name: Test on Windows
-    runs-on: windows-latest
+    runs-on: windows-2022
 
     steps:
       - name: Checkout code
