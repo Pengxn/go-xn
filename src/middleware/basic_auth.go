@@ -1,7 +1,6 @@
 package middleware
 
 import (
-	"log/slog"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -26,7 +25,6 @@ func BasicAuth() gin.HandlerFunc {
 
 		has, user, err := model.GetUserByName(username)
 		if err != nil || !has {
-			slog.Error("GetUserByName", slog.Any("error", err))
 			c.String(http.StatusInternalServerError, "server error")
 			c.Abort()
 			return
