@@ -41,8 +41,7 @@ jobs:
 
       - name: Install Inno Setup
         run: |
-          winget install -e --id JRSoftware.InnoSetup
-          iscc /?
+          winget install -e --id JRSoftware.InnoSetup --accept-source-agreements
 
       - name: Build Inno Setup Installer
         run: |
