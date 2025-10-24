@@ -39,10 +39,6 @@ jobs:
           name: ${{ env.GOOS }}-${{ env.GOARCH }}
           path: build/
 
-      - name: Install Inno Setup
-        run: |
-          winget install -e --id JRSoftware.InnoSetup --accept-source-agreements
-
       - name: Build Inno Setup Installer
         run: |
           iscc script/windows/go-xn.iss
