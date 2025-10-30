@@ -34,7 +34,7 @@ jobs:
           make
 
       - name: Publish Build Artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: ${{ env.GOOS }}-${{ env.GOARCH }}
           path: build/
