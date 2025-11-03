@@ -19,6 +19,8 @@ func InitRoutes(ctx context.Context, c config.ServerConfig) error {
 	g := gin.New()
 	g.Use(gin.Logger(), gin.Recovery(), middleware.RequestID())
 
+	staticRoutes(g) // skip sentry and otel for static files
+
 	// Enable and initialize Sentry
 	if config.Config.Sentry.Enable {
 		g.Use(middleware.Sentry())
@@ -45,7 +47,6 @@ func InitRoutes(ctx context.Context, c config.ServerConfig) error {
 	errorRoute(g)
 	adminRoutes(g)
 	othersRoutes(g)
-	staticRoutes(g)
 	articlesRoutes(g)
 
 	if c.TLS {
