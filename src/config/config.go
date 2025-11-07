@@ -47,6 +47,7 @@ type appConfig struct {
 	Logger   LoggerConfig   `ini:"log"`
 	Otel     OtelConfig     `ini:"otel"`
 	WebAuthn WebAuthnConfig `ini:"webauthn"`
+	OAuth2   OAuth2Config   `ini:"oauth2"`
 	SMTP     SMTPConfig     `ini:"smtp"`
 }
 
@@ -114,6 +115,12 @@ type WebAuthnConfig struct {
 	RPID          string   `ini:"rpID"`
 	RPDisplayName string   `ini:"rpDisplayName"`
 	RPOrigins     []string `ini:"rpOrigins"`
+}
+
+// OAuth2Config is the OAuth2 configuration.
+type OAuth2Config struct {
+	GithubClientID     string `ini:"githubClientID"`
+	GithubClientSecret string `ini:"githubClientSecret"`
 }
 
 // SMTPConfig is the mail SMTP configuration.
