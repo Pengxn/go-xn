@@ -2,6 +2,33 @@
 
 ## [Unreleased]
 
+## [0.1.2] - 2025-11-08
+
+### Added
+
+- Add `EnablePrometheus` option to enable metrics collection. (#563)
+- Add `Enable` option to load Sentry middleware conditionally. (#582)
+
+### Changed
+
+- Regenerate proto files with latest protoc and protoc-gen-go. (#583, #597)
+- Update windows runner to `windows-latest`. (#604)
+- Sync Chinese translation language file for inno-setup. (#606)
+- Skip Sentry and OpenTelemetry middlewares for static routes. (e7bef4b)
+
+### Removed
+
+- Remove logging in middleware to avoid cluttering logs. (062d863)
+
+### Fixed
+
+- Correct dependabot ignore rule placement for OpenTelemetry. (#569)
+- Pin windows runner to `windows-2022` to fix missing iscc. (#589)
+
+### Security
+
+- Bump quic-go to 0.54.1 for security fix. (#594)
+
 ## [0.1.1] - 2025-08-30
 
 ### Added
@@ -245,7 +272,8 @@
 
 - Release first version `0.0.1`.
 
-[Unreleased]: https://github.com/Pengxn/go-xn/compare/0.1.1...HEAD
+[Unreleased]: https://github.com/Pengxn/go-xn/compare/0.1.2...HEAD
+[0.1.2]: https://github.com/Pengxn/go-xn/compare/0.1.1...0.1.2
 [0.1.1]: https://github.com/Pengxn/go-xn/compare/0.1.0...0.1.1
 [0.1.0]: https://github.com/Pengxn/go-xn/compare/0.0.7...0.1.0
 [0.0.7]: https://github.com/Pengxn/go-xn/compare/0.0.6...0.0.7
