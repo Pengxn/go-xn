@@ -7,7 +7,7 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/google/go-github/v69/github"
+	"github.com/google/go-github/v79/github"
 )
 
 var (
