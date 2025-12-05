@@ -2,6 +2,7 @@ package controller
 
 import (
 	"net/http"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 	"golang.org/x/oauth2"
@@ -40,9 +41,16 @@ func OAuth2Redirect(c *gin.Context) {
 	// TODO: Use a secure random state and store it to validate in callback handler
 	state := "todo-random-state"
 
+	scheme := "http://"
+	if c.Request.Header.Get("X-Forwarded-Proto") == "https" || strings.HasPrefix(c.Request.Referer(), "https://") {
+		scheme = "https://"
+	}
+	redirectURL := scheme + c.Request.Host + "/oauth/callback"
+
 	oauth2Config := oauth2.Config{
 		ClientID:     config.Config.OAuth2.GithubClientID,
 		ClientSecret: config.Config.OAuth2.GithubClientSecret,
+		RedirectURL:  redirectURL,
 		Endpoint:     github.Endpoint,
 
 		// Specify minimal scopes to get user email and profile info, refer to:
