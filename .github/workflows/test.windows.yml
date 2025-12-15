@@ -34,7 +34,7 @@ jobs:
           make
 
       - name: Publish Build Artifacts
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: ${{ env.GOOS }}-${{ env.GOARCH }}
           path: build/
@@ -44,7 +44,7 @@ jobs:
           iscc script/windows/go-xn.iss
 
       - name: Publish Installer Build Artifacts
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: ${{ env.GOOS }}-${{ env.GOARCH }}-installer
           path: build/*-setup.exe
