@@ -58,12 +58,7 @@ func update(ctx context.Context, c *cli.Command) error {
 	// create real-time progress bar in terminal
 	bar := progressbar.DefaultBytes(resp.ContentLength)
 
-	size, err := io.Copy(io.MultiWriter(buff, bar), resp.Body)
-	if err != nil {
-		return err
-	}
-
-	archive, err := zip.NewReader(bytes.NewReader(buff.Bytes()), size)
+	_, err = io.Copy(io.MultiWriter(buff, bar), resp.Body)
 	if err != nil {
 		return err
 	}
@@ -73,10 +68,21 @@ func update(ctx context.Context, c *cli.Command) error {
 		return err
 	}
 
-	return unzip(archive, filepath.Dir(exePath))
+	return unzip(buff, filepath.Dir(exePath))
 }
 
-func unzip(archive *zip.Reader, dst string) error {
+func unzip(r io.Reader, dst string) error {
+	// Read all data from reader
+	data, err := io.ReadAll(r)
+	if err != nil {
+		return err
+	}
+
+	archive, err := zip.NewReader(bytes.NewReader(data), int64(len(data)))
+	if err != nil {
+		return err
+	}
+
 	for _, f := range archive.File {
 		filePath := filepath.Join(dst, f.Name)
 
