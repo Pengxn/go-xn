@@ -6,7 +6,9 @@ import (
 	"bytes"
 	"compress/gzip"
 	"context"
+	"fmt"
 	"io"
+	"net/http"
 	"os"
 	"path/filepath"
 
@@ -70,7 +72,17 @@ func update(ctx context.Context, c *cli.Command) error {
 		return err
 	}
 
-	return unzip(buff, filepath.Dir(exePath))
+	// detect content type, based on the head of the file buffer
+	// refer to file magic numbers, https://en.wikipedia.org/wiki/List_of_file_signatures
+	contentType := http.DetectContentType(buff.Bytes())
+	switch contentType {
+	case "application/x-gzip":
+		return ungzip(buff, filepath.Dir(exePath))
+	case "application/zip":
+		return unzip(buff, filepath.Dir(exePath))
+	default:
+		return fmt.Errorf("unsupported content type: %s", contentType)
+	}
 }
 
 func unzip(r io.Reader, dst string) error {
