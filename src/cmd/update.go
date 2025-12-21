@@ -1,10 +1,14 @@
 package cmd
 
 import (
+	"archive/tar"
 	"archive/zip"
 	"bytes"
+	"compress/gzip"
 	"context"
+	"fmt"
 	"io"
+	"net/http"
 	"os"
 	"path/filepath"
 
@@ -68,7 +72,17 @@ func update(ctx context.Context, c *cli.Command) error {
 		return err
 	}
 
-	return unzip(buff, filepath.Dir(exePath))
+	// detect content type, based on the head of the file buffer
+	// refer to file magic numbers, https://en.wikipedia.org/wiki/List_of_file_signatures
+	contentType := http.DetectContentType(buff.Bytes())
+	switch contentType {
+	case "application/x-gzip":
+		return ungzip(buff, filepath.Dir(exePath))
+	case "application/zip":
+		return unzip(buff, filepath.Dir(exePath))
+	default:
+		return fmt.Errorf("unsupported content type: %s", contentType)
+	}
 }
 
 func unzip(r io.Reader, dst string) error {
@@ -92,6 +106,7 @@ func unzip(r io.Reader, dst string) error {
 			continue
 		}
 
+		// create parent directory if it doesn't exist
 		if err := os.MkdirAll(filepath.Dir(filePath), os.ModePerm); err != nil {
 			return err
 		}
@@ -109,6 +124,56 @@ func unzip(r io.Reader, dst string) error {
 		defer fileInArchive.Close()
 
 		if _, err := io.Copy(dstFile, fileInArchive); err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+func ungzip(r io.Reader, dst string) error {
+	// Read all data from reader
+	data, err := gzip.NewReader(r)
+	if err != nil {
+		return err
+	}
+	defer data.Close()
+
+	// create tar reader
+	archive := tar.NewReader(data)
+
+	for {
+		header, err := archive.Next()
+		if err == io.EOF { // no more files
+			break
+		}
+		if err != nil {
+			return err
+		}
+
+		filePath := filepath.Join(dst, header.Name)
+
+		// create directory if entry is a directory
+		if header.Typeflag == tar.TypeDir {
+			if err := os.MkdirAll(filePath, os.ModePerm); err != nil {
+				return err
+			}
+			continue
+		}
+
+		// create parent directory if it doesn't exist
+		if err := os.MkdirAll(filepath.Dir(filePath), os.ModePerm); err != nil {
+			return err
+		}
+
+		// create and write file
+		dstFile, err := os.OpenFile(filePath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, os.FileMode(header.Mode))
+		if err != nil {
+			return err
+		}
+		defer dstFile.Close()
+
+		if _, err := io.Copy(dstFile, archive); err != nil {
 			return err
 		}
 	}
