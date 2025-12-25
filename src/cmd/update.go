@@ -67,23 +67,30 @@ func update(ctx context.Context, c *cli.Command) error {
 		return err
 	}
 
-	exePath, err := os.Executable()
-	if err != nil {
-		return err
-	}
+	var extract extractor
 
 	// detect content type, based on the head of the file buffer
 	// refer to file magic numbers, https://en.wikipedia.org/wiki/List_of_file_signatures
 	contentType := http.DetectContentType(buff.Bytes())
 	switch contentType {
 	case "application/x-gzip":
-		return ungzip(buff, filepath.Dir(exePath))
+		extract = ungzip
 	case "application/zip":
-		return unzip(buff, filepath.Dir(exePath))
+		extract = unzip
 	default:
 		return fmt.Errorf("unsupported content type: %s", contentType)
 	}
+
+	exePath, err := os.Executable()
+	if err != nil {
+		return err
+	}
+
+	return extract(buff, filepath.Dir(exePath))
 }
+
+// extractor defines a function type for unified extraction interface.
+type extractor func(r io.Reader, dst string) error
 
 func unzip(r io.Reader, dst string) error {
 	// Read all data from reader
