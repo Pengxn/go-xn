@@ -1,6 +1,8 @@
 package controller
 
 import (
+	"encoding/json"
+	"io"
 	"net/http"
 	"strings"
 
@@ -60,4 +62,73 @@ func OAuth2Redirect(c *gin.Context) {
 
 	// Redirect user to GitHub authorization page
 	c.Redirect(http.StatusFound, oauth2Config.AuthCodeURL(state, oauth2.AccessTypeOnline))
+}
+
+// OAuth2Callback handles the OAuth2 callback from the provider.
+func OAuth2Callback(c *gin.Context) {
+	code := c.Query("code")
+	state := c.Query("state")
+	if code == "" || state == "" {
+		c.JSON(400, gin.H{
+			"message": "missing code or state",
+		})
+		return
+	}
+
+	// Check `state` for CSRF protection
+	// TODO: validate state from session or redis
+	if state != "todo-random-state" {
+		c.JSON(400, gin.H{
+			"message": "invalid state",
+		})
+		return
+	}
+
+	oauth2Config := oauth2.Config{
+		ClientID:     config.Config.OAuth2.GithubClientID,
+		ClientSecret: config.Config.OAuth2.GithubClientSecret,
+		Endpoint:     github.Endpoint,
+	}
+
+	token, err := oauth2Config.Exchange(c, code)
+	if err != nil {
+		c.JSON(500, gin.H{
+			"message": "failed to exchange token",
+		})
+		return
+	}
+
+	// Use the token to get user info
+	// https://docs.github.com/en/rest/users/emails?apiVersion=2022-11-28#list-email-addresses-for-the-authenticated-user
+	client := oauth2Config.Client(c, token)
+	resp, err := client.Get("https://api.github.com/user/emails")
+	if err != nil {
+		c.JSON(500, gin.H{
+			"message": "failed to get user info",
+		})
+		return
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != 200 {
+		c.JSON(500, gin.H{
+			"message": "failed to get user info",
+		})
+		return
+	}
+
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		c.JSON(500, gin.H{
+			"message": "failed to read response body",
+		})
+		return
+	}
+
+	// TODO: Handle user info (e.g., create user session)
+
+	c.JSON(200, gin.H{
+		"message": "success",
+		"data":    json.RawMessage(body),
+	})
 }
