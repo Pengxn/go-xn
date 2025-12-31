@@ -9,7 +9,7 @@ import (
 func authRoutes(g *gin.Engine) {
 	// OAuth2
 	g.GET("/oauth/:provider", controller.OAuth2Redirect)
-	g.POST("/oauth/callback", oauth2)
+	g.GET("/oauth/callback", oauth2)
 	g.POST("/oauth/logout", oauth2)
 }
 
