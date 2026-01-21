@@ -4,7 +4,7 @@ import (
 	"log"
 	"log/slog"
 
-	"github.com/go-ini/ini"
+	"gopkg.in/ini.v1"
 	"xorm.io/xorm"
 )
 
