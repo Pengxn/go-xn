@@ -3,8 +3,8 @@ package config
 import (
 	"log/slog"
 
-	"github.com/go-ini/ini"
 	"github.com/google/uuid"
+	"gopkg.in/ini.v1"
 )
 
 var Config appConfig // Global config object

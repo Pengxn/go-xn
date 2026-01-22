@@ -12,7 +12,6 @@ require (
 	github.com/getsentry/sentry-go v0.41.0
 	github.com/getsentry/sentry-go/gin v0.41.0
 	github.com/gin-gonic/gin v1.11.0
-	github.com/go-ini/ini v1.67.0
 	github.com/go-mail/mail/v2 v2.3.0
 	github.com/go-sql-driver/mysql v1.9.3
 	github.com/go-webauthn/webauthn v0.15.0
@@ -53,6 +52,7 @@ require (
 	golang.org/x/oauth2 v0.34.0
 	google.golang.org/grpc v1.78.0
 	google.golang.org/protobuf v1.36.11
+	gopkg.in/ini.v1 v1.67.1
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1
 	xorm.io/xorm v1.3.11
 )
