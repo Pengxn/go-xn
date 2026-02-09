@@ -49,7 +49,7 @@ require (
 	go.opentelemetry.io/otel/sdk/metric v1.39.0
 	golang.org/x/crypto v0.47.0
 	golang.org/x/net v0.49.0
-	golang.org/x/oauth2 v0.34.0
+	golang.org/x/oauth2 v0.35.0
 	google.golang.org/grpc v1.78.0
 	google.golang.org/protobuf v1.36.11
 	gopkg.in/ini.v1 v1.67.1
