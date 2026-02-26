@@ -1,6 +1,6 @@
 module github.com/Pengxn/go-xn
 
-go 1.25
+go 1.25.0
 
 tool (
 	google.golang.org/grpc/cmd/protoc-gen-go-grpc
@@ -48,7 +48,7 @@ require (
 	go.opentelemetry.io/otel/sdk/log v0.16.0
 	go.opentelemetry.io/otel/sdk/metric v1.40.0
 	golang.org/x/crypto v0.48.0
-	golang.org/x/net v0.50.0
+	golang.org/x/net v0.51.0
 	golang.org/x/oauth2 v0.35.0
 	google.golang.org/grpc v1.79.1
 	google.golang.org/protobuf v1.36.11
