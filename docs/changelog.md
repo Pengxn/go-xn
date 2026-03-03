@@ -2,6 +2,32 @@
 
 ## [Unreleased]
 
+## [0.1.3] - 2025-03-03
+
+### Added
+
+- Add GitHub OAuth2 configuration support. (#609)
+- Implement GitHub OAuth2 authorization redirect handler. (#612)
+- Add gzip extraction support for `update` command. (#643)
+- Implement GitHub OAuth2 callback handler. (#647)
+
+### Changed
+
+- Set dynamic redirect URL detection for OAuth2 flow. (#633)
+- Update `unzip` function signature and logic. (4fdd237)
+- Introduce `extractor` function type for archive extraction. (a10306d)
+- Regenerate proto files with latest protoc and plugins. ( #641, #653, #676)
+- Bump otel-related dependencies to latest. (#640, #673)
+
+### Fixed
+
+- Fix `ini` import path to `gopkg.in/ini.v1`. (#657)
+
+### Security
+
+- Bump quic-go to 0.57.0 for security fix. (CVE-2025-64702, #638)
+- Bump filippo.io/edwards25519 to 1.1.1 for security fix. (CVE-2026-26958, #672)
+
 ## [0.1.2] - 2025-11-08
 
 ### Added
@@ -27,7 +53,7 @@
 
 ### Security
 
-- Bump quic-go to 0.54.1 for security fix. (#594)
+- Bump quic-go to 0.54.1 for security fix. (CVE-2025-59530, #594)
 
 ## [0.1.1] - 2025-08-30
 
@@ -272,7 +298,8 @@
 
 - Release first version `0.0.1`.
 
-[Unreleased]: https://github.com/Pengxn/go-xn/compare/0.1.2...HEAD
+[Unreleased]: https://github.com/Pengxn/go-xn/compare/0.1.3...HEAD
+[0.1.3]: https://github.com/Pengxn/go-xn/compare/0.1.2...0.1.3
 [0.1.2]: https://github.com/Pengxn/go-xn/compare/0.1.1...0.1.2
 [0.1.1]: https://github.com/Pengxn/go-xn/compare/0.1.0...0.1.1
 [0.1.0]: https://github.com/Pengxn/go-xn/compare/0.0.7...0.1.0
