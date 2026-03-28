@@ -31,7 +31,7 @@ require (
 	github.com/schollz/progressbar/v3 v3.19.0
 	github.com/smartystreets/goconvey v1.8.1
 	github.com/urfave/cli/v3 v3.8.0
-	github.com/yuin/goldmark v1.7.17
+	github.com/yuin/goldmark v1.8.2
 	go.opentelemetry.io/contrib/bridges/otelslog v0.17.0
 	go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin v0.67.0
 	go.opentelemetry.io/otel v1.42.0
