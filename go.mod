@@ -19,7 +19,7 @@ require (
 	github.com/google/go-github/v84 v84.0.0
 	github.com/google/uuid v1.6.0
 	github.com/gorilla/feeds v1.2.0
-	github.com/lib/pq v1.12.0
+	github.com/lib/pq v1.12.1
 	github.com/lmittmann/tint v1.1.3
 	github.com/mattn/go-sqlite3 v1.14.38
 	github.com/patrickmn/go-cache v2.1.0+incompatible
