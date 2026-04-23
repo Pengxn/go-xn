@@ -9,7 +9,7 @@ package main
 import (
 	"log"
 
-	"github.com/Pengxn/go-xn/src/cmd"
+	"github.com/Pengxn/go-xn/cmd"
 )
 
 func main() {
