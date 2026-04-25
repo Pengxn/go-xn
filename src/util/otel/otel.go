@@ -5,6 +5,8 @@ import (
 	"log/slog"
 
 	commonConfig "github.com/Pengxn/go-xn/src/config"
+	"go.opentelemetry.io/otel"
+	"go.opentelemetry.io/otel/propagation"
 )
 
 func SetOtel(ctx context.Context, c commonConfig.OtelConfig) func(ctx context.Context) {
@@ -22,6 +24,13 @@ func SetOtel(ctx context.Context, c commonConfig.OtelConfig) func(ctx context.Co
 		}))
 
 	shutdown := []func(context.Context){}
+
+	// Enable and initialize OpenTelemetry propagator
+	prop := propagation.NewCompositeTextMapPropagator(
+		propagation.TraceContext{}, // W3C Trace Context propagator
+		propagation.Baggage{},      // W3C Baggage propagator
+	)
+	otel.SetTextMapPropagator(prop)
 
 	// Enable and initialize OpenTelemetry tracing
 	if c.EnableTrace {
