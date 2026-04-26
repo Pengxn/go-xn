@@ -6,12 +6,12 @@ import (
 
 	"github.com/urfave/cli/v3"
 
-	"github.com/Pengxn/go-xn/src/config"
-	"github.com/Pengxn/go-xn/src/lib/webauthn"
-	"github.com/Pengxn/go-xn/src/model"
-	"github.com/Pengxn/go-xn/src/route"
-	"github.com/Pengxn/go-xn/src/util/otel"
-	slogger "github.com/Pengxn/go-xn/src/util/slog"
+	"github.com/Pengxn/go-xn/internal/config"
+	"github.com/Pengxn/go-xn/internal/lib/webauthn"
+	"github.com/Pengxn/go-xn/internal/model"
+	"github.com/Pengxn/go-xn/internal/route"
+	"github.com/Pengxn/go-xn/internal/util/otel"
+	slogger "github.com/Pengxn/go-xn/internal/util/slog"
 )
 
 var (
