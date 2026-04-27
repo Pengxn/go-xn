@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package proto;
 
-option go_package = "github.com/Pengxn/go-xn/src/rpc/proto";
+option go_package = "github.com/Pengxn/go-xn/internal/rpc/proto";
 
 message Empty {}
 
