@@ -8,7 +8,7 @@ import (
 )
 
 // Execute to run cmd
-func Execute() error {
+func Execute(ctx context.Context) error {
 	app := &cli.Command{
 		Name:    "go-xn",
 		Usage:   "The platform for publishing and running your blog",
@@ -21,5 +21,5 @@ func Execute() error {
 		},
 	}
 
-	return app.Run(context.Background(), os.Args)
+	return app.Run(ctx, os.Args)
 }

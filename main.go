@@ -7,13 +7,14 @@
 package main
 
 import (
+	"context"
 	"log"
 
 	"github.com/Pengxn/go-xn/cmd"
 )
 
 func main() {
-	if err := cmd.Execute(); err != nil {
+	if err := cmd.Execute(context.Background()); err != nil {
 		log.Fatalln("fail to start app:", err)
 	}
 }
