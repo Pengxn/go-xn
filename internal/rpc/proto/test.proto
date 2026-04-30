@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package proto;
+
+option go_package = "github.com/Pengxn/go-xn/internal/rpc/proto";
+
+message Empty {}
+
+message Pong {
+    string message = 1;
+}
+
+service HealthCheck {
+    rpc Ping (Empty) returns (Pong);
+}

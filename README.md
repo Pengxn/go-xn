@@ -12,7 +12,7 @@
 make
 
 # Move to your home directory and edit it
-cp ./src/config/example.ini ./fyj.ini
+cp ./internal/config/example.ini ./fyj.ini
 ```
 
 > [!NOTE]

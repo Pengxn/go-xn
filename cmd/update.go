@@ -15,8 +15,8 @@ import (
 	"github.com/schollz/progressbar/v3"
 	"github.com/urfave/cli/v3"
 
-	"github.com/Pengxn/go-xn/src/lib/github"
-	"github.com/Pengxn/go-xn/src/util/httplib"
+	"github.com/Pengxn/go-xn/internal/lib/github"
+	"github.com/Pengxn/go-xn/internal/util/httplib"
 )
 
 var (
