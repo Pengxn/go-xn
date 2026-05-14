@@ -9,8 +9,8 @@ import (
 	"github.com/urfave/cli/v3"
 	"google.golang.org/grpc"
 
-	"github.com/Pengxn/go-xn/internal/rpc"
-	"github.com/Pengxn/go-xn/internal/rpc/proto"
+	"github.com/Pengxn/go-xn/rpc"
+	"github.com/Pengxn/go-xn/rpc/proto"
 )
 
 var (
