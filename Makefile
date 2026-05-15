@@ -19,7 +19,7 @@ clean:
 	fi;
 
 generate:
-	@rm -rf internal/rpc/proto/*.pb.go
+	@rm -rf rpc/proto/*.pb.go
 	@go generate ./...
 
 cover: test
