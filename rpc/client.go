@@ -7,7 +7,7 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 
-	pb "github.com/Pengxn/go-xn/internal/rpc/proto"
+	pb "github.com/Pengxn/go-xn/rpc/proto"
 )
 
 func Client(address string) (*pb.Pong, error) {

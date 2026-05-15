@@ -3,7 +3,7 @@ package rpc
 import (
 	"context"
 
-	pb "github.com/Pengxn/go-xn/internal/rpc/proto"
+	pb "github.com/Pengxn/go-xn/rpc/proto"
 )
 
 type Server struct {

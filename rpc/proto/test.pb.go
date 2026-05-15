@@ -111,7 +111,7 @@ const file_test_proto_rawDesc = "" +
 	"\x04Pong\x12\x18\n" +
 	"\amessage\x18\x01 \x01(\tR\amessage20\n" +
 	"\vHealthCheck\x12!\n" +
-	"\x04Ping\x12\f.proto.Empty\x1a\v.proto.PongB,Z*github.com/Pengxn/go-xn/internal/rpc/protob\x06proto3"
+	"\x04Ping\x12\f.proto.Empty\x1a\v.proto.PongB#Z!github.com/Pengxn/go-xn/rpc/protob\x06proto3"
 
 var (
 	file_test_proto_rawDescOnce sync.Once
