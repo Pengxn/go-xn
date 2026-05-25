@@ -3,6 +3,9 @@
 # To use this file (requires git 2.23):
 #   git config blame.ignoreRevsFile .git-blame-ignore-revs
 
+# fix typos
+81bc609c4f10007d6548a1f1c7a7c47420c2205e
+
 # typo in commit main message
 892b9baa5e38f975a7a2eace8af738a2fabd5baa
 
@@ -26,3 +29,4 @@ a98168b202e1c1f94f76d5ea89c6ffb598e34f5e
 e4f49626633973db209ce0ce04241099f23b33bc
 f5f034317605b4ca6d1e7165032f54c8215584ac
 36be95e02a2894e712762c7dff208be24e68c352
+32537afc7ca8c27b0715fedfdd70e7b7c110512d
