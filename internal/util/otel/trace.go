@@ -53,8 +53,7 @@ func initOTELTracer(ctx context.Context, c config, fn exporterFunc) func(context
 	otel.SetTracerProvider(
 		trace.NewTracerProvider(
 			trace.WithSampler(trace.AlwaysSample()),
-			trace.WithSpanProcessor(trace.NewBatchSpanProcessor(exporter)),
-			trace.WithSyncer(exporter),
+			trace.WithBatcher(exporter),
 			trace.WithResource(resources),
 		),
 	)
