@@ -2,6 +2,40 @@
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-05-27
+
+### Added
+
+- Set otel text map propagators for distributed tracing. (#733)
+
+### Changed
+
+- Specify exact go version 1.25.0 in `go` directive. (02dc68e)
+- Bump otel-related dependencies to `2026-03-06` release version. (#684)
+- Bump go toolchain version to `1.26`. (#694)
+- Refactor cmd package layout and update import paths. (833ef24, #732)
+- Update LDFLAGS to reflect new cmd package location. (e308bc2, #732)
+- Pass context as argument to `Execute` function. (06c9db9)
+- Rename `src` directory to `internal` and update import paths. (b2944a3, #734)
+- Update import paths in cmd package. (d0c9afa, #734)
+- Update proto package path and regenerate code. (01e7e28, #734)
+- Update example config path in `README.md`. (cbaedbf, #734)
+- Update `generate` target to use `internal` path. (f0e1ba8, #740)
+- Move `rpc` directory from `internal` to root level. (26f1b97, #750)
+- Update `go_package` option in proto file. (c61623d, #750)
+- Update `generate` target to use new path. (729f093, #750)
+- Regenerate proto files with latest protoc and protoc-gen-go-grpc. (#752)
+
+### Fixed
+
+- Fix typo in `GHCR_USER` variable name: GCHR -> GHCR. (062140d)
+- Fix duplicate and incorrect span processor setup in otel trace init. (aef14f9)
+
+### Security
+
+- Bump grpc to 1.79.3 for security fix. (CVE-2026-33186, #698)
+- Bump otel-related dependencies to `2026-04-02` for security fixes. (CVE-2026-39882, CVE-2026-39883, #724)
+
 ## [0.1.3] - 2026-03-03
 
 ### Added
@@ -298,7 +332,8 @@
 
 - Release first version `0.0.1`.
 
-[Unreleased]: https://github.com/Pengxn/go-xn/compare/0.1.3...HEAD
+[Unreleased]: https://github.com/Pengxn/go-xn/compare/0.2.0...HEAD
+[0.2.0]: https://github.com/Pengxn/go-xn/compare/0.1.3...0.2.0
 [0.1.3]: https://github.com/Pengxn/go-xn/compare/0.1.2...0.1.3
 [0.1.2]: https://github.com/Pengxn/go-xn/compare/0.1.1...0.1.2
 [0.1.1]: https://github.com/Pengxn/go-xn/compare/0.1.0...0.1.1

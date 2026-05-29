@@ -1,4 +1,4 @@
-const APP_VERSION = '0.1.3'
+const APP_VERSION = '0.2.0'
 let YEAR = new Date().getFullYear()
 
 /**
