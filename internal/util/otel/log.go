@@ -36,8 +36,10 @@ func InitLog(ctx context.Context, c *config) *sdklog.LoggerProvider {
 		exporterFn = newStdoutLogExporter
 	default:
 		slog.Warn("unknown otel log type", slog.String("type", c.ClientType))
-		slog.Debug("init otel log with default stdout")
-		exporterFn = newStdoutLogExporter
+		slog.Debug("init otel log with default no-op exporter")
+		exporterFn = func(context.Context, config) (sdklog.Exporter, error) {
+			return nil, nil // nil as no-op exporter
+		}
 	}
 	exporter, err := exporterFn(ctx, *c)
 	if err != nil {

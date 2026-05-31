@@ -28,8 +28,10 @@ func InitTrace(ctx context.Context, c *config) func(context.Context) error {
 		exporterFn = newStdoutTraceExporter
 	default:
 		slog.Warn("unknown otel trace type", slog.String("type", c.ClientType))
-		slog.Debug("init otel trace with default stdout")
-		exporterFn = newStdoutTraceExporter
+		slog.Debug("init otel trace with default no-op exporter")
+		exporterFn = func(context.Context, config) (trace.SpanExporter, error) {
+			return nil, nil // nil as no-op exporter
+		}
 	}
 
 	return initOTELTracer(ctx, *c, exporterFn)

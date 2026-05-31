@@ -28,8 +28,10 @@ func InitMetric(ctx context.Context, c *config) func(context.Context) error {
 		metricExporter = newStdoutMetricExporter
 	default:
 		slog.Warn("unknown otel metric type", slog.String("type", c.ClientType))
-		slog.Debug("init otel metric with default stdout")
-		metricExporter = newStdoutMetricExporter
+		slog.Debug("init otel metric with default no-op exporter")
+		metricExporter = func(context.Context, config) (metric.Exporter, error) {
+			return nil, nil // nil as no-op exporter
+		}
 	}
 
 	exporter, err := metricExporter(ctx, *c)
