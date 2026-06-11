@@ -70,17 +70,37 @@ func newStdoutMetricExporter(_ context.Context, _ config) (metric.Exporter, erro
 // newGRPCMetricExporter creates a new gRPC exporter for OpenTelemetry metrics.
 // https://opentelemetry.io/docs/languages/go/exporters/#otlp-metrics-over-grpc
 func newGRPCMetricExporter(ctx context.Context, c config) (metric.Exporter, error) {
-	return otlpmetricgrpc.New(ctx,
-		otlpmetricgrpc.WithEndpoint(c.Endpoint),
-		otlpmetricgrpc.WithHeaders(c.Headers),
-	)
+	var options []otlpmetricgrpc.Option
+
+	if c.Endpoint != "" {
+		options = append(options, otlpmetricgrpc.WithEndpoint(c.Endpoint))
+	}
+
+	if len(c.Headers) > 0 {
+		options = append(options, otlpmetricgrpc.WithHeaders(c.Headers))
+	}
+
+	// TODO: support disables client transport security for gRPC
+	// options = append(options, otlpmetricgrpc.WithInsecure())
+
+	return otlpmetricgrpc.New(ctx, options...)
 }
 
 // newHTTPMetricExporter creates a new HTTP exporter for OpenTelemetry metrics.
 // https://opentelemetry.io/docs/languages/go/exporters/#otlp-metrics-over-http
 func newHTTPMetricExporter(ctx context.Context, c config) (metric.Exporter, error) {
-	return otlpmetrichttp.New(ctx,
-		otlpmetrichttp.WithEndpoint(c.Endpoint),
-		otlpmetrichttp.WithHeaders(c.Headers),
-	)
+	var options []otlpmetrichttp.Option
+
+	if c.Endpoint != "" {
+		options = append(options, otlpmetrichttp.WithEndpoint(c.Endpoint))
+	}
+
+	if len(c.Headers) > 0 {
+		options = append(options, otlpmetrichttp.WithHeaders(c.Headers))
+	}
+
+	// TODO: support disables client transport security for HTTP
+	// options = append(options, otlpmetrichttp.WithInsecure())
+
+	return otlpmetrichttp.New(ctx, options...)
 }

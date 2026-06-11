@@ -73,17 +73,37 @@ func newStdoutLogExporter(_ context.Context, _ config) (sdklog.Exporter, error) 
 // newGRPCExporter creates a new gRPC exporter for OpenTelemetry logs.
 // https://opentelemetry.io/docs/languages/go/exporters/#otlp-logs-over-grpc-experimental
 func newGRPCLogExporter(ctx context.Context, c config) (sdklog.Exporter, error) {
-	return otlploggrpc.New(ctx,
-		otlploggrpc.WithEndpoint(c.Endpoint),
-		otlploggrpc.WithHeaders(c.Headers),
-	)
+	var options []otlploggrpc.Option
+
+	if c.Endpoint != "" {
+		options = append(options, otlploggrpc.WithEndpoint(c.Endpoint))
+	}
+
+	if len(c.Headers) > 0 {
+		options = append(options, otlploggrpc.WithHeaders(c.Headers))
+	}
+
+	// TODO: support disables client transport security for gRPC
+	// options = append(options, otlploggrpc.WithInsecure())
+
+	return otlploggrpc.New(ctx, options...)
 }
 
 // newHTTPExporter creates a new HTTP exporter for OpenTelemetry logs.
 // https://opentelemetry.io/docs/languages/go/exporters/#otlp-logs-over-http-experimental
 func newHTTPLogExporter(ctx context.Context, c config) (sdklog.Exporter, error) {
-	return otlploghttp.New(ctx,
-		otlploghttp.WithEndpoint(c.Endpoint),
-		otlploghttp.WithHeaders(c.Headers),
-	)
+	var options []otlploghttp.Option
+
+	if c.Endpoint != "" {
+		options = append(options, otlploghttp.WithEndpoint(c.Endpoint))
+	}
+
+	if len(c.Headers) > 0 {
+		options = append(options, otlploghttp.WithHeaders(c.Headers))
+	}
+
+	// TODO: support disables client transport security for HTTP
+	// options = append(options, otlploghttp.WithInsecure())
+
+	return otlploghttp.New(ctx, options...)
 }
