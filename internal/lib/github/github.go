@@ -7,7 +7,7 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/google/go-github/v84/github"
+	"github.com/google/go-github/v88/github"
 )
 
 var (
@@ -22,7 +22,10 @@ var (
 //
 // [GitHub Flavored Markdown Spec]: https://github.github.com/gfm/#gfm-overview
 func Render(text string) (string, error) {
-	client := github.NewClient(nil)
+	client, err := github.NewClient()
+	if err != nil {
+		return "", err
+	}
 
 	// API doc url: https://docs.github.com/en/rest/markdown/markdown
 	res, _, err := client.Markdown.Render(context.Background(), text, &github.MarkdownOptions{
@@ -40,7 +43,10 @@ func Render(text string) (string, error) {
 // It requires the owner and repo name of the repository.
 // The asset link is the download URL of the asset file for the current os and arch.
 func GetLatestAssetLink() (string, error) {
-	client := github.NewClient(nil)
+	client, err := github.NewClient()
+	if err != nil {
+		return "", err
+	}
 
 	// API doc url: https://docs.github.com/en/rest/releases/releases#get-the-latest-release
 	rel, _, err := client.Repositories.GetLatestRelease(context.Background(), defaultOwner, defaultRepo)
@@ -79,7 +85,11 @@ func GetNightlyLink() (string, error) {
 //
 // But it requires authentication with `actions:read` scope to access the archived artifacts links.
 func GetActionsArtifactLink() (string, string, error) {
-	client := github.NewClient(nil)
+	client, err := github.NewClient()
+	if err != nil {
+		return "", "", err
+	}
+
 	ctx := context.Background()
 
 	// Get the latest workflow run from list of workflow runs.
