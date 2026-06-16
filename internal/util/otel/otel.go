@@ -2,6 +2,7 @@ package otel
 
 import (
 	"context"
+	"fmt"
 	"log/slog"
 
 	commonConfig "github.com/Pengxn/go-xn/internal/config"
@@ -16,12 +17,16 @@ func SetOtel(ctx context.Context, c commonConfig.OtelConfig) func(ctx context.Co
 		return func(ctx context.Context) {}
 	}
 
+	// Capture and print internal otel errors
+	otel.SetErrorHandler(otel.ErrorHandlerFunc(
+		func(err error) { fmt.Println("otel error:", err) },
+	))
+
 	cfg := NewConfig(
 		WithClientType(c.ClientType),
 		WithEndpoint(c.Endpoint),
-		WithHeaders(map[string]string{
-			c.Header: c.Token,
-		}))
+		WithHeaders(map[string]string{c.Header: c.Token}),
+	)
 
 	shutdown := []func(context.Context){}
 
