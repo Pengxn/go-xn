@@ -21,14 +21,14 @@ var (
 // refer to [GitHub Flavored Markdown Spec] for more details.
 //
 // [GitHub Flavored Markdown Spec]: https://github.github.com/gfm/#gfm-overview
-func Render(text string) (string, error) {
+func Render(ctx context.Context, text string) (string, error) {
 	client, err := github.NewClient()
 	if err != nil {
 		return "", err
 	}
 
 	// API doc url: https://docs.github.com/en/rest/markdown/markdown
-	res, _, err := client.Markdown.Render(context.Background(), text, &github.MarkdownOptions{
+	res, _, err := client.Markdown.Render(ctx, text, &github.MarkdownOptions{
 		Mode:    "gfm",
 		Context: defaultOwner + "/" + defaultRepo,
 	})
@@ -42,14 +42,14 @@ func Render(text string) (string, error) {
 // GetLatestAssetLink returns the latest asset link of the release from GitHub.
 // It requires the owner and repo name of the repository.
 // The asset link is the download URL of the asset file for the current os and arch.
-func GetLatestAssetLink() (string, error) {
+func GetLatestAssetLink(ctx context.Context) (string, error) {
 	client, err := github.NewClient()
 	if err != nil {
 		return "", err
 	}
 
 	// API doc url: https://docs.github.com/en/rest/releases/releases#get-the-latest-release
-	rel, _, err := client.Repositories.GetLatestRelease(context.Background(), defaultOwner, defaultRepo)
+	rel, _, err := client.Repositories.GetLatestRelease(ctx, defaultOwner, defaultRepo)
 	if err != nil {
 		return "", err
 	}
@@ -67,8 +67,8 @@ func GetLatestAssetLink() (string, error) {
 // GetNightlyLink returns the nightly build artifact link from [nightly.link].
 //
 // [nightly.link]: https://nightly.link
-func GetNightlyLink() (string, error) {
-	_, artifactName, err := GetActionsArtifactLink()
+func GetNightlyLink(ctx context.Context) (string, error) {
+	_, artifactName, err := GetActionsArtifactLink(ctx)
 	if err != nil {
 		return "", err
 	}
@@ -84,13 +84,11 @@ func GetNightlyLink() (string, error) {
 // The artifact link is the download URL of the artifact file for the current os and arch.
 //
 // But it requires authentication with `actions:read` scope to access the archived artifacts links.
-func GetActionsArtifactLink() (string, string, error) {
+func GetActionsArtifactLink(ctx context.Context) (string, string, error) {
 	client, err := github.NewClient()
 	if err != nil {
 		return "", "", err
 	}
-
-	ctx := context.Background()
 
 	// Get the latest workflow run from list of workflow runs.
 	// API doc url: https://docs.github.com/en/rest/actions/workflow-runs#list-workflow-runs-for-a-repository

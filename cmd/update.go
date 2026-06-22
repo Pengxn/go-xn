@@ -43,9 +43,9 @@ func update(ctx context.Context, c *cli.Command) error {
 		err  error
 	)
 	if c.Bool("nightly") {
-		link, err = github.GetNightlyLink()
+		link, err = github.GetNightlyLink(ctx)
 	} else {
-		link, err = github.GetLatestAssetLink()
+		link, err = github.GetLatestAssetLink(ctx)
 	}
 	if err != nil {
 		return err
