@@ -11,6 +11,7 @@ package otel
 type config struct {
 	ClientType string
 	Endpoint   string
+	SkipTLS    bool
 	Headers    map[string]string
 }
 
@@ -51,5 +52,12 @@ func WithEndpoint(endpoint string) Option {
 func WithHeaders(headers map[string]string) Option {
 	return func(c *config) {
 		c.Headers = headers
+	}
+}
+
+// WithSkipTLS sets the skipTLS option for the OpenTelemetry exporter.
+func WithSkipTLS(skipTLS bool) Option {
+	return func(c *config) {
+		c.SkipTLS = skipTLS
 	}
 }
