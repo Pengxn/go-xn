@@ -89,8 +89,9 @@ func newGRPCTraceExporter(ctx context.Context, c config) (trace.SpanExporter, er
 		options = append(options, otlptracegrpc.WithHeaders(c.Headers))
 	}
 
-	// TODO: support disables client transport security for gRPC
-	// options = append(options, otlptracegrpc.WithInsecure())
+	if c.SkipTLS {
+		options = append(options, otlptracegrpc.WithInsecure())
+	}
 
 	return otlptracegrpc.New(ctx, options...)
 }
@@ -108,8 +109,9 @@ func newHTTPTraceExporter(ctx context.Context, c config) (trace.SpanExporter, er
 		options = append(options, otlptracehttp.WithHeaders(c.Headers))
 	}
 
-	// TODO: support disables client transport security for HTTP
-	// options = append(options, otlptracehttp.WithInsecure())
+	if c.SkipTLS {
+		options = append(options, otlptracehttp.WithInsecure())
+	}
 
 	return otlptracehttp.New(ctx, options...)
 }
