@@ -104,7 +104,7 @@ type OtelConfig struct {
 	EnableMetric     bool   `ini:"metric"`     // enable OpenTelemetry metrics
 	EnableLog        bool   `ini:"log"`        // enable OpenTelemetry logging
 	ClientType       string `ini:"clientType"` // client type, used to determine the OpenTelemetry client
-	Endpoint         string `ini:"endpoint"`   // endpoint for OpenTelemetry, default: localhost:4317
+	Endpoint         string `ini:"endpoint"`   // endpoint for OpenTelemetry
 	SkipTLS          bool   `ini:"skipTLS"`    // skip TLS verify for HTTP/gRPC connections
 	Header           string `ini:"header"`     // header name for authentication
 	Token            string `ini:"token"`      // token or key for authentication

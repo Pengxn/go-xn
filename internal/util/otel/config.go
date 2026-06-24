@@ -19,8 +19,8 @@ type config struct {
 // and applies any provided options to customize it.
 func NewConfig(opts ...Option) *config {
 	c := &config{
-		ClientType: "grpc",                  // default client type
-		Endpoint:   "localhost:4317",        // default endpoint
+		ClientType: "",                      // default client type
+		Endpoint:   "",                      // default endpoint
 		Headers:    make(map[string]string), // default empty headers
 	}
 
