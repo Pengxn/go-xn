@@ -19,9 +19,7 @@ type config struct {
 // and applies any provided options to customize it.
 func NewConfig(opts ...Option) *config {
 	c := &config{
-		ClientType: "",                      // default client type
-		Endpoint:   "",                      // default endpoint
-		Headers:    make(map[string]string), // default empty headers
+		Headers: make(map[string]string), // default empty headers
 	}
 
 	for _, opt := range opts {
