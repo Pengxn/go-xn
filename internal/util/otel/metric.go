@@ -80,8 +80,9 @@ func newGRPCMetricExporter(ctx context.Context, c config) (metric.Exporter, erro
 		options = append(options, otlpmetricgrpc.WithHeaders(c.Headers))
 	}
 
-	// TODO: support disables client transport security for gRPC
-	// options = append(options, otlpmetricgrpc.WithInsecure())
+	if c.SkipTLS {
+		options = append(options, otlpmetricgrpc.WithInsecure())
+	}
 
 	return otlpmetricgrpc.New(ctx, options...)
 }
@@ -99,8 +100,9 @@ func newHTTPMetricExporter(ctx context.Context, c config) (metric.Exporter, erro
 		options = append(options, otlpmetrichttp.WithHeaders(c.Headers))
 	}
 
-	// TODO: support disables client transport security for HTTP
-	// options = append(options, otlpmetrichttp.WithInsecure())
+	if c.SkipTLS {
+		options = append(options, otlpmetrichttp.WithInsecure())
+	}
 
 	return otlpmetrichttp.New(ctx, options...)
 }

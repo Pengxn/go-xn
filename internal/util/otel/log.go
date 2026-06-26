@@ -83,8 +83,9 @@ func newGRPCLogExporter(ctx context.Context, c config) (sdklog.Exporter, error) 
 		options = append(options, otlploggrpc.WithHeaders(c.Headers))
 	}
 
-	// TODO: support disables client transport security for gRPC
-	// options = append(options, otlploggrpc.WithInsecure())
+	if c.SkipTLS {
+		options = append(options, otlploggrpc.WithInsecure())
+	}
 
 	return otlploggrpc.New(ctx, options...)
 }
@@ -102,8 +103,9 @@ func newHTTPLogExporter(ctx context.Context, c config) (sdklog.Exporter, error) 
 		options = append(options, otlploghttp.WithHeaders(c.Headers))
 	}
 
-	// TODO: support disables client transport security for HTTP
-	// options = append(options, otlploghttp.WithInsecure())
+	if c.SkipTLS {
+		options = append(options, otlploghttp.WithInsecure())
+	}
 
 	return otlploghttp.New(ctx, options...)
 }

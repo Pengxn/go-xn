@@ -11,6 +11,7 @@ package otel
 type config struct {
 	ClientType string
 	Endpoint   string
+	SkipTLS    bool
 	Headers    map[string]string
 }
 
@@ -18,9 +19,7 @@ type config struct {
 // and applies any provided options to customize it.
 func NewConfig(opts ...Option) *config {
 	c := &config{
-		ClientType: "grpc",                  // default client type
-		Endpoint:   "localhost:4317",        // default endpoint
-		Headers:    make(map[string]string), // default empty headers
+		Headers: make(map[string]string), // default empty headers
 	}
 
 	for _, opt := range opts {
@@ -51,5 +50,12 @@ func WithEndpoint(endpoint string) Option {
 func WithHeaders(headers map[string]string) Option {
 	return func(c *config) {
 		c.Headers = headers
+	}
+}
+
+// WithSkipTLS sets the skipTLS option for the OpenTelemetry exporter.
+func WithSkipTLS(skipTLS bool) Option {
+	return func(c *config) {
+		c.SkipTLS = skipTLS
 	}
 }

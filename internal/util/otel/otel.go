@@ -26,6 +26,7 @@ func SetOtel(ctx context.Context, c commonConfig.OtelConfig) func(ctx context.Co
 		WithClientType(c.ClientType),
 		WithEndpoint(c.Endpoint),
 		WithHeaders(map[string]string{c.Header: c.Token}),
+		WithSkipTLS(c.SkipTLS),
 	)
 
 	shutdown := []func(context.Context){}
