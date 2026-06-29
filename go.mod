@@ -54,7 +54,7 @@ require (
 	google.golang.org/protobuf v1.36.11
 	gopkg.in/ini.v1 v1.67.3
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1
-	xorm.io/xorm v1.3.11
+	xorm.io/xorm v1.4.1
 )
 
 require (
