@@ -66,6 +66,7 @@ func runWeb(ctx context.Context, c *cli.Command) error {
 	slogger.SetLogger(ctx, config.Config.Logger)
 
 	// Initialize OpenTelemetry
+	ctx = context.WithValue(ctx, otel.OtelVersionKey, version)
 	shutdown := otel.SetOtel(ctx, config.Config.Otel)
 	defer shutdown(ctx)
 
