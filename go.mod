@@ -28,7 +28,7 @@ require (
 	github.com/redis/go-redis/v9 v9.21.0
 	github.com/robfig/cron/v3 v3.0.1
 	github.com/rs/cors v1.11.1
-	github.com/schollz/progressbar/v3 v3.19.0
+	github.com/schollz/progressbar/v3 v3.19.1
 	github.com/smartystreets/goconvey v1.8.1
 	github.com/urfave/cli/v3 v3.10.1
 	github.com/yuin/goldmark v1.8.2
