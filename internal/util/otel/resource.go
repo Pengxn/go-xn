@@ -9,6 +9,18 @@ import (
 	"go.opentelemetry.io/otel/sdk/resource"
 )
 
+// Service semantic convention keys
+const (
+	// ServiceNameKey is the attribute Key conforming to the "service.name"
+	// semantic conventions. It represents the logical name of the service.
+	ServiceNameKey = attribute.Key("service.name")
+
+	// ServiceVersionKey is the attribute Key conforming to the "service.version"
+	// semantic conventions. It represents the version string of the service
+	// component. The format is not defined by these conventions.
+	ServiceVersionKey = attribute.Key("service.version")
+)
+
 type otelVersionCtx struct{}
 
 // OtelVersionKey is the context key for storing the service version for OpenTelemetry.
@@ -26,8 +38,8 @@ func commonResource(ctx context.Context) (*resource.Resource, error) {
 		resource.WithFromEnv(),
 		resource.WithHost(),
 		resource.WithAttributes(
-			attribute.String("service.name", "go-xn"),
-			attribute.String("service.version", version),
+			ServiceNameKey.String("go-xn"),
+			ServiceVersionKey.String(version),
 			attribute.String("os.type", runtime.GOOS),
 			attribute.String("os.arch", runtime.GOARCH),
 		),
