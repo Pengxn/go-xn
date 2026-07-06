@@ -62,7 +62,7 @@ func runWeb(ctx context.Context, c *cli.Command) error {
 	webauthn.InitWebAuthn(ctx, config.Config.WebAuthn)
 
 	// Initialize the logger
-	ctx = context.WithValue(ctx, slogger.CtxVersionKey, version)
+	ctx = context.WithValue(ctx, slogger.SlogVersionKey, version)
 	slogger.SetLogger(ctx, config.Config.Logger)
 
 	// Initialize OpenTelemetry
