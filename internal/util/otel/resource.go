@@ -37,6 +37,7 @@ func commonResource(ctx context.Context) (*resource.Resource, error) {
 	return resource.New(ctx,
 		resource.WithFromEnv(),
 		resource.WithHost(),
+		resource.WithContainer(),
 		resource.WithAttributes(
 			ServiceNameKey.String("go-xn"),
 			ServiceVersionKey.String(version),
