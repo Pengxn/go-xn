@@ -29,7 +29,7 @@ var OtelVersionKey = otelVersionCtx{}
 // commonResource returns a common resource with service name, OS, and arch.
 func commonResource(ctx context.Context) (*resource.Resource, error) {
 	version, ok := ctx.Value(OtelVersionKey).(string)
-	if !ok {
+	if !ok || version == "" {
 		slog.Debug("otel version not found in context", slog.String("version", "unknown"))
 		version = "unknown"
 	}

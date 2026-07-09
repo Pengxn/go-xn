@@ -40,7 +40,7 @@ func init() {
 type slogVersionCtx struct{}
 
 // SlogVersionKey is the context key for storing the service version for slog.
-var SlogVersionKey = slogVersionCtx{} // version key
+var SlogVersionKey = slogVersionCtx{}
 
 // SetLogger sets the logger with the given config settings.
 // The default logger is [tint] logger with colorized output.
@@ -61,7 +61,7 @@ func SetLogger(ctx context.Context, c config.LoggerConfig) {
 
 	// Set extra `version` fields for logger, if any.
 	version, ok := ctx.Value(SlogVersionKey).(string)
-	if !ok {
+	if !ok || version == "" {
 		slog.Debug("slog version not found in context", slog.String("version", "unknown"))
 		version = "unknown"
 	}
