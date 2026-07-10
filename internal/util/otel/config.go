@@ -49,7 +49,11 @@ func WithEndpoint(endpoint string) Option {
 // WithHeaders sets the headers for the OpenTelemetry exporter.
 func WithHeaders(headers map[string]string) Option {
 	return func(c *config) {
-		c.Headers = headers
+		for k, v := range headers {
+			if k != "" && v != "" {
+				c.Headers[k] = v
+			}
+		}
 	}
 }
 
