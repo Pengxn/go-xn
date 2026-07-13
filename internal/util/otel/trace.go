@@ -33,34 +33,26 @@ func InitTrace(ctx context.Context, c *config) func(context.Context) error {
 			return nil, nil // nil as no-op exporter
 		}
 	}
-
-	return initOTELTracer(ctx, *c, exporterFn)
-}
-
-// initOTELTracer initializes the OpenTelemetry tracer with the given client.
-func initOTELTracer(ctx context.Context, c config, fn exporterFunc) func(context.Context) error {
-	// create the exporter
-	exporter, err := fn(ctx, c)
+	exporter, err := exporterFn(ctx, *c)
 	if err != nil {
-		log.Fatalf("failed to create tracer exporter: %s", err)
+		log.Fatalf("failed to create trace exporter: %s", err)
 	}
 
-	// create the resource
+	// Create new resource
 	resources, err := commonResource(ctx)
 	if err != nil {
-		log.Fatalf("failed to set resources: %s", err)
+		log.Fatalf("failed to create resource: %s", err)
 	}
 
-	// set the global OpenTelemetry tracer provider
-	otel.SetTracerProvider(
-		trace.NewTracerProvider(
-			trace.WithSampler(trace.AlwaysSample()),
-			trace.WithBatcher(exporter),
-			trace.WithResource(resources),
-		),
+	tp := trace.NewTracerProvider(
+		trace.WithSampler(trace.AlwaysSample()),
+		trace.WithBatcher(exporter),
+		trace.WithResource(resources),
 	)
+	// set the global OpenTelemetry tracer provider
+	otel.SetTracerProvider(tp)
 
-	return exporter.Shutdown
+	return tp.Shutdown
 }
 
 // exporterFunc is a function type that takes a context and config,
