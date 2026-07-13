@@ -36,23 +36,23 @@ func InitMetric(ctx context.Context, c *config) func(context.Context) error {
 
 	exporter, err := metricExporter(ctx, *c)
 	if err != nil {
-		log.Fatal("failed to create metric exporter: ", err)
+		log.Fatalf("failed to create metric exporter: %s", err)
 	}
 
 	// Create new resource
 	resources, err := commonResource(ctx)
 	if err != nil {
-		log.Fatal("failed to create resource: ", err)
+		log.Fatalf("failed to create resource: %s", err)
 	}
 
-	otel.SetMeterProvider(
-		metric.NewMeterProvider(
-			metric.WithReader(metric.NewPeriodicReader(exporter)),
-			metric.WithResource(resources),
-		),
+	mp := metric.NewMeterProvider(
+		metric.WithReader(metric.NewPeriodicReader(exporter)),
+		metric.WithResource(resources),
 	)
+	// Set the global OpenTelemetry meter provider
+	otel.SetMeterProvider(mp)
 
-	return exporter.Shutdown
+	return mp.Shutdown
 }
 
 // metricFunc is a function that creates an OpenTelemetry exporter.
