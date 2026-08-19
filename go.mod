@@ -30,7 +30,7 @@ require (
 	github.com/rs/cors v1.11.1
 	github.com/schollz/progressbar/v3 v3.19.1
 	github.com/smartystreets/goconvey v1.8.1
-	github.com/urfave/cli/v3 v3.10.1
+	github.com/urfave/cli/v3 v3.11.0
 	github.com/yuin/goldmark v1.8.5
 	go.opentelemetry.io/contrib/bridges/otelslog v0.20.0
 	go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin v0.70.0
