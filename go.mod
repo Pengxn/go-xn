@@ -21,7 +21,7 @@ require (
 	github.com/gorilla/feeds v1.2.0
 	github.com/lib/pq v1.12.3
 	github.com/lmittmann/tint v1.2.0
-	github.com/mattn/go-sqlite3 v1.14.49
+	github.com/mattn/go-sqlite3 v1.14.50
 	github.com/patrickmn/go-cache v2.1.0+incompatible
 	github.com/pquerna/otp v1.5.0
 	github.com/prometheus/client_golang v1.24.1
