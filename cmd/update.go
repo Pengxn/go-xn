@@ -3,7 +3,6 @@ package cmd
 import (
 	"bytes"
 	"context"
-	"fmt"
 	"io"
 	"net/http"
 	"os"
@@ -76,7 +75,7 @@ func update(ctx context.Context, c *cli.Command) error {
 	case "application/zip":
 		extract = compress.Unzip
 	default:
-		return fmt.Errorf("unsupported content type: %s", contentType)
+		extract = compress.Unsupported
 	}
 
 	exePath, err := os.Executable()
