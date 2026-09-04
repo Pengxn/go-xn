@@ -1,10 +1,7 @@
 package cmd
 
 import (
-	"archive/tar"
-	"archive/zip"
 	"bytes"
-	"compress/gzip"
 	"context"
 	"fmt"
 	"io"
@@ -15,6 +12,7 @@ import (
 	"github.com/schollz/progressbar/v3"
 	"github.com/urfave/cli/v3"
 
+	"github.com/Pengxn/go-xn/internal/lib/compress"
 	"github.com/Pengxn/go-xn/internal/lib/github"
 	"github.com/Pengxn/go-xn/internal/util/httplib"
 )
@@ -67,16 +65,16 @@ func update(ctx context.Context, c *cli.Command) error {
 		return err
 	}
 
-	var extract extractor
+	var extract compress.ExtractFunc
 
 	// detect content type, based on the head of the file buffer
 	// refer to file magic numbers, https://en.wikipedia.org/wiki/List_of_file_signatures
 	contentType := http.DetectContentType(buff.Bytes())
 	switch contentType {
 	case "application/x-gzip":
-		extract = ungzip
+		extract = compress.Ungzip
 	case "application/zip":
-		extract = unzip
+		extract = compress.Unzip
 	default:
 		return fmt.Errorf("unsupported content type: %s", contentType)
 	}
@@ -87,103 +85,4 @@ func update(ctx context.Context, c *cli.Command) error {
 	}
 
 	return extract(buff, filepath.Dir(exePath))
-}
-
-// extractor defines a function type for unified extraction interface.
-type extractor func(r io.Reader, dst string) error
-
-func unzip(r io.Reader, dst string) error {
-	// Read all data from reader
-	data, err := io.ReadAll(r)
-	if err != nil {
-		return err
-	}
-
-	archive, err := zip.NewReader(bytes.NewReader(data), int64(len(data)))
-	if err != nil {
-		return err
-	}
-
-	for _, f := range archive.File {
-		filePath := filepath.Join(dst, f.Name)
-
-		// create directory if file in archive is a directory
-		if f.FileInfo().IsDir() {
-			os.MkdirAll(filePath, os.ModePerm)
-			continue
-		}
-
-		// create parent directory if it doesn't exist
-		if err := os.MkdirAll(filepath.Dir(filePath), os.ModePerm); err != nil {
-			return err
-		}
-
-		dstFile, err := os.OpenFile(filePath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, f.Mode())
-		if err != nil {
-			return err
-		}
-		defer dstFile.Close()
-
-		fileInArchive, err := f.Open()
-		if err != nil {
-			return err
-		}
-		defer fileInArchive.Close()
-
-		if _, err := io.Copy(dstFile, fileInArchive); err != nil {
-			return err
-		}
-	}
-
-	return nil
-}
-
-func ungzip(r io.Reader, dst string) error {
-	// Read all data from reader
-	data, err := gzip.NewReader(r)
-	if err != nil {
-		return err
-	}
-	defer data.Close()
-
-	// create tar reader
-	archive := tar.NewReader(data)
-
-	for {
-		header, err := archive.Next()
-		if err == io.EOF { // no more files
-			break
-		}
-		if err != nil {
-			return err
-		}
-
-		filePath := filepath.Join(dst, header.Name)
-
-		// create directory if entry is a directory
-		if header.Typeflag == tar.TypeDir {
-			if err := os.MkdirAll(filePath, os.ModePerm); err != nil {
-				return err
-			}
-			continue
-		}
-
-		// create parent directory if it doesn't exist
-		if err := os.MkdirAll(filepath.Dir(filePath), os.ModePerm); err != nil {
-			return err
-		}
-
-		// create and write file
-		dstFile, err := os.OpenFile(filePath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, os.FileMode(header.Mode))
-		if err != nil {
-			return err
-		}
-		defer dstFile.Close()
-
-		if _, err := io.Copy(dstFile, archive); err != nil {
-			return err
-		}
-	}
-
-	return nil
 }
