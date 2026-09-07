@@ -64,8 +64,14 @@ func SetOtel(ctx context.Context, c commonConfig.OtelConfig) func(ctx context.Co
 
 	// Enable and initialize OpenTelemetry logging
 	if c.EnableLog {
-		logger := InitLog(ctx, cfg)
-		slog.SetDefault(logger)
+		logShutdown := InitLog(ctx, cfg)
+		// Add the log shutdown function to the list
+		shutdown = append(shutdown, func(ctx context.Context) {
+			err := logShutdown(ctx)
+			if err != nil {
+				slog.Error("failed to shutdown otel log", slog.Any("error", err))
+			}
+		})
 	}
 
 	return func(ctx context.Context) {
