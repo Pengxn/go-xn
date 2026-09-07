@@ -64,7 +64,7 @@ func SetOtel(ctx context.Context, c commonConfig.OtelConfig) func(ctx context.Co
 
 	// Enable and initialize OpenTelemetry logging
 	if c.EnableLog {
-		logger := NewLogger(ctx, cfg)
+		logger := InitLog(ctx, cfg)
 		slog.SetDefault(logger)
 	}
 
