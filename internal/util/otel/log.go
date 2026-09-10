@@ -12,17 +12,7 @@ import (
 	sdklog "go.opentelemetry.io/otel/sdk/log"
 )
 
-func NewLogger(ctx context.Context, c *config) *slog.Logger {
-	loggerProvider := InitLog(ctx, c)
-
-	logger := otelslog.NewLogger("go-xn",
-		otelslog.WithLoggerProvider(loggerProvider),
-	)
-
-	return logger
-}
-
-func InitLog(ctx context.Context, c *config) *sdklog.LoggerProvider {
+func InitLog(ctx context.Context, c *config) func(context.Context) error {
 	var exporterFn func(context.Context, config) (sdklog.Exporter, error)
 	switch c.ClientType {
 	case "grpc":
@@ -53,12 +43,16 @@ func InitLog(ctx context.Context, c *config) *sdklog.LoggerProvider {
 	}
 
 	// Initialize the logger provider
-	loggerProvider := sdklog.NewLoggerProvider(
+	lp := sdklog.NewLoggerProvider(
 		sdklog.WithProcessor(sdklog.NewBatchProcessor(exporter)),
 		sdklog.WithResource(resources),
 	)
 
-	return loggerProvider
+	// Set the slog default logger to use the OpenTelemetry logger
+	logger := otelslog.NewLogger("go-xn", otelslog.WithLoggerProvider(lp))
+	slog.SetDefault(logger)
+
+	return lp.Shutdown
 }
 
 // newStdoutExporter creates a new stdout exporter for OpenTelemetry logs.
