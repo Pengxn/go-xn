@@ -51,7 +51,7 @@ func getWhoisServer(domain string) (string, error) {
 
 // sendWhoisSocket send whois request to whois server.
 func sendWhoisSocket(domain, whoisServer string) (string, error) {
-	result, _, err := NewSocketConn(whoisServer+":43", domain+"\r\n", 20)
+	result, _, err := NewSocketConn(whoisServer+":43", domain+"\r\n", 20*time.Second)
 	if err != nil {
 		return "", err
 	}
@@ -60,14 +60,14 @@ func sendWhoisSocket(domain, whoisServer string) (string, error) {
 }
 
 // NewSocketConn news SOCKET connection and contents to server.
-func NewSocketConn(server, content string, timeout int64) (string, int, error) {
+func NewSocketConn(server, content string, timeout time.Duration) (string, int, error) {
 	conn, err := net.Dial("tcp", server)
 	if err != nil {
 		return "", 0, err
 	}
 	defer conn.Close()
 
-	if err := conn.SetReadDeadline(time.Now().Add(1 * time.Second)); err != nil {
+	if err := conn.SetReadDeadline(time.Now().Add(timeout)); err != nil {
 		return "", 0, err
 	}
 
