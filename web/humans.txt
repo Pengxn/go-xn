@@ -14,6 +14,6 @@
 
 /* SITE */
 	Version: 0.2.1
-	Last Update: 2026/09/20
+	Last Update: 2026/09/21
 	Language: Chinese / English
 	Source Code: https://github.com/Pengxn/go-xn
