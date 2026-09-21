@@ -2,6 +2,42 @@
 
 ## [Unreleased]
 
+## [0.2.1] - 2026-09-21
+
+### Added
+
+- Add `WithFromEnv` resource detector to otel resource initialization (d5dd40e)
+- Add `otel.SetErrorHandler` to capture and print internal otel errors (07040f7)
+- Add `skipTLS` support for otel exporters (#775)
+- Add service version to otel resources (df9ffd0)
+- Add container resource detection for otel (c7f6cea)
+
+### Changed
+
+- Use no-op exporter instead of stdout as default for unknown type (7a8ae1d)
+- Conditionally append exporter options in exporter init (4e260de)
+- Bump go-github to `v88` and adapt to `NewClient` API change (#766)
+- Pass context as argument to github API functions (c226048)
+- Define semantic keys for otel service resource attributes (4ce4164)
+- Define dedicated slog version context key (65b4c1e)
+- Use provider shutdown for otel metrics and traces (#783)
+- Regenerate proto files with latest `protoc` and `protoc-gen-go` (#800)
+- Bump otel-related dependencies to `2026-08-25` release version (#759, #799, #807)
+- Move update archive extraction into dedicated compress package (ea68608)
+- Align otel log init and shutdown with trace and metric (#812)
+
+### Fixed
+
+- Fix broken links in changelog (958fad3)
+- Handle empty service version context values (07e36a6)
+- Filter invalid otel exporter headers (934c58f)
+- Handle unsupported archive formats in compress package (10865c7)
+- Fix socket read timeout by using the provided `timeout` parameter (fc592b0)
+
+### Security
+
+- Bump quic-go to 0.59.1 for security fix (CVE-2026-40898, #758)
+
 ## [0.2.0] - 2026-05-27
 
 ### Added
@@ -332,7 +368,8 @@
 
 - Release first version `0.0.1`.
 
-[Unreleased]: https://github.com/Pengxn/go-xn/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/Pengxn/go-xn/compare/v0.2.1...HEAD
+[0.2.1]: https://github.com/Pengxn/go-xn/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/Pengxn/go-xn/compare/v0.1.3...v0.2.0
 [0.1.3]: https://github.com/Pengxn/go-xn/compare/v0.1.2...v0.1.3
 [0.1.2]: https://github.com/Pengxn/go-xn/compare/v0.1.1...v0.1.2
