@@ -8,7 +8,7 @@ tool (
 )
 
 require (
-	github.com/agiledragon/gomonkey/v2 v2.14.2
+	github.com/agiledragon/gomonkey/v2 v2.14.3
 	github.com/getsentry/sentry-go v0.49.0
 	github.com/getsentry/sentry-go/gin v0.49.0
 	github.com/gin-gonic/gin v1.12.0
