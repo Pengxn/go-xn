@@ -20,11 +20,6 @@ indent_size = 2
 [{*.go,go.mod}]
 indent_style = tab
 
-# Inno Setup Script and NSIS Script charset setting UTF-8 with BOM
-# Garbled code appear when characters contain Chinese and charset is utf-8
-[*.{iss,isl,nsi,nsh}]
-charset = utf-8-bom
-
 # Makefile indent TAB-style setting
 [Makefile]
 indent_style = tab
