@@ -18,7 +18,7 @@ const defaultTimeout = 5 * time.Second // default timeout
 
 // override default logger with `tint` logger, default to [DEBUG] level.
 func init() {
-	logger := slog.New(tint.NewHandler(os.Stderr, &tint.Options{
+	logger := slog.New(tint.NewTextHandler(os.Stderr, &tint.Options{
 		Level:      slog.LevelDebug,
 		TimeFormat: "2006/01/02 - 15:04:05",
 
