@@ -9,6 +9,7 @@
 ## Build
 
 ```shell
+go install tool # optional, install tools
 make
 
 # Move to your home directory and edit it
